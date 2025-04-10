@@ -56,8 +56,8 @@ const navItems = [
       { name: "ECI Mr. & Mrs. Eko", href: "/projects/mr-and-mrs-eko", icon: FiAward },
     ],
   },
-  { name: "Events", href: "/#events" },
-  { name: "Chapters", href: "/#chapters" },
+  { name: "Events", href: "/events" },
+  { name: "Chapters", href: "/chapters" },
   { name: "Contact", href: "/#contact" },
 ]
 
