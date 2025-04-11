@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, useRef, useEffect } from "react"
+import { useState } from "react"
 import Link from "next/link"
 import Image from "next/image"
 import { motion } from "framer-motion"
@@ -14,7 +14,7 @@ import {
   BreadcrumbList,
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb"
-import { Carousel, CarouselContent, CarouselItem } from "@/components/ui/carousel"
+import { Carousel, CarouselContent, CarouselItem, CarouselPrevious, CarouselNext } from "@/components/ui/carousel"
 import { cn } from "@/lib/utils"
 
 // Chapter data with URLs
@@ -84,18 +84,12 @@ const regions = ["All", "USA", "Canada", "United Kingdom"]
 
 export default function ChaptersPage() {
   const [selectedRegion, setSelectedRegion] = useState("All")
-  const [filteredChapters, setFilteredChapters] = useState(chapters)
   const [hoveredChapter, setHoveredChapter] = useState(null)
-  const carouselRef = useRef(null)
 
-  // Filter chapters by region
-  useEffect(() => {
-    if (selectedRegion === "All") {
-      setFilteredChapters(chapters)
-    } else {
-      setFilteredChapters(chapters.filter((chapter) => chapter.country === selectedRegion))
-    }
-  }, [selectedRegion])
+  // Calculate filtered chapters directly from the selected region
+  // This avoids potential state synchronization issues
+  const filteredChapters =
+    selectedRegion === "All" ? chapters : chapters.filter((chapter) => chapter.country === selectedRegion)
 
   // Animation variants
   const containerVariants = {
@@ -258,14 +252,23 @@ export default function ChaptersPage() {
             ))}
           </motion.div>
 
+          {/* Display message when no chapters are found */}
+          {filteredChapters.length === 0 && (
+            <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="text-center py-12">
+              <p className="text-lg text-gray-600 dark:text-gray-300">
+                No chapters found in this region. Please select another region.
+              </p>
+            </motion.div>
+          )}
+
           <motion.div
+            key={selectedRegion} // Add key to force re-render when region changes
             variants={containerVariants}
             initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true }}
+            animate="visible" // Change from whileInView to animate
             className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6"
           >
-            {filteredChapters.map((chapter, index) => (
+            {filteredChapters.map((chapter) => (
               <motion.div
                 key={chapter.id}
                 variants={itemVariants}
@@ -333,56 +336,61 @@ export default function ChaptersPage() {
             viewport={{ once: true }}
             className="relative"
           >
-            <Carousel
-              ref={carouselRef}
-              className="w-full max-w-5xl mx-auto"
-              opts={{
-                align: "start",
-                loop: true,
-              }}
-            >
-              <CarouselContent>
-                {chapterPresidents.map((president) => (
-                  <CarouselItem key={president.id} className="md:basis-1/2 lg:basis-1/3">
-                    <div className="p-2">
-                      <Card className="overflow-hidden border-none shadow-lg">
-                        <div className="relative h-64 overflow-hidden">
-                          <Image
-                            src={president.image || "/placeholder.svg"}
-                            alt={president.name}
-                            fill
-                            className="object-cover transition-transform duration-500 hover:scale-110"
-                          />
-                          <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent"></div>
-                          <div className="absolute bottom-0 left-0 p-4 text-white">
-                            <h3 className="text-xl font-bold">{president.name}</h3>
-                            <p className="text-[#C8A97E]">President, {president.chapter} Chapter</p>
+            {/* Carousel implementation */}
+            <div className="w-full max-w-5xl mx-auto">
+              <Carousel
+                opts={{
+                  align: "start",
+                  loop: true,
+                }}
+              >
+                <CarouselContent>
+                  {chapterPresidents.map((president) => (
+                    <CarouselItem key={president.id} className="md:basis-1/2 lg:basis-1/3">
+                      <div className="p-2">
+                        <Card className="overflow-hidden border-none shadow-lg">
+                          <div className="relative h-64 overflow-hidden">
+                            <Image
+                              src={president.image || "/placeholder.svg"}
+                              alt={president.name}
+                              fill
+                              className="object-cover transition-transform duration-500 hover:scale-110"
+                            />
+                            <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent"></div>
+                            <div className="absolute bottom-0 left-0 p-4 text-white">
+                              <h3 className="text-xl font-bold">{president.name}</h3>
+                              <p className="text-[#C8A97E]">President, {president.chapter} Chapter</p>
+                            </div>
                           </div>
-                        </div>
-                      </Card>
-                    </div>
-                  </CarouselItem>
-                ))}
-              </CarouselContent>
-              <div className="flex justify-center mt-8 gap-4">
-                <Button
-                  variant="outline"
-                  size="icon"
-                  className="rounded-full border-[#C8A97E] text-[#C8A97E] hover:bg-[#C8A97E] hover:text-white"
-                  onClick={() => carouselRef.current?.scrollPrev()}
-                >
-                  <ChevronLeft className="h-5 w-5" />
-                </Button>
-                <Button
-                  variant="outline"
-                  size="icon"
-                  className="rounded-full border-[#C8A97E] text-[#C8A97E] hover:bg-[#C8A97E] hover:text-white"
-                  onClick={() => carouselRef.current?.scrollNext()}
-                >
-                  <ChevronRight className="h-5 w-5" />
-                </Button>
-              </div>
-            </Carousel>
+                        </Card>
+                      </div>
+                    </CarouselItem>
+                  ))}
+                </CarouselContent>
+                <div className="flex justify-center mt-8 gap-4">
+                  <Button
+                    variant="outline"
+                    size="icon"
+                    className="rounded-full border-[#C8A97E] text-[#C8A97E] hover:bg-[#C8A97E] hover:text-white"
+                    onClick={() => document.querySelector("[data-carousel-button-prev]")?.click()}
+                  >
+                    <ChevronLeft className="h-5 w-5" />
+                    <span className="sr-only">Previous</span>
+                  </Button>
+                  <CarouselPrevious className="hidden" data-carousel-button-prev />
+                  <Button
+                    variant="outline"
+                    size="icon"
+                    className="rounded-full border-[#C8A97E] text-[#C8A97E] hover:bg-[#C8A97E] hover:text-white"
+                    onClick={() => document.querySelector("[data-carousel-button-next]")?.click()}
+                  >
+                    <ChevronRight className="h-5 w-5" />
+                    <span className="sr-only">Next</span>
+                  </Button>
+                  <CarouselNext className="hidden" data-carousel-button-next />
+                </div>
+              </Carousel>
+            </div>
           </motion.div>
         </div>
       </section>
