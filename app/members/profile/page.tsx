@@ -31,6 +31,7 @@ export default function ProfilePage() {
   const [formData, setFormData] = useState({
     fullName: "",
     email: "",
+    role: "",
     // phone: "",
     // address: "",
     // city: "",
@@ -63,6 +64,8 @@ export default function ProfilePage() {
         setFormData({
           fullName: data.fullName || "",
           email: data.email || "",
+          role: data.role || ""
+
         //   phone: data.phone || "",
         //   address: data.user.address || "",
         //   city: data.user.city || "",
@@ -308,6 +311,10 @@ export default function ProfilePage() {
                             disabled={!editMode}
                           />
                         </div>
+                        <select value={formData.role} onChange={handleInputChange} name="role" id="role" disabled={!editMode}>
+                          <option value="admin">Admin</option>
+                          <option value="member">Member</option>
+                        </select>
                         {/* <div className="space-y-2">
                           <Label htmlFor="phone">Phone Number</Label>
                           <Input

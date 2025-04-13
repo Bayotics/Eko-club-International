@@ -32,6 +32,7 @@ export async function PUT(request: NextRequest) {
         $set: {
           fullName: userData.fullName,
           email: userData.email,
+          role: userData.role,
         //   phone: userData.phone,
         //   address: userData.address,
         //   city: userData.city,

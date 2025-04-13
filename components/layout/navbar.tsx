@@ -3,7 +3,7 @@
 import { useState } from "react"
 import Link from "next/link"
 import { motion, AnimatePresence } from "framer-motion"
-import { Menu, X, User, LogOut } from "lucide-react"
+import { Menu, X, User, LogOut, Users, Calendar, FileText, Mail, Settings, DollarSign, UserPlus } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { usePathname } from "next/navigation"
 import { cn } from "@/lib/utils"
@@ -343,6 +343,64 @@ export default function Navbar() {
                     <span>Dashboard</span>
                   </Link>
                 </DropdownMenuItem>
+                <DropdownMenuItem asChild>
+                  <Link href="/members/profile" className="cursor-pointer">
+                    <Settings className="mr-2 h-4 w-4" />
+                    <span>Profile</span>
+                  </Link>
+                </DropdownMenuItem>
+
+                {/* Admin-specific menu items */}
+                {user.role === "admin" && (
+                  <>
+                    <DropdownMenuSeparator />
+                    <DropdownMenuLabel>Administration</DropdownMenuLabel>
+                    <DropdownMenuItem asChild>
+                      <Link href="/admin/users" className="cursor-pointer">
+                        <Users className="mr-2 h-4 w-4" />
+                        <span>Manage Users</span>
+                      </Link>
+                    </DropdownMenuItem>
+                    <DropdownMenuItem asChild>
+                      <Link href="/admin/meetings" className="cursor-pointer">
+                        <Calendar className="mr-2 h-4 w-4" />
+                        <span>Manage Meetings</span>
+                      </Link>
+                    </DropdownMenuItem>
+                    <DropdownMenuItem asChild>
+                      <Link href="/admin/events" className="cursor-pointer">
+                        <Calendar className="mr-2 h-4 w-4" />
+                        <span>Manage Events</span>
+                      </Link>
+                    </DropdownMenuItem>
+                    <DropdownMenuItem asChild>
+                      <Link href="/admin/minutes" className="cursor-pointer">
+                        <FileText className="mr-2 h-4 w-4" />
+                        <span>Manage Minutes</span>
+                      </Link>
+                    </DropdownMenuItem>
+                    <DropdownMenuItem asChild>
+                      <Link href="/admin/newsletter" className="cursor-pointer">
+                        <Mail className="mr-2 h-4 w-4" />
+                        <span>Manage Newsletter</span>
+                      </Link>
+                    </DropdownMenuItem>
+                    <DropdownMenuItem asChild>
+                      <Link href="/admin/donations" className="cursor-pointer">
+                        <DollarSign className="mr-2 h-4 w-4" />
+                        <span>Manage Donations</span>
+                      </Link>
+                    </DropdownMenuItem>
+                    <DropdownMenuItem asChild>
+                      <Link href="/admin/subscribers" className="cursor-pointer">
+                        <UserPlus className="mr-2 h-4 w-4" />
+                        <span>Manage Subscribers</span>
+                      </Link>
+                    </DropdownMenuItem>
+                  </>
+                )}
+
+                <DropdownMenuSeparator />
                 <DropdownMenuItem onClick={handleLogout} className="cursor-pointer text-red-600 hover:text-red-700">
                   <LogOut className="mr-2 h-4 w-4" />
                   <span>Log out</span>
