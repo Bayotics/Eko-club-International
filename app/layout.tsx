@@ -4,6 +4,7 @@ import "./globals.css"
 import { ThemeProvider } from "@/components/theme-provider"
 import Navbar from "@/components/layout/navbar"
 import Footer from "@/components/layout/footer"
+import { AuthProvider } from "@/contexts/auth-context"
 
 const poppins = Poppins({
   subsets: ["latin"],
@@ -36,9 +37,11 @@ export default function RootLayout({
       <body className={`${poppins.variable} font-sans`}>
         <ThemeProvider attribute="class" defaultTheme="light" enableSystem disableTransitionOnChange>
           <div className="flex min-h-screen flex-col">
-            <Navbar />
-            <div className="flex-grow">{children}</div>
-            <Footer />
+            <AuthProvider>
+              <Navbar />
+              <div className="flex-grow">{children}</div>
+              <Footer />
+            </AuthProvider>
           </div>
         </ThemeProvider>
       </body>

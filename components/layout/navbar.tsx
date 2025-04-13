@@ -1,9 +1,9 @@
 "use client"
 
-import { useState, useEffect } from "react"
+import { useState } from "react"
 import Link from "next/link"
 import { motion, AnimatePresence } from "framer-motion"
-import { Menu, X } from "lucide-react"
+import { Menu, X, User, LogOut } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { usePathname } from "next/navigation"
 import { cn } from "@/lib/utils"
@@ -24,6 +24,16 @@ import {
   FiBookOpen,
   FiGlobe,
 } from "react-icons/fi"
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu"
+import { useAuth } from "@/contexts/auth-context"
 
 const navItems = [
   { name: "Home", href: "/" },
@@ -44,11 +54,11 @@ const navItems = [
     href: "/#projects",
     hasDropdown: true,
     dropdownItems: [
-      { name: "Medical Mission", href: "/projects/medical-mission", icon: FiHeart },
-      { name: "Women Forum", href: "/projects/women-forum", icon: FiUsers },
-      { name: "Lagos Community Outreach", href: "/projects/lagos-community-outreach", icon: FiHome },
-      { name: "Empowerment Initiative", href: "/projects/empowerment-initiative", icon: FiTrendingUp },
-      { name: "Food Palliative", href: "/projects/food-palliative", icon: FiPackage },
+      { name: "Medical Mission", href: "/#projects?category=medical", icon: FiHeart },
+      { name: "Women Forum", href: "/#projects?category=women", icon: FiUsers },
+      { name: "Lagos Community Outreach", href: "/#projects?category=lagos", icon: FiHome },
+      { name: "Empowerment Initiative", href: "/#projects?category=empowerment", icon: FiTrendingUp },
+      { name: "Food Palliative", href: "/#projects?category=food", icon: FiPackage },
       { name: "ECI Youth", href: "/projects/eci-youth", icon: FiStar },
       { name: "Children Outreach Initiative", href: "/projects/children-outreach-initiative", icon: FiSmile },
       { name: "Education Initiative", href: "/projects/education-initiative", icon: FiBookOpen },
@@ -66,14 +76,23 @@ export default function Navbar() {
   const [scrolled, setScrolled] = useState(false)
   const pathname = usePathname()
 
-  useEffect(() => {
+  // Use the auth context
+  const { user, loading, logout } = useAuth()
+
+  // Handle scroll effect
+  useState(() => {
     const handleScroll = () => {
       setScrolled(window.scrollY > 10)
     }
 
     window.addEventListener("scroll", handleScroll)
     return () => window.removeEventListener("scroll", handleScroll)
-  }, [])
+  })
+
+  const handleLogout = async () => {
+    await logout()
+    window.location.href = "/"
+  }
 
   const NavDropdown = ({ item, scrolled = false, isMobile = false }) => {
     const [open, setOpen] = useState(false)
@@ -288,9 +307,53 @@ export default function Navbar() {
           <Button className="ml-4 bg-[#C8A97E] hover:bg-[#8A6D3B] text-white transition-colors duration-300 rounded-none px-6">
             <Link href="/donate">Donate</Link>
           </Button>
-          <Button className="ml-2 bg-[oklch(63.7%_0.237_25.331)] hover:bg-[oklch(53.7%_0.237_25.331)] text-white transition-colors duration-300 rounded-none px-6">
-            <Link href="/login">Members Login</Link>
-          </Button>
+          {loading ? (
+            <Button className="ml-2 bg-[oklch(63.7%_0.237_25.331)] hover:bg-[oklch(53.7%_0.237_25.331)] text-white transition-colors duration-300 rounded-none px-6">
+              <span className="animate-pulse">Loading...</span>
+            </Button>
+          ) : user ? (
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button variant="ghost" className="flex items-center gap-2 px-3 hover:bg-gray-100">
+                  <Avatar className="h-8 w-8">
+                    {user.profileImage ? (
+                      <AvatarImage src={user.profileImage || "/placeholder.svg"} alt={user.fullName} />
+                    ) : (
+                      <AvatarFallback className="bg-[#C8A97E] text-white">
+                        {user.fullName
+                          .split(" ")
+                          .map((name) => name[0])
+                          .join("")
+                          .toUpperCase()}
+                      </AvatarFallback>
+                    )}
+                  </Avatar>
+                  <div className="flex flex-col items-start">
+                    <span className="text-sm font-medium">{user.fullName}</span>
+                    <span className="text-xs text-gray-500 capitalize">{user.role}</span>
+                  </div>
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="end" className="w-56">
+                <DropdownMenuLabel>My Account</DropdownMenuLabel>
+                <DropdownMenuSeparator />
+                <DropdownMenuItem asChild>
+                  <Link href="/members/dashboard" className="cursor-pointer">
+                    <User className="mr-2 h-4 w-4" />
+                    <span>Dashboard</span>
+                  </Link>
+                </DropdownMenuItem>
+                <DropdownMenuItem onClick={handleLogout} className="cursor-pointer text-red-600 hover:text-red-700">
+                  <LogOut className="mr-2 h-4 w-4" />
+                  <span>Log out</span>
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
+          ) : (
+            <Button className="ml-2 bg-[oklch(63.7%_0.237_25.331)] hover:bg-[oklch(53.7%_0.237_25.331)] text-white transition-colors duration-300 rounded-none px-6">
+              <Link href="/login">Members Login</Link>
+            </Button>
+          )}
         </nav>
 
         {/* Mobile Menu Button */}
