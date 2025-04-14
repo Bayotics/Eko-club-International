@@ -15,6 +15,7 @@ import {
   BreadcrumbList,
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb"
+import UpcomingMeetingsAnnouncements from "@/components/upcoming-meetings-announcements"
 
 export default function MemberDashboard() {
   const router = useRouter()
@@ -243,30 +244,7 @@ export default function MemberDashboard() {
                         <CardDescription>Latest updates from Eko Club International</CardDescription>
                       </CardHeader>
                       <CardContent>
-                        <div className="space-y-4">
-                          <div className="border-l-4 border-[#C8A97E] pl-4 py-2">
-                            <h4 className="font-medium">Annual General Meeting</h4>
-                            <p className="text-sm text-gray-600">
-                              The Annual General Meeting will be held on July 10, 2025. All members are encouraged to
-                              attend.
-                            </p>
-                            <p className="text-xs text-gray-500 mt-1">Posted: May 1, 2025</p>
-                          </div>
-                          <div className="border-l-4 border-[#C8A97E] pl-4 py-2">
-                            <h4 className="font-medium">Membership Dues Reminder</h4>
-                            <p className="text-sm text-gray-600">
-                              Please remember to pay your annual membership dues by June 30, 2025.
-                            </p>
-                            <p className="text-xs text-gray-500 mt-1">Posted: April 15, 2025</p>
-                          </div>
-                          <div className="border-l-4 border-[#C8A97E] pl-4 py-2">
-                            <h4 className="font-medium">New Website Launch</h4>
-                            <p className="text-sm text-gray-600">
-                              We're excited to announce the launch of our new website with enhanced member features.
-                            </p>
-                            <p className="text-xs text-gray-500 mt-1">Posted: April 1, 2025</p>
-                          </div>
-                        </div>
+                        <UpcomingMeetingsAnnouncements />
                       </CardContent>
                     </Card>
                   </div>
