@@ -7,7 +7,8 @@ import User from "@/models/user"
 export async function GET(request: NextRequest) {
   try {
     // Get the token from cookies
-    const token = cookies().get("token")?.value
+    const cookieStore = await cookies()
+    const token = cookieStore.get("token")?.value
 
     if (!token) {
       return NextResponse.json({ success: false, message: "Not authenticated" }, { status: 401 })

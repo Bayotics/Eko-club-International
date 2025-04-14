@@ -3,7 +3,20 @@
 import { useState } from "react"
 import Link from "next/link"
 import { motion, AnimatePresence } from "framer-motion"
-import { Menu, X, User, LogOut, Users, Calendar, FileText, Mail, Settings, DollarSign, UserPlus } from "lucide-react"
+import {
+  Menu,
+  X,
+  User,
+  LogOut,
+  Users,
+  Calendar,
+  FileText,
+  Mail,
+  Settings,
+  DollarSign,
+  UserPlus,
+  Send,
+} from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { usePathname } from "next/navigation"
 import { cn } from "@/lib/utils"
@@ -359,6 +372,12 @@ export default function Navbar() {
                       <Link href="/admin/users" className="cursor-pointer">
                         <Users className="mr-2 h-4 w-4" />
                         <span>Manage Users</span>
+                      </Link>
+                    </DropdownMenuItem>
+                    <DropdownMenuItem asChild>
+                      <Link href="/admin/invite" className="cursor-pointer">
+                        <Send className="mr-2 h-4 w-4" />
+                        <span>Invite Users</span>
                       </Link>
                     </DropdownMenuItem>
                     <DropdownMenuItem asChild>
