@@ -16,6 +16,7 @@ import {
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb"
 import UpcomingMeetingsAnnouncements from "@/components/upcoming-meetings-announcements"
+import UpcomingEventsAnnouncements from "@/components/upcoming-events-annuncements";
 
 export default function MemberDashboard() {
   const router = useRouter()
@@ -257,64 +258,7 @@ export default function MemberDashboard() {
                       <CardDescription>Events you might be interested in</CardDescription>
                     </CardHeader>
                     <CardContent>
-                      <div className="space-y-6">
-                        <div className="flex flex-col md:flex-row gap-4 border-b pb-4">
-                          <div className="bg-[#C8A97E] text-white rounded-lg p-3 text-center min-w-[80px]">
-                            <div className="text-2xl font-bold">15</div>
-                            <div className="text-sm">June</div>
-                          </div>
-                          <div>
-                            <h4 className="font-medium">Chapter Meeting</h4>
-                            <p className="text-sm text-gray-600 mt-1">
-                              Monthly chapter meeting to discuss upcoming initiatives and projects.
-                            </p>
-                            <div className="flex items-center mt-2 text-sm text-gray-500">
-                              <MapPin className="h-3 w-3 mr-1" />
-                              <span>Eko Club House, Lagos</span>
-                              <span className="mx-2">•</span>
-                              <span>6:00 PM</span>
-                            </div>
-                          </div>
-                        </div>
-
-                        <div className="flex flex-col md:flex-row gap-4 border-b pb-4">
-                          <div className="bg-[#C8A97E] text-white rounded-lg p-3 text-center min-w-[80px]">
-                            <div className="text-2xl font-bold">10</div>
-                            <div className="text-sm">July</div>
-                          </div>
-                          <div>
-                            <h4 className="font-medium">Annual General Meeting</h4>
-                            <p className="text-sm text-gray-600 mt-1">
-                              Annual meeting for all members to review the year and elect new officers.
-                            </p>
-                            <div className="flex items-center mt-2 text-sm text-gray-500">
-                              <MapPin className="h-3 w-3 mr-1" />
-                              <span>Grand Hotel, Lagos</span>
-                              <span className="mx-2">•</span>
-                              <span>10:00 AM</span>
-                            </div>
-                          </div>
-                        </div>
-
-                        <div className="flex flex-col md:flex-row gap-4">
-                          <div className="bg-[#C8A97E] text-white rounded-lg p-3 text-center min-w-[80px]">
-                            <div className="text-2xl font-bold">25</div>
-                            <div className="text-sm">July</div>
-                          </div>
-                          <div>
-                            <h4 className="font-medium">Community Outreach</h4>
-                            <p className="text-sm text-gray-600 mt-1">
-                              Join us for our quarterly community service project in Lagos.
-                            </p>
-                            <div className="flex items-center mt-2 text-sm text-gray-500">
-                              <MapPin className="h-3 w-3 mr-1" />
-                              <span>Surulere Community Center</span>
-                              <span className="mx-2">•</span>
-                              <span>9:00 AM</span>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
+                      <UpcomingEventsAnnouncements />
                     </CardContent>
                   </Card>
                 </TabsContent>
