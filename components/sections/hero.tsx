@@ -89,7 +89,7 @@ export default function Hero() {
 
       {/* Content */}
       <div className="relative z-20 h-full flex items-center justify-center">
-        <div className="container mx-auto px-4">
+        <div className="container mx-auto px-4 py-10 ">
           <AnimatePresence mode="wait">
             <motion.div
               key={current}
@@ -103,7 +103,7 @@ export default function Hero() {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.8, delay: 0.2 }}
-                className="text-5xl md:text-7xl font-light mb-6"
+                className="text-5xl md:text-7xl font-light mb-6 mt-16"
               >
                 <span className="block">{slides[current].title}</span>
                 <span className="font-medium text-[#C8A97E]">{slides[current].subtitle}</span>
@@ -192,8 +192,8 @@ export default function Hero() {
         transition={{ duration: 1, delay: 1.2 }}
         className="absolute bottom-10 left-1/2 transform -translate-x-1/2 z-20"
       >
-        <motion.div animate={{ y: [0, 10, 0] }} transition={{ repeat: Number.POSITIVE_INFINITY, duration: 1.5 }}>
-          <Link href="/#about" className="flex flex-col items-center text-white/80 hover:text-white">
+        {/* <motion.div animate={{ y: [0, 10, 0] }} transition={{ repeat: Number.POSITIVE_INFINITY, duration: 1.5 }}>
+          <Link href="/#about" className="flex flex-col items-center text-white/80 hover:text-white mt-16">
             <span className="text-sm mb-2 uppercase tracking-widest">Discover</span>
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -209,7 +209,7 @@ export default function Hero() {
               <path d="M12 5v14M5 12l7 7 7-7" />
             </svg>
           </Link>
-        </motion.div>
+        </motion.div> */}
       </motion.div>
     </section>
   )

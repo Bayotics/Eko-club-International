@@ -34,7 +34,7 @@ export default function Home() {
       <Chapters />
       <Testimonials />
       <Faq />
-      <Membership />
+      {/* <Membership /> */}
       <WhyJoin />
       <InstagramFeed />
       <Newsletter />

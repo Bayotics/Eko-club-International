@@ -68,7 +68,7 @@ export default function Projects() {
           transition={{ duration: 0.6 }}
           className="text-center mb-12"
         >
-          <h2 className="text-3xl md:text-4xl font-bold mb-4">Our Projects</h2>
+          <h2 className="text-3xl md:text-4xl font-bold mb-4 mt-10">Our Projects</h2>
           <div className="h-1 w-24 bg-primary mx-auto mb-6" />
           <p className="text-gray-600 dark:text-gray-300 max-w-3xl mx-auto">
             Discover the impactful initiatives we're leading to make a difference in communities locally and

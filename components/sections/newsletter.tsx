@@ -41,7 +41,7 @@ export default function Newsletter() {
             transition={{ duration: 0.6 }}
             className="text-4xl md:text-5xl lg:text-6xl font-medium mb-6"
           >
-            Get updated by subscribe to our newsletter
+            Get updated by subscribing to our newsletter
           </motion.h2>
 
           <motion.p
@@ -51,7 +51,7 @@ export default function Newsletter() {
             transition={{ duration: 0.6, delay: 0.2 }}
             className="text-lg md:text-xl mb-10"
           >
-            Get instant news by subscribe to our daily newsletter
+            Get instant news by subscribing to our daily newsletter
           </motion.p>
 
           <motion.form

@@ -55,7 +55,7 @@ export default function Testimonials() {
   }, [current, autoplay])
 
   return (
-    <section className="py-16 md:py-24 bg-black text-white">
+    <section className="py-16 md:py-24 bg-black text-white mt-16">
       <div className="container mx-auto px-4">
         <div className="text-center mb-16">
           <motion.h2

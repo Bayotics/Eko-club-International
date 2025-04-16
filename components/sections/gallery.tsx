@@ -62,7 +62,7 @@ export default function Gallery() {
   return (
     <section id="gallery" className="section-padding bg-white">
       <div className="container mx-auto px-4">
-        <div className="text-center mb-16">
+        <div className="text-center mb-16 mt-16">
           <motion.h2
             initial={{ opacity: 0, y: -20 }}
             whileInView={{ opacity: 1, y: 0 }}
