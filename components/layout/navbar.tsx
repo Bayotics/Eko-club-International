@@ -394,7 +394,7 @@ export default function Navbar() {
                       </Link>
                     </DropdownMenuItem>
                     <DropdownMenuItem asChild>
-                      <Link href="/admin/minutes" className="cursor-pointer">
+                      <Link href="/admin/meeting-minutes" className="cursor-pointer">
                         <FileText className="mr-2 h-4 w-4" />
                         <span>Manage Minutes</span>
                       </Link>

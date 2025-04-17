@@ -3,7 +3,7 @@ import { jwtVerify } from "jose"
 import { cookies } from "next/headers"
 
 import { connectToDatabase } from "@/lib/mongodb"
-import Meeting from "@/models/Meeting"
+import Minute from "@/models/Minute"
 
 // JWT secret should be in environment variables
 const JWT_SECRET = process.env.JWT_SECRET || "your-secret-key"
@@ -36,14 +36,14 @@ export async function GET(request: Request) {
     // Connect to database
     await connectToDatabase()
 
-    // Fetch all meetings, sorted by date (upcoming first)
-    const meetings = await Meeting.find({}).sort({ date: 1 }).lean()
+    // Fetch all minutes, sorted by date (upcoming first)
+    const minutes = await Minute.find({}).sort({ date: 1 }).lean()
 
-    return NextResponse.json(meetings)
+    return NextResponse.json(minutes)
   } catch (error) {
-    console.error("Error fetching meetings:", error)
+    console.error("Error fetching minutes:", error)
     return NextResponse.json(
-      { error: "Failed to fetch meetings", details: error instanceof Error ? error.message : String(error) },
+      { error: "Failed to fetch minutes", details: error instanceof Error ? error.message : String(error) },
       { status: 500 },
     )
   }
@@ -77,17 +77,17 @@ export async function POST(request: Request) {
     // Connect to database
     await connectToDatabase()
 
-    // Get meeting data from request body
-    const meetingData = await request.json()
+    // Get minute data from request body
+    const minuteData = await request.json()
 
-    // Create new meeting
-    const meeting = await Meeting.create(meetingData)
+    // Create new minute
+    const minute = await Minute.create(minuteData)
 
-    return NextResponse.json(meeting, { status: 201 })
+    return NextResponse.json(minute, { status: 201 })
   } catch (error) {
-    console.error("Error creating meeting:", error)
+    console.error("Error creating minute:", error)
     return NextResponse.json(
-      { error: "Failed to create meeting", details: error instanceof Error ? error.message : String(error) },
+      { error: "Failed to create minute", details: error instanceof Error ? error.message : String(error) },
       { status: 500 },
     )
   }

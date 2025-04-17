@@ -6,18 +6,65 @@ import { useState } from "react"
 import { motion } from "framer-motion"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
+import { toast } from "sonner"
+import { Loader2 } from "lucide-react"
 
 export default function Newsletter() {
   const [email, setEmail] = useState("")
+  const [isLoading, setIsLoading] = useState(false)
+  const [error, setError] = useState<string | null>(null)
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const validateEmail = (email: string) => {
+    const regex = /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/
+    return regex.test(email)
+  }
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-    // Handle newsletter subscription
-    console.log("Subscribing email:", email)
-    // Reset form
-    setEmail("")
-    // Show success message or toast notification
-    alert("Thank you for subscribing to our newsletter!")
+
+    // Reset error state
+    setError(null)
+
+    // Validate email format
+    if (!validateEmail(email)) {
+      setError("Please enter a valid email address")
+      toast.error("Please enter a valid email address")
+      return
+    }
+
+    // Set loading state
+    setIsLoading(true)
+
+    try {
+      // Submit to API
+      const response = await fetch("/api/newsletter/subscribe", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ email }),
+      })
+
+      const data = await response.json()
+
+      if (!response.ok) {
+        throw new Error(data.message || "Something went wrong")
+      }
+
+      // Show success message
+      toast.success(data.message || "Thank you for subscribing to our newsletter!")
+
+      // Reset form
+      setEmail("")
+    } catch (error) {
+      // Show error message
+      const errorMessage = error instanceof Error ? error.message : "Failed to subscribe. Please try again."
+      setError(errorMessage)
+      toast.error(errorMessage)
+    } finally {
+      // Reset loading state
+      setIsLoading(false)
+    }
   }
 
   return (
@@ -51,7 +98,7 @@ export default function Newsletter() {
             transition={{ duration: 0.6, delay: 0.2 }}
             className="text-lg md:text-xl mb-10"
           >
-            Get instant news by subscribing to our daily newsletter
+            Get instant news by subscribing to our monthly newsletter
           </motion.p>
 
           <motion.form
@@ -70,18 +117,34 @@ export default function Newsletter() {
                 onChange={(e) => setEmail(e.target.value)}
                 required
                 className="bg-transparent border-none text-white placeholder:text-white/70 h-14 px-6 focus-visible:ring-0 focus-visible:ring-offset-0"
+                disabled={isLoading}
+                aria-invalid={error ? "true" : "false"}
+                aria-describedby={error ? "email-error" : undefined}
               />
             </div>
             <Button
               type="submit"
               className="h-14 px-8 rounded-full bg-[#F9D75E] hover:bg-[#F0C83D] text-black font-medium text-lg"
+              disabled={isLoading}
             >
-              Try for free
+              {isLoading ? (
+                <>
+                  <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                  Subscribing...
+                </>
+              ) : (
+                "Subscribe"
+              )}
             </Button>
           </motion.form>
+
+          {error && (
+            <p id="email-error" className="mt-2 text-red-400 text-sm">
+              {error}
+            </p>
+          )}
         </div>
       </div>
     </section>
   )
 }
-

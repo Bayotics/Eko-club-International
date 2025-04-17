@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react"
 import { useRouter } from "next/navigation"
 import { motion } from "framer-motion"
-import { Loader2, User, Calendar, MapPin, Award, LogOut } from "lucide-react"
+import { Loader2, User, Calendar, MapPin, Award, LogOut, FileText } from "lucide-react"
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
@@ -16,7 +16,8 @@ import {
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb"
 import UpcomingMeetingsAnnouncements from "@/components/upcoming-meetings-announcements"
-import UpcomingEventsAnnouncements from "@/components/upcoming-events-annuncements";
+import UpcomingEventsAnnouncements from "@/components/upcoming-events-annuncements"
+import Link from "next/link"
 
 export default function MemberDashboard() {
   const router = useRouter()
@@ -173,6 +174,22 @@ export default function MemberDashboard() {
                     View Profile
                   </Button>
                 </CardFooter>
+              </Card>
+              <Card className="overflow-hidden mt-10">
+                <CardHeader className="bg-[#C8A97E]/10">
+                  <CardTitle className="text-[#C8A97E]">Meeting Minutes</CardTitle>
+                </CardHeader>
+                <CardContent className="p-6">
+                  <p className="text-sm text-gray-500 mb-4">
+                    Access minutes from previous meetings and stay informed about club decisions and discussions.
+                  </p>
+                  <Button asChild variant="outline" className="w-full">
+                    <Link href="/members/meetings">
+                      <FileText className="mr-2 h-4 w-4" />
+                      View Meeting Minutes
+                    </Link>
+                  </Button>
+                </CardContent>
               </Card>
             </motion.div>
 
