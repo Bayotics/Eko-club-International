@@ -18,9 +18,29 @@ import { Textarea } from "@/components/ui/textarea"
 import { Checkbox } from "@/components/ui/checkbox"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion"
-import { Heart, DollarSign, Users, Calendar, Award, CheckCircle } from "lucide-react"
+import { Heart, DollarSign, Users, Calendar, Award, CheckCircle, AlertCircle, Loader2 } from "lucide-react"
+import { useToast } from "@/components/ui/use-toast"
+import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
+
+// Define payment gateway interfaces
+declare global {
+  interface Window {
+    FlutterwaveCheckout: any
+    PaystackPop: any
+    paypal: any
+  }
+}
+
+interface Payment {
+  fullName: string
+  amount: number
+  comment: string
+  createdAt: string
+}
 
 export default function DonatePage() {
+  const { toast } = useToast()
+
   // State for donation form
   const [donationType, setDonationType] = useState("one-off")
   const [donationAmount, setDonationAmount] = useState("100")
@@ -30,6 +50,20 @@ export default function DonatePage() {
   const [fullName, setFullName] = useState("")
   const [email, setEmail] = useState("")
   const [comment, setComment] = useState("")
+
+  // New state for currency and payment method
+  const [currency, setCurrency] = useState("USD")
+  const [paymentMethod, setPaymentMethod] = useState("paypal")
+
+  // State for payment processing
+  const [isProcessing, setIsProcessing] = useState(false)
+  const [paymentError, setPaymentError] = useState("")
+  const [paymentSuccess, setPaymentSuccess] = useState(false)
+
+  // State to track if scripts are loaded
+  const [paystackLoaded, setPaystackLoaded] = useState(false)
+  const [flutterwaveLoaded, setFlutterwaveLoaded] = useState(false)
+  const [paypalLoaded, setPaypalLoaded] = useState(false)
 
   // Refs for sections to observe
   const heroRef = useRef(null)
@@ -44,6 +78,10 @@ export default function DonatePage() {
   const [donateVisible, setDonateVisible] = useState(false)
   const [recognitionVisible, setRecognitionVisible] = useState(false)
   const [faqVisible, setFaqVisible] = useState(false)
+
+  // New state for fetching payments
+  const [payments, setPayments] = useState<Payment[]>([])
+  const [paymentsLoading, setPaymentsLoading] = useState(true)
 
   // Set up intersection observer
   useEffect(() => {
@@ -82,6 +120,73 @@ export default function DonatePage() {
     }
   }, [])
 
+  // Load payment scripts
+  useEffect(() => {
+    // Load Paystack script
+    const paystackScript = document.createElement("script")
+    paystackScript.src = "https://js.paystack.co/v1/inline.js"
+    paystackScript.async = true
+    paystackScript.onload = () => setPaystackLoaded(true)
+    document.body.appendChild(paystackScript)
+
+    // Load Flutterwave script
+    const flutterwaveScript = document.createElement("script")
+    flutterwaveScript.src = "https://checkout.flutterwave.com/v3.js"
+    flutterwaveScript.async = true
+    flutterwaveScript.onload = () => setFlutterwaveLoaded(true)
+    document.body.appendChild(flutterwaveScript)
+
+    // Load PayPal script
+    const paypalScript = document.createElement("script")
+    paypalScript.src = `https://www.paypal.com/sdk/js?client-id=${process.env.NEXT_PUBLIC_PAYPAL_CLIENT_ID}&currency=USD`
+    paypalScript.async = true
+    paypalScript.onload = () => setPaypalLoaded(true)
+    paypalScript.onerror = () => {
+      console.error("PayPal SDK failed to load.")
+      setPaymentError("PayPal SDK failed to load. Please try again later.")
+    }
+    document.body.appendChild(paypalScript)
+
+    return () => {
+      // Only remove if they exist in the DOM
+      if (document.body.contains(paystackScript)) {
+        document.body.removeChild(paystackScript)
+      }
+      if (document.body.contains(flutterwaveScript)) {
+        document.body.removeChild(flutterwaveScript)
+      }
+      if (document.body.contains(paypalScript)) {
+        document.body.removeChild(paypalScript)
+      }
+    }
+  }, [])
+
+  // Fetch payments
+  useEffect(() => {
+    const fetchPayments = async () => {
+      setPaymentsLoading(true)
+      try {
+        const response = await fetch("/api/payments")
+        if (!response.ok) {
+          throw new Error("Failed to fetch payments")
+        }
+        const data = await response.json()
+        setPayments(data.payments)
+      } catch (error) {
+        console.error("Error fetching payments:", error)
+        toast({
+          title: "Error",
+          description: "Failed to load donor list",
+          variant: "destructive",
+        })
+      } finally {
+        setPaymentsLoading(false)
+      }
+    }
+
+    fetchPayments()
+  }, [toast])
+
   // Handle donation amount selection
   const handleAmountSelect = (amount) => {
     setDonationAmount(amount)
@@ -94,11 +199,294 @@ export default function DonatePage() {
     setDonationAmount("custom")
   }
 
+  // Handle currency change
+  const handleCurrencyChange = (value) => {
+    setCurrency(value)
+    // Default to Paystack for USD
+    if (value === "USD") {
+      setPaymentMethod("paypal")
+    }
+  }
+
+  // Save payment to database
+  const savePaymentToDatabase = async (paymentData) => {
+    try {
+      const response = await fetch("/api/payments", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(paymentData),
+      })
+
+      const data = await response.json()
+
+      if (!data.success) {
+        console.error("Error saving payment:", data.error)
+      }
+
+      return data
+    } catch (error) {
+      console.error("Error saving payment:", error)
+      return { success: false }
+    }
+  }
+
+  // Process payment with PayPal
+  const processPayPalPayment = () => {
+    if (!paypalLoaded) {
+      setPaymentError("PayPal payment system is still loading. Please try again in a moment.")
+      return
+    }
+
+    const amount = donationAmount === "custom" ? Number.parseFloat(customAmount) : Number.parseFloat(donationAmount)
+
+    if (!amount || amount <= 0) {
+      setPaymentError("Please enter a valid donation amount")
+      return
+    }
+
+    if (showRecognition && (!fullName || !email)) {
+      setPaymentError("Please provide your name and email for the recognition wall")
+      return
+    }
+
+    setIsProcessing(true)
+    setPaymentError("")
+
+    window.paypal
+      .Buttons({
+        createOrder: (data, actions) => {
+          return actions.order.create({
+            purchase_units: [
+              {
+                amount: {
+                  currency_code: currency,
+                  value: amount.toString(),
+                },
+              },
+            ],
+          })
+        },
+        onApprove: async (data, actions) => {
+          const order = await actions.order.capture()
+          console.log("PayPal Order Capture:", order)
+
+          const paymentData = {
+            fullName: fullName || "Anonymous",
+            email: email || "anonymous@example.com",
+            amount: amount,
+            currency: currency,
+            paymentMethod: "paypal",
+            transactionReference: order.id,
+            status: "success",
+            comment: comment,
+            donationType: donationType,
+            recognitionPreference: showRecognition ? recognitionPreference : "anonymous",
+          }
+
+          savePaymentToDatabase(paymentData)
+            .then(() => {
+              setIsProcessing(false)
+              setPaymentSuccess(true)
+              toast({
+                title: "Payment Successful",
+                description: "Thank you for your donation!",
+              })
+            })
+            .catch((error) => {
+              console.error("Error saving payment:", error)
+              setIsProcessing(false)
+              setPaymentError("Payment was successful but there was an error saving your details.")
+            })
+        },
+        onError: (err) => {
+          console.error("PayPal Error:", err)
+          setPaymentError("An error occurred during PayPal payment. Please try again.")
+          setIsProcessing(false)
+        },
+      })
+      .render("#paypal-button-container")
+  }
+
+  // Process payment with Paystack
+  const processPaystackPayment = () => {
+    if (!paystackLoaded) {
+      setPaymentError("Payment system is still loading. Please try again in a moment.")
+      return
+    }
+
+    const amount = donationAmount === "custom" ? Number.parseFloat(customAmount) : Number.parseFloat(donationAmount)
+
+    if (!amount || amount <= 0) {
+      setPaymentError("Please enter a valid donation amount")
+      return
+    }
+
+    if (showRecognition && (!fullName || !email)) {
+      setPaymentError("Please provide your name and email for the recognition wall")
+      return
+    }
+
+    setIsProcessing(true)
+    setPaymentError("")
+
+    // Generate a unique reference
+    const reference = "EKO_" + Math.floor(Math.random() * 1000000000 + 1) + "_" + new Date().getTime()
+
+    // Initialize Paystack payment
+    const handler = window.PaystackPop.setup({
+      key: process.env.NEXT_PUBLIC_PAYSTACK_PUBLIC_KEY, // Replace with your Paystack public key
+      email: email || "anonymous@example.com",
+      amount: amount * 100, // Paystack expects amount in kobo (for NGN) or cents (for USD)
+      currency: currency,
+      ref: reference,
+      onClose: () => {
+        setIsProcessing(false)
+        toast({
+          title: "Payment Cancelled",
+          description: "You have cancelled the payment process.",
+          variant: "destructive",
+        })
+      },
+      callback: (response) => {
+        // Payment successful
+        const paymentData = {
+          fullName: fullName || "Anonymous",
+          email: email || "anonymous@example.com",
+          amount: amount,
+          currency: currency,
+          paymentMethod: "paystack",
+          transactionReference: response.reference,
+          status: "success",
+          comment: comment,
+          donationType: donationType,
+          recognitionPreference: showRecognition ? recognitionPreference : "anonymous",
+        }
+
+        savePaymentToDatabase(paymentData)
+          .then(() => {
+            setIsProcessing(false)
+            setPaymentSuccess(true)
+            toast({
+              title: "Payment Successful",
+              description: "Thank you for your donation!",
+            })
+          })
+          .catch((error) => {
+            console.error("Error saving payment:", error)
+            setIsProcessing(false)
+            setPaymentError("Payment was successful but there was an error saving your details.")
+          })
+      },
+    })
+
+    handler.openIframe()
+  }
+
+  // Process payment with Flutterwave
+  const processFlutterwavePayment = () => {
+    if (!flutterwaveLoaded) {
+      setPaymentError("Payment system is still loading. Please try again in a moment.")
+      return
+    }
+
+    const amount = donationAmount === "custom" ? Number.parseFloat(customAmount) : Number.parseFloat(donationAmount)
+
+    if (!amount || amount <= 0) {
+      setPaymentError("Please enter a valid donation amount")
+      return
+    }
+
+    if (showRecognition && (!fullName || !email)) {
+      setPaymentError("Please provide your name and email for the recognition wall")
+      return
+    }
+
+    setIsProcessing(true)
+    setPaymentError("")
+
+    // Generate a unique reference
+    const reference = "EKO_FLW_" + Math.floor(Math.random() * 1000000000 + 1) + "_" + new Date().getTime()
+
+    // Initialize Flutterwave payment
+    const config = {
+      public_key: process.env.NEXT_PUBLIC_FLUTTERWAVE_PUBLIC_KEY, // Replace with your Flutterwave public key
+      tx_ref: reference,
+      amount: amount,
+      currency: currency,
+      payment_options: "card,banktransfer",
+      customer: {
+        email: email || "anonymous@example.com",
+        name: fullName || "Anonymous Donor",
+      },
+      customizations: {
+        title: "Eko Club Donation",
+        description: donationType === "recurring" ? "Monthly Donation" : "One-time Donation",
+        logo: "https://ekoclub.org/logo.png", // Replace with your logo URL
+      },
+      onclose: () => {
+        setIsProcessing(false)
+        toast({
+          title: "Payment Cancelled",
+          description: "You have cancelled the payment process.",
+          variant: "destructive",
+        })
+      },
+      callback: (response) => {
+        // Payment successful
+        const paymentData = {
+          fullName: fullName || "Anonymous",
+          email: email || "anonymous@example.com",
+          amount: amount,
+          currency: currency,
+          paymentMethod: "flutterwave",
+          transactionReference: response.transaction_id ? response.transaction_id.toString() : reference,
+          status: "success",
+          comment: comment,
+          donationType: donationType,
+          recognitionPreference: showRecognition ? recognitionPreference : "anonymous",
+        }
+
+        savePaymentToDatabase(paymentData)
+          .then(() => {
+            setIsProcessing(false)
+            setPaymentSuccess(true)
+            toast({
+              title: "Payment Successful",
+              description: "Thank you for your donation!",
+            })
+          })
+          .catch((error) => {
+            console.error("Error saving payment:", error)
+            setIsProcessing(false)
+            setPaymentError("Payment was successful but there was an error saving your details.")
+          })
+      },
+    }
+
+    // Make sure FlutterwaveCheckout is available
+    if (typeof window.FlutterwaveCheckout === "function") {
+      window.FlutterwaveCheckout(config)
+    } else {
+      setPaymentError(
+        "Flutterwave payment system is not available. Please try again later or choose another payment method.",
+      )
+      setIsProcessing(false)
+    }
+  }
+
   // Handle form submission
   const handleSubmit = (e) => {
     e.preventDefault()
-    // Process donation (would connect to payment processor in production)
-    alert("Thank you for your donation! This would connect to a payment processor in production.")
+
+    if (paymentMethod === "paystack") {
+      processPaystackPayment()
+    } else if (paymentMethod === "flutterwave") {
+      processFlutterwavePayment()
+    } else if (paymentMethod === "paypal") {
+      processPayPalPayment()
+    }
   }
 
   return (
@@ -142,7 +530,8 @@ export default function DonatePage() {
               Your generous donation helps us make a lasting impact in our communities. Together, we can create positive
               change and build a better future.
             </p>
-            <motion.div
+            <motion.div 
+              viewport={{ once: true }}
               initial={{ opacity: 0, scale: 0.9 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ delay: 0.3, duration: 0.5 }}
@@ -167,6 +556,7 @@ export default function DonatePage() {
             animate={impactVisible ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
             transition={{ duration: 0.7 }}
             className="text-center mb-12"
+            viewport={{ once: true }}
           >
             <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">Your Donation Makes a Difference</h2>
             <p className="text-lg text-gray-600 max-w-3xl mx-auto">
@@ -204,6 +594,7 @@ export default function DonatePage() {
                 initial={{ opacity: 0, y: 20 }}
                 animate={impactVisible ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
                 transition={{ duration: 0.5, delay: 0.1 * (index + 1) }}
+                viewport={{ once: true }}
               >
                 <Card className="h-full">
                   <CardContent className="pt-6 flex flex-col items-center text-center h-full">
@@ -240,147 +631,245 @@ export default function DonatePage() {
           <div className="max-w-3xl mx-auto">
             <Card>
               <CardContent className="pt-6">
-                <form onSubmit={handleSubmit}>
-                  <motion.div
-                    initial={{ opacity: 0 }}
-                    animate={donateVisible ? { opacity: 1 } : { opacity: 0 }}
-                    transition={{ duration: 0.5 }}
-                    className="space-y-6"
-                  >
-                    {/* Donation Type */}
-                    <div>
-                      <Label className="text-base font-medium mb-3 block">Donation Type</Label>
-                      <Tabs value={donationType} onValueChange={setDonationType} className="w-full">
-                        <TabsList className="grid w-full grid-cols-2">
-                          <TabsTrigger value="one-off">One-off Donation</TabsTrigger>
-                          <TabsTrigger value="recurring">Monthly Recurring</TabsTrigger>
-                        </TabsList>
-                      </Tabs>
+                {paymentSuccess ? (
+                  <div className="text-center py-8">
+                    <div className="mx-auto w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mb-4">
+                      <CheckCircle className="h-8 w-8 text-green-600" />
                     </div>
+                    <h3 className="text-2xl font-bold text-gray-900 mb-2">Thank You for Your Donation!</h3>
+                    <p className="text-gray-600 mb-6">
+                      Your generous contribution will help us make a difference in our communities.
+                    </p>
+                    <Button
+                      onClick={() => {
+                        setPaymentSuccess(false)
+                        setFullName("")
+                        setEmail("")
+                        setComment("")
+                        setShowRecognition(false)
+                      }}
+                      className="bg-[#C8A97E] hover:bg-[#8A6D3B]"
+                    >
+                      Go back
+                    </Button>
+                  </div>
+                ) : (
+                  <form onSubmit={handleSubmit}>
+                    <motion.div
+                      initial={{ opacity: 0 }}
+                      animate={donateVisible ? { opacity: 1 } : { opacity: 0 }}
+                      transition={{ duration: 0.5 }}
+                      className="space-y-6"
+                      viewport={{ once: true }}
+                    >
+                      {paymentError && (
+                        <Alert variant="destructive">
+                          <AlertCircle className="h-4 w-4" />
+                          <AlertTitle>Error</AlertTitle>
+                          <AlertDescription>{paymentError}</AlertDescription>
+                        </Alert>
+                      )}
 
-                    {/* Donation Amount */}
-                    <div>
-                      <Label className="text-base font-medium mb-3 block">Donation Amount</Label>
-                      <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mb-3">
-                        {["50", "100", "250", "500"].map((amount) => (
-                          <Button
-                            key={amount}
-                            type="button"
-                            variant={donationAmount === amount ? "default" : "outline"}
-                            className={donationAmount === amount ? "bg-[#C8A97E] hover:bg-[#8A6D3B]" : ""}
-                            onClick={() => handleAmountSelect(amount)}
-                          >
-                            ${amount}
-                          </Button>
-                        ))}
+                      {/* Donation Type */}
+                      <div>
+                        <Label className="text-base font-medium mb-3 block">Donation Type</Label>
+                        <Tabs value={donationType} onValueChange={setDonationType} className="w-full">
+                          <TabsList className="grid w-full grid-cols-2">
+                            <TabsTrigger value="one-off">One-off Donation</TabsTrigger>
+                            <TabsTrigger value="recurring">Monthly Recurring</TabsTrigger>
+                          </TabsList>
+                        </Tabs>
                       </div>
-                      <div className="flex items-center gap-2">
-                        <Label htmlFor="customAmount">Custom Amount:</Label>
-                        <div className="relative flex-1">
-                          <span className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500">$</span>
-                          <Input
-                            id="customAmount"
-                            type="number"
-                            min="1"
-                            placeholder="Enter amount"
-                            className="pl-8"
-                            value={customAmount}
-                            onChange={handleCustomAmountChange}
-                          />
-                        </div>
-                      </div>
-                    </div>
 
-                    {/* Recognition Wall Option */}
-                    <div className="flex items-start space-x-2">
-                      <Checkbox id="recognitionWall" checked={showRecognition} onCheckedChange={setShowRecognition} />
-                      <div className="grid gap-1.5 leading-none">
-                        <Label
-                          htmlFor="recognitionWall"
-                          className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-                        >
-                          Add me to the donor recognition wall
+                      {/* Currency Selection */}
+                      <div>
+                        <Label htmlFor="currency" className="text-base font-medium mb-3 block">
+                          Currency
                         </Label>
-                        <p className="text-sm text-gray-500">
-                          Your name will be displayed on our donor recognition wall to acknowledge your support.
-                        </p>
+                        <Select value={currency} onValueChange={handleCurrencyChange}>
+                          <SelectTrigger id="currency">
+                            <SelectValue placeholder="Select Currency" />
+                          </SelectTrigger>
+                          <SelectContent>
+                            <SelectItem value="USD">US Dollar (USD)</SelectItem>
+                            <SelectItem value="NGN">Nigerian Naira (NGN)</SelectItem>
+                          </SelectContent>
+                        </Select>
                       </div>
-                    </div>
 
-                    {/* Conditional Fields for Recognition Wall */}
-                    {showRecognition && (
-                      <motion.div
-                        initial={{ opacity: 0, height: 0 }}
-                        animate={{ opacity: 1, height: "auto" }}
-                        exit={{ opacity: 0, height: 0 }}
-                        transition={{ duration: 0.3 }}
-                        className="space-y-4 border-t border-b py-4 border-gray-200"
-                      >
+                      {/* Payment Method - Only show for USD */}
+                      {currency === "USD" ? (
                         <div>
-                          <Label htmlFor="recognitionPreference">Display Preference</Label>
-                          <Select value={recognitionPreference} onValueChange={setRecognitionPreference}>
-                            <SelectTrigger className="mt-1.5">
-                              <SelectValue placeholder="Select display preference" />
+                          <Label htmlFor="paymentMethod" className="text-base font-medium mb-3 block">
+                            Payment Method
+                          </Label>
+                          <Select value={paymentMethod} onValueChange={setPaymentMethod}>
+                            <SelectTrigger id="paymentMethod">
+                              <SelectValue placeholder="Select Payment Method" />
                             </SelectTrigger>
                             <SelectContent>
-                              <SelectItem value="full">Donation Amount + User Details + Comments</SelectItem>
-                              <SelectItem value="partial">User Details + Comments only</SelectItem>
+                              <SelectItem value="paypal">PayPal</SelectItem>
                             </SelectContent>
                           </Select>
                         </div>
-
-                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                          <div>
-                            <Label htmlFor="fullName">Full Name</Label>
-                            <Input
-                              id="fullName"
-                              placeholder="Enter your full name"
-                              className="mt-1.5"
-                              value={fullName}
-                              onChange={(e) => setFullName(e.target.value)}
-                              required={showRecognition}
-                            />
-                          </div>
-                          <div>
-                            <Label htmlFor="email">Email</Label>
-                            <Input
-                              id="email"
-                              type="email"
-                              placeholder="Enter your email"
-                              className="mt-1.5"
-                              value={email}
-                              onChange={(e) => setEmail(e.target.value)}
-                              required={showRecognition}
-                            />
-                          </div>
-                        </div>
-
+                      ) : (
+                        // Payment Method - Only show for NGN
                         <div>
-                          <Label htmlFor="comment">Comment (Optional)</Label>
-                          <Textarea
-                            id="comment"
-                            placeholder="Share why you're supporting our cause..."
-                            className="mt-1.5"
-                            value={comment}
-                            onChange={(e) => setComment(e.target.value)}
-                          />
+                          <Label htmlFor="paymentMethod" className="text-base font-medium mb-3 block">
+                            Payment Method
+                          </Label>
+                          <Select value={paymentMethod} onValueChange={setPaymentMethod}>
+                            <SelectTrigger id="paymentMethod">
+                              <SelectValue placeholder="Select Payment Method" />
+                            </SelectTrigger>
+                            <SelectContent>
+                              <SelectItem value="paystack">Paystack</SelectItem>
+                              <SelectItem disabled value="flutterwave">
+                                Flutterwave (Coming Soon)
+                              </SelectItem>
+                            </SelectContent>
+                          </Select>
                         </div>
+                      )}
+
+                      {/* Donation Amount */}
+                      <div>
+                        <Label className="text-base font-medium mb-3 block">Donation Amount</Label>
+                        <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mb-3">
+                          {["50", "100", "250", "500"].map((amount) => (
+                            <Button
+                              key={amount}
+                              type="button"
+                              variant={donationAmount === amount ? "default" : "outline"}
+                              className={donationAmount === amount ? "bg-[#C8A97E] hover:bg-[#8A6D3B]" : ""}
+                              onClick={() => handleAmountSelect(amount)}
+                            >
+                              {currency === "USD" ? "$" : "₦"}
+                              {amount}
+                            </Button>
+                          ))}
+                        </div>
+                        <div className="flex items-center gap-2">
+                          <Label htmlFor="customAmount">Custom Amount:</Label>
+                          <div className="relative flex-1">
+                            <span className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500">
+                              {currency === "USD" ? "$" : "₦"}
+                            </span>
+                            <Input
+                              id="customAmount"
+                              type="number"
+                              min="1"
+                              placeholder="Enter amount"
+                              className="pl-8"
+                              value={customAmount}
+                              onChange={handleCustomAmountChange}
+                            />
+                          </div>
+                        </div>
+                      </div>
+
+                      {/* Recognition Wall Option */}
+                      <div className="flex items-start space-x-2">
+                        <Checkbox id="recognitionWall" checked={showRecognition} onCheckedChange={setShowRecognition} />
+                        <div className="grid gap-1.5 leading-none">
+                          <Label
+                            htmlFor="recognitionWall"
+                            className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                          >
+                            Add me to the donor recognition wall
+                          </Label>
+                          <p className="text-sm text-gray-500">
+                            Your name will be displayed on our donor recognition wall to acknowledge your support.
+                          </p>
+                        </div>
+                      </div>
+
+                      {/* Conditional Fields for Recognition Wall */}
+                      {showRecognition && (
+                        <motion.div
+                          initial={{ opacity: 0, height: 0 }}
+                          animate={{ opacity: 1, height: "auto" }}
+                          exit={{ opacity: 0, height: 0 }}
+                          transition={{ duration: 0.3 }}
+                          className="space-y-4 border-t border-b py-4 border-gray-200"
+                          viewport={{ once: true }}
+                        >
+                          <div>
+                            <Label htmlFor="recognitionPreference">Display Preference</Label>
+                            <Select value={recognitionPreference} onValueChange={setRecognitionPreference}>
+                              <SelectTrigger className="mt-1.5">
+                                <SelectValue placeholder="Select display preference" />
+                              </SelectTrigger>
+                              <SelectContent>
+                                <SelectItem value="full">Donation Amount + User Details + Comments</SelectItem>
+                                <SelectItem value="partial">User Details + Comments only</SelectItem>
+                              </SelectContent>
+                            </Select>
+                          </div>
+
+                          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div>
+                              <Label htmlFor="fullName">Full Name</Label>
+                              <Input
+                                id="fullName"
+                                placeholder="Enter your full name"
+                                className="mt-1.5"
+                                value={fullName}
+                                onChange={(e) => setFullName(e.target.value)}
+                                required={showRecognition}
+                              />
+                            </div>
+                            <div>
+                              <Label htmlFor="email">Email</Label>
+                              <Input
+                                id="email"
+                                type="email"
+                                placeholder="Enter your email"
+                                className="mt-1.5"
+                                value={email}
+                                onChange={(e) => setEmail(e.target.value)}
+                                required={showRecognition}
+                              />
+                            </div>
+                          </div>
+
+                          <div>
+                            <Label htmlFor="comment">Comment (Optional)</Label>
+                            <Textarea
+                              id="comment"
+                              placeholder="Share why you're supporting our cause..."
+                              className="mt-1.5"
+                              value={comment}
+                              onChange={(e) => setComment(e.target.value)}
+                            />
+                          </div>
+                        </motion.div>
+                      )}
+
+                      {/* Submit Button */}
+                      <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }} viewport={{ once: true }}>
+                        <Button
+                          type="submit"
+                          className="w-full bg-[#C8A97E] hover:bg-[#8A6D3B] text-lg py-6"
+                          disabled={isProcessing}
+                        >
+                          {isProcessing
+                            ? "Processing..."
+                            : `Donate ${currency === "USD" ? "$" : "₦"}${donationAmount === "custom" ? customAmount || "0" : donationAmount}
+                          ${donationType === "recurring" ? " Monthly" : ""}`}
+                        </Button>
                       </motion.div>
-                    )}
 
-                    {/* Submit Button */}
-                    <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
-                      <Button type="submit" className="w-full bg-[#C8A97E] hover:bg-[#8A6D3B] text-lg py-6">
-                        Donate ${donationAmount === "custom" ? customAmount || "0" : donationAmount}
-                        {donationType === "recurring" && " Monthly"}
-                      </Button>
+                      {currency === "USD" && paymentMethod === "paypal" && (
+                        <div id="paypal-button-container" className="mt-4"></div>
+                      )}
+
+                      <p className="text-center text-sm text-gray-500">
+                        Secure payment processing. Your information is protected.
+                      </p>
                     </motion.div>
-
-                    <p className="text-center text-sm text-gray-500">
-                      Secure payment processing. Your information is protected.
-                    </p>
-                  </motion.div>
-                </form>
+                  </form>
+                )}
               </CardContent>
             </Card>
           </div>
@@ -402,65 +891,43 @@ export default function DonatePage() {
             </p>
           </motion.div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {[
-              {
-                name: "John & Sarah Williams",
-                amount: "$1,000",
-                comment: "In honor of our parents who taught us the importance of giving back to the community.",
-                date: "November 2023",
-              },
-              {
-                name: "Lagos Business Association",
-                amount: "$5,000",
-                comment: "Proud to support the educational initiatives that empower the next generation.",
-                date: "October 2023",
-              },
-              {
-                name: "The Thompson Family",
-                amount: "$750",
-                comment: "We believe in the work you're doing for healthcare access.",
-                date: "September 2023",
-              },
-              {
-                name: "Anonymous Donor",
-                amount: "$2,500",
-                comment: "Keep up the excellent work in the community!",
-                date: "August 2023",
-              },
-              {
-                name: "Global Nigerian Professionals",
-                amount: "$3,000",
-                comment: "Supporting our homeland from abroad with pride.",
-                date: "July 2023",
-              },
-              {
-                name: "Michael & Elizabeth Adeyemi",
-                amount: "$1,200",
-                comment: "For the youth empowerment programs that are changing lives.",
-                date: "June 2023",
-              },
-            ].map((donor, index) => (
-              <motion.div
-                key={index}
-                initial={{ opacity: 0, y: 20 }}
-                animate={recognitionVisible ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
-                transition={{ duration: 0.5, delay: 0.1 * (index % 3) }}
-              >
-                <Card className="h-full">
-                  <CardContent className="pt-6">
-                    <div className="flex items-center mb-4">
-                      <Award className="h-5 w-5 text-[#C8A97E] mr-2" />
-                      <p className="text-[#8A6D3B] font-medium">{donor.amount}</p>
-                    </div>
-                    <h3 className="text-lg font-semibold mb-2">{donor.name}</h3>
-                    <p className="text-gray-600 text-sm italic mb-4">"{donor.comment}"</p>
-                    <p className="text-xs text-gray-500">{donor.date}</p>
-                  </CardContent>
-                </Card>
-              </motion.div>
-            ))}
-          </div>
+          {paymentsLoading ? (
+            <div className="flex justify-center items-center py-8">
+              <Loader2 className="h-8 w-8 animate-spin text-[#C8A97E]" />
+            </div>
+          ) : (
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+              {payments.map((payment, index) => (
+                <motion.div
+                  key={index}
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={recognitionVisible ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+                  transition={{ duration: 0.5, delay: 0.1 * (index % 3) }}
+                >
+                  <Card className="h-full">
+                    <CardContent className="pt-6">
+                      <div className="flex items-center mb-4">
+                        <Award className="h-5 w-5 text-[#C8A97E] mr-2" />
+                        <p className="text-[#8A6D3B] font-medium">
+                          {payment.currency}
+                          {payment.amount}
+                        </p>
+                      </div>
+                      <h3 className="text-lg font-semibold mb-2">{payment.fullName}</h3>
+                      <p className="text-gray-600 text-sm italic mb-4">"{payment.comment}"</p>
+                      <p className="text-xs text-gray-500">
+                        {new Date(payment.createdAt).toLocaleDateString("en-US", {
+                          year: "numeric",
+                          month: "long",
+                          day: "numeric",
+                        })}
+                      </p>
+                    </CardContent>
+                  </Card>
+                </motion.div>
+              ))}
+            </div>
+          )}
         </div>
       </section>
 
@@ -507,6 +974,11 @@ export default function DonatePage() {
                   answer:
                     "Yes, we use industry-standard encryption and secure payment processors to ensure your financial information is protected. We never store your complete credit card information on our servers.",
                 },
+                {
+                  question: "Can I donate in different currencies?",
+                  answer:
+                    "Yes, we accept donations in both Nigerian Naira (NGN) and US Dollars (USD). You can select your preferred currency when making a donation.",
+                },
               ].map((faq, index) => (
                 <motion.div
                   key={index}
@@ -514,8 +986,10 @@ export default function DonatePage() {
                   animate={faqVisible ? { opacity: 1, y: 0 } : { opacity: 0, y: 10 }}
                   transition={{ duration: 0.5, delay: 0.1 * index }}
                 >
-                  <AccordionItem value={`item-${index}`}>
-                    <AccordionTrigger className="text-left">{faq.question}</AccordionTrigger>
+                  <AccordionItem value={`item-${index}`} className="border-b border-gray-200 py-2">
+                    <AccordionTrigger className="text-left font-medium hover:text-[#C8A97E] transition-colors">
+                      {faq.question}
+                    </AccordionTrigger>
                     <AccordionContent>{faq.answer}</AccordionContent>
                   </AccordionItem>
                 </motion.div>
@@ -530,7 +1004,7 @@ export default function DonatePage() {
         <div className="container mx-auto px-4">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
+            animate={faqVisible ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
             transition={{ duration: 0.7, delay: 0.2 }}
             className="text-center mb-12"
           >
@@ -562,7 +1036,7 @@ export default function DonatePage() {
               <motion.div
                 key={index}
                 initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
+                animate={faqVisible ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
                 transition={{ duration: 0.5, delay: 0.3 + 0.1 * index }}
                 className="text-center"
               >
