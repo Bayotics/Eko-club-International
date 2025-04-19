@@ -57,7 +57,7 @@ export default function Contact() {
 
         <div className="grid md:grid-cols-2 gap-12">
           <motion.div
-            initial={{ opacity: 0, x: -50 }}
+            initial={{ opacity: 0, x: 50 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.8 }}
@@ -111,11 +111,11 @@ export default function Contact() {
             </div>
           </motion.div>
 
-          <motion.div
-            initial={{ opacity: 0, x: 50 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.8 }}
+          <div
+            // initial={{ opacity: 0, x: 50 }}
+            // whileInView={{ opacity: 1, x: 0 }}
+            // viewport={{ once: true }}
+            // transition={{ duration: 0.8 }}
           >
             <form onSubmit={handleSubmit} className="space-y-6">
               <div>
@@ -168,7 +168,7 @@ export default function Contact() {
                 Send Message
               </Button>
             </form>
-          </motion.div>
+          </div>
         </div>
       </div>
     </section>
