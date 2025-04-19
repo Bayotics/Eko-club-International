@@ -2,14 +2,17 @@ import { type NextRequest, NextResponse } from "next/server"
 import { connectToDatabase } from "@/lib/mongodb"
 import InviteCode from "@/models/InviteCode"
 import { verifyJwtToken } from "@/lib/jwt"
+import crypto from "crypto"
+// Note: You need to install this package:
+// npm install node-fetch@2
 import fetch from "node-fetch"
 
 // MailerLite configuration
 const MAILERLITE_API_URL = "https://api.mailerlite.com/api/v2"
+// We'll request the API token when needed
 const MAILERLITE_API_TOKEN = process.env.MAILERLITE_API_TOKEN || ""
-const DEFAULT_GROUP_NAME = "Eko Club Invitations"
 
-export async function POST(request: NextRequest, { params }: { params: { id: string } }) {
+export async function POST(request: NextRequest) {
   try {
     // Verify admin access
     const token = request.cookies.get("token")?.value
@@ -19,93 +22,69 @@ export async function POST(request: NextRequest, { params }: { params: { id: str
 
     const payload = await verifyJwtToken(token)
     const userRole = payload.role || (payload.user && payload.user.role)
+    const userId = payload._id || (payload.user && payload.user._id)
 
     if (userRole !== "admin") {
       return NextResponse.json({ message: "Forbidden" }, { status: 403 })
     }
 
-    const { id } = params
+    const { email } = await request.json()
+
+    if (!email) {
+      return NextResponse.json({ message: "Email is required" }, { status: 400 })
+    }
 
     await connectToDatabase()
 
-    // Find the invite
-    const invite = await InviteCode.findById(id)
+    // Check if an invite already exists for this email
+    const existingInvite = await InviteCode.findOne({ email })
 
-    if (!invite) {
-      return NextResponse.json({ message: "Invite not found" }, { status: 404 })
+    if (existingInvite) {
+      if (existingInvite.isUsed) {
+        return NextResponse.json({ message: "This email is already registered" }, { status: 400 })
+      }
+
+      // Update the existing invite with a new expiration date
+      existingInvite.expiresAt = new Date(Date.now() + 7 * 24 * 60 * 60 * 1000) // 7 days from now
+      await existingInvite.save()
+
+      // Send the email with the existing code
+      await sendInviteEmail(email, existingInvite.code)
+
+      return NextResponse.json({
+        message: "Invitation resent successfully",
+      })
     }
 
-    if (invite.isUsed) {
-      return NextResponse.json({ message: "This invite has already been used" }, { status: 400 })
-    }
+    // Generate a unique invite code
+    const code = generateInviteCode()
 
-    // Update the expiration date
-    invite.expiresAt = new Date(Date.now() + 7 * 24 * 60 * 60 * 1000) // 7 days from now
-    await invite.save()
+    // Create a new invite
+    const newInvite = new InviteCode({
+      email,
+      code,
+      createdBy: userId,
+      expiresAt: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000), // 7 days from now
+    })
 
-    // Resend the email
-    await sendInviteEmail(invite.email, invite.code)
+    await newInvite.save()
+
+    // Send the email
+    await sendInviteEmail(email, code)
 
     return NextResponse.json({
-      message: "Invitation resent successfully",
+      message: "Invitation sent successfully",
     })
   } catch (error) {
-    console.error("Error resending invite:", error)
-    return NextResponse.json({ message: "Failed to resend invitation" }, { status: 500 })
+    console.error("Error sending invite:", error)
+    return NextResponse.json({ message: "Failed to send invitation" }, { status: 500 })
   }
 }
 
-// Helper function to get or create a group for invitations
-async function getOrCreateInvitationGroup() {
-  if (!MAILERLITE_API_TOKEN) {
-    throw new Error("MailerLite API token is not configured")
-  }
-
-  try {
-    // First, check if the group already exists
-    const groupsResponse = await fetch(`${MAILERLITE_API_URL}/groups`, {
-      method: "GET",
-      headers: {
-        "X-MailerLite-ApiKey": MAILERLITE_API_TOKEN,
-        "Content-Type": "application/json",
-      },
-    })
-
-    if (!groupsResponse.ok) {
-      throw new Error(`Failed to fetch groups: ${await groupsResponse.text()}`)
-    }
-
-    const groups = await groupsResponse.json()
-
-    // Look for our default group
-    const invitationGroup = groups.find((group: any) => group.name === DEFAULT_GROUP_NAME)
-
-    if (invitationGroup) {
-      return invitationGroup.id
-    }
-
-    // If the group doesn't exist, create it
-    const createGroupResponse = await fetch(`${MAILERLITE_API_URL}/groups`, {
-      method: "POST",
-      headers: {
-        "X-MailerLite-ApiKey": MAILERLITE_API_TOKEN,
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        name: DEFAULT_GROUP_NAME,
-      }),
-    })
-
-    if (!createGroupResponse.ok) {
-      throw new Error(`Failed to create group: ${await createGroupResponse.text()}`)
-    }
-
-    const newGroup = await createGroupResponse.json()
-    return newGroup.id
-  } catch (error) {
-    console.error("Error getting or creating invitation group:", error)
-    throw error
-  }
+// Helper function to generate a unique invite code
+function generateInviteCode() {
+  // Generate a random 8-character code
+  return crypto.randomBytes(4).toString("hex").toUpperCase()
 }
 
 // Helper function to send the invite email using MailerLite
@@ -115,9 +94,6 @@ async function sendInviteEmail(email: string, code: string) {
   }
 
   try {
-    // Get or create the invitation group
-    const groupId = await getOrCreateInvitationGroup()
-
     // First, check if the subscriber exists
     const checkResponse = await fetch(`${MAILERLITE_API_URL}/subscribers/${email}`, {
       method: "GET",
@@ -127,8 +103,12 @@ async function sendInviteEmail(email: string, code: string) {
       },
     })
 
+    let subscriber
+
     if (checkResponse.status === 200) {
       // Subscriber exists, update their fields
+      subscriber = await checkResponse.json()
+
       await fetch(`${MAILERLITE_API_URL}/subscribers/${email}`, {
         method: "PUT",
         headers: {
@@ -160,22 +140,8 @@ async function sendInviteEmail(email: string, code: string) {
       if (!createResponse.ok) {
         throw new Error(`Failed to create subscriber: ${await createResponse.text()}`)
       }
-    }
 
-    // Add the subscriber to the invitation group
-    const addToGroupResponse = await fetch(`${MAILERLITE_API_URL}/groups/${groupId}/subscribers`, {
-      method: "POST",
-      headers: {
-        "X-MailerLite-ApiKey": MAILERLITE_API_TOKEN,
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        email: email,
-      }),
-    })
-
-    if (!addToGroupResponse.ok) {
-      throw new Error(`Failed to add subscriber to group: ${await addToGroupResponse.text()}`)
+      subscriber = await createResponse.json()
     }
 
     // Send the email using a custom campaign
@@ -189,7 +155,7 @@ async function sendInviteEmail(email: string, code: string) {
         subject: "You're invited to join Eko Club International",
         from: process.env.EMAIL_FROM || "noreply@ekoclub.org",
         from_name: "Eko Club",
-        groups: [groupId], // Use the group ID here
+        groups: [],
         type: "regular",
         html: `
           <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; border: 1px solid #e0e0e0; border-radius: 5px;">
@@ -210,6 +176,7 @@ async function sendInviteEmail(email: string, code: string) {
             </p>
           </div>
         `,
+        emails: [email],
       }),
     })
 

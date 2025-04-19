@@ -1,39 +1,42 @@
 import mongoose from "mongoose"
 
-const InviteCodeSchema = new mongoose.Schema({
-  email: {
-    type: String,
-    required: [true, "Email is required"],
-    unique: true,
-    lowercase: true,
-    trim: true,
+const InviteCodeSchema = new mongoose.Schema(
+  {
+    email: {
+      type: String,
+      required: true,
+      unique: true,
+      trim: true,
+      lowercase: true,
+    },
+    code: {
+      type: String,
+      required: true,
+      unique: true,
+    },
+    isUsed: {
+      type: Boolean,
+      default: false,
+    },
+    createdBy: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
+    },
+    usedBy: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
+    },
+    expiresAt: {
+      type: Date,
+      required: true,
+    },
   },
-  code: {
-    type: String,
-    required: [true, "Invite code is required"],
-    unique: true,
+  {
+    timestamps: true,
   },
-  expiresAt: {
-    type: Date,
-    required: [true, "Expiration date is required"],
-    default: () => new Date(Date.now() + 7 * 24 * 60 * 60 * 1000), // 7 days from now
-  },
-  isUsed: {
-    type: Boolean,
-    default: false,
-  },
-  createdBy: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: "User",
-    required: [true, "Creator is required"],
-  },
-  createdAt: {
-    type: Date,
-    default: Date.now,
-  },
-})
+)
 
-// Check if the model exists before creating it
+// Check if the model already exists to prevent OverwriteModelError
 const InviteCode = mongoose.models.InviteCode || mongoose.model("InviteCode", InviteCodeSchema)
 
 export default InviteCode
