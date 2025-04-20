@@ -56,7 +56,7 @@ export default function Chapters() {
           <div className="relative w-full h-[400px] md:h-[500px] bg-gray-200 dark:bg-gray-800 rounded-lg overflow-hidden">
             <div className="absolute inset-0 bg-blue-900/10 dark:bg-blue-900/30 z-10 rounded-lg" />
             <Image
-              src="/images/Map.PNG"
+              src="/images/map.png"
               alt="World Map"
               fill
               className="w-full h-full object-contain"
