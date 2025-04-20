@@ -65,17 +65,17 @@ export default function OurStoryPage() {
 
   const timelineEvents = [
     {
-      year: "1976",
+      year: "1999",
       title: "Foundation",
       description: "Eko Club International was founded by a group of visionary individuals from Lagos.",
     },
     {
-      year: "1985",
+      year: "2002",
       title: "First International Chapter",
       description: "The first international chapter was established, expanding our reach globally.",
     },
     {
-      year: "1997",
+      year: "2003",
       title: "Major Community Project",
       description: "Launched our first major community development project in Lagos.",
     },
@@ -85,12 +85,12 @@ export default function OurStoryPage() {
       description: "Started our scholarship program to support underprivileged students.",
     },
     {
-      year: "2015",
+      year: "2012",
       title: "Healthcare Mission",
       description: "Initiated our annual medical mission providing free healthcare services.",
     },
     {
-      year: "2023",
+      year: "2018",
       title: "Digital Transformation",
       description: "Embraced digital platforms to connect members worldwide and enhance our impact.",
     },
@@ -178,7 +178,7 @@ export default function OurStoryPage() {
                   </div>
                   <div>
                     <h3 className="font-semibold text-gray-800 mb-1">Established</h3>
-                    <p className="text-gray-600">1976</p>
+                    <p className="text-gray-600">1999</p>
                   </div>
                 </div>
                 <div className="flex items-start gap-3">
@@ -309,11 +309,11 @@ export default function OurStoryPage() {
           >
             <motion.div variants={scaleIn} className="bg-gray-800 rounded-lg overflow-hidden">
               <div className="relative h-80">
-                <Image src="/images/hero-slide-4.png" alt="Founder" fill className="object-cover" />
+                <Image src="/images/Presidents/Late-dawodu1.jpg" alt="Founder" fill className="object-cover" />
               </div>
               <div className="p-6">
-                <h3 className="text-xl font-bold mb-2">Chief Adebayo Adeleke</h3>
-                <p className="text-[#C8A97E] mb-4">Founding President (1976-1982)</p>
+                <h3 className="text-xl font-bold mb-2">Chief Olusesi Dawodu</h3>
+                <p className="text-[#C8A97E] mb-4">Founding President (2001-2003)</p>
                 <p className="text-gray-300">
                   Led the initial formation of Eko Club and established its core values and mission that continue to
                   guide us today.
@@ -323,11 +323,11 @@ export default function OurStoryPage() {
 
             <motion.div variants={scaleIn} className="bg-gray-800 rounded-lg overflow-hidden">
               <div className="relative h-80">
-                <Image src="/images/hero-slide-1.png" alt="Founder" fill className="object-cover" />
+                <Image src="/images/Presidents/larry-ojo.jpg" alt="Founder" fill className="object-cover" />
               </div>
               <div className="p-6">
                 <h3 className="text-xl font-bold mb-2">Chief Oluwole Johnson</h3>
-                <p className="text-[#C8A97E] mb-4">Founding Secretary (1976-1984)</p>
+                <p className="text-[#C8A97E] mb-4">Founding Secretary (2001-2005)</p>
                 <p className="text-gray-300">
                   Instrumental in developing the club's constitution and establishing its organizational structure.
                 </p>
@@ -336,11 +336,11 @@ export default function OurStoryPage() {
 
             <motion.div variants={scaleIn} className="bg-gray-800 rounded-lg overflow-hidden">
               <div className="relative h-80">
-                <Image src="/images/hero-slide-2.png" alt="Founder" fill className="object-cover" />
+                <Image src="/images/Presidents/zainu2.jpg" alt="Founder" fill className="object-cover" />
               </div>
               <div className="p-6">
                 <h3 className="text-xl font-bold mb-2">Chief Adebisi Ogunleye</h3>
-                <p className="text-[#C8A97E] mb-4">Founding Treasurer (1976-1980)</p>
+                <p className="text-[#C8A97E] mb-4">Founding Treasurer (2001-2005)</p>
                 <p className="text-gray-300">
                   Established the financial framework that has enabled the club to grow and sustain its operations over
                   the decades.

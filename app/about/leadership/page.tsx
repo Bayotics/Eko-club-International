@@ -11,12 +11,12 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } f
 
 // Sample data for current president
 const currentPresident = {
-  name: "Chief Olumide Johnson",
+  name: "Honorable Saheed Olushi",
   title: "Current President",
-  image: "/images/hero-slide-4.png",
-  joinedYear: "1998",
-  presidentYear: "2022",
-  term: "2022 - Present",
+  image: "/images/president.jpg",
+  joinedYear: "2005",
+  presidentYear: "2021",
+  term: "2021 - Present",
   email: "president@ekoclubinternational.org",
   phone: "+1 (234) 567-8901",
   contributions: [
@@ -27,16 +27,15 @@ const currentPresident = {
     "Strengthened partnerships with government agencies and international organizations",
   ],
   biography:
-    "Chief Olumide Johnson is a distinguished leader with over 25 years of experience in community service and organizational leadership. He holds a Master's degree in Public Administration and has dedicated his career to promoting cultural heritage and community development. Under his leadership, Eko Club International has experienced unprecedented growth and impact, expanding its reach globally while strengthening its core mission of preserving Lagos cultural heritage and supporting community development initiatives.",
+    "Honorable Saheed Olushi is a distinguished leader with over 25 years of experience in community service and organizational leadership. He holds a Master's degree in Public Administration and has dedicated his career to promoting cultural heritage and community development. Under his leadership, Eko Club International has experienced unprecedented growth and impact, expanding its reach globally while strengthening its core mission of preserving Lagos cultural heritage and supporting community development initiatives.",
 }
 
-// Sample data for current executives
 const currentExcos = [
   {
-    name: "Dr. Adebayo Ogunlesi",
+    name: "Hon. Olajide Danmola",
     title: "Vice President",
-    image: "/images/hero-slide-1.png",
-    bio: "Dr. Adebayo Ogunlesi is a respected physician and community leader with over 20 years of experience in healthcare administration. He leads the club's medical mission initiatives.",
+    image: "/images/Excos/vice-president.PNG",
+    bio: "Hon. Olajide Danmola is a respected politician and community leader with over 20 years of experience in healthcare administration. He leads the club's medical mission initiatives.",
     social: {
       facebook: "https://facebook.com/adebayo",
       twitter: "https://twitter.com/adebayo",
@@ -45,10 +44,10 @@ const currentExcos = [
     },
   },
   {
-    name: "Mrs. Folake Adeleke",
+    name: "Hon. Ogbara-Alagba",
     title: "General Secretary",
-    image: "/images/hero-slide-2.png",
-    bio: "Mrs. Folake Adeleke is a corporate lawyer with expertise in governance and compliance. She manages the club's administrative affairs and ensures operational excellence.",
+    image: "/images/Excos/gen-sec.PNG",
+    bio: "Hon. Lola Ogbara-Alogba is a corporate lawyer with expertise in governance and compliance. He manages the club's administrative affairs and ensures operational excellence.",
     social: {
       facebook: "https://facebook.com/folake",
       twitter: "https://twitter.com/folake",
@@ -57,10 +56,10 @@ const currentExcos = [
     },
   },
   {
-    name: "Mr. Tunde Bakare",
-    title: "Financial Secretary",
-    image: "/images/hero-slide-3.png",
-    bio: "Mr. Tunde Bakare is a certified accountant with over 15 years of experience in financial management. He oversees the club's financial operations and reporting.",
+    name: "Hon. Omotayo Ogunyemi",
+    title: "Assistant Gen. Secretary",
+    image: "/images/Excos/Asst-Gen-sec.PNG",
+    bio: "Hon. Omotayo Ogunyemi is a certified accountant with over 15 years of experience in financial management. He oversees the club's financial operations and reporting.",
     social: {
       facebook: "https://facebook.com/tunde",
       twitter: "https://twitter.com/tunde",
@@ -69,10 +68,10 @@ const currentExcos = [
     },
   },
   {
-    name: "Dr. Funmilayo Ojo",
-    title: "Welfare Officer",
-    image: "/images/hero-slide-4.png",
-    bio: "Dr. Funmilayo Ojo is a social worker with a passion for community development. She coordinates the club's welfare programs and community outreach initiatives.",
+    name: "Hon. Olabisi Rokosu-Lawal",
+    title: "Social Secretary",
+    image: "/images/Excos/soc-secretary.PNG",
+    bio: "Hon. Olabisi is a social worker with a passion for community development. She coordinates the club's welfare programs and community outreach initiatives.",
     social: {
       facebook: "https://facebook.com/funmilayo",
       twitter: "https://twitter.com/funmilayo",
@@ -81,10 +80,10 @@ const currentExcos = [
     },
   },
   {
-    name: "Chief Kunle Adeyemi",
-    title: "Cultural Secretary",
-    image: "/images/hero-slide-1.png",
-    bio: "Chief Kunle Adeyemi is a cultural enthusiast and historian. He leads the club's cultural preservation initiatives and organizes cultural events and exhibitions.",
+    name: "Hon. Bukky Adebiyi",
+    title: "Chief Whip",
+    image: "/images/Excos/chief-whip.PNG",
+    bio: "Hon. Bukky Adebiyi is a cultural enthusiast and historian. She leads the club's cultural preservation initiatives and organizes cultural events and exhibitions.",
     social: {
       facebook: "https://facebook.com/kunle",
       twitter: "https://twitter.com/kunle",
@@ -93,10 +92,10 @@ const currentExcos = [
     },
   },
   {
-    name: "Mrs. Bisi Ogunwale",
+    name: "Hon. Saheed Abdullateef",
     title: "Public Relations Officer",
-    image: "/images/hero-slide-2.png",
-    bio: "Mrs. Bisi Ogunwale is a communications expert with experience in public relations and media management. She manages the club's public image and external communications.",
+    image: "/images/Excos/pro.PNG",
+    bio: "Hon. Saheed is a communications expert with experience in public relations and media management. He manages the club's public image and external communications.",
     social: {
       facebook: "https://facebook.com/bisi",
       twitter: "https://twitter.com/bisi",
@@ -104,63 +103,100 @@ const currentExcos = [
       linkedin: "https://linkedin.com/in/bisi",
     },
   },
+  {
+    name: "Ibiyinka Thanni",
+    title: "Financial Secretary",
+    image: "/images/Excos/fin-sec.PNG",
+    bio: "Hon. Ibiyinka is responsible for maintaining accurate financial records and supporting the treasurer in all monetary matters. His commitment to detail and transparency strengthens the club's financial operations.",
+    social: {
+      facebook: "https://facebook.com/bisi",
+      twitter: "https://twitter.com/bisi",
+      instagram: "https://instagram.com/bisi",
+      linkedin: "https://linkedin.com/in/bisi",
+    },
+  },
+  {
+    name: "Hon. Olatunji Anthonio",
+    title: "Auditor General",
+    image: "/images/Excos/treasurer.PNG",
+    bio: "Hon. Olatunji oversees the financial assets of Eko Club International, ensuring transparent and accountable management of the club’s funds. ",
+    social: {
+      facebook: "https://facebook.com/bisi",
+      twitter: "https://twitter.com/bisi",
+      instagram: "https://instagram.com/bisi",
+      linkedin: "https://linkedin.com/in/bisi",
+    },
+  },
+  // {
+  //   name: "Hon. Saheed Abdullateef",
+  //   title: "Public Relations Officer",
+  //   image: "/images/Excos/pro.PNG",
+  //   bio: "Hon. Saheed is a communications expert with experience in public relations and media management. He manages the club's public image and external communications.",
+  //   social: {
+  //     facebook: "https://facebook.com/bisi",
+  //     twitter: "https://twitter.com/bisi",
+  //     instagram: "https://instagram.com/bisi",
+  //     linkedin: "https://linkedin.com/in/bisi",
+  //   },
+  // },
+  
 ]
 
 // Sample data for past presidents
 const pastPresidents = [
   {
-    name: "Chief Hakeem Babatunde",
-    term: "2018-2022",
-    image: "/images/hero-slide-3.png",
+    name: "President Larry Ojo",
+    term: "2017-2021",
+    image: "/images/Presidents/larry-ojo.jpg",
     shortBio:
       "Led the club through a period of significant growth and expansion, establishing new chapters in Europe and North America...",
     fullBio:
-      "Chief Hakeem Babatunde led the club through a period of significant growth and expansion, establishing new chapters in Europe and North America. During his tenure, the club's membership grew by 40%, and he initiated several landmark projects, including the Lagos Heritage Preservation Initiative and the Annual Medical Mission. Chief Babatunde also strengthened the club's financial position through strategic partnerships and fundraising initiatives. His leadership was characterized by innovation, inclusivity, and a strong commitment to the club's core values. Prior to his presidency, he served as the club's Vice President and Welfare Officer, demonstrating his dedication to the organization's mission and vision. Chief Babatunde is a respected business leader with interests in real estate and hospitality.",
+      "President Lanre led the club through a period of significant growth and expansion, establishing new chapters in Europe and North America. During his tenure, the club's membership grew by 40%, and he initiated several landmark projects, including the Lagos Heritage Preservation Initiative and the Annual Medical Mission. President Ojo also strengthened the club's financial position through strategic partnerships and fundraising initiatives. His leadership was characterized by innovation, inclusivity, and a strong commitment to the club's core values. Prior to his presidency, he served as the club's Vice President and Welfare Officer, demonstrating his dedication to the organization's mission and vision. Chief Babatunde is a respected business leader with interests in real estate and hospitality.",
   },
   {
-    name: "Chief Kunle Ojora",
-    term: "2014-2018",
-    image: "/images/hero-slide-4.png",
+    name: "President Bissy Gaji",
+    term: "2013-2017",
+    image: "/images/Presidents/bissy.jpg",
     shortBio:
       "Focused on strengthening the club's governance structures and establishing a robust financial management system...",
     fullBio:
-      "Chief Kunle Ojora focused on strengthening the club's governance structures and establishing a robust financial management system during his presidency. He implemented a comprehensive strategic plan that guided the club's activities and ensured alignment with its mission and vision. Under his leadership, the club launched the Eko Club International Scholarship Program, which has supported hundreds of students in their educational pursuits. Chief Ojora also initiated the club's digital transformation journey, introducing modern technologies to enhance communication and collaboration among members. His presidency was marked by transparency, accountability, and a strong emphasis on member engagement. Before becoming president, Chief Ojora served as the club's Financial Secretary and General Secretary, bringing valuable administrative experience to his leadership role. He is a chartered accountant and financial consultant with over 30 years of experience in the banking sector.",
+      "Chief Bissy Gaji focused on strengthening the club's governance structures and establishing a robust financial management system during his presidency. He implemented a comprehensive strategic plan that guided the club's activities and ensured alignment with its mission and vision. Under his leadership, the club launched the Eko Club International Scholarship Program, which has supported hundreds of students in their educational pursuits. Chief Gaji also initiated the club's digital transformation journey, introducing modern technologies to enhance communication and collaboration among members. His presidency was marked by transparency, accountability, and a strong emphasis on member engagement. Before becoming president, Chief Gaji served as the club's Financial Secretary and General Secretary, bringing valuable administrative experience to his leadership role. He is a chartered accountant and financial consultant with over 30 years of experience in the banking sector.",
   },
   {
-    name: "Dr. Abiodun Aina",
-    term: "2010-2014",
-    image: "/images/hero-slide-1.png",
+    name: "President Zainudeen Popoola",
+    term: "2009-2013",
+    image: "/images/Presidents/zainu2.jpg",
     shortBio:
       "Championed the club's community development initiatives, with a particular focus on healthcare and education...",
     fullBio:
-      "Dr. Abiodun Aina championed the club's community development initiatives, with a particular focus on healthcare and education during his tenure as president. He established the Eko Club International Community Health Program, which provides free medical services to underserved communities in Lagos. Dr. Aina also expanded the club's educational support initiatives, including the establishment of a vocational training center for youth empowerment. His presidency was characterized by a strong commitment to social responsibility and community service. Under his leadership, the club formed strategic partnerships with international organizations to enhance the impact of its development projects. Before his presidency, Dr. Aina served as the club's Welfare Officer and Public Relations Officer, demonstrating his passion for community service and effective communication. He is a medical doctor with specialization in public health and has worked with several international health organizations.",
+      "President Zainudeen championed the club's community development initiatives, with a particular focus on healthcare and education during his tenure as president. He established the Eko Club International Community Health Program, which provides free medical services to underserved communities in Lagos. Mr. Zainudeen also expanded the club's educational support initiatives, including the establishment of a vocational training center for youth empowerment. His presidency was characterized by a strong commitment to social responsibility and community service. Under his leadership, the club formed strategic partnerships with international organizations to enhance the impact of its development projects. Before his presidency, Mr. Zainudeen served as the club's Welfare Officer and Public Relations Officer, demonstrating his passion for community service and effective communication. He is a medical doctor with specialization in public health and has worked with several international health organizations.",
   },
   {
-    name: "Chief Tunde Adeola",
-    term: "2006-2010",
-    image: "/images/hero-slide-2.png",
+    name: "President T.J. Abass",
+    term: "2005-2009",
+    image: "/images/Presidents/tjAbass.jpeg",
     shortBio:
       "Prioritized cultural preservation and promotion, organizing cultural festivals and exhibitions that showcased Lagos heritage...",
     fullBio:
-      "Chief Tunde Adeola prioritized cultural preservation and promotion during his presidency, organizing cultural festivals and exhibitions that showcased Lagos heritage. He established the Lagos Cultural Heritage Documentation Project, which has preserved valuable cultural artifacts, traditions, and historical records. Chief Adeola also strengthened the club's international presence by establishing new chapters in the United Kingdom and Canada. His leadership was marked by a deep appreciation for cultural identity and a commitment to passing on Lagos traditions to future generations. Under his guidance, the club developed educational materials on Lagos history and culture for use in schools and community centers. Prior to his presidency, Chief Adeola served as the club's Cultural Secretary and Vice President, bringing a wealth of knowledge about Lagos cultural heritage to his leadership role. He is a cultural anthropologist and has authored several books on Lagos history and traditions.",
+      "President Abass prioritized cultural preservation and promotion during his presidency, organizing cultural festivals and exhibitions that showcased Lagos heritage. He established the Lagos Cultural Heritage Documentation Project, which has preserved valuable cultural artifacts, traditions, and historical records. Chief Abass also strengthened the club's international presence by establishing new chapters in the United Kingdom and Canada. His leadership was marked by a deep appreciation for cultural identity and a commitment to passing on Lagos traditions to future generations. Under his guidance, the club developed educational materials on Lagos history and culture for use in schools and community centers. Prior to his presidency, Chief Abass served as the club's Cultural Secretary and Vice President, bringing a wealth of knowledge about Lagos cultural heritage to his leadership role. He is a cultural anthropologist and has authored several books on Lagos history and traditions.",
   },
   {
-    name: "Dr. Oluwole Kukoyi",
-    term: "2002-2006",
-    image: "/images/hero-slide-3.png",
+    name: "President O.J Lawal",
+    term: "2003-2005",
+    image: "/images/Presidents/OJLawal.jpg",
     shortBio:
       "Focused on membership growth and engagement, implementing programs that attracted younger members and increased participation...",
     fullBio:
-      "Dr. Oluwole Kukoyi focused on membership growth and engagement during his presidency, implementing programs that attracted younger members and increased participation in club activities. He introduced the Eko Club International Youth Forum, which provides mentorship and leadership development opportunities for young members. Dr. Kukoyi also modernized the club's communication channels, launching the first club website and regular newsletter. His presidency was characterized by innovation, inclusivity, and a forward-thinking approach to club management. Under his leadership, the club experienced a 30% increase in membership and established new chapters in three additional cities. Before becoming president, Dr. Kukoyi served as the club's Membership Secretary and Public Relations Officer, bringing valuable experience in member recruitment and engagement. He is an educational administrator and has held leadership positions in several academic institutions.",
+      "Dr. Lawal focused on membership growth and engagement during his presidency, implementing programs that attracted younger members and increased participation in club activities. He introduced the Eko Club International Youth Forum, which provides mentorship and leadership development opportunities for young members. Dr. Lawal also modernized the club's communication channels, launching the first club website and regular newsletter. His presidency was characterized by innovation, inclusivity, and a forward-thinking approach to club management. Under his leadership, the club experienced a 30% increase in membership and established new chapters in three additional cities. Before becoming president, Dr. Lawal served as the club's Membership Secretary and Public Relations Officer, bringing valuable experience in member recruitment and engagement. He is an educational administrator and has held leadership positions in several academic institutions.",
   },
   {
-    name: "Chief Adebayo Ogunlesi",
-    term: "1998-2002",
-    image: "/images/hero-slide-4.png",
+    name: "Late Olusesi Dawodu",
+    term: "2001-2003",
+    image: "/images/Presidents/Late-dawodu1.jpg",
     shortBio:
       "As the founding president, established the club's foundational structures, values, and mission that continue to guide the organization...",
     fullBio:
-      "Chief Adebayo Ogunlesi, as the founding president, established the club's foundational structures, values, and mission that continue to guide the organization today. He brought together Lagos indigenes from various backgrounds and professions to form a cohesive community dedicated to cultural preservation and community development. Chief Ogunlesi drafted the club's first constitution and established its governance framework, ensuring a solid foundation for future growth. His visionary leadership set the club on a path of excellence and impact that has endured for decades. Under his guidance, the club launched its first community development project, a primary healthcare center in a rural community in Lagos State. Chief Ogunlesi's presidency was marked by vision, dedication, and a pioneering spirit. He is a respected community leader and businessman with interests in various sectors of the economy. His legacy as the founding president continues to inspire current and future generations of club members.",
+      "President Olusesi, as the founding president, established the club's foundational structures, values, and mission that continue to guide the organization today. He brought together Lagos indigenes from various backgrounds and professions to form a cohesive community dedicated to cultural preservation and community development. President Olusesi drafted the club's first constitution and established its governance framework, ensuring a solid foundation for future growth. His visionary leadership set the club on a path of excellence and impact that has endured for decades. Under his guidance, the club launched its first community development project, a primary healthcare center in a rural community in Lagos State. President Olusesi's presidency was marked by vision, dedication, and a pioneering spirit. He is a respected community leader and businessman with interests in various sectors of the economy. His legacy as the founding president continues to inspire current and future generations of club members.",
   },
 ]
 
@@ -281,7 +317,7 @@ export default function LeadershipPage() {
       {/* Hero Section */}
       <section className="relative h-[60vh] min-h-[500px] flex items-center justify-center overflow-hidden">
         <div className="absolute inset-0 z-0">
-          <Image src="/images/hero-slide-3.png" alt="Eko Club Leadership" fill className="object-cover" priority />
+          <Image src="/images/why-join-us-home.jpg" alt="Eko Club Leadership" fill className="object-cover" priority />
           <div className="absolute inset-0 bg-black/70"></div>
         </div>
         <div className="container relative z-10 mx-auto px-4 text-center">
@@ -595,7 +631,7 @@ export default function LeadershipPage() {
 
       {/* Biography Modal */}
       <Dialog open={modalOpen} onOpenChange={setModalOpen}>
-        <DialogContent className="sm:max-w-[600px]">
+        <DialogContent className="sm:max-w-[600px] h-[90vh] overflow-y-auto">
           {selectedPresident && (
             <>
               <DialogHeader>

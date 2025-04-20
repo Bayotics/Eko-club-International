@@ -104,7 +104,7 @@ export default function OurMissionPage() {
       {/* Hero Section */}
       <section className="relative h-[60vh] min-h-[500px] flex items-center justify-center overflow-hidden">
         <div className="absolute inset-0 z-0">
-          <Image src="/images/hero-slide-1.png" alt="Eko Club members" fill className="object-cover" priority />
+          <Image src="/images/gallery-community.jpg" alt="Eko Club members" fill className="object-cover" priority />
           <div className="absolute inset-0 bg-black/70"></div>
         </div>
         <div className="container relative z-10 mx-auto px-4 text-center">
@@ -197,7 +197,7 @@ export default function OurMissionPage() {
             >
               <div className="relative h-[600px] rounded-lg overflow-hidden shadow-xl">
                 <Image
-                  src="/images/hero-slide-4.png"
+                  src="/images/mission-card.jpeg"
                   alt="Eko Club members at an event"
                   fill
                   className="object-cover"
@@ -261,7 +261,7 @@ export default function OurMissionPage() {
               variants={fadeInFromRight}
             >
               <div className="relative h-[500px] rounded-lg overflow-hidden shadow-xl">
-                <Image src="/images/hero-slide-3.png" alt="Eko Club community project" fill className="object-cover" />
+                <Image src="/images/mission-card-2.jpg" alt="Eko Club community project" fill className="object-cover" />
               </div>
             </motion.div>
 
