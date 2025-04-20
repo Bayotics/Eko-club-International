@@ -8,37 +8,37 @@ import { X } from "lucide-react"
 const galleryImages = [
   {
     id: 1,
-    src: "/placeholder.svg?height=600&width=800",
+    src: "/images/gallery-medical.jpg?height=600&width=800",
     alt: "Medical Mission 2023",
     category: "medical",
   },
   {
     id: 2,
-    src: "/placeholder.svg?height=600&width=800",
+    src: "/images/gallery-culture.jpg?height=600&width=800",
     alt: "Cultural Celebration",
     category: "cultural",
   },
   {
     id: 3,
-    src: "/placeholder.svg?height=600&width=800",
+    src: "/images/gallery-community.jpg?height=600&width=800",
     alt: "Community Outreach",
     category: "community",
   },
   {
     id: 4,
-    src: "/placeholder.svg?height=600&width=800",
+    src: "/images/projects-education.jpg?height=600&width=800",
     alt: "Scholarship Awards",
     category: "education",
   },
   {
     id: 5,
-    src: "/placeholder.svg?height=600&width=800",
+    src: "/images/gallery-culture-gala.jpg?height=600&width=800",
     alt: "Annual Gala",
     category: "cultural",
   },
   {
     id: 6,
-    src: "/placeholder.svg?height=600&width=800",
+    src: "/images/gallery-community-2.jpg?height=600&width=800",
     alt: "Water Project",
     category: "community",
   },

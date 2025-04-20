@@ -58,7 +58,7 @@ export default function About() {
             transition={{ duration: 0.8 }}
           >
             <Image
-              src="/placeholder.svg?height=600&width=800"
+              src="/images/about-us-section.jpg"
               alt="About Eko Club International"
               width={800}
               height={600}

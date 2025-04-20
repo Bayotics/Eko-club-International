@@ -70,7 +70,7 @@ export default function Welcome() {
               <div className="space-y-2">
                 <div className="overflow-hidden rounded-md">
                   <Image
-                    src="/placeholder.svg?height=400&width=300"
+                    src="/images/welcome1.jpg"
                     alt="Eko Club Members"
                     width={300}
                     height={400}
@@ -79,7 +79,7 @@ export default function Welcome() {
                 </div>
                 <div className="overflow-hidden rounded-md">
                   <Image
-                    src="/placeholder.svg?height=300&width=300"
+                    src="/images/welcome3.jpg"
                     alt="Eko Club Event"
                     width={300}
                     height={300}
@@ -90,7 +90,7 @@ export default function Welcome() {
               <div className="space-y-2 mt-8">
                 <div className="overflow-hidden rounded-md">
                   <Image
-                    src="/placeholder.svg?height=300&width=300"
+                    src="/images/welcome2.jpg"
                     alt="Eko Club Project"
                     width={300}
                     height={300}
@@ -99,7 +99,7 @@ export default function Welcome() {
                 </div>
                 <div className="overflow-hidden rounded-md">
                   <Image
-                    src="/placeholder.svg?height=400&width=300"
+                    src="/images/welcome4.jpg"
                     alt="Eko Club Community"
                     width={300}
                     height={400}

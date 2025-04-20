@@ -104,7 +104,7 @@ export default function FAQ() {
               transition={{ duration: 0.7 }}
               className="relative h-[400px] md:h-[500px] rounded-lg overflow-hidden"
             >
-              <Image src="/images/faq-person.png" alt="Person using laptop" fill className="object-cover" />
+              <Image src="/images/faq-bg.jpg" alt="Person using laptop" fill className="object-cover" />
             </motion.div>
           </div>
         </div>

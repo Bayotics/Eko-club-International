@@ -4,30 +4,31 @@ import { useState } from "react"
 import { motion } from "framer-motion"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { MapPin } from "lucide-react"
+import Image from "next/image"
 
 const chapters = [
-  { id: 1, name: "Atlanta", country: "USA", members: 120 },
-  { id: 2, name: "Austin", country: "USA", members: 85 },
-  { id: 3, name: "California", country: "USA", members: 150 },
-  { id: 4, name: "Dallas", country: "USA", members: 110 },
-  { id: 5, name: "DC Metro", country: "USA", members: 95 },
-  { id: 6, name: "Delaware Valley", country: "USA", members: 75 },
-  { id: 7, name: "Detroit", country: "USA", members: 65 },
-  { id: 8, name: "Eko Lagosians of Canada", country: "Canada", members: 90 },
-  { id: 9, name: "Florida", country: "USA", members: 105 },
-  { id: 10, name: "Houston", country: "USA", members: 130 },
-  { id: 11, name: "Kent, U.K.", country: "United Kingdom", members: 70 },
-  { id: 12, name: "London, U.K.", country: "United Kingdom", members: 115 },
-  { id: 13, name: "Louisiana", country: "USA", members: 60 },
-  { id: 14, name: "Miami", country: "USA", members: 85 },
-  { id: 15, name: "Minnesota", country: "USA", members: 55 },
-  { id: 16, name: "New Jersey", country: "USA", members: 125 },
-  { id: 17, name: "New York", country: "USA", members: 160 },
-  { id: 18, name: "Ohio", country: "USA", members: 70 },
-  { id: 19, name: "Pennsylvania", country: "USA", members: 80 },
-  { id: 20, name: "Philadelphia", country: "USA", members: 95 },
-  { id: 21, name: "Rhode Island", country: "USA", members: 45 },
-  { id: 22, name: "San Antonio", country: "USA", members: 65 },
+  { id: 1, name: "Atlanta", country: "USA", members: 120, coords: { top: "60%", left: "34%" } },
+  { id: 2, name: "Austin", country: "USA", members: 85, coords: { top: "64%", left: "27%" } },
+  { id: 3, name: "California", country: "USA", members: 150, coords: { top: "47%", left: "10%" } },
+  { id: 4, name: "Dallas", country: "USA", members: 110, coords: { top: "61%", left: "29%" } },
+  { id: 5, name: "DC Metro", country: "USA", members: 95, coords: { top: "55%", left: "37%" } },
+  { id: 6, name: "Delaware Valley", country: "USA", members: 75, coords: { top: "55%", left: "36%" } },
+  { id: 7, name: "Detroit", country: "USA", members: 65, coords: { top: "52%", left: "34%" } },
+  { id: 8, name: "Eko Lagosians of Canada", country: "Canada", members: 90, coords: { top: "40%", left: "34%" } },
+  { id: 9, name: "Florida", country: "USA", members: 105, coords: { top: "67%", left: "36%" } },
+  { id: 10, name: "Houston", country: "USA", members: 130, coords: { top: "63%", left: "26%" } },
+  { id: 11, name: "Kent, U.K.", country: "United Kingdom", members: 70, coords: { top: "32%", left: "80%" } },
+  { id: 12, name: "London, U.K.", country: "United Kingdom", members: 115, coords: { top: "31%", left: "81%" } },
+  { id: 13, name: "Louisiana", country: "USA", members: 60, coords: { top: "65%", left: "28%" } },
+  { id: 14, name: "Miami", country: "USA", members: 85, coords: { top: "66%", left: "37%" } },
+  { id: 15, name: "Minnesota", country: "USA", members: 55, coords: { top: "44%", left: "28%" } },
+  { id: 16, name: "New Jersey", country: "USA", members: 125, coords: { top: "54%", left: "37%" } },
+  { id: 17, name: "New York", country: "USA", members: 160, coords: { top: "53%", left: "37%" } },
+  { id: 18, name: "Ohio", country: "USA", members: 70, coords: { top: "54%", left: "35%" } },
+  { id: 19, name: "Pennsylvania", country: "USA", members: 80, coords: { top: "55%", left: "36%" } },
+  { id: 20, name: "Philadelphia", country: "USA", members: 95, coords: { top: "55%", left: "37%" } },
+  { id: 21, name: "Rhode Island", country: "USA", members: 45, coords: { top: "53%", left: "38%" } },
+  { id: 22, name: "San Antonio", country: "USA", members: 65, coords: { top: "64%", left: "25%" } },
 ]
 
 export default function Chapters() {
@@ -54,30 +55,25 @@ export default function Chapters() {
         <div className="mb-12">
           <div className="relative w-full h-[400px] md:h-[500px] bg-gray-200 dark:bg-gray-800 rounded-lg overflow-hidden">
             <div className="absolute inset-0 bg-blue-900/10 dark:bg-blue-900/30 z-10 rounded-lg" />
-            <img src="/placeholder.svg?height=500&width=1200" alt="World Map" className="w-full h-full object-cover" />
+            <Image
+              src="/images/Map.PNG"
+              alt="World Map"
+              fill
+              className="w-full h-full object-contain"
+              style={{ objectFit: "contain" }}
+            />
             {chapters.map((chapter) => (
               <motion.div
                 key={chapter.id}
                 className="absolute z-20"
                 style={{
-                  // Random positions for demonstration - would be replaced with actual coordinates
-                  left: `${((chapter.id * 37) % 85) + 5}%`,
-                  top: `${((chapter.id * 23) % 75) + 10}%`,
+                  left: chapter.coords.left,
+                  top: chapter.coords.top,
                 }}
                 onMouseEnter={() => setHoveredChapter(chapter)}
                 onMouseLeave={() => setHoveredChapter(null)}
               >
-                <motion.div
-                  className="w-3 h-3 bg-primary rounded-full cursor-pointer"
-                  whileHover={{ scale: 1.5 }}
-                  animate={{
-                    scale: hoveredChapter?.id === chapter.id ? [1, 1.2, 1] : 1,
-                  }}
-                  transition={{
-                    repeat: hoveredChapter?.id === chapter.id ? Number.POSITIVE_INFINITY : 0,
-                    duration: 1,
-                  }}
-                />
+                {/* REMOVED RED DOTS */}
                 {hoveredChapter?.id === chapter.id && (
                   <motion.div
                     initial={{ opacity: 0, y: 10 }}
@@ -123,4 +119,3 @@ export default function Chapters() {
     </section>
   )
 }
-

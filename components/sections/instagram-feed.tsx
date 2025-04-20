@@ -11,7 +11,7 @@ import { Button } from "@/components/ui/button"
 const instagramPosts = [
   {
     id: 1,
-    imageUrl: "/placeholder.svg?height=600&width=600",
+    imageUrl: "/images/ig1.png?height=600&width=600",
     caption:
       "Celebrating our cultural heritage at the annual Eko Festival. Proud to see so many members representing our traditions with pride! #EkoClub #CulturalHeritage #LagosProud",
     likes: 245,
@@ -20,7 +20,7 @@ const instagramPosts = [
   },
   {
     id: 2,
-    imageUrl: "/placeholder.svg?height=600&width=600",
+    imageUrl: "/images/ig2.png?height=600&width=600",
     caption:
       "Our medical mission team provided free healthcare services to over 500 people in Lagos last week. Making a difference one community at a time. #CommunityService #MedicalMission #EkoClubCares",
     likes: 312,
@@ -29,7 +29,7 @@ const instagramPosts = [
   },
   {
     id: 3,
-    imageUrl: "/placeholder.svg?height=600&width=600",
+    imageUrl: "/images/ig3.png?height=600&width=600",
     caption:
       "Congratulations to all the scholarship recipients at our annual education gala! Your dedication to academic excellence inspires us all. #Education #Scholarships #FutureLeaders",
     likes: 189,

@@ -60,18 +60,18 @@ export default function Founder() {
           >
             <div className="overflow-hidden rounded-md">
               <Image
-                src="/placeholder.svg?height=600&width=500"
-                alt="Founder of Eko Club International"
+                src="/images/president.jpg"
+                alt="President of Eko Club International"
                 width={500}
                 height={600}
-                className="w-full h-auto grayscale"
+                className="w-full h-auto"
               />
             </div>
 
             {/* Video Play Button */}
             <motion.button
               initial={{ opacity: 0, scale: 0.5 }}
-              animate={{ opacity: 1, scale: 1 }}
+              animate={{ opacity: 0.6, scale: 1 }}
               transition={{
                 duration: 0.5,
                 delay: 0.5,

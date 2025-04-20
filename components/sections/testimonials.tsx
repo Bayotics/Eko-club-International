@@ -12,7 +12,7 @@ const testimonials = [
     role: "Medical Director",
     quote:
       "Being part of Eko Club International's medical mission was one of the most rewarding experiences of my career. The impact we made on the lives of people in Lagos was immeasurable.",
-    image: "/placeholder.svg?height=200&width=200",
+    image: "/images/testimonial2.png?height=200&width=200",
   },
   {
     id: 2,
@@ -20,7 +20,7 @@ const testimonials = [
     role: "Community Member",
     quote:
       "The scholarship program provided by Eko Club International changed my daughter's life. She is now pursuing her dream of becoming an engineer, which would not have been possible without their support.",
-    image: "/placeholder.svg?height=200&width=200",
+    image: "/images/testimonial1.png?height=200&width=200",
   },
   {
     id: 3,
@@ -28,7 +28,7 @@ const testimonials = [
     role: "Chapter President",
     quote:
       "Leading our local chapter has been an honor. The dedication of our members to preserving our cultural heritage while making a positive impact in our communities is truly inspiring.",
-    image: "/placeholder.svg?height=200&width=200",
+    image: "/images/testimonial3.png?height=200&width=200",
   },
 ]
 

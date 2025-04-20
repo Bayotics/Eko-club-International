@@ -26,7 +26,7 @@ export default function WhyJoin() {
             className="rounded-lg overflow-hidden"
           >
             <Image
-              src="/placeholder.svg?height=500&width=600"
+              src="/images/why-join-us-home.jpg?height=500&width=600"
               alt="Eko Club Members at an event"
               width={600}
               height={500}
@@ -76,7 +76,7 @@ export default function WhyJoin() {
             <div className="flex -space-x-4">
               <div className="w-12 h-12 rounded-full border-2 border-white overflow-hidden">
                 <Image
-                  src="/placeholder.svg?height=100&width=100"
+                  src="/images/member2.png?height=100&width=100"
                   alt="Member"
                   width={100}
                   height={100}
@@ -85,7 +85,7 @@ export default function WhyJoin() {
               </div>
               <div className="w-12 h-12 rounded-full border-2 border-white overflow-hidden">
                 <Image
-                  src="/placeholder.svg?height=100&width=100"
+                  src="/images/member3.png?height=100&width=100"
                   alt="Member"
                   width={100}
                   height={100}
@@ -94,7 +94,7 @@ export default function WhyJoin() {
               </div>
               <div className="w-12 h-12 rounded-full border-2 border-white overflow-hidden">
                 <Image
-                  src="/placeholder.svg?height=100&width=100"
+                  src="/images/member4.png?height=100&width=100"
                   alt="Member"
                   width={100}
                   height={100}
@@ -103,7 +103,7 @@ export default function WhyJoin() {
               </div>
               <div className="w-12 h-12 rounded-full border-2 border-white overflow-hidden">
                 <Image
-                  src="/placeholder.svg?height=100&width=100"
+                  src="/images/member5.png?height=100&width=100"
                   alt="Member"
                   width={100}
                   height={100}
