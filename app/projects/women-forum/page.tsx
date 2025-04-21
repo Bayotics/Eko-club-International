@@ -136,7 +136,7 @@ export default function WomenForumPage() {
       <section className="relative h-[60vh] min-h-[500px] flex items-center justify-center overflow-hidden">
         <div className="absolute inset-0 z-0">
           <Image
-            src="/placeholder.svg?height=800&width=1200"
+            src="/images/welcome2.jpg"
             alt="Women Forum"
             fill
             className="object-cover"
