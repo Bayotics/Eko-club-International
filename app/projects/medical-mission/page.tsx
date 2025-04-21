@@ -20,10 +20,17 @@ const medicalMissions = [
       "Our most recent medical mission to Lagos provided essential healthcare services to over 5,000 individuals in underserved communities. Services included general consultations, specialized care, surgeries, dental services, eye care, and distribution of medications.",
     impact: "5,000+ patients served",
     images: [
-      "/placeholder.svg?height=600&width=800",
-      "/placeholder.svg?height=600&width=800",
-      "/placeholder.svg?height=600&width=800",
-      "/placeholder.svg?height=600&width=800",
+      "/images/Medical_Mission/2024-1.jpg",
+      "/images/Medical_Mission/2024-2.jpg",
+      "/images/Medical_Mission/2024-3.jpg",
+      "/images/Medical_Mission/2024-4.jpg",
+      "/images/Medical_Mission/2024-5.jpg",
+      "/images/Medical_Mission/2024-6.jpg",
+      "/images/Medical_Mission/2024-7.jpg",
+      "/images/Medical_Mission/2024-8.jpg",
+      "/images/Medical_Mission/2024-9.jpg",
+      "/images/Medical_Mission/2024-10.jpg",
+
     ],
     videos: [],
   },
@@ -36,7 +43,12 @@ const medicalMissions = [
     description:
       "Following the challenges of the global pandemic, our 2022 medical mission focused on addressing the healthcare backlog in Lagos communities. We provided comprehensive medical services including COVID-19 education and vaccination support.",
     impact: "4,200+ patients served",
-    images: ["/placeholder.svg?height=600&width=800", "/placeholder.svg?height=600&width=800"],
+    images: [
+              "/images/Medical_Mission/2022-1.jpg", 
+              "/images/Medical_Mission/2022-2.jpg",
+              "/images/Medical_Mission/2022-3.jpg", 
+              "/images/Medical_Mission/2022-4.jpg"
+            ],
     videos: [
       {
         thumbnail: "/placeholder.svg?height=400&width=600",
@@ -64,7 +76,19 @@ const medicalMissions = [
     description:
       "The 2018 medical mission was our largest to date, with a special focus on maternal and child health. We established temporary clinics in six different communities across Lagos State, providing a wide range of medical services.",
     impact: "6,500+ patients served",
-    images: ["/placeholder.svg?height=600&width=800", "/placeholder.svg?height=600&width=800"],
+    images: ["/images/Medical_Mission/2018/1.jpg",
+              "/images/Medical_Mission/2018/2.jpg",
+              "/images/Medical_Mission/2018/3.jpg",
+              "/images/Medical_Mission/2018/4.jpg",
+              "/images/Medical_Mission/2018/5.jpg",
+              "/images/Medical_Mission/2018/6.jpg",
+              "/images/Medical_Mission/2018/7.jpg",
+              "/images/Medical_Mission/2018/8.jpg",
+              "/images/Medical_Mission/2018/9.jpg",
+              "/images/Medical_Mission/2018/10.jpg",
+              "/images/Medical_Mission/2018/11.jpg",
+              "/images/Medical_Mission/2018/12.jpg",
+    ],
     videos: [
       {
         thumbnail: "/placeholder.svg?height=400&width=600",
@@ -108,10 +132,11 @@ const medicalMissions = [
       "The 2016 medical mission introduced specialized eye care services and expanded our dental program. We partnered with local healthcare facilities to provide follow-up care for patients with chronic conditions.",
     impact: "3,800+ patients served",
     images: [
-      "/placeholder.svg?height=600&width=800",
-      "/placeholder.svg?height=600&width=800",
-      "/placeholder.svg?height=600&width=800",
-      "/placeholder.svg?height=600&width=800",
+      "/images/Medical_Mission/2016/A1.png",
+      "/images/Medical_Mission/2016/A2.png",
+      "/images/Medical_Mission/2016/A3.png",
+      "/images/Medical_Mission/2016/A4.png",
+      
     ],
     videos: [
       {
@@ -130,7 +155,17 @@ const medicalMissions = [
     description:
       "The 2012 mission focused on preventive healthcare education alongside medical services. We conducted workshops on hygiene, nutrition, and disease prevention in local schools and community centers.",
     impact: "3,200+ patients served",
-    images: ["/placeholder.svg?height=600&width=800", "/placeholder.svg?height=600&width=800"],
+    images: ["/images/Medical_Mission/2012/1.jpg",
+              "/images/Medical_Mission/2012/2.jpg",
+              "/images/Medical_Mission/2012/3.jpg",
+              "/images/Medical_Mission/2012/4.jpg",
+              "/images/Medical_Mission/2012/5.jpg",
+              "/images/Medical_Mission/2012/6.jpg",
+              "/images/Medical_Mission/2012/7.jpg",
+              "/images/Medical_Mission/2012/8.jpg",
+              "/images/Medical_Mission/2012/9.jpg",
+              "/images/Medical_Mission/2012/10.jpg",
+    ],
     videos: [
       {
         thumbnail: "/placeholder.svg?height=400&width=600",
@@ -177,12 +212,19 @@ const medicalMissions = [
       "Our inaugural medical mission in 2008 laid the foundation for our ongoing healthcare initiatives. Despite limited resources, we provided basic medical care and established relationships with local healthcare providers that continue to this day.",
     impact: "1,500+ patients served",
     images: [
-      "/placeholder.svg?height=600&width=800",
-      "/placeholder.svg?height=600&width=800",
-      "/placeholder.svg?height=600&width=800",
-      "/placeholder.svg?height=600&width=800",
-      "/placeholder.svg?height=600&width=800",
-      "/placeholder.svg?height=600&width=800",
+      "/images/Medical_Mission/2008/1.jpeg",
+      "/images/Medical_Mission/2008/2.jpeg",
+      "/images/Medical_Mission/2008/3.jpeg",
+      "/images/Medical_Mission/2008/4.jpeg",
+      "/images/Medical_Mission/2008/5.jpeg",
+      "/images/Medical_Mission/2008/6.jpeg",
+      "/images/Medical_Mission/2008/7.jpeg",
+      "/images/Medical_Mission/2008/8.jpeg",
+      "/images/Medical_Mission/2008/9.jpeg",
+      "/images/Medical_Mission/2008/10.jpeg",
+      "/images/Medical_Mission/2008/11.jpeg",
+      "/images/Medical_Mission/2008/12.jpeg",
+      
     ],
     videos: [],
   },
@@ -314,7 +356,7 @@ export default function MedicalMissionPage() {
       <section className="relative h-[60vh] min-h-[500px] flex items-center justify-center overflow-hidden">
         <div className="absolute inset-0 z-0">
           <Image
-            src="/placeholder.svg?height=800&width=1200"
+            src="/images/Medical_Mission/mm-banner.jpg?height=800&width=1200"
             alt="Medical Mission"
             fill
             className="object-cover"
@@ -361,7 +403,7 @@ export default function MedicalMissionPage() {
             >
               <div className="relative h-[500px] rounded-lg overflow-hidden shadow-xl">
                 <Image
-                  src="/placeholder.svg?height=800&width=1200"
+                  src="/images/Medical_Mission/mm-card.jpg?height=800&width=1200"
                   alt="Medical Mission Overview"
                   fill
                   className="object-cover"
