@@ -5,7 +5,7 @@ import { motion } from "framer-motion"
 import Image from "next/image"
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
-import { ChevronRight, Play, Calendar, MapPin, X } from "lucide-react"
+import { ChevronRight, Play, Calendar, MapPin, X, Award, Briefcase, Users, GraduationCap } from "lucide-react"
 import { Dialog, DialogContent } from "@/components/ui/dialog"
 import { Card, CardContent } from "@/components/ui/card"
 
@@ -108,25 +108,25 @@ export default function WomenForumPage() {
       title: "Leadership Development",
       description:
         "Empowering women with the skills, knowledge, and confidence to take on leadership roles in their communities and professional lives.",
-      icon: "/placeholder.svg?height=100&width=100",
+      icon: <Award className="h-16 w-16 text-[#C8A97E]" />,
     },
     {
       title: "Entrepreneurship Support",
       description:
         "Providing resources, training, and networking opportunities to help women start and grow successful businesses.",
-      icon: "/placeholder.svg?height=100&width=100",
+      icon: <Briefcase className="h-16 w-16 text-[#C8A97E]" />,
     },
     {
       title: "Mentorship Program",
       description:
         "Connecting experienced professionals with emerging leaders to provide guidance, support, and inspiration.",
-      icon: "/placeholder.svg?height=100&width=100",
+      icon: <Users className="h-16 w-16 text-[#C8A97E]" />,
     },
     {
       title: "Educational Scholarships",
       description:
         "Supporting women's education through scholarships and grants for academic and professional development.",
-      icon: "/placeholder.svg?height=100&width=100",
+      icon: <GraduationCap className="h-16 w-16 text-[#C8A97E]" />,
     },
   ]
 
@@ -135,13 +135,7 @@ export default function WomenForumPage() {
       {/* Hero Section */}
       <section className="relative h-[60vh] min-h-[500px] flex items-center justify-center overflow-hidden">
         <div className="absolute inset-0 z-0">
-          <Image
-            src="/images/welcome2.jpg"
-            alt="Women Forum"
-            fill
-            className="object-cover"
-            priority
-          />
+          <Image src="/images/welcome2.jpg" alt="Women Forum" fill className="object-cover" priority />
           <div className="absolute inset-0 bg-black/70"></div>
         </div>
         <div className="container relative z-10 mx-auto px-4 text-center">
@@ -181,12 +175,7 @@ export default function WomenForumPage() {
               variants={fadeInFromLeft}
             >
               <div className="relative h-[500px] rounded-lg overflow-hidden shadow-xl">
-                <Image
-                  src="/placeholder.svg?height=800&width=1200"
-                  alt="Women Forum Overview"
-                  fill
-                  className="object-cover"
-                />
+                <Image src="/images/women-forum-card.jpeg" alt="Women Forum Overview" fill className="object-cover" />
               </div>
             </motion.div>
 
@@ -307,15 +296,7 @@ export default function WomenForumPage() {
                 variants={scaleIn}
                 className="bg-white rounded-lg shadow-lg p-8 border-t-4 border-[#C8A97E] hover:shadow-xl transition-shadow"
               >
-                <div className="flex justify-center mb-4">
-                  <Image
-                    src={initiative.icon || "/placeholder.svg"}
-                    alt={initiative.title}
-                    width={80}
-                    height={80}
-                    className="h-20 w-20 object-contain"
-                  />
-                </div>
+                <div className="flex justify-center mb-4">{initiative.icon}</div>
                 <h3 className="text-xl font-bold text-gray-800 mb-3 text-center">{initiative.title}</h3>
                 <p className="text-gray-600 text-center">{initiative.description}</p>
               </motion.div>
@@ -353,7 +334,7 @@ export default function WomenForumPage() {
             >
               <div className="flex items-center mb-6">
                 <div className="relative w-16 h-16 rounded-full overflow-hidden mr-4">
-                  <Image src="/placeholder.svg?height=200&width=200" alt="Testimonial" fill className="object-cover" />
+                  <Image src="/images/women-forum-1.PNG?height=200&width=200" alt="Testimonial" fill className="object-cover" />
                 </div>
                 <div>
                   <h3 className="text-lg font-bold text-gray-800">Folake Adeyemi</h3>
@@ -376,10 +357,10 @@ export default function WomenForumPage() {
             >
               <div className="flex items-center mb-6">
                 <div className="relative w-16 h-16 rounded-full overflow-hidden mr-4">
-                  <Image src="/placeholder.svg?height=200&width=200" alt="Testimonial" fill className="object-cover" />
+                  <Image src="/images/women-forum-2.PNG?height=200&width=200" alt="Testimonial" fill className="object-cover" />
                 </div>
                 <div>
-                  <h3 className="text-lg font-bold text-gray-800">Dr. Amina Okonkwo</h3>
+                  <h3 className="text-lg font-bold text-gray-800">Dr. Amina Finn</h3>
                   <p className="text-[#C8A97E]">Healthcare Professional</p>
                 </div>
               </div>
@@ -399,7 +380,7 @@ export default function WomenForumPage() {
             >
               <div className="flex items-center mb-6">
                 <div className="relative w-16 h-16 rounded-full overflow-hidden mr-4">
-                  <Image src="/placeholder.svg?height=200&width=200" alt="Testimonial" fill className="object-cover" />
+                  <Image src="/images/women-forum-3.PNG?height=200&width=200" alt="Testimonial" fill className="object-cover" />
                 </div>
                 <div>
                   <h3 className="text-lg font-bold text-gray-800">Bisi Ogunwale</h3>
@@ -416,7 +397,7 @@ export default function WomenForumPage() {
       </section>
 
       {/* Upcoming Events Section */}
-      <section className="py-20">
+      {/* <section className="py-20">
         <div className="container mx-auto px-4">
           <motion.div
             initial="hidden"
@@ -477,7 +458,7 @@ export default function WomenForumPage() {
             ))}
           </motion.div>
         </div>
-      </section>
+      </section> */}
 
       {/* Stats Section */}
       <section className="py-20 bg-[#C8A97E] text-white">
@@ -583,4 +564,3 @@ export default function WomenForumPage() {
     </div>
   )
 }
-
