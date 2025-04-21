@@ -183,7 +183,20 @@ const medicalMissions = [
     description:
       "The 2010 medical mission expanded our services to include mental health support and counseling. We also distributed essential medications and medical supplies to local clinics to support ongoing healthcare delivery.",
     impact: "2,800+ patients served",
-    images: ["/placeholder.svg?height=600&width=800", "/placeholder.svg?height=600&width=800"],
+    images: [
+                "/images/Medical_Mission/2010/1.jpg?height=600&width=800", 
+                "/images/Medical_Mission/2010/2.jpg?height=600&width=800",
+                "/images/Medical_Mission/2010/3.jpg?height=600&width=800",
+                "/images/Medical_Mission/2010/4.jpg?height=600&width=800",
+                "/images/Medical_Mission/2010/5.jpg?height=600&width=800",
+                "/images/Medical_Mission/2010/6.jpg?height=600&width=800",
+                "/images/Medical_Mission/2010/7.jpg?height=600&width=800",
+                "/images/Medical_Mission/2010/8.jpg?height=600&width=800",
+                "/images/Medical_Mission/2010/9.jpg?height=600&width=800",
+                "/images/Medical_Mission/2010/10.jpg?height=600&width=800",
+                "/images/Medical_Mission/2010/11.jpg?height=600&width=800",
+                "/images/Medical_Mission/2010/12.jpg?height=600&width=800",
+    ],
     videos: [
       {
         thumbnail: "/placeholder.svg?height=400&width=600",

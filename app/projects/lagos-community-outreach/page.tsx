@@ -45,28 +45,28 @@ export default function LagosCommunityOutreachPage() {
       title: "Clean Water Initiative",
       description:
         "Providing access to clean water through well drilling, water purification systems, and education on water conservation and hygiene practices.",
-      image: "/placeholder.svg?height=400&width=600",
+      image: "/images/Clean-water.jpeg?height=400&width=600",
       impact: "15,000+ residents served",
     },
     {
-      title: "School Renovation",
+      title: "Education Initiative",
       description:
         "Renovating and equipping schools with modern facilities, learning materials, and technology to enhance educational experiences.",
-      image: "/placeholder.svg?height=400&width=600",
+      image: "/images/education-initiative.jpg?height=400&width=600",
       impact: "12 schools renovated",
     },
     {
       title: "Healthcare Access",
       description:
         "Establishing community health centers, organizing health camps, and providing essential medications to improve healthcare access.",
-      image: "/placeholder.svg?height=400&width=600",
+      image: "/images/Medical_Mission/2012/9.jpg?height=400&width=600",
       impact: "8,500+ patients treated",
     },
     {
       title: "Food Security",
       description:
         "Distributing food packages to vulnerable families and supporting sustainable farming initiatives to address food insecurity.",
-      image: "/placeholder.svg?height=400&width=600",
+      image: "/images/food-palliative-card.jpg?height=400&width=600",
       impact: "5,000+ families supported",
     },
   ]
@@ -167,7 +167,7 @@ export default function LagosCommunityOutreachPage() {
       <section className="relative h-[60vh] min-h-[500px] flex items-center justify-center overflow-hidden">
         <div className="absolute inset-0 z-0">
           <Image
-            src="/placeholder.svg?height=800&width=1200"
+            src="/images/community-outreach-banner.jpg?height=800&width=1200"
             alt="Lagos Community Outreach"
             fill
             className="object-cover"
@@ -214,7 +214,7 @@ export default function LagosCommunityOutreachPage() {
             >
               <div className="relative h-[500px] rounded-lg overflow-hidden shadow-xl">
                 <Image
-                  src="/placeholder.svg?height=800&width=1200"
+                  src="/images/community-outreach-2.jpg?height=800&width=1200"
                   alt="Lagos Community Outreach Overview"
                   fill
                   className="object-cover"
@@ -473,7 +473,7 @@ export default function LagosCommunityOutreachPage() {
             >
               <div className="flex items-center mb-6">
                 <div className="relative w-16 h-16 rounded-full overflow-hidden mr-4">
-                  <Image src="/placeholder.svg?height=200&width=200" alt="Testimonial" fill className="object-cover" />
+                  <Image src="/images/community-member1.PNG?height=200&width=200" alt="Testimonial" fill className="object-cover" />
                 </div>
                 <div>
                   <h3 className="text-lg font-bold">Mrs. Adebisi Ogunleye</h3>
@@ -496,7 +496,7 @@ export default function LagosCommunityOutreachPage() {
             >
               <div className="flex items-center mb-6">
                 <div className="relative w-16 h-16 rounded-full overflow-hidden mr-4">
-                  <Image src="/placeholder.svg?height=200&width=200" alt="Testimonial" fill className="object-cover" />
+                  <Image src="/images/community-member-2.jpg?height=200&width=200" alt="Testimonial" fill className="object-cover" />
                 </div>
                 <div>
                   <h3 className="text-lg font-bold">Mr. Oluwaseun Adeyemi</h3>
@@ -519,7 +519,7 @@ export default function LagosCommunityOutreachPage() {
             >
               <div className="flex items-center mb-6">
                 <div className="relative w-16 h-16 rounded-full overflow-hidden mr-4">
-                  <Image src="/placeholder.svg?height=200&width=200" alt="Testimonial" fill className="object-cover" />
+                  <Image src="/images/community-member-3.PNG?height=200&width=200" alt="Testimonial" fill className="object-cover" />
                 </div>
                 <div>
                   <h3 className="text-lg font-bold">Mrs. Funmilayo Ojo</h3>
@@ -537,7 +537,7 @@ export default function LagosCommunityOutreachPage() {
       </section>
 
       {/* Upcoming Events Section */}
-      <section className="py-20">
+      {/* <section className="py-20">
         <div className="container mx-auto px-4">
           <motion.div
             initial="hidden"
@@ -598,7 +598,7 @@ export default function LagosCommunityOutreachPage() {
             ))}
           </motion.div>
         </div>
-      </section>
+      </section> */}
 
       {/* CTA Section */}
       <section className="py-20 bg-[#C8A97E]">

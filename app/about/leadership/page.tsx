@@ -607,7 +607,7 @@ export default function LeadershipPage() {
                     src={president.image || "/placeholder.svg"}
                     alt={president.name}
                     fill
-                    className="object-cover"
+                    className= {president.name === "Late Olusesi Dawodu" ? `object-cover grayscale` : `object-cover`}
                   />
                 </div>
                 <div className="p-6">
