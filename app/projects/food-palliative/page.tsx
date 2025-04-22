@@ -68,7 +68,7 @@ export default function FoodPalliativePage() {
         { value: "5,000+", label: "Families Served Monthly" },
         { value: "12", label: "Distribution Centers" },
       ],
-      image: "/placeholder.svg?height=600&width=800",
+      image: "/images/Food_Palliative/food_distribution.jpg?height=600&width=800",
     },
     foodbank: {
       title: "Community Food Banks",
@@ -79,36 +79,36 @@ export default function FoodPalliativePage() {
         { value: "120,000+", label: "Meals Provided" },
         { value: "300+", label: "Volunteers Engaged" },
       ],
-      image: "/placeholder.svg?height=600&width=800",
+      image: "/images/Food_Palliative/food_banks.jpg?height=600&width=800",
     },
-    agriculture: {
-      title: "Agricultural Initiatives",
-      description:
-        "Our agricultural initiatives focus on sustainable farming practices, providing seeds, tools, and training to help communities grow their own food. This approach creates long-term food security and economic opportunities.",
-      stats: [
-        { value: "15", label: "Community Gardens" },
-        { value: "1,200+", label: "Farmers Trained" },
-        { value: "35+", label: "Acres Cultivated" },
-      ],
-      image: "/placeholder.svg?height=600&width=800",
-    },
-    education: {
-      title: "Nutrition Education",
-      description:
-        "Our nutrition education program teaches families about balanced diets, food preparation, and maximizing nutritional value with limited resources. These skills help communities make the most of available food resources.",
-      stats: [
-        { value: "3,500+", label: "Workshop Participants" },
-        { value: "45+", label: "Schools Engaged" },
-        { value: "12", label: "Nutrition Guides Published" },
-      ],
-      image: "/placeholder.svg?height=600&width=800",
-    },
+    // agriculture: {
+    //   title: "Agricultural Initiatives",
+    //   description:
+    //     "Our agricultural initiatives focus on sustainable farming practices, providing seeds, tools, and training to help communities grow their own food. This approach creates long-term food security and economic opportunities.",
+    //   stats: [
+    //     { value: "15", label: "Community Gardens" },
+    //     { value: "1,200+", label: "Farmers Trained" },
+    //     { value: "35+", label: "Acres Cultivated" },
+    //   ],
+    //   image: "/placeholder.svg?height=600&width=800",
+    // },
+    // education: {
+    //   title: "Nutrition Education",
+    //   description:
+    //     "Our nutrition education program teaches families about balanced diets, food preparation, and maximizing nutritional value with limited resources. These skills help communities make the most of available food resources.",
+    //   stats: [
+    //     { value: "3,500+", label: "Workshop Participants" },
+    //     { value: "45+", label: "Schools Engaged" },
+    //     { value: "12", label: "Nutrition Guides Published" },
+    //   ],
+    //   image: "/placeholder.svg?height=600&width=800",
+    // },
   }
 
   // Sample timeline data
   const timeline = [
     {
-      year: "2018",
+      year: "2012",
       title: "Program Launch",
       description:
         "Initiated emergency food distribution in response to economic challenges affecting vulnerable communities in Lagos.",
@@ -156,21 +156,21 @@ export default function FoodPalliativePage() {
         "The food packages we receive have been a lifeline for my family during these difficult times. Beyond just providing food, the nutrition education has helped me prepare more balanced meals for my children with the resources we have.",
       name: "Mrs. Adebisi Ogunleye",
       location: "Mushin, Lagos",
-      image: "/placeholder.svg?height=200&width=200",
+      image: "/images/portrait.png?height=200&width=200",
     },
     {
       quote:
         "As a community leader, I've seen firsthand how the food palliative program has reduced hunger in our area. The agricultural training has been particularly impactful, as many families now grow vegetables in small gardens, improving both nutrition and income.",
       name: "Chief Oluwaseun Adeyemi",
       location: "Alimosho, Lagos",
-      image: "/placeholder.svg?height=200&width=200",
+      image: "/images/portrait.png?height=200&width=200",
     },
     {
       quote:
         "After losing my job, I didn't know how I would feed my three children. The community food bank not only provided us with nutritious food but also connected me with job training opportunities. I'm now employed and volunteering at the same food bank that helped us.",
       name: "Mr. Tunde Bakare",
       location: "Surulere, Lagos",
-      image: "/placeholder.svg?height=200&width=200",
+      image: "/images/portrait.png?height=200&width=200",
     },
   ]
 
@@ -280,7 +280,7 @@ export default function FoodPalliativePage() {
           transition={{ duration: 10, repeat: Number.POSITIVE_INFINITY, repeatType: "reverse" }}
         >
           <Image
-            src="/placeholder.svg?height=1000&width=1600"
+            src="/images/Food_Palliative/food_palliative_bg.jpg?height=1000&width=1600"
             alt="Food Palliative Program"
             fill
             className="object-cover"
@@ -290,10 +290,10 @@ export default function FoodPalliativePage() {
         </motion.div>
 
         <div className="container relative z-10 mx-auto px-4">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center py-4">
             <motion.div initial="hidden" animate="visible" variants={staggerContainer} className="text-left">
               <motion.div variants={fadeIn} className="mb-4">
-                <div className="flex items-center gap-2 text-white/80 mb-4">
+                <div className="flex items-center gap-2 text-white/80 mb-4 pt-10 pb-20">
                   <Link href="/" className="hover:text-[#C8A97E] transition-colors">
                     Home
                   </Link>
@@ -331,7 +331,7 @@ export default function FoodPalliativePage() {
                 <div className="absolute top-0 right-0 w-4/5 h-4/5 bg-[#C8A97E]/20 rounded-lg"></div>
                 <div className="absolute bottom-0 left-0 w-4/5 h-4/5 bg-white rounded-lg overflow-hidden shadow-2xl">
                   <Image
-                    src="/placeholder.svg?height=600&width=800"
+                    src="/images/Food_Palliative/food_palliative-3.jpg?height=600&width=800"
                     alt="Food Distribution"
                     fill
                     className="object-cover"
@@ -459,7 +459,7 @@ export default function FoodPalliativePage() {
                 <div className="sticky top-24">
                   <div className="relative h-[400px] rounded-lg overflow-hidden shadow-xl mb-6">
                     <Image
-                      src="/placeholder.svg?height=600&width=800"
+                      src="/images/Food_Palliative/4.jpg?height=600&width=800"
                       alt="Food Palliative Overview"
                       fill
                       className="object-cover"
@@ -617,9 +617,9 @@ export default function FoodPalliativePage() {
             </p>
           </motion.div>
 
-          <Tabs defaultValue="distribution" value={activeTab} onValueChange={setActiveTab} className="w-full">
+          <Tabs defaultValue="distribution" value={activeTab} onValueChange={setActiveTab} className="px-4">
             <div className="flex justify-center mb-12">
-              <TabsList className="grid grid-cols-2 md:grid-cols-4 bg-gray-100 p-1 rounded-full">
+              <TabsList className="flex grid-cols-2 md:grid-cols-4 bg-gray-100 p-1 rounded-full px-4">
                 <TabsTrigger
                   value="distribution"
                   className="rounded-full data-[state=active]:bg-[#C8A97E] data-[state=active]:text-white px-6 py-2"
@@ -632,7 +632,7 @@ export default function FoodPalliativePage() {
                 >
                   Food Banks
                 </TabsTrigger>
-                <TabsTrigger
+                {/* <TabsTrigger
                   value="agriculture"
                   className="rounded-full data-[state=active]:bg-[#C8A97E] data-[state=active]:text-white px-6 py-2"
                 >
@@ -643,7 +643,7 @@ export default function FoodPalliativePage() {
                   className="rounded-full data-[state=active]:bg-[#C8A97E] data-[state=active]:text-white px-6 py-2"
                 >
                   Education
-                </TabsTrigger>
+                </TabsTrigger> */}
               </TabsList>
             </div>
 

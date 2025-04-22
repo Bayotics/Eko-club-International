@@ -70,7 +70,7 @@ export default function EducationInitiativePage() {
   }
 
   return (
-    <motion.div initial="initial" animate="animate" variants={pageVariants} className="min-h-screen bg-white pt-20">
+    <motion.div initial="initial" animate="animate" variants={pageVariants} className="min-h-screen bg-white pt-20 mt-5">
       {/* Breadcrumb with academic styling */}
       <div className="bg-gradient-to-r from-[#f8f9fa] to-[#e9ecef] border-b border-gray-200 py-5">
         <div className="container mx-auto px-4 py-4">
@@ -137,7 +137,7 @@ export default function EducationInitiativePage() {
                 <div className="absolute inset-0 bg-[#C8A97E] rounded-md shadow-2xl transform rotate-3 z-10"></div>
                 <div className="absolute inset-0 bg-white rounded-md shadow-2xl z-20">
                   <Image
-                    src="/placeholder.svg?height=400&width=600"
+                    src="/images/Education/1.png?height=400&width=600"
                     alt="Education Initiative"
                     width={600}
                     height={400}
@@ -226,10 +226,10 @@ export default function EducationInitiativePage() {
                 We provide financial support to promising students who lack the resources to pursue their educational
                 dreams, from primary school through university.
               </p>
-              <div className="flex items-center text-[#C8A97E] font-medium">
+              {/* <div className="flex items-center text-[#C8A97E] font-medium">
                 <span>Learn more</span>
                 <ArrowRight className="h-4 w-4 ml-2" />
-              </div>
+              </div> */}
             </motion.div>
 
             <motion.div className="bg-white p-8 shadow-md border-l-4 border-[#C8A97E] relative" variants={fadeInUp}>
@@ -240,10 +240,10 @@ export default function EducationInitiativePage() {
                 We build, renovate, and equip schools with modern facilities and learning resources to create conducive
                 environments for education.
               </p>
-              <div className="flex items-center text-[#C8A97E] font-medium">
+              {/* <div className="flex items-center text-[#C8A97E] font-medium">
                 <span>Learn more</span>
                 <ArrowRight className="h-4 w-4 ml-2" />
-              </div>
+              </div> */}
             </motion.div>
           </motion.div>
 
@@ -488,7 +488,7 @@ export default function EducationInitiativePage() {
                   </div>
                   <div className="ml-20 md:ml-0">
                     <Image
-                      src="/placeholder.svg?height=300&width=400"
+                      src="/images/Education/2.png?height=300&width=400"
                       alt="Community Assessment"
                       width={400}
                       height={300}
@@ -505,7 +505,7 @@ export default function EducationInitiativePage() {
                   </div>
                   <div className="ml-20 md:ml-0">
                     <Image
-                      src="/placeholder.svg?height=300&width=400"
+                      src="/images/Education/3.png?height=300&width=400"
                       alt="Develop Programs"
                       width={400}
                       height={300}
@@ -535,7 +535,7 @@ export default function EducationInitiativePage() {
                   </div>
                   <div className="ml-20 md:ml-0">
                     <Image
-                      src="/placeholder.svg?height=300&width=400"
+                      src="/images/Education/4.png?height=300&width=400"
                       alt="Implementation"
                       width={400}
                       height={300}
@@ -552,7 +552,7 @@ export default function EducationInitiativePage() {
                   </div>
                   <div className="ml-20 md:ml-0">
                     <Image
-                      src="/placeholder.svg?height=300&width=400"
+                      src="/images/projects-education.jpg?height=300&width=400"
                       alt="Measure Impact"
                       width={400}
                       height={300}
@@ -613,9 +613,9 @@ export default function EducationInitiativePage() {
                     <Clock className="h-4 w-4 text-gray-500 mr-2" />
                     <span className="text-sm text-gray-500">2:00 PM - 5:00 PM</span>
                   </div>
-                  <Button variant="link" className="text-[#C8A97E] p-0 hover:text-[#8A6D3B]">
+                  {/* <Button variant="link" className="text-[#C8A97E] p-0 hover:text-[#8A6D3B]">
                     Learn More
-                  </Button>
+                  </Button> */}
                 </div>
               </div>
             </motion.div>
@@ -638,9 +638,9 @@ export default function EducationInitiativePage() {
                     <Clock className="h-4 w-4 text-gray-500 mr-2" />
                     <span className="text-sm text-gray-500">9:00 AM - 4:00 PM</span>
                   </div>
-                  <Button variant="link" className="text-[#C8A97E] p-0 hover:text-[#8A6D3B]">
+                  {/* <Button variant="link" className="text-[#C8A97E] p-0 hover:text-[#8A6D3B]">
                     Learn More
-                  </Button>
+                  </Button> */}
                 </div>
               </div>
             </motion.div>
@@ -663,9 +663,9 @@ export default function EducationInitiativePage() {
                     <Clock className="h-4 w-4 text-gray-500 mr-2" />
                     <span className="text-sm text-gray-500">10:00 AM - 2:00 PM</span>
                   </div>
-                  <Button variant="link" className="text-[#C8A97E] p-0 hover:text-[#8A6D3B]">
+                  {/* <Button variant="link" className="text-[#C8A97E] p-0 hover:text-[#8A6D3B]">
                     Learn More
-                  </Button>
+                  </Button> */}
                 </div>
               </div>
             </motion.div>
@@ -692,7 +692,7 @@ export default function EducationInitiativePage() {
                 <Button className="bg-[#C8A97E] hover:bg-[#8A6D3B] text-white px-8 py-2 rounded-none">
                   Donate Now
                 </Button>
-                <Button variant="outline" className="border-white text-white hover:bg-white/10 rounded-none">
+                <Button variant="outline" className="border-white text-gray-500 hover:bg-white/10 rounded-none">
                   Volunteer
                 </Button>
               </div>

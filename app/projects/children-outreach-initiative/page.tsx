@@ -254,20 +254,20 @@ export default function ChildrenOutreachInitiative() {
         "The Children Outreach Initiative has transformed my daughter's outlook on education. She's now excited about learning!",
       name: "Mrs. Adebayo",
       role: "Parent",
-      image: "/placeholder.svg?height=100&width=100",
+      image: "/images/portrait.png?height=100&width=100",
     },
     {
       quote:
         "The school supplies we received made a huge difference for our students. Many of them couldn't afford these essentials.",
       name: "Mr. Johnson",
       role: "School Principal",
-      image: "/placeholder.svg?height=100&width=100",
+      image: "/images/portrait.png?height=100&width=100",
     },
     {
       quote: "I love the art classes! I've discovered my talent for painting thanks to the amazing teachers.",
       name: "Tunde, 10",
       role: "Program Participant",
-      image: "/placeholder.svg?height=100&width=100",
+      image: "/images/portrait.png?height=100&width=100",
     },
   ]
 
@@ -293,7 +293,7 @@ export default function ChildrenOutreachInitiative() {
   ]
 
   return (
-    <main className="pt-20 overflow-hidden">
+    <main className="pt-20 overflow-hidden mt-5">
       {/* Breadcrumb - Improved Design */}
       <div className="bg-gradient-to-r from-[#FF6B6B]/10 to-[#FFD166]/10 py-5">
         <div className="container mx-auto px-4">
@@ -365,7 +365,7 @@ export default function ChildrenOutreachInitiative() {
                   style={{ animationDuration: "3s" }}
                 ></div>
                 <Image
-                  src="/placeholder.svg?height=600&width=600"
+                  src="/images/Children/10.png?height=600&width=600"
                   alt="Children smiling"
                   width={600}
                   height={600}
@@ -456,7 +456,7 @@ export default function ChildrenOutreachInitiative() {
               <div className="relative">
                 <div className="w-full aspect-video rounded-[2rem] overflow-hidden">
                   <Image
-                    src="/placeholder.svg?height=720&width=1280"
+                    src="/images/Children/6.png?height=720&width=1280"
                     alt="Children in a classroom"
                     fill
                     className="object-cover"
@@ -465,21 +465,21 @@ export default function ChildrenOutreachInitiative() {
 
                 <div className="absolute -bottom-10 -right-10 w-40 h-40 rounded-[2rem] overflow-hidden border-8 border-white shadow-xl">
                   <Image
-                    src="/placeholder.svg?height=200&width=200"
+                    src="/images/Children/2.png?height=200&width=200"
                     alt="Children playing"
                     fill
                     className="object-cover"
                   />
                 </div>
 
-                <div className="absolute -top-10 -left-10 w-32 h-32 rounded-full overflow-hidden border-8 border-white shadow-xl">
+                {/* <div className="absolute -top-10 -left-10 w-32 h-32 rounded-full overflow-hidden border-8 border-white shadow-xl">
                   <Image
-                    src="/placeholder.svg?height=200&width=200"
+                    src="/images/Children/2.png?height=200&width=200"
                     alt="Child reading"
                     fill
                     className="object-cover"
                   />
-                </div>
+                </div> */}
               </div>
             </motion.div>
 
@@ -500,7 +500,7 @@ export default function ChildrenOutreachInitiative() {
                 environment. Through our various programs, we aim to empower children to reach their full potential and
                 build a brighter future.
               </p>
-              <div className="flex flex-col sm:flex-row gap-4 mt-8">
+              {/* <div className="flex flex-col sm:flex-row gap-4 mt-8">
                 <Button className="bg-[#FF6B6B] hover:bg-[#FF6B6B]/90 text-white rounded-full">Learn More</Button>
                 <Button
                   variant="outline"
@@ -508,7 +508,7 @@ export default function ChildrenOutreachInitiative() {
                 >
                   Our History
                 </Button>
-              </div>
+              </div> */}
             </motion.div>
           </div>
         </div>
@@ -712,7 +712,7 @@ export default function ChildrenOutreachInitiative() {
               >
                 <div className="relative w-full aspect-square max-w-xs mx-auto">
                   <Image
-                    src="/placeholder.svg?height=400&width=400"
+                    src="/images/Children/9.png?height=400&width=400"
                     alt="Children smiling"
                     width={400}
                     height={400}

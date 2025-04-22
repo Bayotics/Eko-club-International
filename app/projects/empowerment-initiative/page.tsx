@@ -40,28 +40,28 @@ export default function EmpowermentInitiativePage() {
       title: "Vocational Skills Training",
       description:
         "Intensive training in high-demand skills including digital marketing, web development, fashion design, culinary arts, and more.",
-      image: "/placeholder.svg?height=400&width=600",
+      image: "/images/Empowerment/empowerment-1.png?height=400&width=600",
       impact: "1,200+ graduates employed",
     },
     {
       title: "Business Development",
       description:
         "Comprehensive support for entrepreneurs including business planning, financial management, marketing strategies, and access to micro-loans.",
-      image: "/placeholder.svg?height=400&width=600",
+      image: "/images/Empowerment/4.png?height=400&width=600",
       impact: "350+ businesses launched",
     },
     {
       title: "Digital Literacy",
       description:
         "Bridging the digital divide through computer literacy training, coding bootcamps, and technology access programs for underserved communities.",
-      image: "/placeholder.svg?height=400&width=600",
+      image: "/images/Empowerment/digital-literacy.jpg?height=400&width=600",
       impact: "3,000+ participants trained",
     },
     {
       title: "Youth Leadership Academy",
       description:
         "Developing the next generation of leaders through mentorship, leadership training, and community service projects.",
-      image: "/placeholder.svg?height=400&width=600",
+      image: "/images/Empowerment/7.png?height=400&width=600",
       impact: "500+ youth leaders developed",
     },
   ]
@@ -190,7 +190,7 @@ export default function EmpowermentInitiativePage() {
       <section className="relative h-[60vh] min-h-[500px] flex items-center justify-center overflow-hidden">
         <div className="absolute inset-0 z-0">
           <Image
-            src="/placeholder.svg?height=800&width=1200"
+            src="/images/Empowerment/6.png?height=800&width=1200"
             alt="Empowerment Initiative"
             fill
             className="object-cover"
@@ -237,7 +237,7 @@ export default function EmpowermentInitiativePage() {
             >
               <div className="relative h-[500px] rounded-lg overflow-hidden shadow-xl">
                 <Image
-                  src="/placeholder.svg?height=800&width=1200"
+                  src="/images/Empowerment/8.png?height=800&width=1200"
                   alt="Empowerment Initiative Overview"
                   fill
                   className="object-cover"
@@ -468,7 +468,7 @@ export default function EmpowermentInitiativePage() {
       </section>
 
       {/* Success Stories Section */}
-      <section className="py-20 bg-gray-50">
+      {/* <section className="py-20 bg-gray-50">
         <div className="container mx-auto px-4">
           <motion.div
             initial="hidden"
@@ -508,10 +508,10 @@ export default function EmpowermentInitiativePage() {
             ))}
           </motion.div>
         </div>
-      </section>
+      </section> */}
 
       {/* Upcoming Workshops Section */}
-      <section className="py-20">
+      {/* <section className="py-20">
         <div className="container mx-auto px-4">
           <motion.div
             initial="hidden"
@@ -573,7 +573,7 @@ export default function EmpowermentInitiativePage() {
             ))}
           </motion.div>
         </div>
-      </section>
+      </section> */}
 
       {/* CTA Section */}
       <section className="py-20 bg-[#C8A97E]">

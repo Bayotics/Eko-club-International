@@ -106,7 +106,7 @@ const programs = [
       "Decision-making and problem-solving training",
       "Community project management",
     ],
-    image: "/placeholder.svg?height=400&width=600",
+    image: "/images/youth2.jpeg?height=400&width=600",
   },
   {
     id: "education",
@@ -120,7 +120,7 @@ const programs = [
       "Digital literacy training",
       "Career guidance and counseling",
     ],
-    image: "/placeholder.svg?height=400&width=600",
+    image: "/images/projects-education.jpg?height=400&width=600",
   },
   {
     id: "career",
@@ -134,21 +134,7 @@ const programs = [
       "Networking events with professionals",
       "Industry-specific workshops",
     ],
-    image: "/placeholder.svg?height=400&width=600",
-  },
-  {
-    id: "cultural",
-    title: "Cultural Heritage",
-    icon: <Compass className="h-6 w-6" />,
-    description:
-      "Connecting youth with their cultural roots through immersive experiences, language classes, and cultural events.",
-    features: [
-      "Yoruba language classes",
-      "Traditional arts and crafts workshops",
-      "Cultural exchange programs",
-      "Heritage tours to Lagos",
-    ],
-    image: "/placeholder.svg?height=400&width=600",
+    image: "/images/Youth/2.jpg?height=400&width=600",
   },
   {
     id: "community",
@@ -162,7 +148,7 @@ const programs = [
       "Service learning projects",
       "Recognition program for outstanding service",
     ],
-    image: "/placeholder.svg?height=400&width=600",
+    image: "/images/Youth/1.jpg?height=400&width=600",
   },
 ]
 
@@ -174,7 +160,7 @@ const successStories = [
     current: "Medical Student, Harvard University",
     quote:
       "The leadership skills I developed through ECI Youth programs gave me the confidence to pursue my dreams and make a difference in healthcare.",
-    image: "/placeholder.svg?height=300&width=300",
+    image: "/images/portrait.png?height=300&width=300",
   },
   {
     name: "Folake Adeyemi",
@@ -182,7 +168,7 @@ const successStories = [
     current: "Software Engineer, Google",
     quote:
       "ECI Youth's tech workshops sparked my interest in coding. The mentorship I received helped me navigate my career path in technology.",
-    image: "/placeholder.svg?height=300&width=300",
+    image: "/images/portrait.png?height=300&width=300",
   },
   {
     name: "Oluwaseun Olatunji",
@@ -190,7 +176,7 @@ const successStories = [
     current: "Non-profit Founder",
     quote:
       "My experience organizing community service projects with ECI Youth inspired me to start my own non-profit focused on education in rural Lagos.",
-    image: "/placeholder.svg?height=300&width=300",
+    image: "/images/portrait.png?height=300&width=300",
   },
 ]
 
@@ -245,7 +231,7 @@ export default function ECIYouthPage() {
   }
 
   return (
-    <main className="min-h-screen pt-20">
+    <main className="min-h-screen pt-20 mt-4">
       {/* Hero Section with Diagonal Split */}
       <section className="relative overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-r from-[#5D5FEF]/90 to-[#C8A97E]/90 z-10"></div>
@@ -268,14 +254,14 @@ export default function ECIYouthPage() {
                 <p className="text-lg md:text-xl mb-8 max-w-xl">
                   Building future leaders through mentorship, education, cultural connection, and community service.
                 </p>
-                <div className="flex flex-wrap gap-4">
+                {/* <div className="flex flex-wrap gap-4">
                   <Button size="lg" className="bg-white text-[#5D5FEF] hover:bg-gray-100">
                     Join Our Youth Program
                   </Button>
                   <Button size="lg" variant="outline" className="border-white text-white hover:bg-white/20">
                     Learn More
                   </Button>
-                </div>
+                </div> */}
               </motion.div>
             </div>
 
@@ -288,7 +274,7 @@ export default function ECIYouthPage() {
               >
                 <div className="relative h-[300px] md:h-[400px] rounded-lg overflow-hidden shadow-2xl transform rotate-3 hover:rotate-0 transition-transform duration-500">
                   <Image
-                    src="/placeholder.svg?height=400&width=600"
+                    src="/images/mission-card.jpeg?height=400&width=600"
                     alt="ECI Youth members"
                     fill
                     className="object-cover"
@@ -296,7 +282,7 @@ export default function ECIYouthPage() {
                 </div>
                 <div className="absolute -bottom-6 -left-6 h-[150px] w-[150px] md:h-[200px] md:w-[200px] rounded-lg overflow-hidden shadow-xl transform -rotate-6 hover:rotate-0 transition-transform duration-500">
                   <Image
-                    src="/placeholder.svg?height=200&width=200"
+                    src="/images/Youth/4.jpg?height=200&width=200"
                     alt="Youth activities"
                     fill
                     className="object-cover"
@@ -388,7 +374,7 @@ export default function ECIYouthPage() {
               className="absolute top-0 left-0 md:left-[10%] w-[200px] h-[250px] md:w-[300px] md:h-[350px] rounded-lg overflow-hidden shadow-lg z-10"
             >
               <Image
-                src="/placeholder.svg?height=350&width=300"
+                src="/images/welcome1.jpg?height=350&width=300"
                 alt="Youth leadership training"
                 fill
                 className="object-cover"
@@ -403,7 +389,7 @@ export default function ECIYouthPage() {
               className="absolute top-[100px] right-0 md:right-[10%] w-[200px] h-[250px] md:w-[300px] md:h-[350px] rounded-lg overflow-hidden shadow-lg z-20"
             >
               <Image
-                src="/placeholder.svg?height=350&width=300"
+                src="/images/eci-youth-movement.jpg?height=350&width=300"
                 alt="Youth cultural activities"
                 fill
                 className="object-cover"
@@ -418,7 +404,7 @@ export default function ECIYouthPage() {
               className="absolute bottom-0 left-[50%] transform -translate-x-1/2 w-[200px] h-[150px] md:w-[250px] md:h-[200px] rounded-lg overflow-hidden shadow-lg z-30"
             >
               <Image
-                src="/placeholder.svg?height=200&width=250"
+                src="/images/Youth/1.jpg?height=200&width=250"
                 alt="Youth community service"
                 fill
                 className="object-cover"
@@ -559,7 +545,6 @@ export default function ECIYouthPage() {
                       ))}
                     </div>
 
-                    <Button className="bg-[#5D5FEF] hover:bg-[#4A4CD8]">Learn More</Button>
                   </div>
 
                   <div className="relative rounded-lg overflow-hidden shadow-lg h-[300px] md:h-[400px]">
@@ -625,7 +610,7 @@ export default function ECIYouthPage() {
       </section>
 
       {/* Upcoming Events Section - Horizontal Scroll */}
-      <section className="py-20 bg-white">
+      {/* <section className="py-20 bg-white">
         <div className="container mx-auto px-4">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -688,7 +673,7 @@ export default function ECIYouthPage() {
             </Button>
           </div>
         </div>
-      </section>
+      </section> */}
 
       {/* Call to Action Section */}
       <section className="py-20 bg-gradient-to-r from-[#5D5FEF] to-[#4A4CD8] text-white">
@@ -733,7 +718,7 @@ export default function ECIYouthPage() {
                 <Button size="lg" className="bg-white text-[#5D5FEF] hover:bg-gray-100">
                   Apply Now
                 </Button>
-                <Button size="lg" variant="outline" className="border-white text-white hover:bg-white/20">
+                <Button size="lg" variant="outline" className="border-white text-gray-400 hover:bg-white/20">
                   Contact Us
                 </Button>
               </div>
@@ -747,7 +732,7 @@ export default function ECIYouthPage() {
               className="relative h-[400px] rounded-lg overflow-hidden shadow-2xl"
             >
               <Image
-                src="/placeholder.svg?height=400&width=600"
+                src="/images/eci-youth-movement.jpg?height=400&width=600"
                 alt="Youth members collaborating"
                 fill
                 className="object-cover"

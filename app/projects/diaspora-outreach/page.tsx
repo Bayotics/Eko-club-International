@@ -63,8 +63,6 @@ export default function DiasporaOutreachPage() {
   const globalLocations = [
     { name: "North America", members: 1200, events: 15, projects: 8 },
     { name: "Europe", members: 950, events: 12, projects: 6 },
-    { name: "Asia", members: 450, events: 8, projects: 4 },
-    { name: "Australia", members: 320, events: 6, projects: 3 },
     { name: "Africa", members: 2500, events: 25, projects: 12 },
   ]
 
@@ -97,21 +95,21 @@ export default function DiasporaOutreachPage() {
         "The diaspora network has been instrumental in helping me maintain my connection to Nigeria while building a successful career abroad.",
       name: "Dr. Adebayo Johnson",
       location: "Toronto, Canada",
-      image: "/placeholder.svg?height=100&width=100",
+      image: "/images/portrait.png?height=100&width=100",
     },
     {
       quote:
         "Through the cultural exchange program, my children have developed a deep appreciation for their Nigerian heritage despite being born overseas.",
       name: "Mrs. Folake Williams",
       location: "London, UK",
-      image: "/placeholder.svg?height=100&width=100",
+      image: "/images/portrait.png?height=100&width=100",
     },
     {
       quote:
         "The investment network connected me with the right partners to launch my tech startup in Lagos while I remained based in San Francisco.",
       name: "Mr. Oluwaseun Adeyemi",
       location: "San Francisco, USA",
-      image: "/placeholder.svg?height=100&width=100",
+      image: "/images/portrait.png?height=100&width=100",
     },
   ]
 
@@ -205,7 +203,7 @@ export default function DiasporaOutreachPage() {
       {/* Hero Section with World Map Background */}
       <section className="relative overflow-hidden bg-indigo-900 text-white">
         <div className="absolute inset-0 opacity-20">
-          <Image src="/placeholder.svg?height=1080&width=1920" alt="World Map" fill className="object-cover" />
+          <Image src="/images/disapora_outreach/1.png?height=1080&width=1920" alt="World Map" fill className="object-cover" />
         </div>
 
         {/* Connection Lines Animation */}
@@ -238,12 +236,12 @@ export default function DiasporaOutreachPage() {
                 <Button className="bg-[#C8A97E] hover:bg-[#8A6D3B] text-white rounded-full px-8 py-6">
                   Get Involved
                 </Button>
-                <Button
+                {/* <Button
                   variant="outline"
                   className="bg-transparent border-white text-white hover:bg-white/10 rounded-full px-8 py-6"
                 >
                   Learn More
-                </Button>
+                </Button> */}
               </motion.div>
             </motion.div>
 
@@ -253,7 +251,7 @@ export default function DiasporaOutreachPage() {
                 className="relative h-[300px] md:h-[400px] w-full rounded-full overflow-hidden border-4 border-[#C8A97E]/30"
               >
                 <Image
-                  src="/placeholder.svg?height=800&width=800"
+                  src="/images/diaspora_outreach/1.png?height=800&width=800"
                   alt="Global Community"
                   fill
                   className="object-cover rounded-full"
@@ -323,14 +321,14 @@ export default function DiasporaOutreachPage() {
             whileInView="visible"
             viewport={{ once: true, margin: "-100px" }}
             variants={containerVariants}
-            className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-6"
+            className="flex justify-center grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-10"
           >
             {globalLocations.map((location, index) => (
               <motion.div
                 key={location.name}
                 variants={itemVariants}
                 whileHover={{ y: -10, transition: { duration: 0.3 } }}
-                className="bg-gradient-to-br from-indigo-50 to-blue-50 rounded-xl p-6 shadow-md border border-indigo-100"
+                className="bg-gradient-to-br px-10 py-6 from-indigo-50 to-blue-50 rounded-xl shadow-md border border-indigo-100"
               >
                 <div className="text-center">
                   <div className="inline-flex items-center justify-center w-16 h-16 mb-4 rounded-full bg-indigo-100 text-indigo-800">
@@ -664,7 +662,7 @@ export default function DiasporaOutreachPage() {
 
               <motion.div variants={fadeIn} className="relative h-full min-h-[300px]">
                 <Image
-                  src="/placeholder.svg?height=800&width=600"
+                  src="/images/diaspora_outreach/2.jpeg?height=800&width=600"
                   alt="Global Community"
                   fill
                   className="object-cover"
