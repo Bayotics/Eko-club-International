@@ -178,7 +178,7 @@ export default function Navbar() {
       return (
         <div className="py-3 border-b border-gray-100">
           <div className="flex justify-between items-center" onClick={() => setOpen(!open)}>
-            <span className={`text-base font-medium ${open ? "text-[#e4e66d]" : "text-gray-800"}`}>{item.name}</span>
+            <span className={`text-base font-medium ${open ? "text-[#91924f]" : "text-gray-800"}`}>{item.name}</span>
             <FiChevronDown className={`transition-transform ${open ? "rotate-180 text-[#e4e66d]" : ""}`} />
           </div>
 
@@ -190,7 +190,10 @@ export default function Navbar() {
                   <Link
                     href={dropdownItem.href}
                     className="text-gray-600 hover:text-[#e4e66d]"
-                    onClick={() => setIsOpen(false)}
+                    onClick={() => {
+                      setIsOpen(false) // Close the main mobile menu
+                      setOpen(false) // Close the dropdown
+                    }}
                   >
                     {dropdownItem.name}
                   </Link>
@@ -288,7 +291,7 @@ export default function Navbar() {
             transition={{ duration: 0.5, delay: 0.2 }}
             className="font-medium text-lg md:text-xl ml-2"
           >
-            <span className={` ${scrolled || pathname !== "/" ? "text-gray-800" : "text-[#e4e66d]"}`}>EKO CLUB</span>{" "}
+            <span className={`${scrolled || pathname !== "/" ? "text-gray-800" : "text-yellow-300"}`}>EKO CLUB</span>{" "}
             <span className={`hidden sm:inline ${scrolled || pathname !== "/" ? "text-gray-800" : "text-white"}`}>
               INTERNATIONAL
             </span>
@@ -307,9 +310,9 @@ export default function Navbar() {
                 className={cn(
                   "px-1 py-2 text-sm font-medium transition-colors relative group",
                   pathname === item.href || (pathname === "/" && item.href === "/")
-                    ? "text-[#cdd834]"
+                    ? "text-[#e4e66d]"
                     : scrolled || pathname !== "/"
-                      ? "text-gray-800 hover:text-[#6e6e51]"
+                      ? "text-gray-800 hover:text-[#e4e66d]"
                       : "text-white hover:text-[#e4e66d]",
                 )}
               >
@@ -318,7 +321,7 @@ export default function Navbar() {
               </Link>
             ),
           )}
-          <Button className="ml-4 bg-[#e4e66d] hover:bg-[#8A6D3B] text-gray-800 transition-colors duration-300 rounded-none px-6">
+          <Button className="ml-4 bg-[#e4e66d] hover:bg-[#bcbe3a] text-gray-800 transition-colors duration-300 rounded-none px-6">
             <Link href="/donate">Donate</Link>
           </Button>
           {loading ? (
@@ -448,7 +451,11 @@ export default function Navbar() {
           onClick={() => setIsOpen(!isOpen)}
           aria-label="Toggle menu"
         >
-          {isOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
+          {isOpen ? (
+            <X className="h-6 w-6 text-white" />
+          ) : (
+            <Menu className={cn("h-6 w-6", scrolled || pathname !== "/" ? "text-gray-800" : "text-white")} />
+          )}
         </Button>
       </div>
 
@@ -460,7 +467,7 @@ export default function Navbar() {
             animate={{ opacity: 1, height: "auto" }}
             exit={{ opacity: 0, height: 0 }}
             transition={{ duration: 0.3 }}
-            className="md:hidden bg-white border-t"
+            className="md:hidden bg-white border-t max-h-[80vh] overflow-y-auto"
           >
             <div className="container mx-auto px-4 py-4 flex flex-col">
               {navItems.map((item, index) => (
@@ -492,12 +499,135 @@ export default function Navbar() {
                 transition={{ delay: navItems.length * 0.05 }}
                 className="mt-4"
               >
-                <Button className="w-full bg-[#e4e66d] hover:bg-[#8A6D3B] text-white transition-colors duration-300 rounded-none">
+                <Button className="w-full bg-[#e4e66d] hover:bg-[#8A6D3B] text-gray-800 transition-colors duration-300 rounded-none">
                   <Link href="/donate" onClick={() => setIsOpen(false)}>
                     Donate Now
                   </Link>
                 </Button>
               </motion.div>
+              {loading ? null : user ? (
+                <div className="py-3 border-b border-gray-100">
+                  <div className="flex items-center gap-2">
+                    <Avatar className="h-8 w-8">
+                      {user.profileImage ? (
+                        <AvatarImage src={user.profileImage || "/placeholder.svg"} alt={user.fullName} />
+                      ) : (
+                        <AvatarFallback className="bg-[#e4e66d] text-white">
+                          {user.fullName
+                            .split(" ")
+                            .map((name) => name[0])
+                            .join("")
+                            .toUpperCase()}
+                        </AvatarFallback>
+                      )}
+                    </Avatar>
+                    <div className="flex flex-col items-start">
+                      <span className="text-sm font-medium">{user.fullName}</span>
+                      <span className="text-xs text-gray-500 capitalize">{user.role}</span>
+                    </div>
+                  </div>
+                  <div className="mt-2 space-y-1">
+                    <Link
+                      href="/members/dashboard"
+                      className="block py-1 text-sm text-gray-800 hover:text-[#e4e66d]"
+                      onClick={() => setIsOpen(false)}
+                    >
+                      Dashboard
+                    </Link>
+                    <Link
+                      href="/members/profile"
+                      className="block py-1 text-sm text-gray-800 hover:text-[#e4e66d]"
+                      onClick={() => setIsOpen(false)}
+                    >
+                      Profile
+                    </Link>
+                    {user.role === "admin" && (
+                      <>
+                        <Link
+                          href="/admin/users"
+                          className="block py-1 text-sm text-gray-800 hover:text-[#e4e66d]"
+                          onClick={() => setIsOpen(false)}
+                        >
+                          Manage Users
+                        </Link>
+                        <Link
+                          href="/admin/invite"
+                          className="block py-1 text-sm text-gray-800 hover:text-[#e4e66d]"
+                          onClick={() => setIsOpen(false)}
+                        >
+                          Invite Users
+                        </Link>
+                        <Link
+                          href="/admin/meetings"
+                          className="block py-1 text-sm text-gray-800 hover:text-[#e4e66d]"
+                          onClick={() => setIsOpen(false)}
+                        >
+                          Manage Meetings
+                        </Link>
+                        <Link
+                          href="/admin/events"
+                          className="block py-1 text-sm text-gray-800 hover:text-[#e4e66d]"
+                          onClick={() => setIsOpen(false)}
+                        >
+                          Manage Events
+                        </Link>
+                        <Link
+                          href="/admin/meeting-minutes"
+                          className="block py-1 text-sm text-gray-800 hover:text-[#e4e66d]"
+                          onClick={() => setIsOpen(false)}
+                        >
+                          Manage Meeting Minutes
+                        </Link>
+                        <Link
+                          href="/admin/newsletter"
+                          className="block py-1 text-sm text-gray-800 hover:text-[#e4e66d]"
+                          onClick={() => setIsOpen(false)}
+                        >
+                          Manage Newsletter
+                        </Link>
+                        <Link
+                          href="/admin/donations"
+                          className="block py-1 text-sm text-gray-800 hover:text-[#e4e66d]"
+                          onClick={() => setIsOpen(false)}
+                        >
+                          Manage Donations
+                        </Link>
+                        <Link
+                          href="/admin/subscribers"
+                          className="block py-1 text-sm text-gray-800 hover:text-[#e4e66d]"
+                          onClick={() => setIsOpen(false)}
+                        >
+                          Manage Subscribers
+                        </Link>
+                        <Link
+                          href="/admin/documents"
+                          className="block py-1 text-sm text-gray-800 hover:text-[#e4e66d]"
+                          onClick={() => setIsOpen(false)}
+                        >
+                          Manage Documents
+                        </Link>
+                      </>
+                    )}
+                    <Button
+                      variant="ghost"
+                      className="w-full justify-start text-yellow-600"
+                      onClick={() => {
+                        handleLogout()
+                        setIsOpen(false)
+                      }}
+                    >
+                      <LogOut className="mr-2 h-4 w-4" />
+                      Log out
+                    </Button>
+                  </div>
+                </div>
+              ) : (
+                <Button className="w-full bg-[#78b16d] hover:bg-[#2b5223] text-slate-100 transition-colors duration-300 rounded-none">
+                  <Link href="/login" onClick={() => setIsOpen(false)}>
+                    Members Login
+                  </Link>
+                </Button>
+              )}
             </div>
           </motion.div>
         )}
