@@ -1,10 +1,10 @@
 "use client"
 
-import { useState, useRef } from "react"
+import { useState, useRef, useEffect } from "react"
 import Image from "next/image"
 import { motion, useScroll, useTransform, useInView } from "framer-motion"
-import { format } from "date-fns"
-import { Calendar, MapPin, Clock, ChevronRight, ChevronLeft, Search } from "lucide-react"
+import { format, isBefore, isAfter, parseISO, isSameMonth } from "date-fns"
+import { CalendarIcon, MapPin, Clock, ChevronRight, ChevronLeft, Search, Loader2 } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardFooter } from "@/components/ui/card"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
@@ -17,80 +17,33 @@ import {
   BreadcrumbList,
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb"
+import { Alert, AlertDescription } from "@/components/ui/alert"
 
-// Sample data for events
-const upcomingEvents = [
-  {
-    id: 1,
-    title: "Annual Medical Mission",
-    description:
-      "Join us for our annual medical mission to Lagos, providing essential healthcare services to underserved communities.",
-    image: "/placeholder.svg?height=400&width=600",
-    date: "October 15-22, 2024",
-    location: "Lagos, Nigeria",
-    time: "9:00 AM - 5:00 PM",
-    category: "Medical",
-    featured: true,
-  },
-  {
-    id: 2,
-    title: "Cultural Gala Night",
-    description:
-      "A celebration of Lagos culture with traditional music, dance, food, and fashion showcasing our rich heritage.",
-    image: "/placeholder.svg?height=400&width=600",
-    date: "August 12, 2024",
-    location: "Atlanta, GA",
-    time: "6:00 PM - 11:00 PM",
-    category: "Cultural",
-    featured: true,
-  },
-  {
-    id: 3,
-    title: "Scholarship Fundraiser",
-    description: "Help us raise funds to support educational opportunities for deserving students in our communities.",
-    image: "/placeholder.svg?height=400&width=600",
-    date: "September 5, 2024",
-    location: "New York, NY",
-    time: "7:00 PM - 10:00 PM",
-    category: "Education",
-    featured: false,
-  },
-  {
-    id: 4,
-    title: "Youth Leadership Workshop",
-    description: "Empowering the next generation of leaders with skills and knowledge to make a positive impact.",
-    image: "/placeholder.svg?height=400&width=600",
-    date: "July 18, 2024",
-    location: "Houston, TX",
-    time: "10:00 AM - 4:00 PM",
-    category: "Youth",
-    featured: false,
-  },
-  {
-    id: 5,
-    title: "Community Health Fair",
-    description: "Free health screenings, consultations, and wellness information for community members.",
-    image: "/placeholder.svg?height=400&width=600",
-    date: "August 28, 2024",
-    location: "Chicago, IL",
-    time: "9:00 AM - 3:00 PM",
-    category: "Medical",
-    featured: false,
-  },
-  {
-    id: 6,
-    title: "Business Networking Mixer",
-    description: "Connect with professionals and entrepreneurs to build relationships and explore opportunities.",
-    image: "/placeholder.svg?height=400&width=600",
-    date: "July 25, 2024",
-    location: "Washington, DC",
-    time: "6:30 PM - 9:00 PM",
-    category: "Business",
-    featured: false,
-  },
-]
+// Define Event type
+interface Event {
+  _id: string
+  title: string
+  description: string
+  image: string
+  date: string
+  location: string
+  time: string
+  category: string
+  featured: boolean
+}
 
-// Sample data for news
+// Define News type
+interface News {
+  id: number
+  title: string
+  excerpt: string
+  image: string
+  date: string
+  category: string
+  featured: boolean
+}
+
+// Sample data for news (keep this until you have a news API)
 const newsArticles = [
   {
     id: 1,
@@ -134,47 +87,6 @@ const newsArticles = [
   },
 ]
 
-// Sample data for past events
-const pastEvents = [
-  {
-    id: 1,
-    title: "2023 Annual Convention",
-    description:
-      "Members from around the world gathered for our annual convention to discuss initiatives and achievements.",
-    image: "/placeholder.svg?height=400&width=600",
-    date: "November 10-12, 2023",
-    location: "Miami, FL",
-    category: "Convention",
-  },
-  {
-    id: 2,
-    title: "Lagos Heritage Festival",
-    description: "A celebration of Lagos culture and heritage with music, food, and traditional performances.",
-    image: "/placeholder.svg?height=400&width=600",
-    date: "October 5, 2023",
-    location: "Atlanta, GA",
-    category: "Cultural",
-  },
-  {
-    id: 3,
-    title: "Youth Mentorship Program",
-    description: "A six-week program connecting youth with mentors in various professional fields.",
-    image: "/placeholder.svg?height=400&width=600",
-    date: "August-September 2023",
-    location: "Multiple Locations",
-    category: "Youth",
-  },
-  {
-    id: 4,
-    title: "Medical Mission 2023",
-    description: "Provided free medical services to over 1,500 people in underserved communities in Lagos.",
-    image: "/placeholder.svg?height=400&width=600",
-    date: "July 15-22, 2023",
-    location: "Lagos, Nigeria",
-    category: "Medical",
-  },
-]
-
 // Sample data for testimonials
 const testimonials = [
   {
@@ -183,7 +95,7 @@ const testimonials = [
     role: "Medical Mission Volunteer",
     quote:
       "Participating in the Eko Club medical mission was one of the most rewarding experiences of my career. The impact we made on the community was immeasurable.",
-    image: "/placeholder.svg?height=100&width=100",
+    image: "/images/portrait.png?height=100&width=100",
   },
   {
     id: 2,
@@ -191,7 +103,7 @@ const testimonials = [
     role: "Scholarship Recipient",
     quote:
       "The scholarship from Eko Club International changed my life. I was able to complete my education and now I'm giving back to my community as a teacher.",
-    image: "/placeholder.svg?height=100&width=100",
+    image: "/images/portrait.png?height=100&width=100",
   },
   {
     id: 3,
@@ -199,24 +111,17 @@ const testimonials = [
     role: "Gala Attendee",
     quote:
       "The annual gala is always a highlight of my year. It's a wonderful opportunity to connect with fellow Lagosians and support important causes.",
-    image: "/placeholder.svg?height=100&width=100",
+    image: "/images/portrait.png?height=100&width=100",
   },
-]
-
-// Calendar events for the next few months
-const calendarEvents = [
-  { date: new Date(2024, 6, 18), title: "Youth Leadership Workshop", category: "Youth" },
-  { date: new Date(2024, 6, 25), title: "Business Networking Mixer", category: "Business" },
-  { date: new Date(2024, 7, 12), title: "Cultural Gala Night", category: "Cultural" },
-  { date: new Date(2024, 7, 28), title: "Community Health Fair", category: "Medical" },
-  { date: new Date(2024, 8, 5), title: "Scholarship Fundraiser", category: "Education" },
-  { date: new Date(2024, 9, 15), title: "Annual Medical Mission", category: "Medical" },
 ]
 
 export default function EventsPage() {
   const [activeCategory, setActiveCategory] = useState("All")
   const [searchQuery, setSearchQuery] = useState("")
   const [currentMonth, setCurrentMonth] = useState(new Date())
+  const [events, setEvents] = useState<Event[]>([])
+  const [loading, setLoading] = useState(true)
+  const [error, setError] = useState<string | null>(null)
 
   const heroRef = useRef(null)
   const featuredRef = useRef(null)
@@ -237,9 +142,48 @@ export default function EventsPage() {
   const { scrollYProgress } = useScroll()
   const heroScale = useTransform(scrollYProgress, [0, 0.1], [1, 0.98])
 
-  const categories = ["All", "Medical", "Cultural", "Education", "Youth", "Business", "Fundraising"]
+  // Fetch events from the API
+  useEffect(() => {
+    const fetchEvents = async () => {
+      try {
+        setLoading(true)
+        const response = await fetch("/api/events")
 
-  const filteredEvents = upcomingEvents.filter((event) => {
+        if (!response.ok) {
+          throw new Error(`Failed to fetch events: ${response.status}`)
+        }
+
+        const data = await response.json()
+        setEvents(data)
+        setError(null)
+      } catch (err) {
+        console.error("Error fetching events:", err)
+        setError("Failed to load events. Please try again later.")
+      } finally {
+        setLoading(false)
+      }
+    }
+
+    fetchEvents()
+  }, [])
+
+  // Extract unique categories from events
+  const eventCategories = ["All", ...Array.from(new Set(events.map((event) => event.category)))]
+
+  // Filter upcoming events (events with dates in the future)
+  const upcomingEvents = events.filter((event) => {
+    const eventDate = new Date(event.date)
+    return isAfter(eventDate, new Date()) || isSameMonth(eventDate, new Date())
+  })
+
+  // Filter past events (events with dates in the past)
+  const pastEvents = events.filter((event) => {
+    const eventDate = new Date(event.date)
+    return isBefore(eventDate, new Date()) && !isSameMonth(eventDate, new Date())
+  })
+
+  // Filter events based on search and category
+  const filteredUpcomingEvents = upcomingEvents.filter((event) => {
     if (activeCategory !== "All" && event.category !== activeCategory) return false
     if (
       searchQuery &&
@@ -272,12 +216,22 @@ export default function EventsPage() {
     return true
   })
 
-  const monthEventsMap = calendarEvents.reduce((acc, event) => {
-    const monthYear = `${event.date.getMonth()}-${event.date.getFullYear()}`
-    if (!acc[monthYear]) acc[monthYear] = []
-    acc[monthYear].push(event)
-    return acc
-  }, {})
+  // Create calendar events from real events data
+  const calendarEvents = events.map((event) => ({
+    date: parseISO(event.date),
+    title: event.title,
+    category: event.category,
+  }))
+
+  const monthEventsMap = calendarEvents.reduce(
+    (acc, event) => {
+      const monthYear = `${event.date.getMonth()}-${event.date.getFullYear()}`
+      if (!acc[monthYear]) acc[monthYear] = []
+      acc[monthYear].push(event)
+      return acc
+    },
+    {} as Record<string, typeof calendarEvents>,
+  )
 
   const currentMonthYear = `${currentMonth.getMonth()}-${currentMonth.getFullYear()}`
   const currentMonthEvents = monthEventsMap[currentMonthYear] || []
@@ -297,13 +251,23 @@ export default function EventsPage() {
     setCurrentMonth(new Date(currentMonth.getFullYear(), currentMonth.getMonth() + 1, 1))
   }
 
-  const getEventForDay = (day) => {
+  const getEventForDay = (day: number | null) => {
     if (!day) return null
     return currentMonthEvents.find((event) => event.date.getDate() === day)
   }
 
+  // Format date for display
+  const formatEventDate = (dateString: string) => {
+    try {
+      const date = parseISO(dateString)
+      return format(date, "MMMM d, yyyy")
+    } catch (error) {
+      return dateString
+    }
+  }
+
   return (
-    <main className="pt-20 overflow-hidden">
+    <main className="pt-20 overflow-hidden mt-4">
       {/* Breadcrumb */}
       <div className="bg-gradient-to-r from-[#f8f9fa] to-[#e9ecef] py-5">
         <div className="container mx-auto px-4">
@@ -331,7 +295,7 @@ export default function EventsPage() {
         <motion.div
           className="absolute inset-0 z-0"
           style={{
-            backgroundImage: "url('/placeholder.svg?height=1080&width=1920')",
+            backgroundImage: "url('/images/events-bg.jpg?height=1080&width=1920')",
             backgroundSize: "cover",
             backgroundPosition: "center",
             opacity: 0.2,
@@ -368,7 +332,7 @@ export default function EventsPage() {
               to make a positive impact in our communities.
             </motion.p>
 
-            <motion.div
+            {/* <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={heroInView ? { opacity: 1, y: 0 } : {}}
               transition={{ duration: 0.6, delay: 0.6 }}
@@ -380,7 +344,7 @@ export default function EventsPage() {
               <Button className="bg-transparent border-2 border-white hover:bg-white hover:text-[#16213e] text-white transition-colors duration-300 rounded-none px-8 py-6">
                 Latest News
               </Button>
-            </motion.div>
+            </motion.div> */}
           </motion.div>
         </div>
 
@@ -413,7 +377,7 @@ export default function EventsPage() {
             </div>
 
             <div className="flex flex-wrap gap-2 w-full md:w-auto justify-center md:justify-end">
-              {categories.map((category, index) => (
+              {eventCategories.map((category, index) => (
                 <motion.div
                   key={category}
                   initial={{ opacity: 0, y: 10 }}
@@ -460,7 +424,15 @@ export default function EventsPage() {
             </p>
           </motion.div>
 
-          {filteredEvents.length === 0 ? (
+          {loading ? (
+            <div className="flex justify-center items-center py-20">
+              <Loader2 className="h-8 w-8 animate-spin text-[#C8A97E]" />
+            </div>
+          ) : error ? (
+            <Alert variant="destructive" className="max-w-md mx-auto">
+              <AlertDescription>{error}</AlertDescription>
+            </Alert>
+          ) : filteredUpcomingEvents.length === 0 ? (
             <motion.div
               className="text-center py-12"
               initial={{ opacity: 0 }}
@@ -471,9 +443,9 @@ export default function EventsPage() {
             </motion.div>
           ) : (
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-              {filteredEvents.map((event, index) => (
+              {filteredUpcomingEvents.map((event, index) => (
                 <motion.div
-                  key={event.id}
+                  key={event._id}
                   initial={{ opacity: 0, y: 50 }}
                   animate={featuredInView ? { opacity: 1, y: 0 } : {}}
                   transition={{ duration: 0.5, delay: 0.2 + index * 0.1 }}
@@ -487,7 +459,7 @@ export default function EventsPage() {
                         </div>
                       )}
                       <Image
-                        src={event.image || "/placeholder.svg"}
+                        src={event.image || "/placeholder.svg?height=400&width=600"}
                         alt={event.title}
                         width={600}
                         height={400}
@@ -504,8 +476,8 @@ export default function EventsPage() {
                       <p className="text-gray-600 mb-4">{event.description}</p>
                       <div className="space-y-2 text-sm">
                         <div className="flex items-center">
-                          <Calendar className="h-4 w-4 text-[#C8A97E] mr-2" />
-                          <span>{event.date}</span>
+                          <CalendarIcon className="h-4 w-4 text-[#C8A97E] mr-2" />
+                          <span>{formatEventDate(event.date)}</span>
                         </div>
                         <div className="flex items-center">
                           <MapPin className="h-4 w-4 text-[#C8A97E] mr-2" />
@@ -517,27 +489,18 @@ export default function EventsPage() {
                         </div>
                       </div>
                     </CardContent>
-                    <CardFooter className="p-6 pt-0">
+                    {/* <CardFooter className="p-6 pt-0">
                       <Button className="w-full bg-[#C8A97E] hover:bg-[#8A6D3B] text-white transition-colors duration-300 rounded-none uppercase">
                         Register
                       </Button>
-                    </CardFooter>
+                    </CardFooter> */}
                   </Card>
                 </motion.div>
               ))}
             </div>
           )}
 
-          <motion.div
-            className="text-center mt-12"
-            initial={{ opacity: 0, y: 20 }}
-            animate={featuredInView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.6, delay: 0.6 }}
-          >
-            <Button className="border-2 border-[#C8A97E] text-[#C8A97E] hover:bg-[#C8A97E] hover:text-white transition-colors duration-300 rounded-none px-8 py-6 uppercase">
-              View All Events
-            </Button>
-          </motion.div>
+          
         </div>
       </section>
 
@@ -563,8 +526,10 @@ export default function EventsPage() {
               Stay updated with the latest news and announcements from Eko Club International.
             </p>
           </motion.div>
-
-          {filteredNews.length === 0 ? (
+          <h1 className="text-center font-semibold text-3xl">
+            Coming Soon...
+          </h1>
+          {/* {filteredNews.length === 0 ? (
             <motion.div
               className="text-center py-12"
               initial={{ opacity: 0 }}
@@ -607,7 +572,7 @@ export default function EventsPage() {
                       </div>
                       <div className="flex items-center justify-between mt-4">
                         <div className="text-sm text-gray-500">
-                          <Calendar className="h-4 w-4 inline mr-2" />
+                          <CalendarIcon className="h-4 w-4 inline mr-2" />
                           {article.date}
                         </div>
                         <Button className="bg-transparent hover:bg-[#C8A97E] text-[#C8A97E] hover:text-white border border-[#C8A97E] transition-colors duration-300 rounded-none">
@@ -652,7 +617,7 @@ export default function EventsPage() {
                     </CardContent>
                     <CardFooter className="p-5 pt-0 flex justify-between items-center">
                       <span className="text-sm text-gray-500">
-                        <Calendar className="h-4 w-4 inline mr-1" />
+                        <CalendarIcon className="h-4 w-4 inline mr-1" />
                         {article.date}
                       </span>
                       <Button variant="link" className="text-[#C8A97E] p-0 hover:text-[#8A6D3B]">
@@ -663,18 +628,7 @@ export default function EventsPage() {
                 </motion.div>
               ))}
             </div>
-          )}
-
-          <motion.div
-            className="text-center mt-12"
-            initial={{ opacity: 0, y: 20 }}
-            animate={newsInView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.6, delay: 0.6 }}
-          >
-            <Button className="border-2 border-[#C8A97E] text-[#C8A97E] hover:bg-[#C8A97E] hover:text-white transition-colors duration-300 rounded-none px-8 py-6 uppercase">
-              View All News
-            </Button>
-          </motion.div>
+          )} */}
         </div>
       </section>
 
@@ -701,71 +655,83 @@ export default function EventsPage() {
             </p>
           </motion.div>
 
-          <motion.div
-            className="bg-gray-50 p-6 rounded-lg shadow-md"
-            initial={{ opacity: 0, y: 30 }}
-            animate={calendarInView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.6, delay: 0.3 }}
-          >
-            <div className="flex justify-between items-center mb-6">
-              <Button variant="ghost" size="sm" onClick={prevMonth} className="text-gray-600 hover:text-[#C8A97E]">
-                <ChevronLeft className="h-5 w-5" />
-              </Button>
-
-              <h3 className="text-xl font-medium">{format(currentMonth, "MMMM yyyy")}</h3>
-
-              <Button variant="ghost" size="sm" onClick={nextMonth} className="text-gray-600 hover:text-[#C8A97E]">
-                <ChevronRight className="h-5 w-5" />
-              </Button>
+          {loading ? (
+            <div className="flex justify-center items-center py-20">
+              <Loader2 className="h-8 w-8 animate-spin text-[#C8A97E]" />
             </div>
+          ) : error ? (
+            <Alert variant="destructive" className="max-w-md mx-auto">
+              <AlertDescription>{error}</AlertDescription>
+            </Alert>
+          ) : (
+            <motion.div
+              className="bg-gray-50 p-6 rounded-lg shadow-md"
+              initial={{ opacity: 0, y: 30 }}
+              animate={calendarInView ? { opacity: 1, y: 0 } : {}}
+              transition={{ duration: 0.6, delay: 0.3 }}
+            >
+              <div className="flex justify-between items-center mb-6">
+                <Button variant="ghost" size="sm" onClick={prevMonth} className="text-gray-600 hover:text-[#C8A97E]">
+                  <ChevronLeft className="h-5 w-5" />
+                </Button>
 
-            <div className="grid grid-cols-7 gap-1 mb-2">
-              {["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"].map((day) => (
-                <div key={day} className="text-center font-medium text-gray-600 py-2">
-                  {day}
-                </div>
-              ))}
-            </div>
+                <h3 className="text-xl font-medium">{format(currentMonth, "MMMM yyyy")}</h3>
 
-            <div className="grid grid-cols-7 gap-1">
-              {calendarGrid.map((day, index) => {
-                const event = getEventForDay(day)
-                return (
-                  <motion.div
-                    key={index}
-                    initial={{ opacity: 0, scale: 0.9 }}
-                    animate={calendarInView ? { opacity: 1, scale: 1 } : {}}
-                    transition={{ duration: 0.3, delay: 0.4 + index * 0.01 }}
-                    className={`
-                      h-24 sm:h-28 p-1 border ${day ? "border-gray-200" : "border-transparent"} 
-                      ${event ? "bg-[#C8A97E]/10" : day ? "bg-white" : "bg-transparent"}
-                      ${event ? "hover:bg-[#C8A97E]/20" : day ? "hover:bg-gray-100" : ""}
-                      transition-colors duration-200
-                    `}
-                  >
-                    {day && (
-                      <div className="h-full flex flex-col">
-                        <div
-                          className={`text-right text-sm ${
-                            new Date().getDate() === day &&
-                            new Date().getMonth() === currentMonth.getMonth() &&
-                            new Date().getFullYear() === currentMonth.getFullYear()
-                              ? "bg-[#C8A97E] text-white rounded-full w-6 h-6 flex items-center justify-center ml-auto"
-                              : ""
-                          }`}
-                        >
-                          {day}
+                <Button variant="ghost" size="sm" onClick={nextMonth} className="text-gray-600 hover:text-[#C8A97E]">
+                  <ChevronRight className="h-5 w-5" />
+                </Button>
+              </div>
+
+              <div className="grid grid-cols-7 gap-1 mb-2">
+                {["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"].map((day) => (
+                  <div key={day} className="text-center font-medium text-gray-600 py-2">
+                    {day}
+                  </div>
+                ))}
+              </div>
+
+              <div className="grid grid-cols-7 gap-1">
+                {calendarGrid.map((day, index) => {
+                  const event = getEventForDay(day)
+                  return (
+                    <motion.div
+                      key={index}
+                      initial={{ opacity: 0, scale: 0.9 }}
+                      animate={calendarInView ? { opacity: 1, scale: 1 } : {}}
+                      transition={{ duration: 0.3, delay: 0.4 + index * 0.01 }}
+                      className={`
+                        h-24 sm:h-28 p-1 border ${day ? "border-gray-200" : "border-transparent"} 
+                        ${event ? "bg-[#C8A97E]/10" : day ? "bg-white" : "bg-transparent"}
+                        ${event ? "hover:bg-[#C8A97E]/20" : day ? "hover:bg-gray-100" : ""}
+                        transition-colors duration-200
+                      `}
+                    >
+                      {day && (
+                        <div className="h-full flex flex-col">
+                          <div
+                            className={`text-right text-sm ${
+                              new Date().getDate() === day &&
+                              new Date().getMonth() === currentMonth.getMonth() &&
+                              new Date().getFullYear() === currentMonth.getFullYear()
+                                ? "bg-[#C8A97E] text-white rounded-full w-6 h-6 flex items-center justify-center ml-auto"
+                                : ""
+                            }`}
+                          >
+                            {day}
+                          </div>
+                          {event && (
+                            <div className="mt-1 text-xs bg-[#C8A97E] text-white p-1 rounded truncate">
+                              {event.title}
+                            </div>
+                          )}
                         </div>
-                        {event && (
-                          <div className="mt-1 text-xs bg-[#C8A97E] text-white p-1 rounded truncate">{event.title}</div>
-                        )}
-                      </div>
-                    )}
-                  </motion.div>
-                )
-              })}
-            </div>
-          </motion.div>
+                      )}
+                    </motion.div>
+                  )
+                })}
+              </div>
+            </motion.div>
+          )}
 
           <motion.div
             className="mt-8 bg-gray-100 p-6 rounded-lg"
@@ -846,7 +812,15 @@ export default function EventsPage() {
             </motion.div>
 
             <TabsContent value="gallery">
-              {filteredPastEvents.length === 0 ? (
+              {loading ? (
+                <div className="flex justify-center items-center py-20">
+                  <Loader2 className="h-8 w-8 animate-spin text-[#C8A97E]" />
+                </div>
+              ) : error ? (
+                <Alert variant="destructive" className="max-w-md mx-auto">
+                  <AlertDescription>{error}</AlertDescription>
+                </Alert>
+              ) : filteredPastEvents.length === 0 ? (
                 <motion.div
                   className="text-center py-12"
                   initial={{ opacity: 0 }}
@@ -859,7 +833,7 @@ export default function EventsPage() {
                 <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
                   {filteredPastEvents.map((event, index) => (
                     <motion.div
-                      key={event.id}
+                      key={event._id}
                       initial={{ opacity: 0, scale: 0.9 }}
                       animate={pastEventsInView ? { opacity: 1, scale: 1 } : {}}
                       transition={{ duration: 0.5, delay: 0.4 + index * 0.1 }}
@@ -872,7 +846,7 @@ export default function EventsPage() {
                     >
                       <div className="relative">
                         <Image
-                          src={event.image || "/placeholder.svg"}
+                          src={event.image || "/placeholder.svg?height=400&width=600"}
                           alt={event.title}
                           width={600}
                           height={400}
@@ -888,8 +862,8 @@ export default function EventsPage() {
                       <div className="p-4">
                         <h3 className="font-medium mb-2">{event.title}</h3>
                         <div className="flex items-center text-sm text-gray-600 mb-2">
-                          <Calendar className="h-4 w-4 mr-2 text-[#C8A97E]" />
-                          {event.date}
+                          <CalendarIcon className="h-4 w-4 mr-2 text-[#C8A97E]" />
+                          {formatEventDate(event.date)}
                         </div>
                         <div className="flex items-center text-sm text-gray-600">
                           <MapPin className="h-4 w-4 mr-2 text-[#C8A97E]" />
@@ -903,7 +877,15 @@ export default function EventsPage() {
             </TabsContent>
 
             <TabsContent value="list">
-              {filteredPastEvents.length === 0 ? (
+              {loading ? (
+                <div className="flex justify-center items-center py-20">
+                  <Loader2 className="h-8 w-8 animate-spin text-[#C8A97E]" />
+                </div>
+              ) : error ? (
+                <Alert variant="destructive" className="max-w-md mx-auto">
+                  <AlertDescription>{error}</AlertDescription>
+                </Alert>
+              ) : filteredPastEvents.length === 0 ? (
                 <motion.div
                   className="text-center py-12"
                   initial={{ opacity: 0 }}
@@ -916,7 +898,7 @@ export default function EventsPage() {
                 <div className="space-y-4">
                   {filteredPastEvents.map((event, index) => (
                     <motion.div
-                      key={event.id}
+                      key={event._id}
                       initial={{ opacity: 0, x: -30 }}
                       animate={pastEventsInView ? { opacity: 1, x: 0 } : {}}
                       transition={{ duration: 0.5, delay: 0.4 + index * 0.1 }}
@@ -924,7 +906,7 @@ export default function EventsPage() {
                     >
                       <div className="md:w-1/6">
                         <Image
-                          src={event.image || "/placeholder.svg"}
+                          src={event.image || "/placeholder.svg?height=400&width=600"}
                           alt={event.title}
                           width={200}
                           height={200}
@@ -938,8 +920,8 @@ export default function EventsPage() {
                       </div>
                       <div className="md:w-1/6 text-sm text-gray-600">
                         <div className="flex items-center mb-2">
-                          <Calendar className="h-4 w-4 mr-2 text-[#C8A97E]" />
-                          {event.date}
+                          <CalendarIcon className="h-4 w-4 mr-2 text-[#C8A97E]" />
+                          {formatEventDate(event.date)}
                         </div>
                         <div className="flex items-center">
                           <MapPin className="h-4 w-4 mr-2 text-[#C8A97E]" />
@@ -957,17 +939,6 @@ export default function EventsPage() {
               )}
             </TabsContent>
           </Tabs>
-
-          <motion.div
-            className="text-center mt-12"
-            initial={{ opacity: 0, y: 20 }}
-            animate={pastEventsInView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.6, delay: 0.6 }}
-          >
-            <Button className="border-2 border-[#C8A97E] text-[#C8A97E] hover:bg-[#C8A97E] hover:text-white transition-colors duration-300 rounded-none px-8 py-6 uppercase">
-              View Event Archives
-            </Button>
-          </motion.div>
         </div>
       </section>
 

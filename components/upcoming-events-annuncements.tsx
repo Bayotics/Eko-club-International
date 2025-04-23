@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation"
 import { MapPin, Loader2 } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { useToast } from "@/components/ui/use-toast"
+import dayjs from "dayjs"
 
 interface Event {
   _id: string
@@ -117,8 +118,8 @@ export default function UpcomingEventsAnnouncements() {
         {events.map((event) => (
             <div className="flex flex-col md:flex-row gap-4 border-b pb-4">
             <div className="bg-[#C8A97E] text-white rounded-lg p-3 text-center min-w-[80px]">
-              <div className="text-2xl font-bold">15</div>
-              <div className="text-sm">June</div>
+              <div className="text-2xl font-bold">{dayjs(event.date).format('D')}</div>
+              <div className="text-sm">{dayjs(event.date).format('MMM')}</div>
             </div>
             <div>
               <h4 className="font-medium">{event.title}</h4>
@@ -129,7 +130,7 @@ export default function UpcomingEventsAnnouncements() {
                 <MapPin className="h-3 w-3 mr-1" />
                 <span>{event.location}</span>
                 <span className="mx-2">•</span>
-                <span>6:00 PM</span>
+                <span>{dayjs(event.date).format('HH mm A')}</span>
               </div>
             </div>
           </div>
@@ -139,7 +140,7 @@ export default function UpcomingEventsAnnouncements() {
         <Button
           variant="outline"
           className="w-full text-[#C8A97E] hover:bg-[#C8A97E]/10"
-          onClick={() => router.push("#")}
+          onClick={() => router.push("/events")}
         >
           View All Events
         </Button>

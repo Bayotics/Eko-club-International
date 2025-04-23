@@ -421,7 +421,7 @@ export default function AdminEventsPage() {
                     checked={newEvent.featured}
                     onCheckedChange={(checked) => setNewEvent({ ...newEvent, featured: checked === true })}
                   />
-                  <Label htmlFor="featured">Featured Event</Label>
+                  <Label htmlFor="featured">Featured Event? (featured events are displayed on the homepage even for non registered users)</Label>
                 </div>
               </div>
 

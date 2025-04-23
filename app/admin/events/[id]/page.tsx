@@ -512,11 +512,11 @@ export default function EventDetailsPage({ params }) {
                 <Separator />
                 <div>
                   <p className="text-sm text-gray-500">Event ID</p>
-                  <p className="text-xs font-mono bg-gray-100 p-2 rounded">{event._id}</p>
+                  <p className="text-xs font-mono bg-gray-100 p-2 rounded text-gray-500">{event._id}</p>
                 </div>
               </div>
 
-              <div className="mt-6">
+              {/* <div className="mt-6">
                 <h4 className="text-md font-semibold mb-2">Quick Actions</h4>
                 <div className="space-y-2">
                   <Button
@@ -527,7 +527,7 @@ export default function EventDetailsPage({ params }) {
                     View on Public Page
                   </Button>
                 </div>
-              </div>
+              </div> */}
             </CardContent>
           </Card>
         </div>

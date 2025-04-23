@@ -19,64 +19,64 @@ import { cn } from "@/lib/utils"
 
 // Chapter data with URLs
 const chapters = [
-  { id: 1, name: "Atlanta", country: "USA", members: 120, url: "https://ekoclub-atlanta.org" },
-  { id: 2, name: "Austin", country: "USA", members: 85, url: "https://ekoclub-austin.org" },
-  { id: 3, name: "California", country: "USA", members: 150, url: "https://ekoclub-california.org" },
-  { id: 4, name: "Dallas", country: "USA", members: 110, url: "https://ekoclub-dallas.org" },
-  { id: 5, name: "DC Metro", country: "USA", members: 95, url: "https://ekoclub-dcmetro.org" },
-  { id: 6, name: "Delaware Valley", country: "USA", members: 75, url: "https://ekoclub-delawarevalley.org" },
-  { id: 7, name: "Detroit", country: "USA", members: 65, url: "https://ekoclub-detroit.org" },
-  { id: 8, name: "Eko Lagosians of Canada", country: "Canada", members: 90, url: "https://ekoclub-canada.org" },
-  { id: 9, name: "Florida", country: "USA", members: 105, url: "https://ekoclub-florida.org" },
-  { id: 10, name: "Houston", country: "USA", members: 130, url: "https://ekoclub-houston.org" },
-  { id: 11, name: "Kent, U.K.", country: "United Kingdom", members: 70, url: "https://ekoclub-kentuk.org" },
-  { id: 12, name: "London, U.K.", country: "United Kingdom", members: 115, url: "https://ekoclub-londonuk.org" },
+  { id: 1, name: "Atlanta", country: "USA", members: 120, url: "http://ekoclubatlanta.org/" },
+  { id: 2, name: "Austin", country: "USA", members: 85, url: "http://ecatmembers.org/about_us" },
+  { id: 3, name: "California", country: "USA", members: 150, url: "https://ekoclubinternational.org/california/" },
+  { id: 4, name: "Dallas", country: "USA", members: 110, url: "http://www.ekoclubdfw.org" },
+  { id: 5, name: "DC Metro", country: "USA", members: 95, url: "https://www.ekoclubdcmetro.org/" },
+  { id: 6, name: "Delaware Valley", country: "USA", members: 75, url: "http://ekoclubdeva.com/styled-5/index.html" },
+  { id: 7, name: "Detroit", country: "USA", members: 65, url: "http://www.ekoclubdetroit.org" },
+  { id: 8, name: "Eko Lagosians of Canada", country: "Canada", members: 90, url: "http://www.lagosiansofcanada.com" },
+  { id: 9, name: "Florida", country: "USA", members: 105, url: "www.ekoclubflorida.org" },
+  { id: 10, name: "Houston", country: "USA", members: 130, url: "www.ekoclubhouston.com" },
+  { id: 11, name: "Kent, U.K.", country: "United Kingdom", members: 70, url: "#" },
+  { id: 12, name: "London, U.K.", country: "United Kingdom", members: 115, url: "http://www.gobspace.com/ekl" },
   { id: 13, name: "Louisiana", country: "USA", members: 60, url: "https://ekoclub-louisiana.org" },
   { id: 14, name: "Miami", country: "USA", members: 85, url: "https://ekoclub-miami.org" },
-  { id: 15, name: "Minnesota", country: "USA", members: 55, url: "https://ekoclub-minnesota.org" },
-  { id: 16, name: "New Jersey", country: "USA", members: 125, url: "https://ekoclub-newjersey.org" },
-  { id: 17, name: "New York", country: "USA", members: 160, url: "https://ekoclub-newyork.org" },
-  { id: 18, name: "Ohio", country: "USA", members: 70, url: "https://ekoclub-ohio.org" },
-  { id: 19, name: "Pennsylvania", country: "USA", members: 80, url: "https://ekoclub-pennsylvania.org" },
-  { id: 20, name: "Philadelphia", country: "USA", members: 95, url: "https://ekoclub-philadelphia.org" },
+  { id: 15, name: "Minnesota", country: "USA", members: 55, url: "www.ekoclubminnesota.com/" },
+  { id: 16, name: "New Jersey", country: "USA", members: 125, url: "https://ekoclubnj.org/" },
+  { id: 17, name: "New York", country: "USA", members: 160, url: "www.ekoclubny.org" },
+  { id: 18, name: "Ohio", country: "USA", members: 70, url: "https://ekoclubohio.org" },
+  { id: 19, name: "Pennsylvania", country: "USA", members: 80, url: "https://www.facebook.com/ekoclub.pennsylvania" },
+  { id: 20, name: "Philadelphia", country: "USA", members: 95, url: "www.ekoclubphiladelphia.org" },
   { id: 21, name: "Rhode Island", country: "USA", members: 45, url: "https://ekoclub-rhodeisland.org" },
   { id: 22, name: "San Antonio", country: "USA", members: 65, url: "https://ekoclub-sanantonio.org" },
 ]
 
-// Chapter presidents data (fictional)
 const chapterPresidents = [
-  { id: 1, name: "Dr. Adebayo Johnson", chapter: "Atlanta", image: "/placeholder.svg?height=300&width=300" },
-  { id: 2, name: "Chief Oluwaseun Adeyemi", chapter: "Austin", image: "/placeholder.svg?height=300&width=300" },
-  { id: 3, name: "Mrs. Folashade Ogunleye", chapter: "California", image: "/placeholder.svg?height=300&width=300" },
-  { id: 4, name: "Mr. Babatunde Olatunji", chapter: "Dallas", image: "/placeholder.svg?height=300&width=300" },
-  { id: 5, name: "Dr. Olufemi Akinwande", chapter: "DC Metro", image: "/placeholder.svg?height=300&width=300" },
-  { id: 6, name: "Chief Adewale Ayodeji", chapter: "Delaware Valley", image: "/placeholder.svg?height=300&width=300" },
-  { id: 7, name: "Mrs. Yewande Oladipo", chapter: "Detroit", image: "/placeholder.svg?height=300&width=300" },
+  { id: 1, name: "Hon. Deji Ajiboye", chapter: "Atlanta", image: "/images/chapter-presidents/atlanta.jpg?height=400&width=300" },
+  { id: 2, name: "Hon. Christie Okolie", chapter: "Austin", image: "/images/chapter-presidents/Austin.jpg?height=300&width=300" },
+  { id: 3, name: "Hon. Olatunji Anthonio", chapter: "California", image: "/images/chapter-presidents/california.png?height=300&width=300" },
+  { id: 23, name: "Hon. Bunmi Kuton", chapter: "Chicago", image: "/images/chapter-presidents/chicago.jpg?height=300&width=300" },
+  { id: 4, name: "Hon. Toyin Caxton", chapter: "Dallas", image: "/images/chapter-presidents/dallas.jpg?height=300&width=300" },
+  { id: 6, name: "Hon Dapo Lediju", chapter: "Delaware Valley", image: "/images/chapter-presidents/delaware.jpeg?height=300&width=300" },
+  { id: 7, name: "Hon. Deola Odunuga", chapter: "Detroit", image: "/images/chapter-presidents/detroit.jpg?height=300&width=300" },
   {
     id: 8,
-    name: "Mr. Olumide Akinsanya",
+    name: "Hon. Ibiyinka Thanni",
     chapter: "Eko Lagosians of Canada",
-    image: "/placeholder.svg?height=300&width=300",
+    image: "/images/chapter-presidents/canada.png?height=300&width=300",
   },
-  { id: 9, name: "Dr. Funmilayo Adekoya", chapter: "Florida", image: "/placeholder.svg?height=300&width=300" },
-  { id: 10, name: "Chief Olabisi Ogunbanjo", chapter: "Houston", image: "/placeholder.svg?height=300&width=300" },
-  { id: 11, name: "Mr. Adegoke Oyelade", chapter: "Kent, U.K.", image: "/placeholder.svg?height=300&width=300" },
-  { id: 12, name: "Mrs. Oluwakemi Adeleke", chapter: "London, U.K.", image: "/placeholder.svg?height=300&width=300" },
-  { id: 13, name: "Dr. Olusegun Obasanjo", chapter: "Louisiana", image: "/placeholder.svg?height=300&width=300" },
-  { id: 14, name: "Chief Adebola Adeniyi", chapter: "Miami", image: "/placeholder.svg?height=300&width=300" },
-  { id: 15, name: "Mrs. Abimbola Ogunlesi", chapter: "Minnesota", image: "/placeholder.svg?height=300&width=300" },
-  { id: 16, name: "Mr. Oluwadamilare Adeyemo", chapter: "New Jersey", image: "/placeholder.svg?height=300&width=300" },
-  { id: 17, name: "Dr. Oluwaseyi Ajayi", chapter: "New York", image: "/placeholder.svg?height=300&width=300" },
-  { id: 18, name: "Chief Oluwafunmilola Adebisi", chapter: "Ohio", image: "/placeholder.svg?height=300&width=300" },
-  { id: 19, name: "Mrs. Oluwabunmi Oladele", chapter: "Pennsylvania", image: "/placeholder.svg?height=300&width=300" },
-  { id: 20, name: "Mr. Oluwasegun Adebayo", chapter: "Philadelphia", image: "/placeholder.svg?height=300&width=300" },
+  { id: 9, name: "Hon. T.O Olarinde", chapter: "Florida", image: "/images/chapter-presidents/florida.jpg?height=300&width=300" },
+  { id: 10, name: "Hon. B. J. Agoro", chapter: "Houston", image: "/images/chapter-presidents/houston.jpg?height=300&width=300" },
+  { id: 10, name: "Hon. Oyedunmola Iyabo Ojo", chapter: "Houston Women", image: "/images/chapter-presidents/houston_women.jpg?height=300&width=300" },
+  { id: 12, name: "Hon. Toyin Ibrahim-Igbo", chapter: "London, U.K.", image: "/images/chapter-presidents/london.jpg?height=300&width=300" },
+  { id: 13, name: "Hon. Ayodeji Famuyide", chapter: "Louisiana", image: "/images/chapter-presidents/louisiana.jpg?height=300&width=300" },
+  { id: 14, name: "Hon. Julia Ayo-Ajayi", chapter: "Miami", image: "/images/chapter-presidents/miami.jpg?height=300&width=300" },
+  { id: 15, name: "Hon. Fatai Martins", chapter: "Minnesota", image: "/images/chapter-presidents/minnesota.jpg?height=300&width=300" },
+  { id: 16, name: "Hon. Tajudeen Lawal", chapter: "New Jersey", image: "/images/chapter-presidents/new_jersey.jpg?height=300&width=300" },
+  { id: 17, name: "Prince Omokayode Dosumu", chapter: "New York", image: "/images/chapter-presidents/new_york.jpg?height=300&width=300" },
+  { id: 18, name: "Hon. Wale Onitiri", chapter: "Ohio", image: "/images/chapter-presidents/ohio.jpg?height=300&width=300" },
+  { id: 19, name: "Hon. Adewale Dosumu", chapter: "Pennsylvania", image: "/images/chapter-presidents/pennsylvania.jpg?height=300&width=300" },
+  { id: 20, name: "Hon. Olabisi Dabiri-Okoya", chapter: "Philadelphia", image: "/images/chapter-presidents/philadelphia.jpg?height=300&width=300" },
+  { id: 20, name: "Hon. Bode Esuola", chapter: "Washington D.C Metro", image: "/images/chapter-presidents/washington.jpg?height=300&width=300" },
   {
     id: 21,
-    name: "Dr. Oluwadamilola Adeyinka",
+    name: "Hon. Kamaldeen Lambo",
     chapter: "Rhode Island",
-    image: "/placeholder.svg?height=300&width=300",
+    image: "/images/chapter-presidents/rhode_island.jpg?height=300&width=300",
   },
-  { id: 22, name: "Chief Oluwafemi Ogunleye", chapter: "San Antonio", image: "/placeholder.svg?height=300&width=300" },
+  { id: 22, name: "Dr. Caroline Jokotola", chapter: "San Antonio", image: "/images/chapter-presidents/san_antonio.jpg?height=300&width=300" },
 ]
 
 // Filter options
@@ -150,7 +150,7 @@ export default function ChaptersPage() {
       <section className="relative bg-gradient-to-r from-[#1a1a2e] to-[#16213e] text-white overflow-hidden">
         <div className="absolute inset-0 z-0">
           <Image
-            src="/placeholder.svg?height=600&width=1600"
+            src="/images/map.png?height=600&width=1600"
             alt="World Map Background"
             fill
             className="object-cover opacity-20"
@@ -422,12 +422,12 @@ export default function ChaptersPage() {
           >
             <div className="absolute inset-0 bg-blue-900/10 dark:bg-blue-900/30 z-10 rounded-lg" />
             <Image
-              src="/placeholder.svg?height=500&width=1200"
+              src="/images/map.png?height=500&width=1200"
               alt="World Map"
               fill
               className="w-full h-full object-cover"
             />
-            {chapters.map((chapter) => (
+            {/* {chapters.map((chapter) => (
               <motion.div
                 key={chapter.id}
                 className="absolute z-20"
@@ -458,7 +458,7 @@ export default function ChaptersPage() {
                   <p className="text-xs text-gray-500 dark:text-gray-400">{chapter.members} members</p>
                 </motion.div>
               </motion.div>
-            ))}
+            ))} */}
           </motion.div>
         </div>
       </section>
@@ -479,14 +479,14 @@ export default function ChaptersPage() {
               Connect with fellow Lagosians in your area, participate in cultural events, and contribute to community
               development initiatives.
             </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            {/* <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Button className="bg-[#C8A97E] hover:bg-[#b89868] text-white px-8 py-6 text-lg">
                 Find Your Chapter
               </Button>
               <Button variant="outline" className="border-white text-white hover:bg-white/10 px-8 py-6 text-lg">
                 Start a New Chapter
               </Button>
-            </div>
+            </div> */}
           </motion.div>
         </div>
       </section>
