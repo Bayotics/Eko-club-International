@@ -202,8 +202,8 @@ export default function ManageUsersPage() {
                         <DropdownMenuContent>
                           <DropdownMenuItem onClick={() => handleEditChange("role", "admin")}>admin</DropdownMenuItem>
                           <DropdownMenuItem onClick={() => handleEditChange("role", "member")}>member</DropdownMenuItem>
-                          <DropdownMenuItem onClick={() => handleEditChange("role", "chapter_leader")}>
-                            chapter_leader
+                          <DropdownMenuItem onClick={() => handleEditChange("role", "exco")}>
+                            exco
                           </DropdownMenuItem>
                         </DropdownMenuContent>
                       </DropdownMenu>

@@ -18,6 +18,7 @@ import {
 import UpcomingMeetingsAnnouncements from "@/components/upcoming-meetings-announcements"
 import UpcomingEventsAnnouncements from "@/components/upcoming-events-annuncements"
 import Link from "next/link"
+import MemberDocuments from "@/components/member-documents"
 
 export default function MemberDashboard() {
   const router = useRouter()
@@ -287,103 +288,7 @@ export default function MemberDashboard() {
                       <CardDescription>Access important club documents</CardDescription>
                     </CardHeader>
                     <CardContent>
-                      <div className="space-y-4">
-                        <div className="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
-                          <div className="flex items-center">
-                            <div className="bg-blue-100 p-2 rounded mr-3">
-                              <svg
-                                xmlns="http://www.w3.org/2000/svg"
-                                width="20"
-                                height="20"
-                                viewBox="0 0 24 24"
-                                fill="none"
-                                stroke="currentColor"
-                                strokeWidth="2"
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                                className="text-blue-600"
-                              >
-                                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
-                                <polyline points="14 2 14 8 20 8"></polyline>
-                                <line x1="16" y1="13" x2="8" y2="13"></line>
-                                <line x1="16" y1="17" x2="8" y2="17"></line>
-                                <polyline points="10 9 9 9 8 9"></polyline>
-                              </svg>
-                            </div>
-                            <div>
-                              <h4 className="font-medium">Club Constitution</h4>
-                              <p className="text-xs text-gray-500">PDF • 2.4 MB • Updated April 2025</p>
-                            </div>
-                          </div>
-                          <Button variant="outline" size="sm">
-                            Download
-                          </Button>
-                        </div>
-
-                        <div className="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
-                          <div className="flex items-center">
-                            <div className="bg-green-100 p-2 rounded mr-3">
-                              <svg
-                                xmlns="http://www.w3.org/2000/svg"
-                                width="20"
-                                height="20"
-                                viewBox="0 0 24 24"
-                                fill="none"
-                                stroke="currentColor"
-                                strokeWidth="2"
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                                className="text-green-600"
-                              >
-                                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
-                                <polyline points="14 2 14 8 20 8"></polyline>
-                                <line x1="16" y1="13" x2="8" y2="13"></line>
-                                <line x1="16" y1="17" x2="8" y2="17"></line>
-                                <polyline points="10 9 9 9 8 9"></polyline>
-                              </svg>
-                            </div>
-                            <div>
-                              <h4 className="font-medium">Member Directory</h4>
-                              <p className="text-xs text-gray-500">Excel • 1.8 MB • Updated May 2025</p>
-                            </div>
-                          </div>
-                          <Button variant="outline" size="sm">
-                            Download
-                          </Button>
-                        </div>
-
-                        <div className="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
-                          <div className="flex items-center">
-                            <div className="bg-purple-100 p-2 rounded mr-3">
-                              <svg
-                                xmlns="http://www.w3.org/2000/svg"
-                                width="20"
-                                height="20"
-                                viewBox="0 0 24 24"
-                                fill="none"
-                                stroke="currentColor"
-                                strokeWidth="2"
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                                className="text-purple-600"
-                              >
-                                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
-                                <polyline points="14 2 14 8 20 8"></polyline>
-                                <line x1="16" y1="13" x2="8" y2="13"></line>
-                                <line x1="16" y1="17" x2="8" y2="17"></line>
-                                <polyline points="10 9 9 9 8 9"></polyline>
-                              </svg>
-                            </div>
-                            <div>
-                              <h4 className="font-medium">Annual Report 2024</h4>
-                              <p className="text-xs text-gray-500">PDF • 5.2 MB • Published January 2025</p>
-                            </div>
-                          </div>
-                          <Button variant="outline" size="sm">
-                            Download
-                          </Button>
-                        </div>
-                      </div>
+                      <MemberDocuments />
                     </CardContent>
                   </Card>
                 </TabsContent>

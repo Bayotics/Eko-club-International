@@ -417,6 +417,12 @@ export default function Navbar() {
                         <span>Manage Subscribers</span>
                       </Link>
                     </DropdownMenuItem>
+                    <DropdownMenuItem asChild>
+                      <Link href="/admin/documents">
+                        <FileText className="mr-2 h-4 w-4" />
+                        Manage Documents
+                      </Link>
+                    </DropdownMenuItem>
                   </>
                 )}
 

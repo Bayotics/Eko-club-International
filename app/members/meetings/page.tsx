@@ -83,7 +83,7 @@ export default function MembersUpcomingMeetingsPage() {
 
   return (
     <div className="container mx-auto py-10 mt-20">
-      <h1 className="mb-8 text-3xl font-bold mt-10">Upcoming Meetings</h1>
+      <h1 className="mb-8 text-3xl font-bold mt-10"> Meetings</h1>
 
       {meetings.length > 0 ? (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">

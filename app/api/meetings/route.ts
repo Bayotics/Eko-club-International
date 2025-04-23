@@ -17,9 +17,12 @@ export async function GET(request: Request) {
     // Connect to database
     await connectToDatabase()
 
-    let meetings
+    // First, get all meetings from the database
+    const allMeetings = await Meeting.find({}).sort({ date: 1 }).lean()
 
-    // If user is logged in, check their role
+    let filteredMeetings = []
+
+    // If user is logged in, check their role and filter meetings accordingly
     if (token) {
       try {
         const { payload } = await jwtVerify(token, new TextEncoder().encode(JWT_SECRET))
@@ -27,49 +30,40 @@ export async function GET(request: Request) {
 
         // If admin, return all meetings
         if (userRole === "admin") {
-          meetings = await Meeting.find({}).sort({ date: 1 }).lean()
+          filteredMeetings = allMeetings
         }
-        // If exco, return exco and member meetings
+        // If exco, return exco, member, and public meetings
         else if (userRole === "exco") {
-          meetings = await Meeting.find({
-            meantFor: { $in: ["excos", "members", "public"] },
-          })
-            .sort({ date: 1 })
-            .lean()
+          filteredMeetings = allMeetings.filter(
+            (meeting) =>
+              meeting.meantFor &&
+              (meeting.meantFor.includes("excos") ||
+                meeting.meantFor.includes("members") ||
+                meeting.meantFor.includes("public")),
+          )
         }
-        // If regular member, return member meetings
+        // If regular member, return member and public meetings
         else {
-          meetings = await Meeting.find({
-            meantFor: { $in: ["members", "public"] },
-          })
-            .sort({ date: 1 })
-            .lean()
+          filteredMeetings = allMeetings.filter(
+            (meeting) =>
+              meeting.meantFor && (meeting.meantFor.includes("members") || meeting.meantFor.includes("public")),
+          )
         }
       } catch (error) {
+        console.error("Token verification error:", error)
         // If token verification fails, return only public meetings
-        meetings = await Meeting.find({
-          meantFor: "public",
-        })
-          .sort({ date: 1 })
-          .lean()
+        filteredMeetings = allMeetings.filter((meeting) => meeting.meantFor && meeting.meantFor.includes("public"))
       }
     } else {
       // If no token, return only public meetings
-      meetings = await Meeting.find({
-        meantFor: "public",
-      })
-        .sort({ date: 1 })
-        .lean()
+      filteredMeetings = allMeetings.filter((meeting) => meeting.meantFor && meeting.meantFor.includes("public"))
     }
 
-    // Filter out past meetings
-    const currentDate = new Date()
-    const upcomingMeetings = meetings.filter((meeting) => {
-      const meetingDate = new Date(meeting.date)
-      return meetingDate >= currentDate
-    })
+    // COMPLETELY NEW APPROACH: Don't filter by date at all for now
+    // Just return all meetings that match the role criteria
+    // This will ensure we're not accidentally filtering out meetings due to timezone issues
 
-    return NextResponse.json(upcomingMeetings)
+    return NextResponse.json(filteredMeetings)
   } catch (error) {
     console.error("Error fetching meetings:", error)
     return NextResponse.json(
