@@ -106,7 +106,7 @@ export default function Hero() {
                 className="text-5xl md:text-7xl font-light mb-6 mt-16"
               >
                 <span className="block">{slides[current].title}</span>
-                <span className="font-medium text-[#C8A97E]">{slides[current].subtitle}</span>
+                <span className="font-medium text-[#f3d447]">{slides[current].subtitle}</span>
               </motion.h1>
 
               <motion.p
@@ -127,7 +127,7 @@ export default function Hero() {
                 <Button
                   asChild
                   size="lg"
-                  className="text-lg bg-[#C8A97E] hover:bg-[#8A6D3B] text-white transition-colors duration-300 rounded-none px-8 py-6"
+                  className="text-lg bg-[#e4e66d] hover:bg-[#d5d83b] text-gray-800 transition-colors duration-300 rounded-none px-8 py-6"
                 >
                   <Link href="/donate">DONATE NOW</Link>
                 </Button>
@@ -135,7 +135,7 @@ export default function Hero() {
                   asChild
                   size="lg"
                   variant="outline"
-                  className="text-lg border-[#C8A97E] text-[#C8A97E] hover:bg-[#C8A97E] hover:text-black transition-colors duration-300 rounded-none px-8 py-6"
+                  className="text-lg border-[#78b16d] text-[#78b16d] hover:bg-[#78b16d] hover:text-white transition-colors duration-300 rounded-none px-8 py-6"
                 >
                   <Link href="/#membership">BECOME A MEMBER</Link>
                 </Button>
@@ -151,7 +151,7 @@ export default function Hero() {
           onClick={prevSlide}
           onMouseEnter={() => setAutoplay(false)}
           onMouseLeave={() => setAutoplay(true)}
-          className="p-2 rounded-full bg-black/30 text-white hover:bg-[#C8A97E] transition-colors"
+          className="p-2 rounded-full bg-black/30 text-white hover:bg-[#78b16d] transition-colors"
           aria-label="Previous slide"
         >
           <ChevronLeft className="h-6 w-6" />
@@ -160,7 +160,7 @@ export default function Hero() {
           onClick={nextSlide}
           onMouseEnter={() => setAutoplay(false)}
           onMouseLeave={() => setAutoplay(true)}
-          className="p-2 rounded-full bg-black/30 text-white hover:bg-[#C8A97E] transition-colors"
+          className="p-2 rounded-full bg-black/30 text-white hover:bg-[#78b16d] transition-colors"
           aria-label="Next slide"
         >
           <ChevronRight className="h-6 w-6" />
@@ -178,7 +178,7 @@ export default function Hero() {
               setTimeout(() => setAutoplay(true), 10000)
             }}
             className={`w-3 h-3 rounded-full transition-all duration-300 ${
-              index === current ? "bg-[#C8A97E] w-10" : "bg-white/50 hover:bg-white"
+              index === current ? "bg-[#78b16d] w-10" : "bg-white/50 hover:bg-white"
             }`}
             aria-label={`Go to slide ${index + 1}`}
           />

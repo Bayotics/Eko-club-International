@@ -67,14 +67,14 @@ export default function Events() {
             transition={{ duration: 0.6 }}
             className="text-3xl md:text-4xl font-light mb-4"
           >
-            UPCOMING <span className="text-[#C8A97E] font-medium">EVENTS</span>
+            UPCOMING <span className="text-[red] font-medium">EVENTS</span>
           </motion.h2>
           <motion.div
             initial={{ opacity: 0, width: 0 }}
             whileInView={{ opacity: 1, width: "80px" }}
             viewport={{ once: true }}
             transition={{ duration: 0.8, delay: 0.2 }}
-            className="h-0.5 bg-[#C8A97E] mx-auto mb-6"
+            className="h-0.5 bg-[red] mx-auto mb-6"
           />
           <p className="text-gray-600 max-w-3xl mx-auto">
             Join us at our upcoming events and be part of our mission to make a difference in our communities.
@@ -118,7 +118,7 @@ export default function Events() {
                     <p className="text-gray-600 mb-4">{event.description}</p>
                     <div className="space-y-2 text-sm">
                       <div className="flex items-center">
-                        <Calendar className="h-4 w-4 text-[#C8A97E] mr-2" />
+                        <Calendar className="h-4 w-4 text-[#f33a3a] mr-2" />
                         <span>
                           {new Date(event.date).toLocaleDateString("en-US", {
                             year: "numeric",
@@ -128,11 +128,11 @@ export default function Events() {
                         </span>
                       </div>
                       <div className="flex items-center">
-                        <MapPin className="h-4 w-4 text-[#C8A97E] mr-2" />
+                        <MapPin className="h-4 w-4 text-[#f33a3a] mr-2" />
                         <span>{event.location}</span>
                       </div>
                       <div className="flex items-center">
-                        <Clock className="h-4 w-4 text-[#C8A97E] mr-2" />
+                        <Clock className="h-4 w-4 text-[#f33a3a] mr-2" />
                         <span>{dayjs(event.date).format('HH mm A')}</span>
                       </div>
                     </div>
@@ -145,7 +145,7 @@ export default function Events() {
 
         <div className="text-center mt-12">
           <Link href="/events">
-            <Button className="border-2 border-[#C8A97E] text-[#C8A97E] hover:bg-[#C8A97E] hover:text-black transition-colors duration-300 rounded-none px-8 py-6 uppercase">
+            <Button className=" text-white hover:bg-[#C8A97E] hover:text-black transition-colors duration-300 rounded-none px-8 py-6 uppercase">
               View All Events
             </Button>
           </Link>

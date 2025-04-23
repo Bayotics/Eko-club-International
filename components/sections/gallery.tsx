@@ -70,14 +70,14 @@ export default function Gallery() {
             transition={{ duration: 0.6 }}
             className="text-3xl md:text-4xl font-light mb-4"
           >
-            OUR <span className="text-[#C8A97E] font-medium">GALLERY</span>
+            OUR <span className="text-[#1818bb] font-medium">GALLERY</span>
           </motion.h2>
           <motion.div
             initial={{ opacity: 0, width: 0 }}
             whileInView={{ opacity: 1, width: "80px" }}
             viewport={{ once: true }}
             transition={{ duration: 0.8, delay: 0.2 }}
-            className="h-0.5 bg-[#C8A97E] mx-auto mb-6"
+            className="h-0.5 bg-[#3f3feb] mx-auto mb-6"
           />
           <p className="text-gray-600 max-w-3xl mx-auto">
             Explore our gallery showcasing the impact of our work and events across our communities.
@@ -91,7 +91,7 @@ export default function Gallery() {
               onClick={() => setActiveCategory(category.id)}
               className={`px-6 py-2 text-sm font-medium transition-colors ${
                 activeCategory === category.id
-                  ? "bg-[#C8A97E] text-white"
+                  ? "bg-[blue] text-white"
                   : "bg-gray-100 text-gray-800 hover:bg-gray-200"
               }`}
             >

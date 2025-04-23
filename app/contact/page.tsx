@@ -158,13 +158,12 @@ export default function ContactPage() {
   return (
     <main className="pt-16 bg-white">
       {/* Breadcrumb */}
-      <div className="bg-gray-50 border-b mt-16 py-4">
+      <div className="bg-gray-50 border-b mt-8 py-4">
         <div className="container mx-auto px-4">
           <Breadcrumb>
             <BreadcrumbList>
               <BreadcrumbItem>
                 <BreadcrumbLink href="/">
-                  <Home className="h-4 w-4 mr-1" />
                   Home
                 </BreadcrumbLink>
               </BreadcrumbItem>
@@ -181,7 +180,7 @@ export default function ContactPage() {
       <section ref={heroRef} className="relative h-[50vh] md:h-[60vh] flex items-center justify-center overflow-hidden">
         <div className="absolute inset-0 z-0">
           <Image
-            src="/placeholder.svg?height=1080&width=1920"
+            src="/images/chapter-bg.jpg?height=1080&width=1920"
             alt="Contact Us"
             fill
             className="object-cover"

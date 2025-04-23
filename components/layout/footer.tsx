@@ -110,6 +110,7 @@ export default function Footer() {
 
         <div className="border-t border-gray-800 mt-12 pt-8 text-center text-gray-500 text-sm">
           <p>&copy; {new Date().getFullYear()} Eko Club International. All rights reserved.</p>
+          <div className="text-xs text-gray-600">design and development by <Link target="_blank" href="https://bayotics.github.io/updated-portfolio/">Ab Sho</Link></div>
         </div>
       </div>
     </footer>

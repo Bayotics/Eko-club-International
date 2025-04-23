@@ -28,8 +28,8 @@ export async function GET(request: Request) {
           console.log(error)
       }
     } else {
-      // If no token, return only public events
-        console.log("Error fetching Events")
+      events = await Event.find({}).sort({ date: 1 }).lean()
+      console.log("Error fetching Events")
     }
 
     // Filter out past events

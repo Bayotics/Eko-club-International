@@ -35,7 +35,7 @@ export default function Welcome() {
           >
             <div className="space-y-4">
               <p className="text-[#8A6D3B] uppercase tracking-widest text-sm font-medium">AN</p>
-              <h3 className="text-4xl md:text-5xl lg:text-6xl font-light text-[#4A2D5F] leading-tight">
+              <h3 className="text-4xl md:text-5xl lg:text-6xl font-light text-[#151f58] leading-tight">
                 EXCLUSIVE
                 <br />
                 MEMBERS ONLY

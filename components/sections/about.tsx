@@ -4,8 +4,10 @@ import { useRef } from "react"
 import { motion, useInView } from "framer-motion"
 import Image from "next/image"
 import { Button } from "@/components/ui/button"
+import { useRouter } from "next/navigation"
 
 export default function About() {
+  const router = useRouter()
   const ref = useRef(null)
   const isInView = useInView(ref, { once: true, amount: 0.3 })
 
@@ -39,14 +41,14 @@ export default function About() {
             transition={{ duration: 0.6 }}
             className="text-3xl md:text-4xl font-light mb-4"
           >
-            ABOUT <span className="text-[#C8A97E] font-medium">US</span>
+            ABOUT <span className="text-[#f15858] font-medium">US</span>
           </motion.h2>
           <motion.div
             initial={{ opacity: 0, width: 0 }}
             whileInView={{ opacity: 1, width: "80px" }}
             viewport={{ once: true }}
             transition={{ duration: 0.8, delay: 0.2 }}
-            className="h-0.5 bg-[#C8A97E] mx-auto mb-6"
+            className="h-0.5 bg-[#e26a6a] mx-auto mb-6"
           />
         </div>
 
@@ -73,7 +75,7 @@ export default function About() {
             animate={isInView ? "visible" : "hidden"}
             className="space-y-6"
           >
-            <motion.h3 variants={itemVariants} className="text-2xl font-medium text-[#C8A97E]">
+            <motion.h3 variants={itemVariants} className="text-2xl font-medium text-[#e26a6a]">
               Our Story
             </motion.h3>
             <motion.p variants={itemVariants} className="text-gray-700">
@@ -81,7 +83,7 @@ export default function About() {
               cultural preservation, community service, and sustainable development projects that improve lives.
             </motion.p>
 
-            <motion.h3 variants={itemVariants} className="text-2xl font-medium text-[#C8A97E]">
+            <motion.h3 variants={itemVariants} className="text-2xl font-medium text-[#e26a6a]">
               Our Mission
             </motion.h3>
             <motion.p variants={itemVariants} className="text-gray-700">
@@ -90,7 +92,7 @@ export default function About() {
               infrastructure projects.
             </motion.p>
 
-            <motion.h3 variants={itemVariants} className="text-2xl font-medium text-[#C8A97E]">
+            <motion.h3 variants={itemVariants} className="text-2xl font-medium text-[#e26a6a]">
               Our Values
             </motion.h3>
             <motion.ul variants={itemVariants} className="list-disc pl-5 text-gray-700 space-y-2">
@@ -102,7 +104,7 @@ export default function About() {
             </motion.ul>
 
             <motion.div variants={itemVariants} className="pt-4">
-              <Button className="bg-[#C8A97E] hover:bg-[#8A6D3B] text-white transition-colors duration-300 rounded-none px-8 py-6 uppercase">
+              <Button onClick={() => router.push('/about/our-mission')} className="bg-[#f15858] hover:bg-[#f18c51] text-white transition-colors duration-300 rounded-none px-8 py-6 uppercase">
                 Learn More
               </Button>
             </motion.div>

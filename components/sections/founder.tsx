@@ -24,7 +24,7 @@ export default function Founder() {
           >
             <p className="text-[#8A6D3B] uppercase tracking-widest text-sm font-medium">NOTE FROM THE PRESIDENT</p>
 
-            <h2 className="text-3xl md:text-4xl lg:text-5xl font-light text-[#4A2D5F] leading-tight">
+            <h2 className="text-3xl md:text-4xl lg:text-5xl font-light text-[#151f58] leading-tight">
               We Are Providing An Environment In Which Our Members Build Mutual Trust
             </h2>
 
@@ -42,12 +42,11 @@ export default function Founder() {
             </div>
 
             <div className="pt-4">
-              <Link
-                href="/about-founder"
-                className="uppercase tracking-wider text-sm font-medium border-b border-[#8A6D3B] text-[#8A6D3B] pb-1 hover:text-[#C8A97E] hover:border-[#C8A97E] transition-colors"
+              <div
+                className="uppercase tracking-wider text-sm font-medium text-[#91be48] pb-1 hover:text-[#284e19] hover:border-[#C8A97E] transition-colors"
               >
-                READ MORE
-              </Link>
+                Hon. Saheed Olushi, President
+              </div>
             </div>
           </motion.div>
 

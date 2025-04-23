@@ -97,8 +97,8 @@ export default function Presidents() {
           </div>
 
           <Link
-            href="/leadership"
-            className="mt-6 md:mt-0 inline-flex items-center gap-2 text-[#C8A97E] font-medium hover:text-[#8A6D3B] transition-colors group"
+            href="/about/leadership"
+            className="mt-6 md:mt-0 inline-flex items-center gap-2 text-[green] font-medium hover:text-[#488a3b] transition-colors group"
           >
             View All Leadership
             <ArrowRight className="h-5 w-5 transition-transform group-hover:translate-x-1" />

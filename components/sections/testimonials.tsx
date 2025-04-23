@@ -65,19 +65,19 @@ export default function Testimonials() {
             transition={{ duration: 0.6 }}
             className="text-3xl md:text-4xl font-light mb-4"
           >
-            <span className="text-[#C8A97E] font-medium">TESTIMONIALS</span>
+            <span className="text-[#57ec57] font-medium">TESTIMONIALS</span>
           </motion.h2>
           <motion.div
             initial={{ opacity: 0, width: 0 }}
             whileInView={{ opacity: 1, width: "80px" }}
             viewport={{ once: true }}
             transition={{ duration: 0.8, delay: 0.2 }}
-            className="h-0.5 bg-[#C8A97E] mx-auto mb-6"
+            className="h-0.5 bg-[#57ec57] mx-auto mb-6"
           />
         </div>
 
         <div className="relative max-w-4xl mx-auto">
-          <div className="absolute -top-10 left-1/2 transform -translate-x-1/2 text-[#C8A97E] opacity-20">
+          <div className="absolute -top-10 left-1/2 transform -translate-x-1/2 text-[#57ec57] opacity-20">
             <Quote className="w-24 h-24" />
           </div>
 
@@ -97,11 +97,11 @@ export default function Testimonials() {
                     alt={testimonials[current].name}
                     width={100}
                     height={100}
-                    className="rounded-full mx-auto border-2 border-[#C8A97E]"
+                    className="rounded-full mx-auto border-2 border-[#57ec57]"
                   />
                 </div>
                 <p className="text-xl md:text-2xl italic mb-8 max-w-3xl mx-auto">"{testimonials[current].quote}"</p>
-                <h3 className="text-lg font-medium text-[#C8A97E]">{testimonials[current].name}</h3>
+                <h3 className="text-lg font-medium text-[#57ec57]">{testimonials[current].name}</h3>
                 <p className="text-gray-400">{testimonials[current].role}</p>
               </motion.div>
             </AnimatePresence>
@@ -110,7 +110,7 @@ export default function Testimonials() {
           <div className="flex justify-center mt-8 gap-4">
             <button
               onClick={prev}
-              className="p-2 rounded-full border border-[#C8A97E] text-[#C8A97E] hover:bg-[#C8A97E] hover:text-white transition-colors"
+              className="p-2 rounded-full border border-[#57ec57] text-[#7ec8ac] hover:bg-[#54e447] hover:text-white transition-colors"
               onMouseEnter={() => setAutoplay(false)}
               onMouseLeave={() => setAutoplay(true)}
             >
@@ -122,7 +122,7 @@ export default function Testimonials() {
                   key={index}
                   onClick={() => setCurrent(index)}
                   className={`w-3 h-3 rounded-full transition-colors ${
-                    current === index ? "bg-[#C8A97E]" : "bg-gray-600 hover:bg-gray-400"
+                    current === index ? "bg-[#7ec890]" : "bg-gray-600 hover:bg-gray-400"
                   }`}
                   onMouseEnter={() => setAutoplay(false)}
                   onMouseLeave={() => setAutoplay(true)}
@@ -131,7 +131,7 @@ export default function Testimonials() {
             </div>
             <button
               onClick={next}
-              className="p-2 rounded-full border border-[#C8A97E] text-[#C8A97E] hover:bg-[#C8A97E] hover:text-white transition-colors"
+              className="p-2 rounded-full border border-[#57ec57] text-[#7ec89f] hover:bg-[#54e447] hover:text-white transition-colors"
               onMouseEnter={() => setAutoplay(false)}
               onMouseLeave={() => setAutoplay(true)}
             >

@@ -55,7 +55,7 @@ export default function InstagramFeed() {
             transition={{ duration: 0.6 }}
           >
             <h2 className="text-3xl md:text-4xl font-bold flex items-center gap-3">
-              <span className="text-[#C8A97E]">FEEDS</span> FROM OUR SOCIALS
+              <span className="text-green-900">FEEDS</span> FROM OUR SOCIALS
               <Instagram className="h-8 w-8 text-[#E1306C] ml-2" />
             </h2>
           </motion.div>
@@ -153,7 +153,7 @@ export default function InstagramFeed() {
           <Button
             asChild
             variant="outline"
-            className="border-[#C8A97E] text-[#C8A97E] hover:bg-[#C8A97E] hover:text-white transition-colors duration-300 rounded-full px-8"
+            className="border-[#153d0f] text-[#25611b] hover:bg-[#368b29] hover:text-white transition-colors duration-300 rounded-full px-8"
           >
             <Link href="https://www.instagram.com/ekoclubinternational/" target="_blank" rel="noopener noreferrer">
               View More on Instagram

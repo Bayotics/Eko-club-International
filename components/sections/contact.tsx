@@ -32,7 +32,7 @@ export default function Contact() {
 
   return (
     <section id="contact" className="py-16 md:py-24 bg-white">
-      <div className="container mx-auto px-4">
+      {/* <div className="container mx-auto px-4">
         <div className="text-center mb-16">
           <motion.h2
             initial={{ opacity: 0, y: -20 }}
@@ -170,7 +170,7 @@ export default function Contact() {
             </form>
           </div>
         </div>
-      </div>
+      </div> */}
     </section>
   )
 }

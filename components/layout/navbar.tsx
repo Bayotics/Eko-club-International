@@ -162,9 +162,9 @@ export default function Navbar() {
         <motion.li
           variants={itemVariants}
           onClick={() => setOpen(false)}
-          className="flex items-center gap-2 w-full p-2 text-sm font-medium whitespace-nowrap rounded-md hover:bg-gray-100 text-gray-700 hover:text-[#C8A97E] transition-colors cursor-pointer"
+          className="flex items-center gap-2 w-full p-2 text-sm font-medium whitespace-nowrap rounded-md hover:bg-gray-100 text-gray-700 hover:text-[#e4e66d] transition-colors cursor-pointer"
         >
-          <motion.span variants={actionIconVariants} className="text-[#C8A97E]">
+          <motion.span variants={actionIconVariants} className="text-[#e4e66d]">
             <Icon />
           </motion.span>
           <Link href={href}>
@@ -178,18 +178,18 @@ export default function Navbar() {
       return (
         <div className="py-3 border-b border-gray-100">
           <div className="flex justify-between items-center" onClick={() => setOpen(!open)}>
-            <span className={`text-base font-medium ${open ? "text-[#C8A97E]" : "text-gray-800"}`}>{item.name}</span>
-            <FiChevronDown className={`transition-transform ${open ? "rotate-180 text-[#C8A97E]" : ""}`} />
+            <span className={`text-base font-medium ${open ? "text-[#e4e66d]" : "text-gray-800"}`}>{item.name}</span>
+            <FiChevronDown className={`transition-transform ${open ? "rotate-180 text-[#e4e66d]" : ""}`} />
           </div>
 
           {open && (
             <ul className="mt-2 ml-4 space-y-2 max-h-60 overflow-y-auto">
               {item.dropdownItems.map((dropdownItem, idx) => (
                 <li key={idx} className="flex items-center gap-2">
-                  <dropdownItem.icon className="text-[#C8A97E] h-4 w-4" />
+                  <dropdownItem.icon className="text-[#e4e66d] h-4 w-4" />
                   <Link
                     href={dropdownItem.href}
-                    className="text-gray-600 hover:text-[#C8A97E]"
+                    className="text-gray-600 hover:text-[#e4e66d]"
                     onClick={() => setIsOpen(false)}
                   >
                     {dropdownItem.name}
@@ -211,10 +211,10 @@ export default function Navbar() {
           <span
             className={
               pathname.includes(item.href)
-                ? "text-[#C8A97E]"
+                ? "text-[#e4e66d]"
                 : scrolled || pathname !== "/"
-                  ? "text-gray-800 group-hover:text-[#C8A97E]"
-                  : "text-white group-hover:text-[#C8A97E]"
+                  ? "text-gray-800 group-hover:text-[#e4e66d]"
+                  : "text-white group-hover:text-[#e4e66d]"
             }
           >
             {item.name}
@@ -223,15 +223,15 @@ export default function Navbar() {
             variants={iconVariants}
             className={
               pathname.includes(item.href)
-                ? "text-[#C8A97E]"
+                ? "text-[#e4e66d]"
                 : scrolled || pathname !== "/"
-                  ? "text-gray-800 group-hover:text-[#C8A97E]"
-                  : "text-white group-hover:text-[#C8A97E]"
+                  ? "text-gray-800 group-hover:text-[#e4e66d]"
+                  : "text-white group-hover:text-[#e4e66d]"
             }
           >
             <FiChevronDown />
           </motion.span>
-          <span className="absolute left-0 bottom-0 w-0 h-0.5 bg-[#C8A97E] transition-all duration-300 group-hover:w-full"></span>
+          <span className="absolute left-0 bottom-0 w-0 h-0.5 bg-[#e4e66d] transition-all duration-300 group-hover:w-full"></span>
         </button>
 
         <AnimatePresence>
@@ -288,7 +288,7 @@ export default function Navbar() {
             transition={{ duration: 0.5, delay: 0.2 }}
             className="font-medium text-lg md:text-xl ml-2"
           >
-            <span className="text-[#C8A97E]">EKO CLUB</span>{" "}
+            <span className={` ${scrolled || pathname !== "/" ? "text-gray-800" : "text-[#e4e66d]"}`}>EKO CLUB</span>{" "}
             <span className={`hidden sm:inline ${scrolled || pathname !== "/" ? "text-gray-800" : "text-white"}`}>
               INTERNATIONAL
             </span>
@@ -307,22 +307,22 @@ export default function Navbar() {
                 className={cn(
                   "px-1 py-2 text-sm font-medium transition-colors relative group",
                   pathname === item.href || (pathname === "/" && item.href === "/")
-                    ? "text-[#C8A97E]"
+                    ? "text-[#cdd834]"
                     : scrolled || pathname !== "/"
-                      ? "text-gray-800 hover:text-[#C8A97E]"
-                      : "text-white hover:text-[#C8A97E]",
+                      ? "text-gray-800 hover:text-[#6e6e51]"
+                      : "text-white hover:text-[#e4e66d]",
                 )}
               >
                 {item.name}
-                <span className="absolute left-0 bottom-0 w-0 h-0.5 bg-[#C8A97E] transition-all duration-300 group-hover:w-full"></span>
+                <span className="absolute left-0 bottom-0 w-0 h-0.5 bg-[#e4e66d] transition-all duration-300 group-hover:w-full"></span>
               </Link>
             ),
           )}
-          <Button className="ml-4 bg-[#C8A97E] hover:bg-[#8A6D3B] text-white transition-colors duration-300 rounded-none px-6">
+          <Button className="ml-4 bg-[#e4e66d] hover:bg-[#8A6D3B] text-gray-800 transition-colors duration-300 rounded-none px-6">
             <Link href="/donate">Donate</Link>
           </Button>
           {loading ? (
-            <Button className="ml-2 bg-[oklch(63.7%_0.237_25.331)] hover:bg-[oklch(53.7%_0.237_25.331)] text-white transition-colors duration-300 rounded-none px-6">
+            <Button className="ml-2 bg-[#f38888] hover:bg-[oklch(53.7%_0.237_25.331)] text-white transition-colors duration-300 rounded-none px-6">
               <span className="animate-pulse">Loading...</span>
             </Button>
           ) : user ? (
@@ -333,7 +333,7 @@ export default function Navbar() {
                     {user.profileImage ? (
                       <AvatarImage src={user.profileImage || "/placeholder.svg"} alt={user.fullName} />
                     ) : (
-                      <AvatarFallback className="bg-[#C8A97E] text-white">
+                      <AvatarFallback className="bg-[#e4e66d] text-white">
                         {user.fullName
                           .split(" ")
                           .map((name) => name[0])
@@ -434,7 +434,7 @@ export default function Navbar() {
               </DropdownMenuContent>
             </DropdownMenu>
           ) : (
-            <Button className="ml-2 bg-[oklch(63.7%_0.237_25.331)] hover:bg-[oklch(53.7%_0.237_25.331)] text-white transition-colors duration-300 rounded-none px-6">
+            <Button className="ml-2 bg-[#78b16d] hover:bg-[#2b5223] text-slate-100 transition-colors duration-300 rounded-none px-6">
               <Link href="/login">Members Login</Link>
             </Button>
           )}
@@ -477,7 +477,7 @@ export default function Navbar() {
                       href={item.href}
                       className={cn(
                         "block py-3 text-base font-medium border-b border-gray-100",
-                        pathname === item.href ? "text-[#C8A97E]" : "text-gray-800",
+                        pathname === item.href ? "text-[#e4e66d]" : "text-gray-800",
                       )}
                       onClick={() => setIsOpen(false)}
                     >
@@ -492,7 +492,7 @@ export default function Navbar() {
                 transition={{ delay: navItems.length * 0.05 }}
                 className="mt-4"
               >
-                <Button className="w-full bg-[#C8A97E] hover:bg-[#8A6D3B] text-white transition-colors duration-300 rounded-none">
+                <Button className="w-full bg-[#e4e66d] hover:bg-[#8A6D3B] text-white transition-colors duration-300 rounded-none">
                   <Link href="/donate" onClick={() => setIsOpen(false)}>
                     Donate Now
                   </Link>
