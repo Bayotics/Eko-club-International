@@ -1,8 +1,8 @@
 "use client"
 
-import { useState, useEffect } from "react"
+import { useState, useEffect, useRef } from "react"
 import { useRouter } from "next/navigation"
-import { Calendar, MapPin, Clock, Plus, Edit, Trash2, Search, Filter, ChevronDown } from "lucide-react"
+import { Calendar, MapPin, Clock, Plus, Edit, Trash2, Search, Filter, ChevronDown, X, ImageIcon } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Card, CardContent, CardFooter } from "@/components/ui/card"
@@ -37,6 +37,8 @@ export default function AdminEventsPage() {
   const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false)
   const [eventToDelete, setEventToDelete] = useState(null)
   const [isCreateDialogOpen, setIsCreateDialogOpen] = useState(false)
+  const fileInputRef = useRef(null)
+  const [isUploading, setIsUploading] = useState(false)
   const [newEvent, setNewEvent] = useState({
     title: "",
     description: "",
@@ -44,7 +46,9 @@ export default function AdminEventsPage() {
     time: "",
     location: "",
     category: "Cultural",
-    image: "/placeholder.svg?height=400&width=600",
+    image: "",
+    imageFile: null,
+    imagePreview: null,
     featured: false,
   })
 
@@ -83,11 +87,78 @@ export default function AdminEventsPage() {
     }
   }
 
+  const handleImageSelect = (e) => {
+    const file = e.target.files[0]
+    if (!file) return
+
+    // Check file type
+    const allowedTypes = ["image/jpeg", "image/jpg", "image/png"]
+    if (!allowedTypes.includes(file.type)) {
+      toast({
+        title: "Error",
+        description: "File type not supported. Please upload JPG or PNG images only.",
+        variant: "destructive",
+      })
+      return
+    }
+
+    // Create a preview URL
+    const previewUrl = URL.createObjectURL(file)
+
+    setNewEvent({
+      ...newEvent,
+      imageFile: file,
+      imagePreview: previewUrl,
+    })
+  }
+
+  const handleImageUpload = async () => {
+    if (!newEvent.imageFile) return null
+
+    try {
+      setIsUploading(true)
+
+      const formData = new FormData()
+      formData.append("file", newEvent.imageFile)
+
+      const response = await fetch("/api/upload", {
+        method: "POST",
+        body: formData,
+      })
+
+      if (!response.ok) {
+        const error = await response.json()
+        throw new Error(error.error || error.details || "Failed to upload image")
+      }
+
+      const data = await response.json()
+      return data.secure_url
+    } catch (error) {
+      console.error("Error uploading image:", error)
+      toast({
+        title: "Error",
+        description: error.message || "Failed to upload image. Please try again.",
+        variant: "destructive",
+      })
+      return null
+    } finally {
+      setIsUploading(false)
+    }
+  }
+
   // Update the handleCreateEvent function to add better error handling
   const handleCreateEvent = async (e) => {
     e.preventDefault()
     try {
       setIsLoading(true)
+
+      // Upload image if available
+      let imageUrl = newEvent.image
+      if (newEvent.imageFile) {
+        imageUrl = await handleImageUpload()
+        if (!imageUrl) return // Stop if image upload failed
+      }
+
       const response = await fetch("/api/admin/events", {
         method: "POST",
         headers: {
@@ -95,6 +166,7 @@ export default function AdminEventsPage() {
         },
         body: JSON.stringify({
           ...newEvent,
+          image: imageUrl,
           visibility: "public", // Add default visibility
         }),
       })
@@ -118,7 +190,9 @@ export default function AdminEventsPage() {
         time: "",
         location: "",
         category: "Cultural",
-        image: "/placeholder.svg?height=400&width=600",
+        image: "",
+        imageFile: null,
+        imagePreview: null,
         featured: false,
       })
       fetchEvents()
@@ -289,13 +363,56 @@ export default function AdminEventsPage() {
                 </div>
 
                 <div className="space-y-2">
-                  <Label htmlFor="image">Image URL</Label>
-                  <Input
-                    id="image"
-                    value={newEvent.image}
-                    onChange={(e) => setNewEvent({ ...newEvent, image: e.target.value })}
-                    placeholder="Enter image URL or leave default"
-                  />
+                  <Label htmlFor="image">Add Image</Label>
+                  <div className="flex flex-col gap-4">
+                    <input
+                      ref={fileInputRef}
+                      type="file"
+                      id="image-upload"
+                      accept=".jpg,.JPG,.jpeg,.JPEG,.png,.PNG"
+                      onChange={handleImageSelect}
+                      className="hidden"
+                    />
+
+                    {newEvent.imagePreview ? (
+                      <div className="relative w-full h-40 bg-gray-100 rounded-md overflow-hidden">
+                        <img
+                          src={newEvent.imagePreview || "/placeholder.svg"}
+                          alt="Event preview"
+                          className="w-full h-full object-cover"
+                        />
+                        <Button
+                          type="button"
+                          variant="destructive"
+                          size="icon"
+                          className="absolute top-2 right-2 h-8 w-8 rounded-full"
+                          onClick={() => {
+                            setNewEvent({
+                              ...newEvent,
+                              imageFile: null,
+                              imagePreview: null,
+                            })
+                            if (fileInputRef.current) {
+                              fileInputRef.current.value = ""
+                            }
+                          }}
+                        >
+                          <X className="h-4 w-4" />
+                        </Button>
+                      </div>
+                    ) : (
+                      <Button
+                        type="button"
+                        variant="outline"
+                        className="w-full h-40 flex flex-col gap-2 items-center justify-center border-dashed"
+                        onClick={() => fileInputRef.current?.click()}
+                      >
+                        <ImageIcon className="h-8 w-8 text-gray-400" />
+                        <span>Click to select an image</span>
+                        <span className="text-xs text-gray-500">JPG, JPEG, PNG only</span>
+                      </Button>
+                    )}
+                  </div>
                 </div>
 
                 <div className="flex items-center space-x-2">
@@ -312,8 +429,19 @@ export default function AdminEventsPage() {
                 <Button type="button" variant="outline" onClick={() => setIsCreateDialogOpen(false)}>
                   Cancel
                 </Button>
-                <Button type="submit" className="bg-[#C8A97E] hover:bg-[#8A6D3B] text-white">
-                  Create Event
+                <Button
+                  type="submit"
+                  className="bg-[#C8A97E] hover:bg-[#8A6D3B] text-white"
+                  disabled={isLoading || isUploading}
+                >
+                  {isLoading || isUploading ? (
+                    <>
+                      <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white mr-2"></div>
+                      {isUploading ? "Uploading..." : "Creating..."}
+                    </>
+                  ) : (
+                    "Create Event"
+                  )}
                 </Button>
               </DialogFooter>
             </form>
