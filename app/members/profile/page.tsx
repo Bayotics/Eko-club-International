@@ -311,10 +311,11 @@ export default function ProfilePage() {
                             disabled={!editMode}
                           />
                         </div>
-                        <select value={formData.role} onChange={handleInputChange} name="role" id="role" disabled={!editMode}>
+                        {/* <select value={formData.role} onChange={handleInputChange} name="role" id="role" disabled={!editMode}>
                           <option value="admin">Admin</option>
                           <option value="member">Member</option>
-                        </select>
+                          <option value="exco">Exco</option>
+                        </select> */}
                         {/* <div className="space-y-2">
                           <Label htmlFor="phone">Phone Number</Label>
                           <Input
