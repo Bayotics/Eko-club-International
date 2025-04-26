@@ -83,7 +83,7 @@ export default function Footer() {
               <li>Dallas</li>
               <li>London, U.K.</li>
               <li>
-                <Link href="/#chapters" className="text-[#C8A97E] hover:underline">
+                <Link href="/chapters" className="text-[#C8A97E] hover:underline">
                   View All Chapters
                 </Link>
               </li>

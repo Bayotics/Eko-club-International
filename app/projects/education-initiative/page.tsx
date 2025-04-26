@@ -75,15 +75,15 @@ export default function EducationInitiativePage() {
       <div className="bg-gradient-to-r from-[#f8f9fa] to-[#e9ecef] border-b border-gray-200 py-5">
         <div className="container mx-auto px-4 py-4">
           <div className="flex items-center text-sm font-medium">
-            <Link href="/" className="text-gray-600 hover:text-[#C8A97E] transition-colors">
+            <Link href="/" className="text-gray-600 hover:text-[#bcbe3a] transition-colors">
               Home
             </Link>
             <ChevronRight className="h-4 w-4 mx-2 text-gray-400" />
-            <Link href="/#projects" className="text-gray-600 hover:text-[#C8A97E] transition-colors">
+            <Link href="/#projects" className="text-gray-600 hover:text-[#bcbe3a] transition-colors">
               Our Projects
             </Link>
             <ChevronRight className="h-4 w-4 mx-2 text-gray-400" />
-            <span className="text-[#C8A97E]">Education Initiative</span>
+            <span className="text-[#bcbe3a]">Education Initiative</span>
           </div>
         </div>
       </div>
@@ -110,19 +110,19 @@ export default function EducationInitiativePage() {
               transition={{ duration: 0.6 }}
             >
               <h1 className="text-4xl md:text-5xl font-bold mb-4 leading-tight">
-                Empowering Through <span className="text-[#C8A97E]">Education</span>
+                Empowering Through <span className="text-[#bcbe3a]">Education</span>
               </h1>
               <p className="text-lg md:text-xl mb-6 text-gray-200 max-w-2xl">
                 Building a brighter future through accessible, quality education for all. Our initiative focuses on
                 creating sustainable educational opportunities that transform lives and communities.
               </p>
               <div className="flex flex-wrap gap-4">
-                <Button className="bg-[#C8A97E] hover:bg-[#8A6D3B] text-white px-6 py-2 rounded-none">
-                  Get Involved
+                <Button className="bg-[#bcbe3a] hover:bg-[#8A6D3B] text-white px-6 py-2 rounded-none">
+                  <Link href="/contact" className="">Get Involved</Link>
                 </Button>
-                <Button variant="outline" className="border-white text-white hover:bg-white/10 rounded-none">
+                {/* <Button variant="outline" className="border-white text-white hover:bg-white/10 rounded-none">
                   Learn More
-                </Button>
+                </Button> */}
               </div>
             </motion.div>
 
@@ -134,7 +134,7 @@ export default function EducationInitiativePage() {
             >
               <div className="relative h-[300px] md:h-[400px] w-full">
                 <div className="absolute inset-0 bg-[#0F2A4A] rounded-md shadow-2xl transform -rotate-3 z-0"></div>
-                <div className="absolute inset-0 bg-[#C8A97E] rounded-md shadow-2xl transform rotate-3 z-10"></div>
+                <div className="absolute inset-0 bg-[#bcbe3a] rounded-md shadow-2xl transform rotate-3 z-10"></div>
                 <div className="absolute inset-0 bg-white rounded-md shadow-2xl z-20">
                   <Image
                     src="/images/Education/1.png?height=400&width=600"
@@ -152,7 +152,7 @@ export default function EducationInitiativePage() {
 
                 {/* Decorative elements */}
                 <motion.div
-                  className="absolute -top-6 -right-6 w-16 h-16 bg-[#C8A97E] rounded-full flex items-center justify-center z-30"
+                  className="absolute -top-6 -right-6 w-16 h-16 bg-[#bcbe3a] rounded-full flex items-center justify-center z-30"
                   initial={{ y: -20, opacity: 0 }}
                   animate={{ y: 0, opacity: 1 }}
                   transition={{ delay: 0.6, duration: 0.5 }}
@@ -199,9 +199,9 @@ export default function EducationInitiativePage() {
             transition={{ duration: 0.6 }}
           >
             <div className="inline-block mb-4">
-              <div className="h-1 w-16 bg-[#C8A97E] mb-1"></div>
-              <div className="h-1 w-12 bg-[#C8A97E] mb-1"></div>
-              <div className="h-1 w-8 bg-[#C8A97E]"></div>
+              <div className="h-1 w-16 bg-[#bcbe3a] mb-1"></div>
+              <div className="h-1 w-12 bg-[#bcbe3a] mb-1"></div>
+              <div className="h-1 w-8 bg-[#bcbe3a]"></div>
             </div>
             <h2 className="text-3xl md:text-4xl font-bold mb-6 text-[#1A3A5F]">Our Educational Mission</h2>
             <p className="text-lg text-gray-700">
@@ -220,19 +220,19 @@ export default function EducationInitiativePage() {
           >
             <motion.div className="bg-white p-8 shadow-md border-l-4 border-[#1A3A5F] relative" variants={fadeInUp}>
               <div className="absolute top-0 right-0 w-12 h-12 bg-[#f8f9fa] transform rotate-45 translate-x-6 -translate-y-6"></div>
-              <BookText className="h-12 w-12 text-[#C8A97E] mb-4" />
+              <BookText className="h-12 w-12 text-[#bcbe3a] mb-4" />
               <h3 className="text-xl font-bold mb-3 text-[#1A3A5F]">Scholarship Programs</h3>
               <p className="text-gray-700 mb-4">
                 We provide financial support to promising students who lack the resources to pursue their educational
                 dreams, from primary school through university.
               </p>
-              {/* <div className="flex items-center text-[#C8A97E] font-medium">
+              {/* <div className="flex items-center text-[#bcbe3a] font-medium">
                 <span>Learn more</span>
                 <ArrowRight className="h-4 w-4 ml-2" />
               </div> */}
             </motion.div>
 
-            <motion.div className="bg-white p-8 shadow-md border-l-4 border-[#C8A97E] relative" variants={fadeInUp}>
+            <motion.div className="bg-white p-8 shadow-md border-l-4 border-[#bcbe3a] relative" variants={fadeInUp}>
               <div className="absolute top-0 right-0 w-12 h-12 bg-[#f8f9fa] transform rotate-45 translate-x-6 -translate-y-6"></div>
               <School className="h-12 w-12 text-[#1A3A5F] mb-4" />
               <h3 className="text-xl font-bold mb-3 text-[#1A3A5F]">School Development</h3>
@@ -240,7 +240,7 @@ export default function EducationInitiativePage() {
                 We build, renovate, and equip schools with modern facilities and learning resources to create conducive
                 environments for education.
               </p>
-              {/* <div className="flex items-center text-[#C8A97E] font-medium">
+              {/* <div className="flex items-center text-[#bcbe3a] font-medium">
                 <span>Learn more</span>
                 <ArrowRight className="h-4 w-4 ml-2" />
               </div> */}
@@ -255,15 +255,15 @@ export default function EducationInitiativePage() {
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
           >
-            <div className="absolute -top-6 -left-6 text-[#C8A97E] text-9xl opacity-20">"</div>
+            <div className="absolute -top-6 -left-6 text-[#bcbe3a] text-9xl opacity-20">"</div>
             <div className="relative z-10">
               <p className="text-xl md:text-2xl italic mb-6">
                 Education is the most powerful weapon which you can use to change the world. Our initiative aims to
                 provide this weapon to as many people as possible.
               </p>
               <div className="flex items-center">
-                <div className="h-px flex-grow bg-[#C8A97E] mr-4"></div>
-                <p className="text-[#C8A97E] font-medium">Eko Club International</p>
+                <div className="h-px flex-grow bg-[#bcbe3a] mr-4"></div>
+                <p className="text-[#bcbe3a] font-medium">Eko Club International</p>
               </div>
             </div>
           </motion.div>
@@ -276,7 +276,7 @@ export default function EducationInitiativePage() {
             viewport={{ once: true }}
           >
             <motion.div className="bg-white p-6 shadow-md" variants={fadeInUp}>
-              <Lightbulb className="h-10 w-10 text-[#C8A97E] mb-4" />
+              <Lightbulb className="h-10 w-10 text-[#bcbe3a] mb-4" />
               <h3 className="text-lg font-bold mb-2 text-[#1A3A5F]">Teacher Training</h3>
               <p className="text-gray-700">
                 We provide professional development opportunities for teachers to enhance their skills and teaching
@@ -285,7 +285,7 @@ export default function EducationInitiativePage() {
             </motion.div>
 
             <motion.div className="bg-white p-6 shadow-md" variants={fadeInUp}>
-              <Laptop className="h-10 w-10 text-[#C8A97E] mb-4" />
+              <Laptop className="h-10 w-10 text-[#bcbe3a] mb-4" />
               <h3 className="text-lg font-bold mb-2 text-[#1A3A5F]">Digital Literacy</h3>
               <p className="text-gray-700">
                 We equip students with essential digital skills needed to thrive in today's technology-driven world.
@@ -293,7 +293,7 @@ export default function EducationInitiativePage() {
             </motion.div>
 
             <motion.div className="bg-white p-6 shadow-md" variants={fadeInUp}>
-              <PenTool className="h-10 w-10 text-[#C8A97E] mb-4" />
+              <PenTool className="h-10 w-10 text-[#bcbe3a] mb-4" />
               <h3 className="text-lg font-bold mb-2 text-[#1A3A5F]">Educational Materials</h3>
               <p className="text-gray-700">
                 We provide textbooks, stationery, and other learning materials to students who cannot afford them.
@@ -340,7 +340,7 @@ export default function EducationInitiativePage() {
               {/* Video thumbnail */}
               <div className="relative ml-12 aspect-video">
                 <Image
-                  src="/placeholder.svg?height=720&width=1280"
+                  src="/images/Education/thumbnail1.png?height=720&width=1280"
                   alt="Education Initiative Video"
                   width={1280}
                   height={720}
@@ -351,7 +351,7 @@ export default function EducationInitiativePage() {
                 {/* Play button */}
                 <div className="absolute inset-0 flex items-center justify-center">
                   <motion.div
-                    className="h-20 w-20 bg-[#C8A97E] rounded-full flex items-center justify-center"
+                    className="h-20 w-20 bg-[#bcbe3a] rounded-full flex items-center justify-center"
                     whileHover={{ scale: 1.1 }}
                     transition={{ type: "spring", stiffness: 400, damping: 10 }}
                   >
@@ -404,10 +404,10 @@ export default function EducationInitiativePage() {
               className="bg-white/10 backdrop-blur-sm p-6 rounded-md border border-white/20 text-center"
               variants={fadeInUp}
             >
-              <div className="inline-block p-4 bg-[#C8A97E] rounded-full mb-4">
+              <div className="inline-block p-4 bg-[#bcbe3a] rounded-full mb-4">
                 <School className="h-8 w-8 text-white" />
               </div>
-              <h3 className="text-4xl font-bold mb-2 text-[#C8A97E]">25+</h3>
+              <h3 className="text-4xl font-bold mb-2 text-[#bcbe3a]">25+</h3>
               <p className="text-gray-300">Schools Built or Renovated</p>
             </motion.div>
 
@@ -415,10 +415,10 @@ export default function EducationInitiativePage() {
               className="bg-white/10 backdrop-blur-sm p-6 rounded-md border border-white/20 text-center"
               variants={fadeInUp}
             >
-              <div className="inline-block p-4 bg-[#C8A97E] rounded-full mb-4">
+              <div className="inline-block p-4 bg-[#bcbe3a] rounded-full mb-4">
                 <Users className="h-8 w-8 text-white" />
               </div>
-              <h3 className="text-4xl font-bold mb-2 text-[#C8A97E]">5,000+</h3>
+              <h3 className="text-4xl font-bold mb-2 text-[#bcbe3a]">5,000+</h3>
               <p className="text-gray-300">Students Supported</p>
             </motion.div>
 
@@ -426,10 +426,10 @@ export default function EducationInitiativePage() {
               className="bg-white/10 backdrop-blur-sm p-6 rounded-md border border-white/20 text-center"
               variants={fadeInUp}
             >
-              <div className="inline-block p-4 bg-[#C8A97E] rounded-full mb-4">
+              <div className="inline-block p-4 bg-[#bcbe3a] rounded-full mb-4">
                 <Award className="h-8 w-8 text-white" />
               </div>
-              <h3 className="text-4xl font-bold mb-2 text-[#C8A97E]">750+</h3>
+              <h3 className="text-4xl font-bold mb-2 text-[#bcbe3a]">750+</h3>
               <p className="text-gray-300">Scholarships Awarded</p>
             </motion.div>
 
@@ -437,10 +437,10 @@ export default function EducationInitiativePage() {
               className="bg-white/10 backdrop-blur-sm p-6 rounded-md border border-white/20 text-center"
               variants={fadeInUp}
             >
-              <div className="inline-block p-4 bg-[#C8A97E] rounded-full mb-4">
+              <div className="inline-block p-4 bg-[#bcbe3a] rounded-full mb-4">
                 <Target className="h-8 w-8 text-white" />
               </div>
-              <h3 className="text-4xl font-bold mb-2 text-[#C8A97E]">12</h3>
+              <h3 className="text-4xl font-bold mb-2 text-[#bcbe3a]">12</h3>
               <p className="text-gray-300">Communities Reached</p>
             </motion.div>
           </motion.div>
@@ -465,7 +465,7 @@ export default function EducationInitiativePage() {
 
           <div className="relative max-w-4xl mx-auto">
             {/* Connecting line */}
-            <div className="absolute left-1/2 top-0 bottom-0 w-1 bg-[#C8A97E] transform -translate-x-1/2 z-0 hidden md:block"></div>
+            <div className="absolute left-1/2 top-0 bottom-0 w-1 bg-[#bcbe3a] transform -translate-x-1/2 z-0 hidden md:block"></div>
 
             <motion.div
               className="space-y-16"
@@ -573,7 +573,7 @@ export default function EducationInitiativePage() {
       </section>
 
       {/* Upcoming Events */}
-      <section className="py-16 md:py-24 bg-white">
+      {/* <section className="py-16 md:py-24 bg-white">
         <div className="container mx-auto px-4">
           <motion.div
             className="max-w-3xl mx-auto text-center mb-16"
@@ -596,13 +596,13 @@ export default function EducationInitiativePage() {
             viewport={{ once: true }}
           >
             <motion.div className="bg-[#f8f9fa] overflow-hidden shadow-md group" variants={fadeInUp}>
-              <div className="h-2 bg-[#C8A97E]"></div>
+              <div className="h-2 bg-[#bcbe3a]"></div>
               <div className="p-6">
                 <div className="flex items-center mb-4">
                   <Calendar className="h-5 w-5 text-[#1A3A5F] mr-2" />
                   <span className="text-gray-600 font-medium">June 15, 2025</span>
                 </div>
-                <h3 className="text-xl font-bold mb-3 text-[#1A3A5F] group-hover:text-[#C8A97E] transition-colors">
+                <h3 className="text-xl font-bold mb-3 text-[#1A3A5F] group-hover:text-[#bcbe3a] transition-colors">
                   Annual Scholarship Award Ceremony
                 </h3>
                 <p className="text-gray-700 mb-4">
@@ -613,9 +613,7 @@ export default function EducationInitiativePage() {
                     <Clock className="h-4 w-4 text-gray-500 mr-2" />
                     <span className="text-sm text-gray-500">2:00 PM - 5:00 PM</span>
                   </div>
-                  {/* <Button variant="link" className="text-[#C8A97E] p-0 hover:text-[#8A6D3B]">
-                    Learn More
-                  </Button> */}
+                  
                 </div>
               </div>
             </motion.div>
@@ -627,7 +625,7 @@ export default function EducationInitiativePage() {
                   <Calendar className="h-5 w-5 text-[#1A3A5F] mr-2" />
                   <span className="text-gray-600 font-medium">July 8, 2025</span>
                 </div>
-                <h3 className="text-xl font-bold mb-3 text-[#1A3A5F] group-hover:text-[#C8A97E] transition-colors">
+                <h3 className="text-xl font-bold mb-3 text-[#1A3A5F] group-hover:text-[#bcbe3a] transition-colors">
                   Teacher Training Workshop
                 </h3>
                 <p className="text-gray-700 mb-4">
@@ -638,21 +636,19 @@ export default function EducationInitiativePage() {
                     <Clock className="h-4 w-4 text-gray-500 mr-2" />
                     <span className="text-sm text-gray-500">9:00 AM - 4:00 PM</span>
                   </div>
-                  {/* <Button variant="link" className="text-[#C8A97E] p-0 hover:text-[#8A6D3B]">
-                    Learn More
-                  </Button> */}
+                  
                 </div>
               </div>
             </motion.div>
 
             <motion.div className="bg-[#f8f9fa] overflow-hidden shadow-md group" variants={fadeInUp}>
-              <div className="h-2 bg-[#C8A97E]"></div>
+              <div className="h-2 bg-[#bcbe3a]"></div>
               <div className="p-6">
                 <div className="flex items-center mb-4">
                   <Calendar className="h-5 w-5 text-[#1A3A5F] mr-2" />
                   <span className="text-gray-600 font-medium">August 22, 2025</span>
                 </div>
-                <h3 className="text-xl font-bold mb-3 text-[#1A3A5F] group-hover:text-[#C8A97E] transition-colors">
+                <h3 className="text-xl font-bold mb-3 text-[#1A3A5F] group-hover:text-[#bcbe3a] transition-colors">
                   School Supplies Distribution
                 </h3>
                 <p className="text-gray-700 mb-4">
@@ -663,15 +659,13 @@ export default function EducationInitiativePage() {
                     <Clock className="h-4 w-4 text-gray-500 mr-2" />
                     <span className="text-sm text-gray-500">10:00 AM - 2:00 PM</span>
                   </div>
-                  {/* <Button variant="link" className="text-[#C8A97E] p-0 hover:text-[#8A6D3B]">
-                    Learn More
-                  </Button> */}
+                  
                 </div>
               </div>
             </motion.div>
           </motion.div>
         </div>
-      </section>
+      </section> */}
 
       {/* Call to Action */}
       <section className="py-16 md:py-24 bg-[#1A3A5F] text-white">
@@ -689,11 +683,11 @@ export default function EducationInitiativePage() {
                 build a brighter future through education.
               </p>
               <div className="flex flex-wrap gap-4">
-                <Button className="bg-[#C8A97E] hover:bg-[#8A6D3B] text-white px-8 py-2 rounded-none">
-                  Donate Now
+                <Button className="bg-[#bcbe3a] hover:bg-[#8A6D3B] text-white px-8 py-2 rounded-none">
+                  <Link href="/donate">Donate Now</Link>
                 </Button>
                 <Button variant="outline" className="border-white text-gray-500 hover:bg-white/10 rounded-none">
-                  Volunteer
+                  <Link href="/contact">Volunteer</Link>
                 </Button>
               </div>
             </motion.div>
@@ -705,10 +699,10 @@ export default function EducationInitiativePage() {
               transition={{ duration: 0.6 }}
               className="bg-white/10 backdrop-blur-sm p-8 rounded-md border border-white/20"
             >
-              <h3 className="text-2xl font-bold mb-6 text-[#C8A97E]">How Your Support Helps</h3>
+              <h3 className="text-2xl font-bold mb-6 text-[#bcbe3a]">How Your Support Helps</h3>
               <ul className="space-y-4">
                 <li className="flex items-start">
-                  <div className="bg-[#C8A97E] rounded-full p-1 mt-1 mr-3">
+                  <div className="bg-[#bcbe3a] rounded-full p-1 mt-1 mr-3">
                     <svg className="h-4 w-4 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                     </svg>
@@ -716,7 +710,7 @@ export default function EducationInitiativePage() {
                   <p>$50 provides school supplies for one student for a year</p>
                 </li>
                 <li className="flex items-start">
-                  <div className="bg-[#C8A97E] rounded-full p-1 mt-1 mr-3">
+                  <div className="bg-[#bcbe3a] rounded-full p-1 mt-1 mr-3">
                     <svg className="h-4 w-4 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                     </svg>
@@ -724,7 +718,7 @@ export default function EducationInitiativePage() {
                   <p>$200 funds a teacher training workshop</p>
                 </li>
                 <li className="flex items-start">
-                  <div className="bg-[#C8A97E] rounded-full p-1 mt-1 mr-3">
+                  <div className="bg-[#bcbe3a] rounded-full p-1 mt-1 mr-3">
                     <svg className="h-4 w-4 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                     </svg>
@@ -732,7 +726,7 @@ export default function EducationInitiativePage() {
                   <p>$500 provides a scholarship for one student</p>
                 </li>
                 <li className="flex items-start">
-                  <div className="bg-[#C8A97E] rounded-full p-1 mt-1 mr-3">
+                  <div className="bg-[#bcbe3a] rounded-full p-1 mt-1 mr-3">
                     <svg className="h-4 w-4 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                     </svg>
@@ -768,7 +762,7 @@ export default function EducationInitiativePage() {
                   ref={videoRef}
                   width="100%"
                   height="100%"
-                  src="https://www.youtube.com/embed/dQw4w9WgXcQ?autoplay=1"
+                  src="https://res.cloudinary.com/dvrpa1lyo/video/upload/v1745666847/VideoCompressorResizeCompressVideo2025_04_26_11_32_16_clihkh.mp4"
                   title="Education Initiative Video"
                   allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                   allowFullScreen
@@ -778,7 +772,7 @@ export default function EducationInitiativePage() {
               <div className="p-4 bg-[#1A3A5F] text-white">
                 <div className="flex justify-between items-center mb-2">
                   <h3 className="text-lg font-semibold">Transforming Education in Lagos</h3>
-                  <button onClick={closeVideoModal} className="text-white hover:text-[#C8A97E] transition-colors">
+                  <button onClick={closeVideoModal} className="text-white hover:text-[#bcbe3a] transition-colors">
                     <X className="h-5 w-5" />
                   </button>
                 </div>

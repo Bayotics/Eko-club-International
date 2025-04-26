@@ -108,25 +108,25 @@ export default function WomenForumPage() {
       title: "Leadership Development",
       description:
         "Empowering women with the skills, knowledge, and confidence to take on leadership roles in their communities and professional lives.",
-      icon: <Award className="h-16 w-16 text-[#C8A97E]" />,
+      icon: <Award className="h-16 w-16 text-[#db2777]" />,
     },
     {
       title: "Entrepreneurship Support",
       description:
         "Providing resources, training, and networking opportunities to help women start and grow successful businesses.",
-      icon: <Briefcase className="h-16 w-16 text-[#C8A97E]" />,
+      icon: <Briefcase className="h-16 w-16 text-[#db2777]" />,
     },
     {
       title: "Mentorship Program",
       description:
         "Connecting experienced professionals with emerging leaders to provide guidance, support, and inspiration.",
-      icon: <Users className="h-16 w-16 text-[#C8A97E]" />,
+      icon: <Users className="h-16 w-16 text-[#db2777]" />,
     },
     {
       title: "Educational Scholarships",
       description:
         "Supporting women's education through scholarships and grants for academic and professional development.",
-      icon: <GraduationCap className="h-16 w-16 text-[#C8A97E]" />,
+      icon: <GraduationCap className="h-16 w-16 text-[#db2777]" />,
     },
   ]
 
@@ -142,20 +142,20 @@ export default function WomenForumPage() {
           <motion.div initial="hidden" animate="visible" variants={staggerContainer} className="max-w-4xl mx-auto">
             <motion.div variants={fadeIn} className="mb-4">
               <div className="flex items-center justify-center gap-2 text-white/80 mb-4">
-                <Link href="/" className="hover:text-[#C8A97E] transition-colors">
+                <Link href="/" className="hover:text-[#db2777] transition-colors">
                   Home
                 </Link>
                 <ChevronRight className="h-4 w-4" />
-                <Link href="/#projects" className="hover:text-[#C8A97E] transition-colors">
+                <Link href="/#projects" className="hover:text-[#db2777] transition-colors">
                   Our Projects
                 </Link>
                 <ChevronRight className="h-4 w-4" />
-                <span className="text-[#C8A97E]">Women Forum</span>
+                <span className="text-[#db2777]">Women Forum</span>
               </div>
               <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-4">Women Forum</h1>
             </motion.div>
             <motion.div variants={fadeIn}>
-              <div className="h-1 w-24 bg-[#C8A97E] mx-auto mb-6"></div>
+              <div className="h-1 w-24 bg-[#db2777] mx-auto mb-6"></div>
               <p className="text-lg md:text-xl text-white/90 max-w-3xl mx-auto">
                 Empowering women through leadership, entrepreneurship, and community engagement.
               </p>
@@ -187,9 +187,9 @@ export default function WomenForumPage() {
               className="space-y-6"
             >
               <h2 className="text-3xl md:text-4xl font-bold text-gray-800">
-                About the <span className="text-[#C8A97E]">Women Forum</span>
+                About the <span className="text-pink-600">Women Forum</span>
               </h2>
-              <div className="h-1 w-20 bg-[#C8A97E] mb-6"></div>
+              <div className="h-1 w-20 bg-pink mb-6"></div>
               <p className="text-gray-600">
                 The Eko Club International Women Forum was established in 2010 to address the unique challenges and
                 opportunities faced by women in our community. Our mission is to empower women through leadership
@@ -205,11 +205,6 @@ export default function WomenForumPage() {
                 supportive network that fosters growth, collaboration, and mutual support. We believe that when women
                 are empowered, entire communities benefit.
               </p>
-              <div className="pt-4">
-                <Button className="bg-[#C8A97E] hover:bg-[#8A6D3B] text-white transition-colors duration-300 rounded-none px-8 py-6 uppercase">
-                  Join the Forum
-                </Button>
-              </div>
             </motion.div>
           </div>
         </div>
@@ -225,9 +220,9 @@ export default function WomenForumPage() {
           className="text-center max-w-3xl mx-auto mb-16 px-4"
         >
           <h2 className="text-3xl md:text-4xl font-bold mb-6 text-white">
-            Our <span className="text-[#C8A97E]">Impact</span>
+            Our <span className="text-[#db2777]">Impact</span>
           </h2>
-          <div className="h-1 w-20 bg-[#C8A97E] mx-auto mb-8"></div>
+          <div className="h-1 w-20 bg-[#db2777] mx-auto mb-8"></div>
           <p className="text-white/80">
             Watch how the Women Forum has made a difference in the lives of women in our community.
           </p>
@@ -244,14 +239,14 @@ export default function WomenForumPage() {
           >
             <div className="relative w-full aspect-video rounded-lg overflow-hidden shadow-xl">
               <Image
-                src="/placeholder.svg?height=800&width=1600"
+                src="/images/women-forum-thumbnail.jpg?height=800&width=1600"
                 alt="Women Forum Impact Video"
                 fill
                 className="object-cover"
               />
               <div className="absolute inset-0 bg-black/40 flex items-center justify-center group-hover:bg-black/60 transition-colors">
                 <motion.div
-                  className="bg-white/90 rounded-full p-6 group-hover:bg-[#C8A97E] transition-colors"
+                  className="bg-white/90 rounded-full p-6 group-hover:bg-[#db2777] transition-colors"
                   whileHover={{ scale: 1.1 }}
                   transition={{ type: "spring", stiffness: 400, damping: 10 }}
                 >
@@ -274,9 +269,9 @@ export default function WomenForumPage() {
             className="text-center max-w-3xl mx-auto mb-16"
           >
             <h2 className="text-3xl md:text-4xl font-bold mb-6 text-gray-800">
-              Our <span className="text-[#C8A97E]">Initiatives</span>
+              Our <span className="text-[#db2777]">Initiatives</span>
             </h2>
-            <div className="h-1 w-20 bg-[#C8A97E] mx-auto mb-8"></div>
+            <div className="h-1 w-20 bg-[#db2777] mx-auto mb-8"></div>
             <p className="text-gray-600">
               Through our various initiatives, we aim to address the unique challenges and opportunities faced by women
               in our community.
@@ -294,7 +289,7 @@ export default function WomenForumPage() {
               <motion.div
                 key={index}
                 variants={scaleIn}
-                className="bg-white rounded-lg shadow-lg p-8 border-t-4 border-[#C8A97E] hover:shadow-xl transition-shadow"
+                className="bg-white rounded-lg shadow-lg p-8 border-t-4 border-[#db2777] hover:shadow-xl transition-shadow"
               >
                 <div className="flex justify-center mb-4">{initiative.icon}</div>
                 <h3 className="text-xl font-bold text-gray-800 mb-3 text-center">{initiative.title}</h3>
@@ -316,9 +311,9 @@ export default function WomenForumPage() {
             className="text-center max-w-3xl mx-auto mb-16"
           >
             <h2 className="text-3xl md:text-4xl font-bold mb-6 text-gray-800">
-              Success <span className="text-[#C8A97E]">Stories</span>
+              Success <span className="text-[#db2777]">Stories</span>
             </h2>
-            <div className="h-1 w-20 bg-[#C8A97E] mx-auto mb-8"></div>
+            <div className="h-1 w-20 bg-[#db2777] mx-auto mb-8"></div>
             <p className="text-gray-600">
               Hear from women whose lives have been transformed through our programs and initiatives.
             </p>
@@ -338,7 +333,7 @@ export default function WomenForumPage() {
                 </div>
                 <div>
                   <h3 className="text-lg font-bold text-gray-800">Folake Adeyemi</h3>
-                  <p className="text-[#C8A97E]">Entrepreneur</p>
+                  <p className="text-[#db2777]">Entrepreneur</p>
                 </div>
               </div>
               <p className="text-gray-600 italic">
@@ -361,7 +356,7 @@ export default function WomenForumPage() {
                 </div>
                 <div>
                   <h3 className="text-lg font-bold text-gray-800">Dr. Amina Finn</h3>
-                  <p className="text-[#C8A97E]">Healthcare Professional</p>
+                  <p className="text-[#db2777]">Healthcare Professional</p>
                 </div>
               </div>
               <p className="text-gray-600 italic">
@@ -384,7 +379,7 @@ export default function WomenForumPage() {
                 </div>
                 <div>
                   <h3 className="text-lg font-bold text-gray-800">Bisi Ogunwale</h3>
-                  <p className="text-[#C8A97E]">Community Leader</p>
+                  <p className="text-[#db2777]">Community Leader</p>
                 </div>
               </div>
               <p className="text-gray-600 italic">
@@ -407,9 +402,9 @@ export default function WomenForumPage() {
             className="text-center max-w-3xl mx-auto mb-16"
           >
             <h2 className="text-3xl md:text-4xl font-bold mb-6 text-gray-800">
-              Upcoming <span className="text-[#C8A97E]">Events</span>
+              Upcoming <span className="text-[#db2777]">Events</span>
             </h2>
-            <div className="h-1 w-20 bg-[#C8A97E] mx-auto mb-8"></div>
+            <div className="h-1 w-20 bg-[#db2777] mx-auto mb-8"></div>
             <p className="text-gray-600">
               Join us at our upcoming events to connect, learn, and grow with other women in our community.
             </p>
@@ -439,17 +434,17 @@ export default function WomenForumPage() {
                     <p className="text-gray-600 mb-4">{event.description}</p>
                     <div className="space-y-2 text-sm">
                       <div className="flex items-center">
-                        <Calendar className="h-4 w-4 text-[#C8A97E] mr-2" />
+                        <Calendar className="h-4 w-4 text-[#db2777] mr-2" />
                         <span>{event.date}</span>
                       </div>
                       <div className="flex items-center">
-                        <MapPin className="h-4 w-4 text-[#C8A97E] mr-2" />
+                        <MapPin className="h-4 w-4 text-[#db2777] mr-2" />
                         <span>{event.location}</span>
                       </div>
                     </div>
                   </CardContent>
                   <div className="p-6 pt-0">
-                    <Button className="w-full bg-[#C8A97E] hover:bg-[#8A6D3B] text-white transition-colors duration-300 rounded-none uppercase">
+                    <Button className="w-full bg-[#db2777] hover:bg-[#8A6D3B] text-white transition-colors duration-300 rounded-none uppercase">
                       Register
                     </Button>
                   </div>
@@ -461,7 +456,7 @@ export default function WomenForumPage() {
       </section> */}
 
       {/* Stats Section */}
-      <section className="py-20 bg-[#C8A97E] text-white">
+      <section className="py-20 bg-[#db2777] text-white">
         <div className="container mx-auto px-4">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 text-center">
             <motion.div
@@ -526,11 +521,11 @@ export default function WomenForumPage() {
               in our communities.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Button className="bg-[#C8A97E] hover:bg-[#8A6D3B] text-white px-8 py-6 text-lg rounded-none" asChild>
+              <Button className="bg-[#db2777] hover:bg-[#e584b0] text-white px-8 py-6 text-lg rounded-none" asChild>
                 <Link href="/membership">Become a Member</Link>
               </Button>
               <Button className="bg-white text-gray-900 hover:bg-gray-100 px-8 py-6 text-lg rounded-none" asChild>
-                <Link href="/#contact">Contact Us</Link>
+                <Link href="/contact">Contact Us</Link>
               </Button>
             </div>
           </motion.div>
@@ -551,7 +546,7 @@ export default function WomenForumPage() {
               ref={videoRef}
               width="100%"
               height="100%"
-              src="https://www.youtube.com/embed/dQw4w9WgXcQ?autoplay=1"
+              src="https://res.cloudinary.com/dvrpa1lyo/video/upload/v1745611922/Eko-Club-women-forum-donation_wa_sjithr.mp4"
               title="Women Forum Impact Video"
               frameBorder="0"
               allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"

@@ -6,13 +6,14 @@ import { Button } from "@/components/ui/button"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Calendar, MapPin, Users } from "lucide-react"
 import Image from "next/image"
+import Link from "next/link"
 
 const projects = [
   {
     id: "medical",
     title: "Medical Missions",
     description: "Providing essential healthcare services to communities in Lagos, Nigeria.",
-    image: "/images/projects-community.jpg?height=400&width=600",
+    image: "/images/projects-medical.jpg?height=400&width=600",
     location: "Lagos, Nigeria",
     date: "Annual",
     impact: "10,000+ patients served",
@@ -39,7 +40,7 @@ const projects = [
     date: "Ongoing",
     impact: "15+ communities improved",
     details:
-      "From water projects to community centers, we invest in infrastructure that improves quality of life and creates sustainable development in local communities.",
+      "From health projects to community centers, we invest in infrastructure that improves quality of life and creates sustainable development in local communities.",
   },
   {
     id: "cultural",
@@ -131,7 +132,11 @@ export default function Projects() {
                       </div>
                     </div>
 
-                    <Button className="mt-4">Learn More</Button>
+                    <Button className="mt-4">
+                      <Link href={'/about/our-mission'}>                      
+                        Learn More
+                      </Link>
+                    </Button>
                   </div>
                 </div>
               </motion.div>

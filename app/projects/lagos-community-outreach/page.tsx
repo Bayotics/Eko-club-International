@@ -18,24 +18,24 @@ export default function LagosCommunityOutreachPage() {
   const videos = [
     {
       id: 1,
-      title: "Clean Water Initiative",
-      description: "Our efforts to provide clean water to communities in Lagos.",
-      thumbnail: "/placeholder.svg?height=400&width=600",
-      videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ",
+      title: "ECI Lagos Outreach 1",
+      description: "",
+      thumbnail: "/images/Food_Palliative/food_banks.jpg?height=400&width=600",
+      videoUrl: "https://res.cloudinary.com/dvrpa1lyo/video/upload/v1745614208/egjigojjmj3xqnetfznh.mp4",
     },
     {
       id: 2,
-      title: "School Renovation Project",
-      description: "Transforming educational facilities for better learning environments.",
-      thumbnail: "/placeholder.svg?height=400&width=600",
-      videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ",
+      title: "ECI Lagos Outreach 2",
+      description: "",
+      thumbnail: "/images/Food_Palliative/4.jpg?height=400&width=600",
+      videoUrl: "https://res.cloudinary.com/dvrpa1lyo/video/upload/v1745614217/AQOUoIPyiG0R316CIDWjHnQ3IGTOwGDTF03kpHYB3_EhZcw4Sp8RZDOZmZ3gCk6skWTwCRi4hjQvARIOQD40oM8s_ahrvpd.mp4",
     },
     {
       id: 3,
-      title: "Food Distribution Program",
-      description: "Addressing food insecurity in vulnerable communities.",
-      thumbnail: "/placeholder.svg?height=400&width=600",
-      videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ",
+      title: "ECI Lagos Outreach 3",
+      description: "",
+      thumbnail: "/images/Food_Palliative/1.png?height=400&width=600",
+      videoUrl: "https://res.cloudinary.com/dvrpa1lyo/video/upload/v1745614213/AQNFRL4_dmPURHvjtQShRiByTrL4I7kQyMHbvTI-PIeAN3dF3XxCmFYC_p7_56_bZc7zKptoXIGAtPmoYGPQvQrr_c6pbe2.mp4",
     },
   ]
 
@@ -179,20 +179,20 @@ export default function LagosCommunityOutreachPage() {
           <motion.div initial="hidden" animate="visible" variants={staggerContainer} className="max-w-4xl mx-auto">
             <motion.div variants={fadeIn} className="mb-4">
               <div className="flex items-center justify-center gap-2 text-white/80 mb-4">
-                <Link href="/" className="hover:text-[#C8A97E] transition-colors">
+                <Link href="/" className="hover:text-[#78b16d] transition-colors">
                   Home
                 </Link>
                 <ChevronRight className="h-4 w-4" />
-                <Link href="/#projects" className="hover:text-[#C8A97E] transition-colors">
+                <Link href="/#projects" className="hover:text-[#78b16d] transition-colors">
                   Our Projects
                 </Link>
                 <ChevronRight className="h-4 w-4" />
-                <span className="text-[#C8A97E]">Lagos Community Outreach</span>
+                <span className="text-[#78b16d]">Lagos Community Outreach</span>
               </div>
               <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-4">Lagos Community Outreach</h1>
             </motion.div>
             <motion.div variants={fadeIn}>
-              <div className="h-1 w-24 bg-[#C8A97E] mx-auto mb-6"></div>
+              <div className="h-1 w-24 bg-[#78b16d] mx-auto mb-6"></div>
               <p className="text-lg md:text-xl text-white/90 max-w-3xl mx-auto">
                 Transforming lives and building stronger communities through sustainable development initiatives in
                 Lagos.
@@ -230,9 +230,9 @@ export default function LagosCommunityOutreachPage() {
               className="space-y-6"
             >
               <h2 className="text-3xl md:text-4xl font-bold text-gray-800">
-                About Our <span className="text-[#C8A97E]">Community Outreach</span>
+                About Our <span className="text-[#78b16d]">Community Outreach</span>
               </h2>
-              <div className="h-1 w-20 bg-[#C8A97E] mb-6"></div>
+              <div className="h-1 w-20 bg-[#78b16d] mb-6"></div>
               <p className="text-gray-600">
                 The Lagos Community Outreach program was established in 2012 to address critical needs in underserved
                 communities across Lagos State. Our mission is to improve quality of life through sustainable
@@ -251,7 +251,7 @@ export default function LagosCommunityOutreachPage() {
                 lives and communities.
               </p>
               <div className="pt-4">
-                <Button className="bg-[#C8A97E] hover:bg-[#8A6D3B] text-white transition-colors duration-300 rounded-none px-8 py-6 uppercase">
+                <Button className="bg-[#78b16d] hover:bg-[#7be07b] text-white transition-colors duration-300 rounded-none px-8 py-6 uppercase">
                   Get Involved
                 </Button>
               </div>
@@ -271,9 +271,9 @@ export default function LagosCommunityOutreachPage() {
             className="text-center max-w-3xl mx-auto mb-16"
           >
             <h2 className="text-3xl md:text-4xl font-bold mb-6 text-gray-800">
-              Our <span className="text-[#C8A97E]">Impact</span> in Action
+              Our <span className="text-[#78b16d]">Impact</span> in Action
             </h2>
-            <div className="h-1 w-20 bg-[#C8A97E] mx-auto mb-8"></div>
+            <div className="h-1 w-20 bg-[#78b16d] mx-auto mb-8"></div>
             <p className="text-gray-600">
               Watch these videos to see how our community outreach initiatives are making a difference in Lagos.
             </p>
@@ -302,7 +302,7 @@ export default function LagosCommunityOutreachPage() {
                   />
                   <div className="absolute inset-0 bg-black/40 flex items-center justify-center group-hover:bg-black/60 transition-colors">
                     <motion.div
-                      className="bg-white/90 rounded-full p-4 group-hover:bg-[#C8A97E] transition-colors"
+                      className="bg-white/90 rounded-full p-4 group-hover:bg-[#78b16d] transition-colors"
                       whileHover={{ scale: 1.1 }}
                       transition={{ type: "spring", stiffness: 400, damping: 10 }}
                     >
@@ -311,7 +311,7 @@ export default function LagosCommunityOutreachPage() {
                   </div>
                 </div>
                 <div className="p-4 bg-white">
-                  <h3 className="text-xl font-bold text-gray-800 mb-2 group-hover:text-[#C8A97E] transition-colors">
+                  <h3 className="text-xl font-bold text-gray-800 mb-2 group-hover:text-[#78b16d] transition-colors">
                     {video.title}
                   </h3>
                   <p className="text-gray-600">{video.description}</p>
@@ -323,7 +323,7 @@ export default function LagosCommunityOutreachPage() {
       </section>
 
       {/* Impact Stats Section */}
-      <section className="py-20 bg-[#C8A97E] text-white">
+      <section className="py-20 bg-[#78b16d] text-white">
         <div className="container mx-auto px-4">
           <motion.div
             initial="hidden"
@@ -348,7 +348,7 @@ export default function LagosCommunityOutreachPage() {
               className="flex flex-col items-center"
             >
               <div className="bg-white/10 p-4 rounded-full mb-4">
-                <Home className="h-10 w-10" />
+                <Home className="h-10 w-10 text-blue-700" />
               </div>
               <div className="text-5xl font-bold mb-2">25+</div>
               <p className="text-xl">Communities Served</p>
@@ -362,7 +362,7 @@ export default function LagosCommunityOutreachPage() {
               className="flex flex-col items-center"
             >
               <div className="bg-white/10 p-4 rounded-full mb-4">
-                <Users className="h-10 w-10" />
+                <Users className="h-10 w-10 text-pink-700" />
               </div>
               <div className="text-5xl font-bold mb-2">50K+</div>
               <p className="text-xl">Lives Impacted</p>
@@ -376,7 +376,7 @@ export default function LagosCommunityOutreachPage() {
               className="flex flex-col items-center"
             >
               <div className="bg-white/10 p-4 rounded-full mb-4">
-                <BookOpen className="h-10 w-10" />
+                <BookOpen className="h-10 w-10 text-purple-700"/>
               </div>
               <div className="text-5xl font-bold mb-2">12</div>
               <p className="text-xl">Schools Renovated</p>
@@ -390,7 +390,7 @@ export default function LagosCommunityOutreachPage() {
               className="flex flex-col items-center"
             >
               <div className="bg-white/10 p-4 rounded-full mb-4">
-                <Heart className="h-10 w-10" />
+                <Heart className="h-10 w-10 text-yellow-700" />
               </div>
               <div className="text-5xl font-bold mb-2">35+</div>
               <p className="text-xl">Projects Completed</p>
@@ -410,9 +410,9 @@ export default function LagosCommunityOutreachPage() {
             className="text-center max-w-3xl mx-auto mb-16"
           >
             <h2 className="text-3xl md:text-4xl font-bold mb-6 text-gray-800">
-              Our <span className="text-[#C8A97E]">Projects</span>
+              Our <span className="text-[#78b16d]">Projects</span>
             </h2>
-            <div className="h-1 w-20 bg-[#C8A97E] mx-auto mb-8"></div>
+            <div className="h-1 w-20 bg-[#78b16d] mx-auto mb-8"></div>
             <p className="text-gray-600">
               Explore our key initiatives that are transforming communities across Lagos State.
             </p>
@@ -434,8 +434,8 @@ export default function LagosCommunityOutreachPage() {
                 <div className="w-full md:w-1/2 space-y-4">
                   <h3 className="text-2xl font-bold text-gray-800">{project.title}</h3>
                   <p className="text-gray-600">{project.description}</p>
-                  <div className="p-4 bg-[#C8A97E]/10 rounded-lg">
-                    <p className="text-[#C8A97E] font-medium">Impact: {project.impact}</p>
+                  <div className="p-4 bg-[#78b16d]/10 rounded-lg">
+                    <p className="text-[#78b16d] font-medium">Impact: {project.impact}</p>
                   </div>
                 </div>
               </motion.div>
@@ -455,9 +455,9 @@ export default function LagosCommunityOutreachPage() {
             className="text-center max-w-3xl mx-auto mb-16"
           >
             <h2 className="text-3xl md:text-4xl font-bold mb-6">
-              Community <span className="text-[#C8A97E]">Voices</span>
+              Community <span className="text-[#78b16d]">Voices</span>
             </h2>
-            <div className="h-1 w-20 bg-[#C8A97E] mx-auto mb-8"></div>
+            <div className="h-1 w-20 bg-[#78b16d] mx-auto mb-8"></div>
             <p className="text-white/80">
               Hear from community members whose lives have been transformed through our outreach initiatives.
             </p>
@@ -477,7 +477,7 @@ export default function LagosCommunityOutreachPage() {
                 </div>
                 <div>
                   <h3 className="text-lg font-bold">Mrs. Adebisi Ogunleye</h3>
-                  <p className="text-[#C8A97E]">Mushin Community</p>
+                  <p className="text-[#78b16d]">Mushin Community</p>
                 </div>
               </div>
               <p className="text-white/80 italic">
@@ -500,7 +500,7 @@ export default function LagosCommunityOutreachPage() {
                 </div>
                 <div>
                   <h3 className="text-lg font-bold">Mr. Oluwaseun Adeyemi</h3>
-                  <p className="text-[#C8A97E]">School Principal, Alimosho</p>
+                  <p className="text-[#78b16d]">School Principal, Alimosho</p>
                 </div>
               </div>
               <p className="text-white/80 italic">
@@ -523,7 +523,7 @@ export default function LagosCommunityOutreachPage() {
                 </div>
                 <div>
                   <h3 className="text-lg font-bold">Mrs. Funmilayo Ojo</h3>
-                  <p className="text-[#C8A97E]">Small Business Owner, Surulere</p>
+                  <p className="text-[#78b16d]">Small Business Owner, Surulere</p>
                 </div>
               </div>
               <p className="text-white/80 italic">
@@ -547,9 +547,9 @@ export default function LagosCommunityOutreachPage() {
             className="text-center max-w-3xl mx-auto mb-16"
           >
             <h2 className="text-3xl md:text-4xl font-bold mb-6 text-gray-800">
-              Upcoming <span className="text-[#C8A97E]">Events</span>
+              Upcoming <span className="text-[#78b16d]">Events</span>
             </h2>
-            <div className="h-1 w-20 bg-[#C8A97E] mx-auto mb-8"></div>
+            <div className="h-1 w-20 bg-[#78b16d] mx-auto mb-8"></div>
             <p className="text-gray-600">
               Join us at these upcoming events and be part of our community outreach efforts.
             </p>
@@ -579,17 +579,17 @@ export default function LagosCommunityOutreachPage() {
                     <p className="text-gray-600 mb-4">{event.description}</p>
                     <div className="space-y-2 text-sm">
                       <div className="flex items-center">
-                        <Calendar className="h-4 w-4 text-[#C8A97E] mr-2" />
+                        <Calendar className="h-4 w-4 text-[#78b16d] mr-2" />
                         <span>{event.date}</span>
                       </div>
                       <div className="flex items-center">
-                        <MapPin className="h-4 w-4 text-[#C8A97E] mr-2" />
+                        <MapPin className="h-4 w-4 text-[#78b16d] mr-2" />
                         <span>{event.location}</span>
                       </div>
                     </div>
                   </CardContent>
                   <div className="p-6 pt-0">
-                    <Button className="w-full bg-[#C8A97E] hover:bg-[#8A6D3B] text-white transition-colors duration-300 rounded-none uppercase">
+                    <Button className="w-full bg-[#78b16d] hover:bg-[#8A6D3B] text-white transition-colors duration-300 rounded-none uppercase">
                       Register
                     </Button>
                   </div>
@@ -601,7 +601,7 @@ export default function LagosCommunityOutreachPage() {
       </section> */}
 
       {/* CTA Section */}
-      <section className="py-20 bg-[#C8A97E]">
+      <section className="py-20 bg-[#78b16d]">
         <div className="container mx-auto px-4 text-center">
           <motion.div
             initial="hidden"
@@ -615,11 +615,11 @@ export default function LagosCommunityOutreachPage() {
               communities across Lagos.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Button className="bg-white text-[#C8A97E] hover:bg-gray-100 px-8 py-6 text-lg rounded-none" asChild>
+              <Button className="bg-white text-[#78b16d] hover:bg-gray-100 px-8 py-6 text-lg rounded-none" asChild>
                 <Link href="/donate">Donate Now</Link>
               </Button>
               <Button className="bg-gray-900 text-white hover:bg-gray-800 px-8 py-6 text-lg rounded-none" asChild>
-                <Link href="/#contact">Contact Us</Link>
+                <Link href="/contact">Contact Us</Link>
               </Button>
             </div>
           </motion.div>

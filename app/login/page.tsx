@@ -170,11 +170,11 @@ export default function LoginPage() {
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.5, delay: 0.2 }}
             >
-              <div className="bg-[#C8A97E]/10 p-6 rounded-lg border border-[#C8A97E]/20">
+              <div className="bg-[#78b16d]/10 p-6 rounded-lg border border-[#78b16d]/20">
                 <h2 className="text-xl font-semibold mb-4 text-[#8A6D3B]">Member Benefits</h2>
                 <ul className="space-y-3">
                   <li className="flex items-start">
-                    <div className="mr-2 mt-1 bg-[#C8A97E] rounded-full p-1 text-white">
+                    <div className="mr-2 mt-1 bg-[#78b16d] rounded-full p-1 text-white">
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
                         width="12"
@@ -192,7 +192,7 @@ export default function LoginPage() {
                     <span>Access to exclusive events and networking opportunities</span>
                   </li>
                   <li className="flex items-start">
-                    <div className="mr-2 mt-1 bg-[#C8A97E] rounded-full p-1 text-white">
+                    <div className="mr-2 mt-1 bg-[#78b16d] rounded-full p-1 text-white">
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
                         width="12"
@@ -210,7 +210,7 @@ export default function LoginPage() {
                     <span>Participate in community service projects</span>
                   </li>
                   <li className="flex items-start">
-                    <div className="mr-2 mt-1 bg-[#C8A97E] rounded-full p-1 text-white">
+                    <div className="mr-2 mt-1 bg-[#78b16d] rounded-full p-1 text-white">
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
                         width="12"
@@ -228,7 +228,7 @@ export default function LoginPage() {
                     <span>Connect with other members worldwide</span>
                   </li>
                   <li className="flex items-start">
-                    <div className="mr-2 mt-1 bg-[#C8A97E] rounded-full p-1 text-white">
+                    <div className="mr-2 mt-1 bg-[#78b16d] rounded-full p-1 text-white">
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
                         width="12"
@@ -246,7 +246,7 @@ export default function LoginPage() {
                     <span>Access to member-only resources and documents</span>
                   </li>
                   <li className="flex items-start">
-                    <div className="mr-2 mt-1 bg-[#C8A97E] rounded-full p-1 text-white">
+                    <div className="mr-2 mt-1 bg-[#78b16d] rounded-full p-1 text-white">
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
                         width="12"
@@ -321,7 +321,7 @@ export default function LoginPage() {
                               <label htmlFor="password" className="text-sm font-medium">
                                 Password
                               </label>
-                              <Link href="/forgot-password" className="text-sm text-[#C8A97E] hover:underline">
+                              <Link href="/forgot-password" className="text-sm text-[#78b16d] hover:underline">
                                 Forgot password?
                               </Link>
                             </div>
@@ -335,7 +335,7 @@ export default function LoginPage() {
                               onChange={handleLoginChange}
                             />
                           </div>
-                          <Button type="submit" className="w-full bg-[#C8A97E] hover:bg-[#8A6D3B]" disabled={isLoading}>
+                          <Button type="submit" className="w-full bg-[#78b16d] hover:bg-[#8A6D3B]" disabled={isLoading}>
                             {isLoading ? (
                               <>
                                 <Loader2 className="mr-2 h-4 w-4 animate-spin" />
@@ -440,7 +440,7 @@ export default function LoginPage() {
                               />
                             </div>
                           </div>
-                          <Button type="submit" className="w-full bg-[#C8A97E] hover:bg-[#8A6D3B]" disabled={isLoading}>
+                          <Button type="submit" className="w-full bg-[#78b16d] hover:bg-[#8A6D3B]" disabled={isLoading}>
                             {isLoading ? (
                               <>
                                 <Loader2 className="mr-2 h-4 w-4 animate-spin" />
@@ -459,14 +459,14 @@ export default function LoginPage() {
                   {activeTab === "login" ? (
                     <p>
                       Don&apos;t have an account?{" "}
-                      <button onClick={() => setActiveTab("register")} className="text-[#C8A97E] hover:underline">
+                      <button onClick={() => setActiveTab("register")} className="text-[#78b16d] hover:underline">
                         Register here
                       </button>
                     </p>
                   ) : (
                     <p>
                       Already have an account?{" "}
-                      <button onClick={() => setActiveTab("login")} className="text-[#C8A97E] hover:underline">
+                      <button onClick={() => setActiveTab("login")} className="text-[#78b16d] hover:underline">
                         Login here
                       </button>
                     </p>

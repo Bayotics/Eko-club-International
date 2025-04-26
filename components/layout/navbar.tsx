@@ -310,10 +310,10 @@ export default function Navbar() {
                 className={cn(
                   "px-1 py-2 text-sm font-medium transition-colors relative group",
                   pathname === item.href || (pathname === "/" && item.href === "/")
-                    ? "text-[#e4e66d]"
+                    ? "text-[#bbbd59]"
                     : scrolled || pathname !== "/"
-                      ? "text-gray-800 hover:text-[#e4e66d]"
-                      : "text-white hover:text-[#e4e66d]",
+                      ? "text-gray-800 hover:text-[#a0a14b]"
+                      : "text-white hover:text-[#aeaf53]",
                 )}
               >
                 {item.name}
@@ -346,7 +346,7 @@ export default function Navbar() {
                     )}
                   </Avatar>
                   <div className="flex flex-col items-start">
-                    <span className="text-sm font-medium">{user.fullName}</span>
+                    <span className={scrolled ? "text-sm font-medium" : "text-sm font-medium text-slate-400"}>{user.fullName}</span>
                     <span className="text-xs text-gray-500 capitalize">{user.role}</span>
                   </div>
                 </Button>

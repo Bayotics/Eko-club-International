@@ -324,20 +324,20 @@ export default function LeadershipPage() {
           <motion.div initial="hidden" animate="visible" variants={staggerContainer} className="max-w-4xl mx-auto">
             <motion.div variants={fadeIn} className="mb-4">
               <div className="flex items-center justify-center gap-2 text-white/80 mb-4">
-                <Link href="/" className="hover:text-[#C8A97E] transition-colors">
+                <Link href="/" className="hover:text-[#ec3e3e] transition-colors">
                   Home
                 </Link>
                 <ChevronRight className="h-4 w-4" />
-                <Link href="/#about" className="hover:text-[#C8A97E] transition-colors">
+                <Link href="/#about" className="hover:text-[#ec3e3e] transition-colors">
                   About
                 </Link>
                 <ChevronRight className="h-4 w-4" />
-                <span className="text-[#C8A97E]">Leadership</span>
+                <span className="text-[#ec3e3e]">Leadership</span>
               </div>
               <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-4">Our Leadership</h1>
             </motion.div>
             <motion.div variants={fadeIn}>
-              <div className="h-1 w-24 bg-[#C8A97E] mx-auto mb-6"></div>
+              <div className="h-1 w-24 bg-[#ec3e3e] mx-auto mb-6"></div>
               <p className="text-lg md:text-xl text-white/90 max-w-3xl mx-auto">
                 Meet the dedicated individuals who lead Eko Club International, guiding our mission and vision with
                 passion and commitment.
@@ -358,9 +358,9 @@ export default function LeadershipPage() {
             className="text-center max-w-3xl mx-auto mb-16"
           >
             <h2 className="text-3xl md:text-4xl font-bold mb-6 text-gray-800">
-              Current <span className="text-[#C8A97E]">President</span>
+              Current <span className="text-[#ec3e3e]">President</span>
             </h2>
-            <div className="h-1 w-20 bg-[#C8A97E] mx-auto mb-8"></div>
+            <div className="h-1 w-20 bg-[#ec3e3e] mx-auto mb-8"></div>
             <p className="text-gray-600">
               Under the visionary leadership of our current president, Eko Club International continues to grow and make
               a significant impact in our communities.
@@ -392,12 +392,12 @@ export default function LeadershipPage() {
               className="space-y-6"
             >
               <h3 className="text-3xl font-bold text-gray-800">{currentPresident.name}</h3>
-              <p className="text-xl text-[#C8A97E] font-medium">{currentPresident.title}</p>
+              <p className="text-xl text-[#ec3e3e] font-medium">{currentPresident.title}</p>
               <p className="text-gray-600">{currentPresident.biography}</p>
 
               <div className="space-y-4 mt-8">
                 <div className="flex items-center gap-3">
-                  <div className="p-2 rounded-full bg-[#C8A97E]/10 text-[#C8A97E]">
+                  <div className="p-2 rounded-full bg-[#ec3e3e]/10 text-[#ec3e3e]">
                     <Calendar className="h-5 w-5" />
                   </div>
                   <div>
@@ -408,7 +408,7 @@ export default function LeadershipPage() {
                 </div>
 
                 <div className="flex items-center gap-3">
-                  <div className="p-2 rounded-full bg-[#C8A97E]/10 text-[#C8A97E]">
+                  <div className="p-2 rounded-full bg-[#ec3e3e]/10 text-[#ec3e3e]">
                     <Award className="h-5 w-5" />
                   </div>
                   <div>
@@ -419,7 +419,7 @@ export default function LeadershipPage() {
                 </div>
 
                 <div className="flex items-center gap-3">
-                  <div className="p-2 rounded-full bg-[#C8A97E]/10 text-[#C8A97E]">
+                  <div className="p-2 rounded-full bg-[#ec3e3e]/10 text-[#ec3e3e]">
                     <Briefcase className="h-5 w-5" />
                   </div>
                   <div>
@@ -430,7 +430,7 @@ export default function LeadershipPage() {
                 </div>
 
                 <div className="flex items-center gap-3">
-                  <div className="p-2 rounded-full bg-[#C8A97E]/10 text-[#C8A97E]">
+                  <div className="p-2 rounded-full bg-[#ec3e3e]/10 text-[#ec3e3e]">
                     <Mail className="h-5 w-5" />
                   </div>
                   <div>
@@ -441,7 +441,7 @@ export default function LeadershipPage() {
                 </div>
 
                 <div className="flex items-center gap-3">
-                  <div className="p-2 rounded-full bg-[#C8A97E]/10 text-[#C8A97E]">
+                  <div className="p-2 rounded-full bg-[#ec3e3e]/10 text-[#ec3e3e]">
                     <Phone className="h-5 w-5" />
                   </div>
                   <div>
@@ -457,7 +457,7 @@ export default function LeadershipPage() {
                 <ul className="space-y-2">
                   {currentPresident.contributions.map((contribution, index) => (
                     <li key={index} className="flex items-start gap-2">
-                      <span className="text-[#C8A97E] font-bold">•</span>
+                      <span className="text-[#ec3e3e] font-bold">•</span>
                       <span className="text-gray-600">{contribution}</span>
                     </li>
                   ))}
@@ -479,9 +479,9 @@ export default function LeadershipPage() {
             className="text-center max-w-3xl mx-auto mb-16"
           >
             <h2 className="text-3xl md:text-4xl font-bold mb-6 text-gray-800">
-              Current <span className="text-[#C8A97E]">Executives</span>
+              Current <span className="text-[#ec3e3e]">Executives</span>
             </h2>
-            <div className="h-1 w-20 bg-[#C8A97E] mx-auto mb-8"></div>
+            <div className="h-1 w-20 bg-[#ec3e3e] mx-auto mb-8"></div>
             <p className="text-gray-600">
               Our dedicated team of executives works tirelessly to fulfill the mission and vision of Eko Club
               International, bringing diverse skills and expertise to their roles.
@@ -506,7 +506,7 @@ export default function LeadershipPage() {
                     </div>
                     <div className="w-full md:w-1/2">
                       <h3 className="text-2xl font-bold text-gray-800">{exco.name}</h3>
-                      <p className="text-[#C8A97E] mb-4">{exco.title}</p>
+                      <p className="text-[#ec3e3e] mb-4">{exco.title}</p>
                       <div className="w-full h-px bg-gray-200 mb-4"></div>
                       <p className="text-gray-600 mb-6">{exco.bio}</p>
 
@@ -545,7 +545,7 @@ export default function LeadershipPage() {
             <div className="flex justify-center items-center mt-16 gap-4">
               <button
                 onClick={handlePrevExco}
-                className="p-2 rounded-full border border-gray-300 hover:border-[#C8A97E] hover:text-[#C8A97E] transition-colors"
+                className="p-2 rounded-full border border-gray-300 hover:border-[#ec3e3e] hover:text-[#ec3e3e] transition-colors"
                 disabled={isAnimating}
               >
                 <ChevronLeft className="h-6 w-6" />
@@ -559,7 +559,7 @@ export default function LeadershipPage() {
 
               <button
                 onClick={handleNextExco}
-                className="p-2 rounded-full border border-gray-300 hover:border-[#C8A97E] hover:text-[#C8A97E] transition-colors"
+                className="p-2 rounded-full border border-gray-300 hover:border-[#ec3e3e] hover:text-[#ec3e3e] transition-colors"
                 disabled={isAnimating}
               >
                 <ChevronRight className="h-6 w-6" />
@@ -580,9 +580,9 @@ export default function LeadershipPage() {
             className="text-center max-w-3xl mx-auto mb-16"
           >
             <h2 className="text-3xl md:text-4xl font-bold mb-6 text-gray-800">
-              Past <span className="text-[#C8A97E]">Presidents</span>
+              Past <span className="text-[#ec3e3e]">Presidents</span>
             </h2>
-            <div className="h-1 w-20 bg-[#C8A97E] mx-auto mb-8"></div>
+            <div className="h-1 w-20 bg-[#ec3e3e] mx-auto mb-8"></div>
             <p className="text-gray-600">
               We honor the legacy of our past presidents who have shaped Eko Club International through their visionary
               leadership and dedication to our mission.
@@ -612,12 +612,12 @@ export default function LeadershipPage() {
                 </div>
                 <div className="p-6">
                   <h3 className="text-xl font-bold text-gray-800 mb-1">{president.name}</h3>
-                  <p className="text-[#C8A97E] font-medium mb-4">{president.term}</p>
+                  <p className="text-[#ec3e3e] font-medium mb-4">{president.term}</p>
                   <p className="text-gray-600 mb-4">{president.shortBio}</p>
 
                   <Button
                     variant="link"
-                    className="text-[#C8A97E] p-0 hover:text-[#8A6D3B]"
+                    className="text-[#ec3e3e] p-0 hover:text-[#8A6D3B]"
                     onClick={() => openModal(president)}
                   >
                     See more
@@ -636,7 +636,7 @@ export default function LeadershipPage() {
             <>
               <DialogHeader>
                 <DialogTitle className="text-2xl font-bold">{selectedPresident.name}</DialogTitle>
-                <DialogDescription className="text-[#C8A97E] font-medium">{selectedPresident.term}</DialogDescription>
+                <DialogDescription className="text-[#ec3e3e] font-medium">{selectedPresident.term}</DialogDescription>
               </DialogHeader>
               <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-4">
                 <div className="relative h-40 md:h-full rounded-md overflow-hidden">
@@ -657,7 +657,7 @@ export default function LeadershipPage() {
       </Dialog>
 
       {/* CTA Section */}
-      <section className="py-20 bg-[#C8A97E]">
+      <section className="py-20 bg-[#ec3e3e]">
         <div className="container mx-auto px-4 text-center">
           <motion.div
             initial="hidden"
@@ -671,7 +671,7 @@ export default function LeadershipPage() {
               lasting impact in our communities.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Button className="bg-white text-[#C8A97E] hover:bg-gray-100 px-8 py-6 text-lg rounded-none" asChild>
+              <Button className="bg-white text-[#ec3e3e] hover:bg-gray-100 px-8 py-6 text-lg rounded-none" asChild>
                 <Link href="/#membership">Become a Member</Link>
               </Button>
               <Button className="bg-gray-900 text-white hover:bg-gray-800 px-8 py-6 text-lg rounded-none" asChild>

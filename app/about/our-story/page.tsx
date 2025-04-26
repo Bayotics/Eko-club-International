@@ -108,20 +108,20 @@ export default function OurStoryPage() {
           <motion.div initial="hidden" animate="visible" variants={staggerContainer} className="max-w-4xl mx-auto">
             <motion.div variants={fadeIn} className="mb-4">
               <div className="flex items-center justify-center gap-2 text-white/80 mb-4">
-                <Link href="/" className="hover:text-[#C8A97E] transition-colors">
+                <Link href="/" className="hover:text-[#e4e66d] transition-colors">
                   Home
                 </Link>
                 <ChevronRight className="h-4 w-4" />
-                <Link href="/#about" className="hover:text-[#C8A97E] transition-colors">
+                <Link href="/#about" className="hover:text-[#e4e66d] transition-colors">
                   About
                 </Link>
                 <ChevronRight className="h-4 w-4" />
-                <span className="text-[#C8A97E]">Our Story</span>
+                <span className="text-[#f0f359]">Our Story</span>
               </div>
               <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-4">Our Story</h1>
             </motion.div>
             <motion.div variants={fadeIn}>
-              <div className="h-1 w-24 bg-[#C8A97E] mx-auto mb-6"></div>
+              <div className="h-1 w-24 bg-[#f0f359] mx-auto mb-6"></div>
               <p className="text-lg md:text-xl text-white/90 max-w-3xl mx-auto">
                 Discover the journey of Eko Club International, from our humble beginnings to becoming a leading
                 cultural and community organization.
@@ -158,9 +158,9 @@ export default function OurStoryPage() {
               className="max-w-xl"
             >
               <h2 className="text-3xl md:text-4xl font-bold mb-6 text-gray-800">
-                Our <span className="text-[#C8A97E]">Mission</span> & Vision
+                Our <span className="text-[#f0f359]">Mission</span> & Vision
               </h2>
-              <div className="h-1 w-20 bg-[#C8A97E] mb-8"></div>
+              <div className="h-1 w-20 bg-[#f0f359] mb-8"></div>
               <p className="text-gray-600 mb-6 leading-relaxed">
                 Since our founding, Eko Club International has been dedicated to preserving and promoting the rich
                 cultural heritage of Lagos while fostering unity, community development, and social welfare among our
@@ -173,7 +173,7 @@ export default function OurStoryPage() {
               </p>
               <div className="grid grid-cols-2 gap-6">
                 <div className="flex items-start gap-3">
-                  <div className="p-3 rounded-full bg-[#C8A97E]/10 text-[#C8A97E]">
+                  <div className="p-3 rounded-full bg-[#f0f359]/10 text-[#f0f359]">
                     <Calendar className="h-6 w-6" />
                   </div>
                   <div>
@@ -182,7 +182,7 @@ export default function OurStoryPage() {
                   </div>
                 </div>
                 <div className="flex items-start gap-3">
-                  <div className="p-3 rounded-full bg-[#C8A97E]/10 text-[#C8A97E]">
+                  <div className="p-3 rounded-full bg-[#f0f359]/10 text-[#f0f359]">
                     <Users className="h-6 w-6" />
                   </div>
                   <div>
@@ -191,7 +191,7 @@ export default function OurStoryPage() {
                   </div>
                 </div>
                 <div className="flex items-start gap-3">
-                  <div className="p-3 rounded-full bg-[#C8A97E]/10 text-[#C8A97E]">
+                  <div className="p-3 rounded-full bg-[#f0f359]/10 text-[#f0f359]">
                     <Award className="h-6 w-6" />
                   </div>
                   <div>
@@ -200,7 +200,7 @@ export default function OurStoryPage() {
                   </div>
                 </div>
                 <div className="flex items-start gap-3">
-                  <div className="p-3 rounded-full bg-[#C8A97E]/10 text-[#C8A97E]">
+                  <div className="p-3 rounded-full bg-[#f0f359]/10 text-[#f0f359]">
                     <Heart className="h-6 w-6" />
                   </div>
                   <div>
@@ -225,9 +225,9 @@ export default function OurStoryPage() {
             className="text-center max-w-3xl mx-auto mb-16"
           >
             <h2 className="text-3xl md:text-4xl font-bold mb-6 text-gray-800">
-              Our <span className="text-[#C8A97E]">Journey</span> Through Time
+              Our <span className="text-[#d0d331]">Journey</span> Through Time
             </h2>
-            <div className="h-1 w-20 bg-[#C8A97E] mx-auto mb-8"></div>
+            <div className="h-1 w-20 bg-[#f0f359] mx-auto mb-8"></div>
             <p className="text-gray-600">
               For over four decades, Eko Club International has grown from a small gathering of like-minded individuals
               to a global organization with chapters across multiple countries. Explore our rich history and milestones.
@@ -255,12 +255,12 @@ export default function OurStoryPage() {
                   <div className="w-full md:w-1/2 px-4 md:px-8">
                     <div
                       className={`p-6 rounded-lg shadow-lg bg-white border-t-4 ${
-                        index % 2 === 0 ? "border-[#C8A97E]" : "border-[#8A6D3B]"
+                        index % 2 === 0 ? "border-[#e1e43f]" : "border-[#8A6D3B]"
                       }`}
                     >
                       <div
                         className={`inline-block px-4 py-2 rounded-full text-white text-sm font-semibold mb-4 ${
-                          index % 2 === 0 ? "bg-[#C8A97E]" : "bg-[#8A6D3B]"
+                          index % 2 === 0 ? "bg-[#f0f359]" : "bg-[#8A6D3B]"
                         }`}
                       >
                         {event.year}
@@ -270,7 +270,7 @@ export default function OurStoryPage() {
                     </div>
                   </div>
                   <div className="hidden md:flex items-center justify-center">
-                    <div className="w-6 h-6 rounded-full bg-[#C8A97E] border-4 border-white shadow"></div>
+                    <div className="w-6 h-6 rounded-full bg-[#f0f359] border-4 border-white shadow"></div>
                   </div>
                   <div className="w-full md:w-1/2"></div>
                 </motion.div>
@@ -291,9 +291,9 @@ export default function OurStoryPage() {
             className="text-center max-w-3xl mx-auto mb-16"
           >
             <h2 className="text-3xl md:text-4xl font-bold mb-6">
-              Our <span className="text-[#C8A97E]">Founders</span>
+              Our <span className="text-[#f0f359]">Founders</span>
             </h2>
-            <div className="h-1 w-20 bg-[#C8A97E] mx-auto mb-8"></div>
+            <div className="h-1 w-20 bg-[#f0f359] mx-auto mb-8"></div>
             <p className="text-gray-300">
               Eko Club International was founded by visionary individuals who saw the need to preserve our cultural
               heritage and foster unity among our people. Their legacy continues to inspire our work today.
@@ -313,7 +313,7 @@ export default function OurStoryPage() {
               </div>
               <div className="p-6">
                 <h3 className="text-xl font-bold mb-2">Chief Olusesi Dawodu</h3>
-                <p className="text-[#C8A97E] mb-4">Founding President (2001-2003)</p>
+                <p className="text-[#f0f359] mb-4">Founding President (2001-2003)</p>
                 <p className="text-gray-300">
                   Led the initial formation of Eko Club and established its core values and mission that continue to
                   guide us today.
@@ -327,7 +327,7 @@ export default function OurStoryPage() {
               </div>
               <div className="p-6">
                 <h3 className="text-xl font-bold mb-2">Chief Oluwole Johnson</h3>
-                <p className="text-[#C8A97E] mb-4">Founding Secretary (2001-2005)</p>
+                <p className="text-[#f0f359] mb-4">Founding Secretary (2001-2005)</p>
                 <p className="text-gray-300">
                   Instrumental in developing the club's constitution and establishing its organizational structure.
                 </p>
@@ -340,7 +340,7 @@ export default function OurStoryPage() {
               </div>
               <div className="p-6">
                 <h3 className="text-xl font-bold mb-2">Chief Adebisi Ogunleye</h3>
-                <p className="text-[#C8A97E] mb-4">Founding Treasurer (2001-2005)</p>
+                <p className="text-[#f0f359] mb-4">Founding Treasurer (2001-2005)</p>
                 <p className="text-gray-300">
                   Established the financial framework that has enabled the club to grow and sustain its operations over
                   the decades.
@@ -352,7 +352,7 @@ export default function OurStoryPage() {
       </section>
 
       {/* CTA Section */}
-      <section className="py-20 bg-[#C8A97E]">
+      <section className="py-20 bg-[#bcbe39]">
         <div className="container mx-auto px-4 text-center">
           <motion.div
             initial="hidden"
@@ -366,7 +366,7 @@ export default function OurStoryPage() {
               preserve our heritage and create positive change in our communities.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Button className="bg-white text-[#C8A97E] hover:bg-gray-100 px-8 py-6 text-lg rounded-none" asChild>
+              <Button className="bg-white text-[#868828] hover:bg-gray-100 px-8 py-6 text-lg rounded-none" asChild>
                 <Link href="/#membership">Become a Member</Link>
               </Button>
               <Button className="bg-gray-900 text-white hover:bg-gray-800 px-8 py-6 text-lg rounded-none" asChild>

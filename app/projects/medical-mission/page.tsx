@@ -32,7 +32,23 @@ const medicalMissions = [
       "/images/Medical_Mission/2024-10.jpg",
 
     ],
-    videos: [],
+    videos: [
+      {
+        thumbnail: "/images/day1.png?height=400&width=600",
+        url: "https://res.cloudinary.com/dvrpa1lyo/video/upload/v1745486057/VideoCompressorResizeCompressVideo2025_04_24_09_57_54_qhboqe.mp4",
+        title: "2024 Medical Mission Day 1 Isolo",
+      },
+      {
+        thumbnail: "/images/Medical_Mission/2024-2.jpg?height=400&width=600",
+        url: "https://res.cloudinary.com/dvrpa1lyo/video/upload/v1745496138/VideoCompressorResizeCompressVideo2025_04_24_11_48_31_zlxme9.mp4",
+        title: "2024 Medical Mission Day 2 Lagos Island",
+      },
+      {
+        thumbnail: "/images/Medical_Mission/2024-10.jpg?height=400&width=600",
+        url: "https://res.cloudinary.com/dvrpa1lyo/video/upload/v1745530740/VideoCompressorResizeCompressVideo2025_04_24_10_26_39_ygig5s.mp4",
+        title: "2024 Medical Mission Day 3 Epe",
+      },
+    ],
   },
   {
     year: "2022",
@@ -50,21 +66,7 @@ const medicalMissions = [
               "/images/Medical_Mission/2022-4.jpg"
             ],
     videos: [
-      {
-        thumbnail: "/placeholder.svg?height=400&width=600",
-        url: "https://www.youtube.com/embed/dQw4w9WgXcQ",
-        title: "2022 Medical Mission Highlights",
-      },
-      {
-        thumbnail: "/placeholder.svg?height=400&width=600",
-        url: "https://www.youtube.com/embed/dQw4w9WgXcQ",
-        title: "Community Impact - 2022",
-      },
-      {
-        thumbnail: "/placeholder.svg?height=400&width=600",
-        url: "https://www.youtube.com/embed/dQw4w9WgXcQ",
-        title: "Volunteer Testimonials - 2022",
-      },
+      
     ],
   },
   {
@@ -91,34 +93,29 @@ const medicalMissions = [
     ],
     videos: [
       {
-        thumbnail: "/placeholder.svg?height=400&width=600",
-        url: "https://www.youtube.com/embed/dQw4w9WgXcQ",
-        title: "2018 Mission Opening Ceremony",
+        thumbnail: "/images/Medical_Mission/2018/badagry.jpg?height=400&width=600",
+        url: "https://mediacdn.cincopa.com/v2/214979/813!MsyAA8mFqDwmWC/6/2018ECIMOHDay2_Badagry.mp4.mp4",
+        title: "Badagry",
       },
       {
-        thumbnail: "/placeholder.svg?height=400&width=600",
-        url: "https://www.youtube.com/embed/dQw4w9WgXcQ",
-        title: "Pediatric Care Services",
+        thumbnail: "/images/Medical_Mission/2018/isolo.jpg?height=400&width=600",
+        url: "https://mediacdn.cincopa.com/v2/214979/812!MsyAA8mFqDAU9C/6/2018ECIMOHDay3_Isolo.mp4.mp4",
+        title: "Isolo",
       },
       {
-        thumbnail: "/placeholder.svg?height=400&width=600",
-        url: "https://www.youtube.com/embed/dQw4w9WgXcQ",
-        title: "Surgical Procedures Highlight",
+        thumbnail: "/images/Medical_Mission/2018/alimosho.jpg?height=400&width=600",
+        url: "https://mediacdn.cincopa.com/v2/214979/814!MsyAA8mFqDghKB/6/2018ECIMOHDay5_Alimosho.mp4.mp4",
+        title: "Alimosho",
       },
       {
-        thumbnail: "/placeholder.svg?height=400&width=600",
-        url: "https://www.youtube.com/embed/dQw4w9WgXcQ",
-        title: "Community Outreach Program",
+        thumbnail: "/images/Medical_Mission/2018/okota.jpg?height=400&width=600",
+        url: "https://mediacdn.cincopa.com/v2/214979/815!MsyAA8mFqDAmpD/6/2018ECIMOHDay1_Okota.mp4.mp4",
+        title: "Okota",
       },
       {
-        thumbnail: "/placeholder.svg?height=400&width=600",
-        url: "https://www.youtube.com/embed/dQw4w9WgXcQ",
-        title: "Volunteer Interviews",
-      },
-      {
-        thumbnail: "/placeholder.svg?height=400&width=600",
-        url: "https://www.youtube.com/embed/dQw4w9WgXcQ",
-        title: "Closing Ceremony and Impact Report",
+        thumbnail: "/images/Medical_Mission/2018/agege.jpg?height=400&width=600",
+        url: "https://mediacdn.cincopa.com/v2/214979/816!MsyAA8mFqDgsRD/6/AnAgegeresidente28099stestimonyduringtheECIMOH2018MedicalMission-1153542428154570_x264.mp4.mp4",
+        title: "Agege",
       },
     ],
   },
@@ -140,9 +137,19 @@ const medicalMissions = [
     ],
     videos: [
       {
-        thumbnail: "/placeholder.svg?height=400&width=600",
-        url: "https://www.youtube.com/embed/dQw4w9WgXcQ",
-        title: "2016 Medical Mission Documentary",
+        thumbnail: "/images/Medical_Mission/2016/1.png?height=400&width=600",
+        url: "https://res.cloudinary.com/dvrpa1lyo/video/upload/v1745536859/2016-1_vq2ewg.mp4",
+        title: "2016 Medical Mission Feedback",
+      },
+      {
+        thumbnail: "/images/Medical_Mission/2016/2.png?height=400&width=600",
+        url: "https://res.cloudinary.com/dvrpa1lyo/video/upload/v1745536743/2016-2_oaph98.mp4",
+        title: "2016 Medical Mission - Face of our heroes",
+      },
+      {
+        thumbnail: "/images/Medical_Mission/2016/3.png?height=400&width=600",
+        url: "https://res.cloudinary.com/dvrpa1lyo/video/upload/v1745536491/2016-3_bosnrw.mp4",
+        title: "2016 Medical Mission on TV",
       },
     ],
   },
@@ -168,8 +175,8 @@ const medicalMissions = [
     ],
     videos: [
       {
-        thumbnail: "/placeholder.svg?height=400&width=600",
-        url: "https://www.youtube.com/embed/dQw4w9WgXcQ",
+        thumbnail: "/images/Medical_Mission/2012/4.jpg?height=400&width=600",
+        url: "https://mediacdn.cincopa.com/v2/214979/51!MsyAAkxGwCg8rB/0/mm2012.mp4",
         title: "2012 Medical Mission Overview",
       },
     ],
@@ -199,19 +206,19 @@ const medicalMissions = [
     ],
     videos: [
       {
-        thumbnail: "/placeholder.svg?height=400&width=600",
-        url: "https://www.youtube.com/embed/dQw4w9WgXcQ",
+        thumbnail: "/images/Medical_Mission/2010/a.png?height=400&width=600",
+        url: "https://mediacdn.cincopa.com/v2/214979/42!MsyAAkxGwCQafA/0/ECIMM2010-Part1.mp4",
         title: "2010 Mission Highlights",
       },
       {
-        thumbnail: "/placeholder.svg?height=400&width=600",
-        url: "https://www.youtube.com/embed/dQw4w9WgXcQ",
-        title: "Patient Stories - 2010",
+        thumbnail: "/images/Medical_Mission/2010/b.png?height=400&width=600",
+        url: "https://mediacdn.cincopa.com/v2/214979/41!MsyAAkxGwCAL4D/0/ECIMM2010-Part2.mp4",
+        title: "2010 Mission Highlights 2",
       },
       {
-        thumbnail: "/placeholder.svg?height=400&width=600",
-        url: "https://www.youtube.com/embed/dQw4w9WgXcQ",
-        title: "Healthcare Education Program",
+        thumbnail: "/images/Medical_Mission/2010/c.png?height=400&width=600",
+        url: "https://mediacdn.cincopa.com/v2/214979/43!MsyAAkxGwCAC8D/0/ECIMM2010PartA.mp4",
+        title: "2010 Mission Highlights 3",
       },
     ],
   },
@@ -381,20 +388,20 @@ export default function MedicalMissionPage() {
           <motion.div initial="hidden" animate="visible" variants={staggerContainer} className="max-w-4xl mx-auto">
             <motion.div variants={fadeIn} className="mb-4">
               <div className="flex items-center justify-center gap-2 text-white/80 mb-4">
-                <Link href="/" className="hover:text-[#C8A97E] transition-colors">
+                <Link href="/" className="hover:text-[#bcbe3a] transition-colors">
                   Home
                 </Link>
                 <ChevronRight className="h-4 w-4" />
-                <Link href="/#projects" className="hover:text-[#C8A97E] transition-colors">
+                <Link href="/#projects" className="hover:text-[#bcbe3a] transition-colors">
                   Our Projects
                 </Link>
                 <ChevronRight className="h-4 w-4" />
-                <span className="text-[#C8A97E]">Medical Mission</span>
+                <span className="text-[#bcbe3a]">Medical Mission</span>
               </div>
               <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-4">Medical Mission</h1>
             </motion.div>
             <motion.div variants={fadeIn}>
-              <div className="h-1 w-24 bg-[#C8A97E] mx-auto mb-6"></div>
+              <div className="h-1 w-24 bg-[#bcbe3a] mx-auto mb-6"></div>
               <p className="text-lg md:text-xl text-white/90 max-w-3xl mx-auto">
                 Providing essential healthcare services to underserved communities in Lagos, Nigeria through our annual
                 medical missions.
@@ -432,9 +439,9 @@ export default function MedicalMissionPage() {
               className="space-y-6"
             >
               <h2 className="text-3xl md:text-4xl font-bold text-gray-800">
-                Our <span className="text-[#C8A97E]">Medical Missions</span>
+                Our <span className="text-[#bcbe3a]">Medical Missions</span>
               </h2>
-              <div className="h-1 w-20 bg-[#C8A97E] mb-6"></div>
+              <div className="h-1 w-20 bg-[#bcbe3a] mb-6"></div>
               <p className="text-gray-600">
                 Since 2008, Eko Club International has organized annual medical missions to Lagos, Nigeria, providing
                 free healthcare services to underserved communities. Our team of volunteer healthcare professionals,
@@ -468,9 +475,9 @@ export default function MedicalMissionPage() {
               className="text-center max-w-3xl mx-auto mb-16"
             >
               <h2 className="text-3xl md:text-4xl font-bold mb-6 text-gray-800">
-                Medical Mission <span className="text-[#C8A97E]">{mission.year}</span>
+                Medical Mission <span className="text-[#bcbe3a]">{mission.year}</span>
               </h2>
-              <div className="h-1 w-20 bg-[#C8A97E] mx-auto mb-8"></div>
+              <div className="h-1 w-20 bg-[#bcbe3a] mx-auto mb-8"></div>
             </motion.div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-start mb-16">
@@ -486,7 +493,7 @@ export default function MedicalMissionPage() {
 
                 <div className="space-y-4 mt-8">
                   <div className="flex items-center gap-3">
-                    <div className="p-2 rounded-full bg-[#C8A97E]/10 text-[#C8A97E]">
+                    <div className="p-2 rounded-full bg-[#bcbe3a]/10 text-[#bcbe3a]">
                       <MapPin className="h-5 w-5" />
                     </div>
                     <div>
@@ -497,7 +504,7 @@ export default function MedicalMissionPage() {
                   </div>
 
                   <div className="flex items-center gap-3">
-                    <div className="p-2 rounded-full bg-[#C8A97E]/10 text-[#C8A97E]">
+                    <div className="p-2 rounded-full bg-[#bcbe3a]/10 text-[#bcbe3a]">
                       <Calendar className="h-5 w-5" />
                     </div>
                     <div>
@@ -508,7 +515,7 @@ export default function MedicalMissionPage() {
                   </div>
 
                   <div className="flex items-center gap-3">
-                    <div className="p-2 rounded-full bg-[#C8A97E]/10 text-[#C8A97E]">
+                    <div className="p-2 rounded-full bg-[#bcbe3a]/10 text-[#bcbe3a]">
                       <Users className="h-5 w-5" />
                     </div>
                     <div>
@@ -519,8 +526,8 @@ export default function MedicalMissionPage() {
                   </div>
                 </div>
 
-                <div className="mt-6 p-4 bg-[#C8A97E]/10 rounded-lg">
-                  <p className="text-lg font-medium text-[#C8A97E]">Impact: {mission.impact}</p>
+                <div className="mt-6 p-4 bg-[#bcbe3a]/10 rounded-lg">
+                  <p className="text-lg font-medium text-[#bcbe3a]">Impact: {mission.impact}</p>
                 </div>
               </motion.div>
 
@@ -556,13 +563,13 @@ export default function MedicalMissionPage() {
                       <>
                         <button
                           onClick={() => handlePrevImage(mission.year)}
-                          className="absolute left-4 top-1/2 transform -translate-y-1/2 bg-black/50 text-white p-2 rounded-full hover:bg-[#C8A97E] transition-colors z-10"
+                          className="absolute left-4 top-1/2 transform -translate-y-1/2 bg-black/50 text-white p-2 rounded-full hover:bg-[#bcbe3a] transition-colors z-10"
                         >
                           <ChevronLeft className="h-6 w-6" />
                         </button>
                         <button
                           onClick={() => handleNextImage(mission.year)}
-                          className="absolute right-4 top-1/2 transform -translate-y-1/2 bg-black/50 text-white p-2 rounded-full hover:bg-[#C8A97E] transition-colors z-10"
+                          className="absolute right-4 top-1/2 transform -translate-y-1/2 bg-black/50 text-white p-2 rounded-full hover:bg-[#bcbe3a] transition-colors z-10"
                         >
                           <ChevronRight className="h-6 w-6" />
                         </button>
@@ -608,12 +615,12 @@ export default function MedicalMissionPage() {
                           className="object-cover transition-transform duration-500 group-hover:scale-105"
                         />
                         <div className="absolute inset-0 bg-black/40 flex items-center justify-center group-hover:bg-black/60 transition-colors">
-                          <div className="bg-white/90 rounded-full p-4 group-hover:bg-[#C8A97E] transition-colors">
+                          <div className="bg-white/90 rounded-full p-4 group-hover:bg-[#bcbe3a] transition-colors">
                             <Play className="h-8 w-8 text-gray-800 group-hover:text-white" />
                           </div>
                         </div>
                       </div>
-                      <h4 className="mt-3 text-lg font-medium text-gray-800 group-hover:text-[#C8A97E] transition-colors">
+                      <h4 className="mt-3 text-lg font-medium text-gray-800 group-hover:text-[#bcbe3a] transition-colors">
                         {video.title}
                       </h4>
                     </motion.div>
@@ -687,7 +694,7 @@ export default function MedicalMissionPage() {
       ))}
 
       {/* CTA Section */}
-      <section className="py-20 bg-[#C8A97E]">
+      <section className="py-20 bg-[#bcbe3a]">
         <div className="container mx-auto px-4 text-center">
           <motion.div
             initial="hidden"
@@ -701,11 +708,11 @@ export default function MedicalMissionPage() {
               makes a difference in the lives of thousands of individuals.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Button className="bg-white text-[#C8A97E] hover:bg-gray-100 px-8 py-6 text-lg rounded-none" asChild>
+              <Button className="bg-white text-[#bcbe3a] hover:bg-gray-100 px-8 py-6 text-lg rounded-none" asChild>
                 <Link href="/donate">Donate Now</Link>
               </Button>
               <Button className="bg-gray-900 text-white hover:bg-gray-800 px-8 py-6 text-lg rounded-none" asChild>
-                <Link href="/#contact">Contact Us</Link>
+                <Link href="/contact">Contact Us</Link>
               </Button>
             </div>
           </motion.div>
@@ -772,13 +779,13 @@ export default function MedicalMissionPage() {
               <>
                 <button
                   onClick={handlePrevModalImage}
-                  className="absolute left-4 top-1/2 transform -translate-y-1/2 bg-white/10 text-white p-3 rounded-full hover:bg-[#C8A97E] transition-colors z-10"
+                  className="absolute left-4 top-1/2 transform -translate-y-1/2 bg-white/10 text-white p-3 rounded-full hover:bg-[#bcbe3a] transition-colors z-10"
                 >
                   <ChevronLeft className="h-6 w-6" />
                 </button>
                 <button
                   onClick={handleNextModalImage}
-                  className="absolute right-4 top-1/2 transform -translate-y-1/2 bg-white/10 text-white p-3 rounded-full hover:bg-[#C8A97E] transition-colors z-10"
+                  className="absolute right-4 top-1/2 transform -translate-y-1/2 bg-white/10 text-white p-3 rounded-full hover:bg-[#bcbe3a] transition-colors z-10"
                 >
                   <ChevronRight className="h-6 w-6" />
                 </button>

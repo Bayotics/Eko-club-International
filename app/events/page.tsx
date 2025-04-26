@@ -10,6 +10,8 @@ import { Card, CardContent, CardFooter } from "@/components/ui/card"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Badge } from "@/components/ui/badge"
 import { Input } from "@/components/ui/input"
+import { toast } from "sonner"
+
 import {
   Breadcrumb,
   BreadcrumbItem,
@@ -141,6 +143,62 @@ export default function EventsPage() {
 
   const { scrollYProgress } = useScroll()
   const heroScale = useTransform(scrollYProgress, [0, 0.1], [1, 0.98])
+  const [email, setEmail] = useState("")
+    const [isLoading, setIsLoading] = useState(false)
+  
+    const validateEmail = (email: string) => {
+      const regex = /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/
+      return regex.test(email)
+    }
+  
+    const handleSubmit = async (e: React.FormEvent) => {
+      e.preventDefault()
+  
+      // Reset error state
+      setError(null)
+  
+      // Validate email format
+      if (!validateEmail(email)) {
+        setError("Please enter a valid email address")
+        toast.error("Please enter a valid email address")
+        return
+      }
+  
+      // Set loading state
+      setIsLoading(true)
+  
+      try {
+        // Submit to API
+        const response = await fetch("/api/newsletter/subscribe", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ email }),
+        })
+  
+        const data = await response.json()
+  
+        if (!response.ok) {
+          throw new Error(data.message || "Something went wrong")
+        }
+  
+        // Show success message
+        toast.success(data.message || "Thank you for subscribing to our newsletter!")
+  
+        // Reset form
+        setEmail("")
+      } catch (error) {
+        // Show error message
+        const errorMessage = error instanceof Error ? error.message : "Failed to subscribe. Please try again."
+        setError(errorMessage)
+        toast.error(errorMessage)
+      } finally {
+        // Reset loading state
+        setIsLoading(false)
+      }
+    }
+  
 
   // Fetch events from the API
   useEffect(() => {
@@ -278,7 +336,7 @@ export default function EventsPage() {
               </BreadcrumbItem>
               <BreadcrumbSeparator />
               <BreadcrumbItem>
-                <BreadcrumbLink href="/events" className="text-[#C8A97E] font-medium">
+                <BreadcrumbLink href="/events" className="text-[#2cc72c] font-medium">
                   News & Events
                 </BreadcrumbLink>
               </BreadcrumbItem>
@@ -312,13 +370,13 @@ export default function EventsPage() {
               transition={{ duration: 0.6 }}
             >
               <h1 className="text-4xl md:text-5xl lg:text-6xl font-light mb-6">
-                NEWS & <span className="text-[#C8A97E] font-medium">EVENTS</span>
+                NEWS & <span className="text-[#2cc72c] font-medium">EVENTS</span>
               </h1>
               <motion.div
                 initial={{ opacity: 0, width: 0 }}
                 animate={heroInView ? { opacity: 1, width: "120px" } : {}}
                 transition={{ duration: 0.8, delay: 0.3 }}
-                className="h-0.5 bg-[#C8A97E] mx-auto mb-8"
+                className="h-0.5 bg-[#2cc72c] mx-auto mb-8"
               />
             </motion.div>
 
@@ -338,7 +396,7 @@ export default function EventsPage() {
               transition={{ duration: 0.6, delay: 0.6 }}
               className="flex flex-col sm:flex-row gap-4 justify-center"
             >
-              <Button className="bg-[#C8A97E] hover:bg-[#8A6D3B] text-white transition-colors duration-300 rounded-none px-8 py-6">
+              <Button className="bg-[#2cc72c] hover:bg-[#8A6D3B] text-white transition-colors duration-300 rounded-none px-8 py-6">
                 Upcoming Events
               </Button>
               <Button className="bg-transparent border-2 border-white hover:bg-white hover:text-[#16213e] text-white transition-colors duration-300 rounded-none px-8 py-6">
@@ -370,7 +428,7 @@ export default function EventsPage() {
               <Input
                 type="text"
                 placeholder="Search events and news..."
-                className="pl-10 rounded-full border-gray-300 focus:border-[#C8A97E] focus:ring-[#C8A97E]"
+                className="pl-10 rounded-full border-gray-300 focus:border-[#2cc72c] focus:ring-[#2cc72c]"
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
               />
@@ -387,7 +445,7 @@ export default function EventsPage() {
                   <Badge
                     className={`cursor-pointer px-4 py-2 text-sm ${
                       activeCategory === category
-                        ? "bg-[#C8A97E] hover:bg-[#8A6D3B] text-white"
+                        ? "bg-[#2cc72c] hover:bg-[#8A6D3B] text-white"
                         : "bg-white hover:bg-gray-100 text-gray-700 border border-gray-200"
                     }`}
                     onClick={() => setActiveCategory(category)}
@@ -411,13 +469,13 @@ export default function EventsPage() {
             transition={{ duration: 0.6 }}
           >
             <h2 className="text-3xl md:text-4xl font-light mb-4">
-              UPCOMING <span className="text-[#C8A97E] font-medium">EVENTS</span>
+              UPCOMING <span className="text-[#2cc72c] font-medium">EVENTS</span>
             </h2>
             <motion.div
               initial={{ opacity: 0, width: 0 }}
               animate={featuredInView ? { opacity: 1, width: "80px" } : {}}
               transition={{ duration: 0.8, delay: 0.2 }}
-              className="h-0.5 bg-[#C8A97E] mx-auto mb-6"
+              className="h-0.5 bg-[#2cc72c] mx-auto mb-6"
             />
             <p className="text-gray-600 max-w-3xl mx-auto">
               Join us at our upcoming events and be part of our mission to make a difference in our communities.
@@ -426,7 +484,7 @@ export default function EventsPage() {
 
           {loading ? (
             <div className="flex justify-center items-center py-20">
-              <Loader2 className="h-8 w-8 animate-spin text-[#C8A97E]" />
+              <Loader2 className="h-8 w-8 animate-spin text-[#2cc72c]" />
             </div>
           ) : error ? (
             <Alert variant="destructive" className="max-w-md mx-auto">
@@ -454,7 +512,7 @@ export default function EventsPage() {
                   <Card className="border-0 overflow-hidden shadow-lg h-full flex flex-col">
                     <div className="relative overflow-hidden">
                       {event.featured && (
-                        <div className="absolute top-0 right-0 bg-[#C8A97E] text-white px-4 py-1 z-10 font-medium text-sm">
+                        <div className="absolute top-0 right-0 bg-[#2cc72c] text-white px-4 py-1 z-10 font-medium text-sm">
                           Featured
                         </div>
                       )}
@@ -467,7 +525,7 @@ export default function EventsPage() {
                       />
                       <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-t from-black/60 to-transparent opacity-0 hover:opacity-100 transition-opacity duration-300 flex items-end">
                         <div className="p-6">
-                          <Badge className="bg-[#C8A97E] text-white mb-2">{event.category}</Badge>
+                          <Badge className="bg-[#2cc72c] text-white mb-2">{event.category}</Badge>
                         </div>
                       </div>
                     </div>
@@ -476,21 +534,21 @@ export default function EventsPage() {
                       <p className="text-gray-600 mb-4">{event.description}</p>
                       <div className="space-y-2 text-sm">
                         <div className="flex items-center">
-                          <CalendarIcon className="h-4 w-4 text-[#C8A97E] mr-2" />
+                          <CalendarIcon className="h-4 w-4 text-[#2cc72c] mr-2" />
                           <span>{formatEventDate(event.date)}</span>
                         </div>
                         <div className="flex items-center">
-                          <MapPin className="h-4 w-4 text-[#C8A97E] mr-2" />
+                          <MapPin className="h-4 w-4 text-[#2cc72c] mr-2" />
                           <span>{event.location}</span>
                         </div>
                         <div className="flex items-center">
-                          <Clock className="h-4 w-4 text-[#C8A97E] mr-2" />
+                          <Clock className="h-4 w-4 text-[#2cc72c] mr-2" />
                           <span>{event.time}</span>
                         </div>
                       </div>
                     </CardContent>
                     {/* <CardFooter className="p-6 pt-0">
-                      <Button className="w-full bg-[#C8A97E] hover:bg-[#8A6D3B] text-white transition-colors duration-300 rounded-none uppercase">
+                      <Button className="w-full bg-[#2cc72c] hover:bg-[#8A6D3B] text-white transition-colors duration-300 rounded-none uppercase">
                         Register
                       </Button>
                     </CardFooter> */}
@@ -514,13 +572,13 @@ export default function EventsPage() {
             transition={{ duration: 0.6 }}
           >
             <h2 className="text-3xl md:text-4xl font-light mb-4">
-              LATEST <span className="text-[#C8A97E] font-medium">NEWS</span>
+              LATEST <span className="text-[#2cc72c] font-medium">NEWS</span>
             </h2>
             <motion.div
               initial={{ opacity: 0, width: 0 }}
               animate={newsInView ? { opacity: 1, width: "80px" } : {}}
               transition={{ duration: 0.8, delay: 0.2 }}
-              className="h-0.5 bg-[#C8A97E] mx-auto mb-6"
+              className="h-0.5 bg-[#2cc72c] mx-auto mb-6"
             />
             <p className="text-gray-600 max-w-3xl mx-auto">
               Stay updated with the latest news and announcements from Eko Club International.
@@ -559,14 +617,14 @@ export default function EventsPage() {
                         className="w-full h-full object-cover"
                       />
                       {article.featured && (
-                        <div className="absolute top-0 left-0 bg-[#C8A97E] text-white px-4 py-1 z-10 font-medium text-sm">
+                        <div className="absolute top-0 left-0 bg-[#2cc72c] text-white px-4 py-1 z-10 font-medium text-sm">
                           Featured
                         </div>
                       )}
                     </div>
                     <div className="md:w-3/5 p-6 flex flex-col justify-between">
                       <div>
-                        <Badge className="bg-[#C8A97E] text-white mb-3">{article.category}</Badge>
+                        <Badge className="bg-[#2cc72c] text-white mb-3">{article.category}</Badge>
                         <h3 className="text-xl font-medium mb-3">{article.title}</h3>
                         <p className="text-gray-600 mb-4">{article.excerpt}</p>
                       </div>
@@ -575,7 +633,7 @@ export default function EventsPage() {
                           <CalendarIcon className="h-4 w-4 inline mr-2" />
                           {article.date}
                         </div>
-                        <Button className="bg-transparent hover:bg-[#C8A97E] text-[#C8A97E] hover:text-white border border-[#C8A97E] transition-colors duration-300 rounded-none">
+                        <Button className="bg-transparent hover:bg-[#2cc72c] text-[#2cc72c] hover:text-white border border-[#2cc72c] transition-colors duration-300 rounded-none">
                           Read More
                         </Button>
                       </div>
@@ -607,7 +665,7 @@ export default function EventsPage() {
                       />
                       <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-t from-black/60 to-transparent opacity-0 hover:opacity-100 transition-opacity duration-300 flex items-end">
                         <div className="p-4">
-                          <Badge className="bg-[#C8A97E] text-white mb-2">{article.category}</Badge>
+                          <Badge className="bg-[#2cc72c] text-white mb-2">{article.category}</Badge>
                         </div>
                       </div>
                     </div>
@@ -620,7 +678,7 @@ export default function EventsPage() {
                         <CalendarIcon className="h-4 w-4 inline mr-1" />
                         {article.date}
                       </span>
-                      <Button variant="link" className="text-[#C8A97E] p-0 hover:text-[#8A6D3B]">
+                      <Button variant="link" className="text-[#2cc72c] p-0 hover:text-[#8A6D3B]">
                         Read More
                       </Button>
                     </CardFooter>
@@ -642,13 +700,13 @@ export default function EventsPage() {
             transition={{ duration: 0.6 }}
           >
             <h2 className="text-3xl md:text-4xl font-light mb-4">
-              EVENTS <span className="text-[#C8A97E] font-medium">CALENDAR</span>
+              EVENTS <span className="text-[#2cc72c] font-medium">CALENDAR</span>
             </h2>
             <motion.div
               initial={{ opacity: 0, width: 0 }}
               animate={calendarInView ? { opacity: 1, width: "80px" } : {}}
               transition={{ duration: 0.8, delay: 0.2 }}
-              className="h-0.5 bg-[#C8A97E] mx-auto mb-6"
+              className="h-0.5 bg-[#2cc72c] mx-auto mb-6"
             />
             <p className="text-gray-600 max-w-3xl mx-auto">
               Plan ahead with our events calendar and never miss an important date.
@@ -657,7 +715,7 @@ export default function EventsPage() {
 
           {loading ? (
             <div className="flex justify-center items-center py-20">
-              <Loader2 className="h-8 w-8 animate-spin text-[#C8A97E]" />
+              <Loader2 className="h-8 w-8 animate-spin text-[#2cc72c]" />
             </div>
           ) : error ? (
             <Alert variant="destructive" className="max-w-md mx-auto">
@@ -671,13 +729,13 @@ export default function EventsPage() {
               transition={{ duration: 0.6, delay: 0.3 }}
             >
               <div className="flex justify-between items-center mb-6">
-                <Button variant="ghost" size="sm" onClick={prevMonth} className="text-gray-600 hover:text-[#C8A97E]">
+                <Button variant="ghost" size="sm" onClick={prevMonth} className="text-gray-600 hover:text-[#2cc72c]">
                   <ChevronLeft className="h-5 w-5" />
                 </Button>
 
                 <h3 className="text-xl font-medium">{format(currentMonth, "MMMM yyyy")}</h3>
 
-                <Button variant="ghost" size="sm" onClick={nextMonth} className="text-gray-600 hover:text-[#C8A97E]">
+                <Button variant="ghost" size="sm" onClick={nextMonth} className="text-gray-600 hover:text-[#2cc72c]">
                   <ChevronRight className="h-5 w-5" />
                 </Button>
               </div>
@@ -701,8 +759,8 @@ export default function EventsPage() {
                       transition={{ duration: 0.3, delay: 0.4 + index * 0.01 }}
                       className={`
                         h-24 sm:h-28 p-1 border ${day ? "border-gray-200" : "border-transparent"} 
-                        ${event ? "bg-[#C8A97E]/10" : day ? "bg-white" : "bg-transparent"}
-                        ${event ? "hover:bg-[#C8A97E]/20" : day ? "hover:bg-gray-100" : ""}
+                        ${event ? "bg-[#2cc72c]/10" : day ? "bg-white" : "bg-transparent"}
+                        ${event ? "hover:bg-[#2cc72c]/20" : day ? "hover:bg-gray-100" : ""}
                         transition-colors duration-200
                       `}
                     >
@@ -713,14 +771,14 @@ export default function EventsPage() {
                               new Date().getDate() === day &&
                               new Date().getMonth() === currentMonth.getMonth() &&
                               new Date().getFullYear() === currentMonth.getFullYear()
-                                ? "bg-[#C8A97E] text-white rounded-full w-6 h-6 flex items-center justify-center ml-auto"
+                                ? "bg-[#2cc72c] text-white rounded-full w-6 h-6 flex items-center justify-center ml-auto"
                                 : ""
                             }`}
                           >
                             {day}
                           </div>
                           {event && (
-                            <div className="mt-1 text-xs bg-[#C8A97E] text-white p-1 rounded truncate">
+                            <div className="mt-1 text-xs bg-[#2cc72c] text-white p-1 rounded truncate">
                               {event.title}
                             </div>
                           )}
@@ -752,7 +810,7 @@ export default function EventsPage() {
                     transition={{ duration: 0.4, delay: 0.7 + index * 0.1 }}
                     className="flex items-center gap-3"
                   >
-                    <div className="bg-[#C8A97E] text-white rounded-full w-10 h-10 flex items-center justify-center flex-shrink-0">
+                    <div className="bg-[#2cc72c] text-white rounded-full w-10 h-10 flex items-center justify-center flex-shrink-0">
                       {format(event.date, "d")}
                     </div>
                     <div>
@@ -778,13 +836,13 @@ export default function EventsPage() {
             transition={{ duration: 0.6 }}
           >
             <h2 className="text-3xl md:text-4xl font-light mb-4">
-              PAST <span className="text-[#C8A97E] font-medium">EVENTS</span>
+              PAST <span className="text-[#2cc72c] font-medium">EVENTS</span>
             </h2>
             <motion.div
               initial={{ opacity: 0, width: 0 }}
               animate={pastEventsInView ? { opacity: 1, width: "80px" } : {}}
               transition={{ duration: 0.8, delay: 0.2 }}
-              className="h-0.5 bg-[#C8A97E] mx-auto mb-6"
+              className="h-0.5 bg-[#2cc72c] mx-auto mb-6"
             />
             <p className="text-gray-600 max-w-3xl mx-auto">
               Explore our past events and the impact we've made in our communities.
@@ -801,11 +859,11 @@ export default function EventsPage() {
               <TabsList className="bg-gray-200">
                 <TabsTrigger
                   value="gallery"
-                  className="data-[state=active]:bg-[#C8A97E] data-[state=active]:text-white"
+                  className="data-[state=active]:bg-[#2cc72c] data-[state=active]:text-white"
                 >
                   Gallery View
                 </TabsTrigger>
-                <TabsTrigger value="list" className="data-[state=active]:bg-[#C8A97E] data-[state=active]:text-white">
+                <TabsTrigger value="list" className="data-[state=active]:bg-[#2cc72c] data-[state=active]:text-white">
                   List View
                 </TabsTrigger>
               </TabsList>
@@ -814,7 +872,7 @@ export default function EventsPage() {
             <TabsContent value="gallery">
               {loading ? (
                 <div className="flex justify-center items-center py-20">
-                  <Loader2 className="h-8 w-8 animate-spin text-[#C8A97E]" />
+                  <Loader2 className="h-8 w-8 animate-spin text-[#2cc72c]" />
                 </div>
               ) : error ? (
                 <Alert variant="destructive" className="max-w-md mx-auto">
@@ -857,16 +915,16 @@ export default function EventsPage() {
                             View Gallery
                           </Button>
                         </div>
-                        <Badge className="absolute top-2 right-2 bg-[#C8A97E]">{event.category}</Badge>
+                        <Badge className="absolute top-2 right-2 bg-[#2cc72c]">{event.category}</Badge>
                       </div>
                       <div className="p-4">
                         <h3 className="font-medium mb-2">{event.title}</h3>
                         <div className="flex items-center text-sm text-gray-600 mb-2">
-                          <CalendarIcon className="h-4 w-4 mr-2 text-[#C8A97E]" />
+                          <CalendarIcon className="h-4 w-4 mr-2 text-[#2cc72c]" />
                           {formatEventDate(event.date)}
                         </div>
                         <div className="flex items-center text-sm text-gray-600">
-                          <MapPin className="h-4 w-4 mr-2 text-[#C8A97E]" />
+                          <MapPin className="h-4 w-4 mr-2 text-[#2cc72c]" />
                           {event.location}
                         </div>
                       </div>
@@ -879,7 +937,7 @@ export default function EventsPage() {
             <TabsContent value="list">
               {loading ? (
                 <div className="flex justify-center items-center py-20">
-                  <Loader2 className="h-8 w-8 animate-spin text-[#C8A97E]" />
+                  <Loader2 className="h-8 w-8 animate-spin text-[#2cc72c]" />
                 </div>
               ) : error ? (
                 <Alert variant="destructive" className="max-w-md mx-auto">
@@ -914,22 +972,22 @@ export default function EventsPage() {
                         />
                       </div>
                       <div className="md:w-3/6">
-                        <Badge className="mb-2 bg-[#C8A97E]">{event.category}</Badge>
+                        <Badge className="mb-2 bg-[#2cc72c]">{event.category}</Badge>
                         <h3 className="font-medium mb-1">{event.title}</h3>
                         <p className="text-sm text-gray-600">{event.description}</p>
                       </div>
                       <div className="md:w-1/6 text-sm text-gray-600">
                         <div className="flex items-center mb-2">
-                          <CalendarIcon className="h-4 w-4 mr-2 text-[#C8A97E]" />
+                          <CalendarIcon className="h-4 w-4 mr-2 text-[#2cc72c]" />
                           {formatEventDate(event.date)}
                         </div>
                         <div className="flex items-center">
-                          <MapPin className="h-4 w-4 mr-2 text-[#C8A97E]" />
+                          <MapPin className="h-4 w-4 mr-2 text-[#2cc72c]" />
                           {event.location}
                         </div>
                       </div>
                       <div className="md:w-1/6 flex justify-end">
-                        <Button className="bg-transparent hover:bg-[#C8A97E] text-[#C8A97E] hover:text-white border border-[#C8A97E] transition-colors duration-300 rounded-none">
+                        <Button className="bg-transparent hover:bg-[#2cc72c] text-[#2cc72c] hover:text-white border border-[#2cc72c] transition-colors duration-300 rounded-none">
                           View Details
                         </Button>
                       </div>
@@ -952,13 +1010,13 @@ export default function EventsPage() {
             transition={{ duration: 0.6 }}
           >
             <h2 className="text-3xl md:text-4xl font-light mb-4">
-              EVENT <span className="text-[#C8A97E] font-medium">TESTIMONIALS</span>
+              EVENT <span className="text-[#2cc72c] font-medium">TESTIMONIALS</span>
             </h2>
             <motion.div
               initial={{ opacity: 0, width: 0 }}
               animate={testimonialsInView ? { opacity: 1, width: "80px" } : {}}
               transition={{ duration: 0.8, delay: 0.2 }}
-              className="h-0.5 bg-[#C8A97E] mx-auto mb-6"
+              className="h-0.5 bg-[#2cc72c] mx-auto mb-6"
             />
             <p className="text-gray-300 max-w-3xl mx-auto">
               Hear from those who have attended our events and experienced the impact firsthand.
@@ -975,7 +1033,7 @@ export default function EventsPage() {
                 whileHover={{ y: -5, transition: { duration: 0.2 } }}
                 className="bg-[#16213e] p-6 rounded-lg relative"
               >
-                <div className="absolute -top-5 left-1/2 transform -translate-x-1/2 bg-[#C8A97E] rounded-full p-1">
+                <div className="absolute -top-5 left-1/2 transform -translate-x-1/2 bg-[#2cc72c] rounded-full p-1">
                   <div className="bg-white rounded-full p-0.5">
                     <Image
                       src={testimonial.image || "/placeholder.svg"}
@@ -988,7 +1046,7 @@ export default function EventsPage() {
                 </div>
                 <div className="pt-12 text-center">
                   <p className="italic text-gray-300 mb-4">"{testimonial.quote}"</p>
-                  <h4 className="font-medium text-[#C8A97E]">{testimonial.name}</h4>
+                  <h4 className="font-medium text-[#2cc72c]">{testimonial.name}</h4>
                   <p className="text-sm text-gray-400">{testimonial.role}</p>
                 </div>
               </motion.div>
@@ -998,7 +1056,7 @@ export default function EventsPage() {
       </section>
 
       {/* Call to Action Section */}
-      <section ref={ctaRef} className="py-16 bg-gradient-to-r from-[#C8A97E]/20 to-[#8A6D3B]/20">
+      <section ref={ctaRef} className="py-16 bg-gradient-to-r from-[#2cc72c]/20 to-[#8A6D3B]/20">
         <div className="container mx-auto px-4">
           <motion.div
             className="max-w-3xl mx-auto text-center"
@@ -1007,26 +1065,62 @@ export default function EventsPage() {
             transition={{ duration: 0.6 }}
           >
             <h2 className="text-3xl md:text-4xl font-light mb-6">
-              STAY <span className="text-[#C8A97E] font-medium">CONNECTED</span>
+              STAY <span className="text-[#2cc72c] font-medium">CONNECTED</span>
             </h2>
             <p className="text-gray-600 mb-8">
               Subscribe to our newsletter to receive updates on upcoming events, news, and opportunities to get
               involved.
             </p>
-            <div className="flex flex-col sm:flex-row gap-4 max-w-md mx-auto">
-              <Input type="email" placeholder="Your email address" className="rounded-none border-gray-300" />
-              <Button className="bg-[#C8A97E] hover:bg-[#8A6D3B] text-white transition-colors duration-300 rounded-none">
-                Subscribe
-              </Button>
-            </div>
-            <div className="mt-8 flex flex-wrap justify-center gap-4">
+            <motion.form
+                        initial={{ opacity: 0, y: 20 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        viewport={{ once: true }}
+                        transition={{ duration: 0.6, delay: 0.4 }}
+                        onSubmit={handleSubmit}
+                        className="flex flex-col sm:flex-row gap-4 max-w-2xl mx-auto"
+                      >
+                        <div className="flex-grow relative rounded-full overflow-hidden border-2 border-green-300 focus-within:border-white/50">
+                          <Input
+                            type="email"
+                            placeholder="Email address"
+                            value={email}
+                            onChange={(e) => setEmail(e.target.value)}
+                            required
+                            className="bg-transparent border-none text-black placeholder:text-gray-400 h-14 px-6 focus-visible:ring-0 focus-visible:ring-offset-0"
+                            disabled={isLoading}
+                            aria-invalid={error ? "true" : "false"}
+                            aria-describedby={error ? "email-error" : undefined}
+                          />
+                        </div>
+                        <Button
+                          type="submit"
+                          className="h-14 px-8 rounded-full bg-[#2cc72c] hover:bg-[#1a6e1a] text-black font-medium text-lg"
+                          disabled={isLoading}
+                        >
+                          {isLoading ? (
+                            <>
+                              <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                              Subscribing...
+                            </>
+                          ) : (
+                            "Subscribe"
+                          )}
+                        </Button>
+                      </motion.form>
+            
+                      {error && (
+                        <p id="email-error" className="mt-2 text-red-400 text-sm">
+                          {error}
+                        </p>
+                      )}
+            {/* <div className="mt-8 flex flex-wrap justify-center gap-4">
               <motion.div
                 initial={{ opacity: 0, scale: 0.8 }}
                 animate={ctaInView ? { opacity: 1, scale: 1 } : {}}
                 transition={{ duration: 0.4, delay: 0.4 }}
                 whileHover={{ scale: 1.05, transition: { duration: 0.2 } }}
               >
-                <Button className="bg-[#C8A97E] hover:bg-[#8A6D3B] text-white transition-colors duration-300 rounded-none px-6">
+                <Button className="bg-[#2cc72c] hover:bg-[#8add8a] text-white transition-colors duration-300 rounded-none px-6">
                   Upcoming Events
                 </Button>
               </motion.div>
@@ -1046,11 +1140,11 @@ export default function EventsPage() {
                 transition={{ duration: 0.4, delay: 0.6 }}
                 whileHover={{ scale: 1.05, transition: { duration: 0.2 } }}
               >
-                <Button className="bg-transparent border-2 border-[#C8A97E] text-[#C8A97E] hover:bg-[#C8A97E] hover:text-white transition-colors duration-300 rounded-none px-6">
+                <Button className="bg-transparent border-2 border-[#2cc72c] text-[#2cc72c] hover:bg-[#2cc72c] hover:text-white transition-colors duration-300 rounded-none px-6">
                   Contact Us
                 </Button>
               </motion.div>
-            </div>
+            </div> */}
           </motion.div>
         </div>
       </section>

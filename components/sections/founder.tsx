@@ -101,7 +101,8 @@ export default function Founder() {
             <iframe
               width="100%"
               height="100%"
-              src="https://www.youtube.com/embed/dQw4w9WgXcQ?autoplay=0"
+              // src="https://www.youtube.com/embed/dQw4w9WgXcQ?autoplay=0"
+              src = "https://res.cloudinary.com/dvrpa1lyo/video/upload/v1745481734/t1umoljisiqbxdhe1fmf.mp4"
               title="Founder's Message - Eko Club International"
               frameBorder="0"
               allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"

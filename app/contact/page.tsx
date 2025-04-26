@@ -196,9 +196,9 @@ export default function ContactPage() {
           variants={containerVariants}
         >
           <motion.h1 className="text-4xl md:text-5xl lg:text-6xl font-light text-white mb-4" variants={itemVariants}>
-            GET IN <span className="text-[#C8A97E] font-medium">TOUCH</span>
+            GET IN <span className="text-[#2626e4] font-medium">TOUCH</span>
           </motion.h1>
-          <motion.div className="h-0.5 bg-[#C8A97E] w-20 mx-auto mb-6" variants={scaleUpVariants}></motion.div>
+          <motion.div className="h-0.5 bg-[#2626e4] w-20 mx-auto mb-6" variants={scaleUpVariants}></motion.div>
           <motion.p className="text-white text-lg md:text-xl max-w-2xl mx-auto" variants={itemVariants}>
             We'd love to hear from you. Reach out to us with any questions, feedback, or inquiries.
           </motion.p>
@@ -225,7 +225,7 @@ export default function ContactPage() {
                     <TabsTrigger
                       key={category.id}
                       value={category.id}
-                      className="data-[state=active]:bg-[#C8A97E] data-[state=active]:text-white"
+                      className="data-[state=active]:bg-[#2626e4] data-[state=active]:text-white"
                     >
                       {category.label}
                     </TabsTrigger>
@@ -249,7 +249,7 @@ export default function ContactPage() {
                           value={formData.name}
                           onChange={handleChange}
                           required
-                          className="border-gray-300 focus:border-[#C8A97E] focus:ring-[#C8A97E] py-6"
+                          className="border-gray-300 focus:border-[#2626e4] focus:ring-[#2626e4] py-6"
                         />
                       </motion.div>
                       <motion.div variants={itemVariants}>
@@ -260,7 +260,7 @@ export default function ContactPage() {
                           value={formData.email}
                           onChange={handleChange}
                           required
-                          className="border-gray-300 focus:border-[#C8A97E] focus:ring-[#C8A97E] py-6"
+                          className="border-gray-300 focus:border-[#2626e4] focus:ring-[#2626e4] py-6"
                         />
                       </motion.div>
                       <motion.div variants={itemVariants}>
@@ -271,7 +271,7 @@ export default function ContactPage() {
                           value={formData.subject}
                           onChange={handleChange}
                           required
-                          className="border-gray-300 focus:border-[#C8A97E] focus:ring-[#C8A97E] py-6"
+                          className="border-gray-300 focus:border-[#2626e4] focus:ring-[#2626e4] py-6"
                         />
                       </motion.div>
                       <motion.div variants={itemVariants}>
@@ -281,13 +281,13 @@ export default function ContactPage() {
                           value={formData.message}
                           onChange={handleChange}
                           required
-                          className="border-gray-300 focus:border-[#C8A97E] focus:ring-[#C8A97E] min-h-[150px]"
+                          className="border-gray-300 focus:border-[#2626e4] focus:ring-[#2626e4] min-h-[150px]"
                         />
                       </motion.div>
                       <motion.div variants={itemVariants}>
                         <Button
                           type="submit"
-                          className="w-full bg-[#C8A97E] hover:bg-[#8A6D3B] text-white transition-colors duration-300 rounded-none py-6 uppercase flex items-center justify-center gap-2"
+                          className="w-full bg-[#2626e4] hover:bg-[#8A6D3B] text-white transition-colors duration-300 rounded-none py-6 uppercase flex items-center justify-center gap-2"
                         >
                           <Send className="h-4 w-4" />
                           Send Message
@@ -319,7 +319,7 @@ export default function ContactPage() {
                 className="space-y-6"
               >
                 <motion.div variants={itemVariants} className="flex items-start gap-4">
-                  <div className="bg-[#C8A97E] p-3 rounded-full text-white">
+                  <div className="bg-[#2626e4] p-3 rounded-full text-white">
                     <MapPin className="h-5 w-5" />
                   </div>
                   <div>
@@ -329,7 +329,7 @@ export default function ContactPage() {
                 </motion.div>
 
                 <motion.div variants={itemVariants} className="flex items-start gap-4">
-                  <div className="bg-[#C8A97E] p-3 rounded-full text-black">
+                  <div className="bg-[#2626e4] p-3 rounded-full text-black">
                     <Phone className="h-5 w-5" />
                   </div>
                   <div>
@@ -339,7 +339,7 @@ export default function ContactPage() {
                 </motion.div>
 
                 <motion.div variants={itemVariants} className="flex items-start gap-4">
-                  <div className="bg-[#C8A97E] p-3 rounded-full text-white">
+                  <div className="bg-[#2626e4] p-3 rounded-full text-white">
                     <Mail className="h-5 w-5" />
                   </div>
                   <div>
@@ -349,7 +349,7 @@ export default function ContactPage() {
                 </motion.div>
 
                 <motion.div variants={itemVariants} className="flex items-start gap-4">
-                  <div className="bg-[#8A6D3B] p-3 rounded-full text-white">
+                  <div className="bg-[#2626e4] p-3 rounded-full text-white">
                     <Clock className="h-5 w-5" />
                   </div>
                   <div>
@@ -361,7 +361,7 @@ export default function ContactPage() {
 
               <motion.div variants={fadeInVariants} className="mt-8 p-6 bg-gray-50 border border-gray-100 rounded-lg">
                 <h4 className="font-medium mb-2 flex items-center gap-2">
-                  <MessageSquare className="h-5 w-5 text-[#C8A97E]" />
+                  <MessageSquare className="h-5 w-5 text-[#2626e4]" />
                   Quick Response
                 </h4>
                 <p className="text-gray-600">
@@ -385,9 +385,9 @@ export default function ContactPage() {
         <div className="container mx-auto px-4">
           <div className="text-center mb-12">
             <motion.h2 variants={itemVariants} className="text-3xl md:text-4xl font-light mb-4">
-              FIND <span className="text-[#C8A97E] font-medium">US</span>
+              FIND <span className="text-[#2626e4] font-medium">US</span>
             </motion.h2>
-            <motion.div variants={scaleUpVariants} className="h-0.5 bg-[#C8A97E] w-20 mx-auto mb-6"></motion.div>
+            <motion.div variants={scaleUpVariants} className="h-0.5 bg-[#2626e4] w-20 mx-auto mb-6"></motion.div>
             <motion.p variants={itemVariants} className="text-gray-600 max-w-2xl mx-auto">
               Visit our headquarters or find a chapter near you.
             </motion.p>
@@ -423,9 +423,9 @@ export default function ContactPage() {
         <div className="container mx-auto px-4">
           <div className="text-center mb-12">
             <motion.h2 variants={itemVariants} className="text-3xl md:text-4xl font-light mb-4">
-              FREQUENTLY ASKED <span className="text-[#C8A97E] font-medium">QUESTIONS</span>
+              FREQUENTLY ASKED <span className="text-[#2626e4] font-medium">QUESTIONS</span>
             </motion.h2>
-            <motion.div variants={scaleUpVariants} className="h-0.5 bg-[#C8A97E] w-20 mx-auto mb-6"></motion.div>
+            <motion.div variants={scaleUpVariants} className="h-0.5 bg-[#2626e4] w-20 mx-auto mb-6"></motion.div>
             <motion.p variants={itemVariants} className="text-gray-600 max-w-2xl mx-auto">
               Find answers to common questions about contacting and engaging with Eko Club International.
             </motion.p>
@@ -443,7 +443,7 @@ export default function ContactPage() {
                   transition={{ delay: index * 0.1 }}
                 >
                   <AccordionItem value={`item-${index}`} className="border-b border-gray-200 py-2">
-                    <AccordionTrigger className="text-left font-medium hover:text-[#C8A97E] transition-colors">
+                    <AccordionTrigger className="text-left font-medium hover:text-[#2626e4] transition-colors">
                       {faq.question}
                     </AccordionTrigger>
                     <AccordionContent className="text-gray-600">{faq.answer}</AccordionContent>
@@ -466,9 +466,9 @@ export default function ContactPage() {
         <div className="container mx-auto px-4">
           <div className="text-center mb-12">
             <motion.h2 variants={itemVariants} className="text-3xl md:text-4xl font-light mb-4">
-              CONNECT WITH <span className="text-[#C8A97E] font-medium">US</span>
+              CONNECT WITH <span className="text-[#2626e4] font-medium">US</span>
             </motion.h2>
-            <motion.div variants={scaleUpVariants} className="h-0.5 bg-[#C8A97E] w-20 mx-auto mb-6"></motion.div>
+            <motion.div variants={scaleUpVariants} className="h-0.5 bg-[#2626e4] w-20 mx-auto mb-6"></motion.div>
             <motion.p variants={itemVariants} className="text-gray-600 max-w-2xl mx-auto">
               Follow us on social media to stay updated with our latest news, events, and initiatives.
             </motion.p>
@@ -486,7 +486,7 @@ export default function ContactPage() {
                 whileTap={{ scale: 0.95 }}
                 className="flex flex-col items-center justify-center p-6 bg-white rounded-lg shadow-md hover:shadow-lg transition-all"
               >
-                <div className="bg-[#C8A97E] p-4 rounded-full text-white mb-4">
+                <div className="bg-[#2626e4] p-4 rounded-full text-white mb-4">
                   <social.icon className="h-6 w-6" />
                 </div>
                 <span className="font-medium">{social.name}</span>
@@ -497,7 +497,7 @@ export default function ContactPage() {
       </motion.section>
 
       {/* Call to Action */}
-      <section className="py-16 bg-[#C8A97E]">
+      <section className="py-16 bg-[#2626e4]">
         <div className="container mx-auto px-4 text-center">
           <motion.h2
             initial={{ opacity: 0, y: -20 }}
@@ -524,10 +524,10 @@ export default function ContactPage() {
             transition={{ duration: 0.6, delay: 0.4 }}
             className="flex flex-col sm:flex-row gap-4 justify-center"
           >
-            <Button className="bg-white text-[#C8A97E] hover:bg-gray-100 transition-colors duration-300 rounded-none px-8 py-6">
+            <Button className="bg-white text-[#2626e4] hover:bg-gray-100 transition-colors duration-300 rounded-none px-8 py-6">
               <Link href="/membership">Become a Member</Link>
             </Button>
-            <Button className="bg-[#8A6D3B] text-white hover:bg-[#7A5D2B] transition-colors duration-300 rounded-none px-8 py-6">
+            <Button className="bg-[#e4e66d] text-black hover:bg-[#7A5D2B] transition-colors duration-300 rounded-none px-8 py-6">
               <Link href="/donate">Support Our Cause</Link>
             </Button>
           </motion.div>

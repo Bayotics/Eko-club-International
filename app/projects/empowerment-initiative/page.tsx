@@ -18,19 +18,19 @@ export default function EmpowermentInitiativePage() {
   const videos = [
     {
       id: 1,
-      title: "Skills Development Program",
+      title: "Synopsis Of The Eko Club International Empowerment Programme ",
       description:
         "Our comprehensive skills training program equipping youth and women with marketable skills for economic independence.",
-      thumbnail: "/placeholder.svg?height=400&width=600",
-      videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ",
+      thumbnail: "/images/Empowerment/thumbnail1.png?height=400&width=600",
+      videoUrl: "https://www.youtube.com/embed/5pct9yp-XAc?si=Gtv6PUq8P996Zyiz",
     },
     {
       id: 2,
-      title: "Entrepreneurship Success Stories",
+      title: "Synopsis Of The Eko Club International Empowerment Programme 2",
       description:
-        "Meet the entrepreneurs who have transformed their lives through our business development and mentorship programs.",
-      thumbnail: "/placeholder.svg?height=400&width=600",
-      videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ",
+        "",
+      thumbnail: "/images/Empowerment/thumbnail2.png?height=400&width=600",
+      videoUrl: "https://res.cloudinary.com/dvrpa1lyo/video/upload/v1745616191/day4_v7joec.mp4",
     },
   ]
 
@@ -202,20 +202,20 @@ export default function EmpowermentInitiativePage() {
           <motion.div initial="hidden" animate="visible" variants={staggerContainer} className="max-w-4xl mx-auto">
             <motion.div variants={fadeIn} className="mb-4">
               <div className="flex items-center justify-center gap-2 text-white/80 mb-4">
-                <Link href="/" className="hover:text-[#C8A97E] transition-colors">
+                <Link href="/" className="hover:text-[#f54949] transition-colors">
                   Home
                 </Link>
                 <ChevronRight className="h-4 w-4" />
-                <Link href="/#projects" className="hover:text-[#C8A97E] transition-colors">
+                <Link href="/#projects" className="hover:text-[#f54949] transition-colors">
                   Our Projects
                 </Link>
                 <ChevronRight className="h-4 w-4" />
-                <span className="text-[#C8A97E]">Empowerment Initiative</span>
+                <span className="text-[#f54949]">Empowerment Initiative</span>
               </div>
               <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-4">Empowerment Initiative</h1>
             </motion.div>
             <motion.div variants={fadeIn}>
-              <div className="h-1 w-24 bg-[#C8A97E] mx-auto mb-6"></div>
+              <div className="h-1 w-24 bg-[#f54949] mx-auto mb-6"></div>
               <p className="text-lg md:text-xl text-white/90 max-w-3xl mx-auto">
                 Equipping individuals with skills, resources, and opportunities to achieve economic independence and
                 build better futures.
@@ -253,9 +253,9 @@ export default function EmpowermentInitiativePage() {
               className="space-y-6"
             >
               <h2 className="text-3xl md:text-4xl font-bold text-gray-800">
-                About Our <span className="text-[#C8A97E]">Empowerment Initiative</span>
+                About Our <span className="text-[#f54949]">Empowerment Initiative</span>
               </h2>
-              <div className="h-1 w-20 bg-[#C8A97E] mb-6"></div>
+              <div className="h-1 w-20 bg-[#f54949] mb-6"></div>
               <p className="text-gray-600">
                 The Eko Club International Empowerment Initiative was established in 2015 to address unemployment and
                 economic challenges in our communities. Our mission is to equip individuals with the skills, resources,
@@ -273,7 +273,7 @@ export default function EmpowermentInitiativePage() {
                 pathways to economic empowerment that lead to long-term success and community development.
               </p>
               <div className="pt-4">
-                <Button className="bg-[#C8A97E] hover:bg-[#8A6D3B] text-white transition-colors duration-300 rounded-none px-8 py-6 uppercase">
+                <Button className="bg-[#f54949] hover:bg-[#8A6D3B] text-white transition-colors duration-300 rounded-none px-8 py-6 uppercase">
                   Join Our Programs
                 </Button>
               </div>
@@ -293,9 +293,9 @@ export default function EmpowermentInitiativePage() {
             className="text-center max-w-3xl mx-auto mb-16"
           >
             <h2 className="text-3xl md:text-4xl font-bold mb-6 text-gray-800">
-              See Our <span className="text-[#C8A97E]">Impact</span>
+              See Our <span className="text-[#f54949]">Impact</span>
             </h2>
-            <div className="h-1 w-20 bg-[#C8A97E] mx-auto mb-8"></div>
+            <div className="h-1 w-20 bg-[#f54949] mx-auto mb-8"></div>
             <p className="text-gray-600">
               Watch these videos to see how our empowerment initiatives are transforming lives and communities.
             </p>
@@ -324,7 +324,7 @@ export default function EmpowermentInitiativePage() {
                   />
                   <div className="absolute inset-0 bg-black/40 flex items-center justify-center group-hover:bg-black/60 transition-colors">
                     <motion.div
-                      className="bg-white/90 rounded-full p-5 group-hover:bg-[#C8A97E] transition-colors"
+                      className="bg-white/90 rounded-full p-5 group-hover:bg-[#f54949] transition-colors"
                       whileHover={{ scale: 1.1 }}
                       transition={{ type: "spring", stiffness: 400, damping: 10 }}
                     >
@@ -333,7 +333,7 @@ export default function EmpowermentInitiativePage() {
                   </div>
                 </div>
                 <div className="p-6 bg-white">
-                  <h3 className="text-xl font-bold text-gray-800 mb-3 group-hover:text-[#C8A97E] transition-colors">
+                  <h3 className="text-xl font-bold text-gray-800 mb-3 group-hover:text-[#f54949] transition-colors">
                     {video.title}
                   </h3>
                   <p className="text-gray-600">{video.description}</p>
@@ -345,7 +345,7 @@ export default function EmpowermentInitiativePage() {
       </section>
 
       {/* Impact Stats Section */}
-      <section className="py-20 bg-[#C8A97E] text-white">
+      <section className="py-20 bg-[#f54949] text-white">
         <div className="container mx-auto px-4">
           <motion.div
             initial="hidden"
@@ -433,9 +433,9 @@ export default function EmpowermentInitiativePage() {
             className="text-center max-w-3xl mx-auto mb-16"
           >
             <h2 className="text-3xl md:text-4xl font-bold mb-6 text-gray-800">
-              Our <span className="text-[#C8A97E]">Programs</span>
+              Our <span className="text-[#f54949]">Programs</span>
             </h2>
-            <div className="h-1 w-20 bg-[#C8A97E] mx-auto mb-8"></div>
+            <div className="h-1 w-20 bg-[#f54949] mx-auto mb-8"></div>
             <p className="text-gray-600">
               Explore our key programs designed to empower individuals with skills and opportunities.
             </p>
@@ -457,8 +457,8 @@ export default function EmpowermentInitiativePage() {
                 <div className="w-full md:w-1/2 space-y-4">
                   <h3 className="text-2xl font-bold text-gray-800">{program.title}</h3>
                   <p className="text-gray-600">{program.description}</p>
-                  <div className="p-4 bg-[#C8A97E]/10 rounded-lg">
-                    <p className="text-[#C8A97E] font-medium">Impact: {program.impact}</p>
+                  <div className="p-4 bg-[#f54949]/10 rounded-lg">
+                    <p className="text-[#f54949] font-medium">Impact: {program.impact}</p>
                   </div>
                 </div>
               </motion.div>
@@ -478,9 +478,9 @@ export default function EmpowermentInitiativePage() {
             className="text-center max-w-3xl mx-auto mb-16"
           >
             <h2 className="text-3xl md:text-4xl font-bold mb-6 text-gray-800">
-              Success <span className="text-[#C8A97E]">Stories</span>
+              Success <span className="text-[#f54949]">Stories</span>
             </h2>
-            <div className="h-1 w-20 bg-[#C8A97E] mx-auto mb-8"></div>
+            <div className="h-1 w-20 bg-[#f54949] mx-auto mb-8"></div>
             <p className="text-gray-600">
               Meet some of the entrepreneurs and professionals who have transformed their lives through our empowerment
               programs.
@@ -501,7 +501,7 @@ export default function EmpowermentInitiativePage() {
                 </div>
                 <div className="p-6">
                   <h3 className="text-xl font-bold text-gray-800 mb-1">{story.name}</h3>
-                  <p className="text-[#C8A97E] font-medium mb-4">{story.business}</p>
+                  <p className="text-[#f54949] font-medium mb-4">{story.business}</p>
                   <p className="text-gray-600 italic">"{story.story}"</p>
                 </div>
               </motion.div>
@@ -521,9 +521,9 @@ export default function EmpowermentInitiativePage() {
             className="text-center max-w-3xl mx-auto mb-16"
           >
             <h2 className="text-3xl md:text-4xl font-bold mb-6 text-gray-800">
-              Upcoming <span className="text-[#C8A97E]">Workshops</span>
+              Upcoming <span className="text-[#f54949]">Workshops</span>
             </h2>
-            <div className="h-1 w-20 bg-[#C8A97E] mx-auto mb-8"></div>
+            <div className="h-1 w-20 bg-[#f54949] mx-auto mb-8"></div>
             <p className="text-gray-600">
               Join our upcoming workshops and training sessions to develop your skills and advance your career or
               business.
@@ -554,17 +554,17 @@ export default function EmpowermentInitiativePage() {
                     <p className="text-gray-600 mb-4">{workshop.description}</p>
                     <div className="space-y-2 text-sm">
                       <div className="flex items-center">
-                        <Calendar className="h-4 w-4 text-[#C8A97E] mr-2" />
+                        <Calendar className="h-4 w-4 text-[#f54949] mr-2" />
                         <span>{workshop.date}</span>
                       </div>
                       <div className="flex items-center">
-                        <MapPin className="h-4 w-4 text-[#C8A97E] mr-2" />
+                        <MapPin className="h-4 w-4 text-[#f54949] mr-2" />
                         <span>{workshop.location}</span>
                       </div>
                     </div>
                   </CardContent>
                   <div className="p-6 pt-0">
-                    <Button className="w-full bg-[#C8A97E] hover:bg-[#8A6D3B] text-white transition-colors duration-300 rounded-none uppercase">
+                    <Button className="w-full bg-[#f54949] hover:bg-[#8A6D3B] text-white transition-colors duration-300 rounded-none uppercase">
                       Register
                     </Button>
                   </div>
@@ -576,7 +576,7 @@ export default function EmpowermentInitiativePage() {
       </section> */}
 
       {/* CTA Section */}
-      <section className="py-20 bg-[#C8A97E]">
+      <section className="py-20 bg-[#f54949]">
         <div className="container mx-auto px-4 text-center">
           <motion.div
             initial="hidden"
@@ -590,7 +590,7 @@ export default function EmpowermentInitiativePage() {
               and build better futures.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Button className="bg-white text-[#C8A97E] hover:bg-gray-100 px-8 py-6 text-lg rounded-none" asChild>
+              <Button className="bg-white text-[#f54949] hover:bg-gray-100 px-8 py-6 text-lg rounded-none" asChild>
                 <Link href="/donate">Donate Now</Link>
               </Button>
               <Button className="bg-gray-900 text-white hover:bg-gray-800 px-8 py-6 text-lg rounded-none" asChild>

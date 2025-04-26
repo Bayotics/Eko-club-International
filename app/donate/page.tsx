@@ -511,11 +511,11 @@ export default function DonatePage() {
       {/* Hero Section */}
       <section
         ref={heroRef}
-        className="relative bg-gradient-to-r from-[#8A6D3B]/90 to-[#C8A97E]/90 py-20 overflow-hidden"
+        className="relative bg-gradient-to-r from-green-400/90 to-green-800/90 py-20 overflow-hidden"
       >
         <div className="absolute inset-0 z-0 opacity-20">
           <div className="absolute inset-0 bg-black opacity-30"></div>
-          <div className="h-full w-full bg-[url('/placeholder.svg?height=1080&width=1920')] bg-cover bg-center"></div>
+          <div className="h-full w-full bg-[url('/images/donations-bg.jpg?height=1080&width=1920')] bg-cover bg-center"></div>
         </div>
 
         <div className="container mx-auto px-4 relative z-10">
@@ -538,7 +538,7 @@ export default function DonatePage() {
             >
               <Button
                 size="lg"
-                className="bg-white text-[#8A6D3B] hover:bg-gray-100 hover:text-[#C8A97E] font-semibold text-lg px-8"
+                className="bg-white text-green-400 hover:bg-gray-100 hover:text-green-600 font-semibold text-lg px-8"
                 onClick={() => donateRef.current.scrollIntoView({ behavior: "smooth" })}
               >
                 Donate Now
@@ -568,21 +568,21 @@ export default function DonatePage() {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {[
               {
-                icon: <Heart className="h-10 w-10 text-[#C8A97E]" />,
+                icon: <Heart className="h-10 w-10 text-[#2cc72c]" />,
                 title: "Medical Missions",
                 description: "Providing essential healthcare services to underserved communities in Lagos.",
                 stat: "5,000+",
                 statLabel: "People Served",
               },
               {
-                icon: <Users className="h-10 w-10 text-[#C8A97E]" />,
+                icon: <Users className="h-10 w-10 text-[#2cc72c]" />,
                 title: "Educational Support",
                 description: "Funding scholarships and educational resources for students in need.",
                 stat: "250+",
                 statLabel: "Scholarships Awarded",
               },
               {
-                icon: <DollarSign className="h-10 w-10 text-[#C8A97E]" />,
+                icon: <DollarSign className="h-10 w-10 text-[#2cc72c]" />,
                 title: "Community Development",
                 description: "Building infrastructure and supporting local initiatives.",
                 stat: "12",
@@ -598,7 +598,7 @@ export default function DonatePage() {
               >
                 <Card className="h-full">
                   <CardContent className="pt-6 flex flex-col items-center text-center h-full">
-                    <div className="mb-4 p-3 bg-[#C8A97E]/10 rounded-full">{item.icon}</div>
+                    <div className="mb-4 p-3 bg-[#2cc72c]/10 rounded-full">{item.icon}</div>
                     <h3 className="text-xl font-semibold mb-2 text-gray-900">{item.title}</h3>
                     <p className="text-gray-600 mb-6">{item.description}</p>
                     <div className="mt-auto">
@@ -648,7 +648,7 @@ export default function DonatePage() {
                         setComment("")
                         setShowRecognition(false)
                       }}
-                      className="bg-[#C8A97E] hover:bg-[#8A6D3B]"
+                      className="bg-[#2cc72c] hover:bg-[#8A6D3B]"
                     >
                       Go back
                     </Button>
@@ -741,7 +741,7 @@ export default function DonatePage() {
                               key={amount}
                               type="button"
                               variant={donationAmount === amount ? "default" : "outline"}
-                              className={donationAmount === amount ? "bg-[#C8A97E] hover:bg-[#8A6D3B]" : ""}
+                              className={donationAmount === amount ? "bg-[#2cc72c] hover:bg-[#8A6D3B]" : ""}
                               onClick={() => handleAmountSelect(amount)}
                             >
                               {currency === "USD" ? "$" : "₦"}
@@ -850,7 +850,7 @@ export default function DonatePage() {
                       <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }} viewport={{ once: true }}>
                         <Button
                           type="submit"
-                          className="w-full bg-[#C8A97E] hover:bg-[#8A6D3B] text-lg py-6"
+                          className="w-full bg-[#2cc72c] hover:bg-[#8A6D3B] text-lg py-6"
                           disabled={isProcessing}
                         >
                           {isProcessing
@@ -893,7 +893,7 @@ export default function DonatePage() {
 
           {paymentsLoading ? (
             <div className="flex justify-center items-center py-8">
-              <Loader2 className="h-8 w-8 animate-spin text-[#C8A97E]" />
+              <Loader2 className="h-8 w-8 animate-spin text-[#2cc72c]" />
             </div>
           ) : (
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
@@ -907,7 +907,7 @@ export default function DonatePage() {
                   <Card className="h-full">
                     <CardContent className="pt-6">
                       <div className="flex items-center mb-4">
-                        <Award className="h-5 w-5 text-[#C8A97E] mr-2" />
+                        <Award className="h-5 w-5 text-[#2cc72c] mr-2" />
                         <p className="text-[#8A6D3B] font-medium">
                           {payment.currency}
                           {payment.amount}
@@ -987,7 +987,7 @@ export default function DonatePage() {
                   transition={{ duration: 0.5, delay: 0.1 * index }}
                 >
                   <AccordionItem value={`item-${index}`} className="border-b border-gray-200 py-2">
-                    <AccordionTrigger className="text-left font-medium hover:text-[#C8A97E] transition-colors">
+                    <AccordionTrigger className="text-left font-medium hover:text-[#2cc72c] transition-colors">
                       {faq.question}
                     </AccordionTrigger>
                     <AccordionContent>{faq.answer}</AccordionContent>
@@ -1017,18 +1017,18 @@ export default function DonatePage() {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {[
               {
-                icon: <Calendar className="h-10 w-10 text-[#C8A97E]" />,
+                icon: <Calendar className="h-10 w-10 text-[#2cc72c]" />,
                 title: "Volunteer Your Time",
                 description: "Join us at events, help organize fundraisers, or contribute your professional skills.",
               },
               {
-                icon: <Users className="h-10 w-10 text-[#C8A97E]" />,
+                icon: <Users className="h-10 w-10 text-[#2cc72c]" />,
                 title: "Become a Member",
                 description:
                   "Join Eko Club International and participate in our regular activities and decision-making.",
               },
               {
-                icon: <CheckCircle className="h-10 w-10 text-[#C8A97E]" />,
+                icon: <CheckCircle className="h-10 w-10 text-[#2cc72c]" />,
                 title: "Spread the Word",
                 description: "Follow us on social media and help raise awareness about our initiatives.",
               },
@@ -1040,7 +1040,7 @@ export default function DonatePage() {
                 transition={{ duration: 0.5, delay: 0.3 + 0.1 * index }}
                 className="text-center"
               >
-                <div className="mb-4 mx-auto p-3 bg-[#C8A97E]/10 rounded-full inline-block">{item.icon}</div>
+                <div className="mb-4 mx-auto p-3 bg-[#2cc72c]/10 rounded-full inline-block">{item.icon}</div>
                 <h3 className="text-xl font-semibold mb-2">{item.title}</h3>
                 <p className="text-gray-600">{item.description}</p>
               </motion.div>

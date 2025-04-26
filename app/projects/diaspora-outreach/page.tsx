@@ -43,18 +43,18 @@ export default function DiasporaOutreachPage() {
     {
       title: "Global Diaspora Network",
       description:
-        "Learn about our global network connecting Nigerians across continents and how we're building bridges between communities worldwide.",
-      thumbnail: "/placeholder.svg?height=600&width=800",
-      url: "https://www.youtube.com/embed/dQw4w9WgXcQ",
-      location: "Multiple Countries",
+        "ECI Community Outreach at the Heritage at Turner Park Health and Rehab in Irving, TX (12/14/19)",
+      thumbnail: "/images/diaspora_outreach/thumbnail1.png?height=600&width=800",
+      url: "https://www.youtube.com/embed/bkp-oHW1laQ?si=1ky6FVKYfVySoHk1",
+      location: "Texas",
       date: "Ongoing Initiative",
     },
     {
-      title: "Cultural Exchange Program",
+      title: "ECI 2022 National Community Outreach Day",
       description:
-        "Explore our cultural exchange initiatives that help preserve Nigerian heritage while fostering understanding and appreciation worldwide.",
-      thumbnail: "/placeholder.svg?height=600&width=800",
-      url: "https://www.youtube.com/embed/dQw4w9WgXcQ",
+        "ECI 2022 National Community Outreach Day - Eko Club Minnesota",
+      thumbnail: "/images/diaspora_outreach/thumbnail2.png?height=600&width=800",
+      url: "https://www.youtube.com/embed/GuiN7s6iyfU?si=0f-1KzfXwoSbF4T9",
       location: "Lagos, London, New York",
       date: "Annual Program",
     },
@@ -182,20 +182,20 @@ export default function DiasporaOutreachPage() {
   }
 
   return (
-    <div className="min-h-screen bg-white pt-20">
+    <div className="min-h-screen bg-white pt-20 mt-4">
       {/* Breadcrumb with proper spacing */}
       <div className="bg-gradient-to-r from-blue-50 to-indigo-50 py-5">
         <div className="container mx-auto px-4">
           <div className="flex items-center text-sm text-gray-600">
-            <Link href="/" className="hover:text-[#C8A97E] transition-colors">
+            <Link href="/" className="hover:text-[#bcbe3a] transition-colors">
               Home
             </Link>
             <ChevronRight className="h-4 w-4 mx-2" />
-            <Link href="/#projects" className="hover:text-[#C8A97E] transition-colors">
+            <Link href="/#projects" className="hover:text-[#bcbe3a] transition-colors">
               Our Projects
             </Link>
             <ChevronRight className="h-4 w-4 mx-2" />
-            <span className="text-[#C8A97E] font-medium">Diaspora Outreach</span>
+            <span className="text-[#bcbe3a] font-medium">Diaspora Outreach</span>
           </div>
         </div>
       </div>
@@ -203,7 +203,7 @@ export default function DiasporaOutreachPage() {
       {/* Hero Section with World Map Background */}
       <section className="relative overflow-hidden bg-indigo-900 text-white">
         <div className="absolute inset-0 opacity-20">
-          <Image src="/images/disapora_outreach/1.png?height=1080&width=1920" alt="World Map" fill className="object-cover" />
+          <Image src="/images/map.png?height=1080&width=1920" alt="World Map" fill className="object-cover" />
         </div>
 
         {/* Connection Lines Animation */}
@@ -223,7 +223,7 @@ export default function DiasporaOutreachPage() {
             <motion.div initial="hidden" animate="visible" variants={containerVariants} className="space-y-6">
               <motion.div variants={slideRight}>
                 <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight">
-                  <span className="text-[#C8A97E]">Connecting</span> Across Borders
+                  <span className="text-[#bcbe3a]">Connecting</span> Across Borders
                 </h1>
               </motion.div>
 
@@ -233,7 +233,7 @@ export default function DiasporaOutreachPage() {
               </motion.p>
 
               <motion.div variants={slideRight} className="flex flex-wrap gap-4">
-                <Button className="bg-[#C8A97E] hover:bg-[#8A6D3B] text-white rounded-full px-8 py-6">
+                <Button className="bg-[#bcbe3a] hover:bg-[#8A6D3B] text-white rounded-full px-8 py-6">
                   Get Involved
                 </Button>
                 {/* <Button
@@ -248,7 +248,7 @@ export default function DiasporaOutreachPage() {
             <motion.div initial="hidden" animate="visible" variants={fadeIn} className="relative">
               <motion.div
                 animate={pulse}
-                className="relative h-[300px] md:h-[400px] w-full rounded-full overflow-hidden border-4 border-[#C8A97E]/30"
+                className="relative h-[300px] md:h-[400px] w-full rounded-full overflow-hidden border-4 border-[#bcbe3a]/30"
               >
                 <Image
                   src="/images/diaspora_outreach/1.png?height=800&width=800"
@@ -263,7 +263,7 @@ export default function DiasporaOutreachPage() {
                 initial={{ scale: 0 }}
                 animate={{ scale: 1 }}
                 transition={{ delay: 0.5, duration: 0.5 }}
-                className="absolute top-10 -left-5 bg-[#C8A97E] text-white p-3 rounded-full shadow-lg"
+                className="absolute top-10 -left-5 bg-[#bcbe3a] text-white p-3 rounded-full shadow-lg"
               >
                 <Globe className="h-6 w-6" />
               </motion.div>
@@ -308,7 +308,7 @@ export default function DiasporaOutreachPage() {
             className="text-center mb-16"
           >
             <motion.h2 variants={slideUp} className="text-3xl md:text-4xl font-bold mb-4">
-              Our <span className="text-[#C8A97E]">Global</span> Presence
+              Our <span className="text-[#bcbe3a]">Global</span> Presence
             </motion.h2>
             <motion.p variants={slideUp} className="text-gray-600 max-w-2xl mx-auto">
               With active communities across five continents, we're building a worldwide network that celebrates
@@ -364,7 +364,7 @@ export default function DiasporaOutreachPage() {
             className="text-center mb-16"
           >
             <motion.h2 variants={slideUp} className="text-3xl md:text-4xl font-bold mb-4">
-              Diaspora <span className="text-[#C8A97E]">Stories</span>
+              Diaspora <span className="text-[#bcbe3a]">Stories</span>
             </motion.h2>
             <motion.p variants={slideUp} className="text-gray-600 max-w-2xl mx-auto">
               Watch how our diaspora initiatives are making an impact across the globe, connecting communities and
@@ -397,7 +397,7 @@ export default function DiasporaOutreachPage() {
 
                   <div className="absolute inset-0 flex flex-col justify-between p-6 text-white">
                     <div className="flex items-center space-x-2">
-                      <MapPin className="h-4 w-4 text-[#C8A97E]" />
+                      <MapPin className="h-4 w-4 text-[#bcbe3a]" />
                       <span className="text-sm">{video.location}</span>
                     </div>
 
@@ -407,13 +407,13 @@ export default function DiasporaOutreachPage() {
 
                       <div className="flex items-center justify-between">
                         <span className="text-sm flex items-center">
-                          <Calendar className="h-4 w-4 mr-2 text-[#C8A97E]" />
+                          <Calendar className="h-4 w-4 mr-2 text-[#bcbe3a]" />
                           {video.date}
                         </span>
 
                         <button
                           onClick={() => openVideoModal(video)}
-                          className="bg-[#C8A97E] hover:bg-[#8A6D3B] text-white rounded-full p-3 transition-transform duration-300 group-hover:scale-110"
+                          className="bg-[#bcbe3a] hover:bg-[#8A6D3B] text-white rounded-full p-3 transition-transform duration-300 group-hover:scale-110"
                         >
                           <Play className="h-5 w-5" />
                         </button>
@@ -438,7 +438,7 @@ export default function DiasporaOutreachPage() {
             className="text-center mb-16"
           >
             <motion.h2 variants={slideUp} className="text-3xl md:text-4xl font-bold mb-4">
-              Key <span className="text-[#C8A97E]">Initiatives</span>
+              Key <span className="text-[#bcbe3a]">Initiatives</span>
             </motion.h2>
             <motion.p variants={slideUp} className="text-gray-600 max-w-2xl mx-auto">
               Our diaspora outreach program focuses on these key areas to strengthen connections and create meaningful
@@ -481,7 +481,7 @@ export default function DiasporaOutreachPage() {
             className="text-center mb-16"
           >
             <motion.h2 variants={slideUp} className="text-3xl md:text-4xl font-bold mb-4">
-              Diaspora <span className="text-[#C8A97E]">Voices</span>
+              Diaspora <span className="text-[#bcbe3a]">Voices</span>
             </motion.h2>
             <motion.p variants={slideUp} className="text-gray-600 max-w-2xl mx-auto">
               Hear from members of our global community about how our initiatives have impacted their lives.
@@ -497,7 +497,7 @@ export default function DiasporaOutreachPage() {
           >
             {/* Decorative Elements */}
             <div className="absolute -left-20 top-1/4 w-40 h-40 bg-indigo-100 rounded-full opacity-30"></div>
-            <div className="absolute -right-20 bottom-1/4 w-40 h-40 bg-[#C8A97E]/20 rounded-full opacity-30"></div>
+            <div className="absolute -right-20 bottom-1/4 w-40 h-40 bg-[#bcbe3a]/20 rounded-full opacity-30"></div>
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8 relative z-10">
               {testimonials.map((testimonial, index) => (
@@ -512,7 +512,7 @@ export default function DiasporaOutreachPage() {
                       <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path
                           d="M9.33333 21.3333C7.86667 21.3333 6.66667 20.8 5.73333 19.7333C4.8 18.6667 4.33333 17.3333 4.33333 15.7333C4.33333 14 4.93333 12.2667 6.13333 10.5333C7.33333 8.8 9.06667 7.33333 11.3333 6.13333L13.3333 8.66667C11.7333 9.46667 10.5333 10.3333 9.73333 11.2667C8.93333 12.2 8.53333 13.0667 8.53333 13.8667C8.53333 14.2 8.6 14.4667 8.73333 14.6667C8.86667 14.8667 9.06667 15 9.33333 15.0667C10.0667 15.2 10.6667 15.5333 11.1333 16.0667C11.6 16.6 11.8333 17.2 11.8333 17.8667C11.8333 18.8 11.5 19.6 10.8333 20.2667C10.1667 20.9333 9.33333 21.2667 8.33333 21.2667L9.33333 21.3333ZM21.3333 21.3333C19.8667 21.3333 18.6667 20.8 17.7333 19.7333C16.8 18.6667 16.3333 17.3333 16.3333 15.7333C16.3333 14 16.9333 12.2667 18.1333 10.5333C19.3333 8.8 21.0667 7.33333 23.3333 6.13333L25.3333 8.66667C23.7333 9.46667 22.5333 10.3333 21.7333 11.2667C20.9333 12.2 20.5333 13.0667 20.5333 13.8667C20.5333 14.2 20.6 14.4667 20.7333 14.6667C20.8667 14.8667 21.0667 15 21.3333 15.0667C22.0667 15.2 22.6667 15.5333 23.1333 16.0667C23.6 16.6 23.8333 17.2 23.8333 17.8667C23.8333 18.8 23.5 19.6 22.8333 20.2667C22.1667 20.9333 21.3333 21.2667 20.3333 21.2667L21.3333 21.3333Z"
-                          fill="#C8A97E"
+                          fill="#bcbe3a"
                         />
                       </svg>
                     </div>
@@ -543,8 +543,7 @@ export default function DiasporaOutreachPage() {
       </section>
 
       {/* Upcoming Events Section */}
-      <section className="py-16 md:py-24 bg-indigo-900 text-white relative overflow-hidden">
-        {/* World Map Background */}
+      {/* <section className="py-16 md:py-24 bg-indigo-900 text-white relative overflow-hidden">
         <div className="absolute inset-0 opacity-5">
           <Image src="/placeholder.svg?height=1080&width=1920" alt="World Map" fill className="object-cover" />
         </div>
@@ -558,7 +557,7 @@ export default function DiasporaOutreachPage() {
             className="text-center mb-16"
           >
             <motion.h2 variants={slideUp} className="text-3xl md:text-4xl font-bold mb-4">
-              Upcoming <span className="text-[#C8A97E]">Global</span> Events
+              Upcoming <span className="text-[#bcbe3a]">Global</span> Events
             </motion.h2>
             <motion.p variants={slideUp} className="text-white/80 max-w-2xl mx-auto">
               Join us at these upcoming events to connect with the Nigerian diaspora community worldwide.
@@ -581,24 +580,24 @@ export default function DiasporaOutreachPage() {
               >
                 <div className="flex flex-col h-full">
                   <div className="mb-4 flex items-center justify-between">
-                    <h3 className="text-xl font-bold text-[#C8A97E]">{event.title}</h3>
-                    <div className="bg-[#C8A97E] text-white text-xs font-bold px-2 py-1 rounded-full">Upcoming</div>
+                    <h3 className="text-xl font-bold text-[#bcbe3a]">{event.title}</h3>
+                    <div className="bg-[#bcbe3a] text-white text-xs font-bold px-2 py-1 rounded-full">Upcoming</div>
                   </div>
 
                   <div className="space-y-3 mb-6">
                     <div className="flex items-center">
-                      <Calendar className="h-5 w-5 mr-3 text-[#C8A97E]" />
+                      <Calendar className="h-5 w-5 mr-3 text-[#bcbe3a]" />
                       <span>{event.date}</span>
                     </div>
                     <div className="flex items-center">
-                      <MapPin className="h-5 w-5 mr-3 text-[#C8A97E]" />
+                      <MapPin className="h-5 w-5 mr-3 text-[#bcbe3a]" />
                       <span>{event.location}</span>
                     </div>
                   </div>
 
                   <p className="text-white/80 mb-6 flex-grow">{event.description}</p>
 
-                  <Button className="bg-transparent hover:bg-white/10 border border-[#C8A97E] text-[#C8A97E] rounded-full flex items-center">
+                  <Button className="bg-transparent hover:bg-white/10 border border-[#bcbe3a] text-[#bcbe3a] rounded-full flex items-center">
                     <span>Register Now</span>
                     <ArrowRight className="ml-2 h-4 w-4" />
                   </Button>
@@ -607,7 +606,7 @@ export default function DiasporaOutreachPage() {
             ))}
           </motion.div>
         </div>
-      </section>
+      </section> */}
 
       {/* Call to Action Section */}
       <section className="py-16 md:py-24 bg-white">
@@ -622,7 +621,7 @@ export default function DiasporaOutreachPage() {
             <div className="grid grid-cols-1 md:grid-cols-2">
               <div className="p-8 md:p-12">
                 <motion.h2 variants={slideRight} className="text-3xl md:text-4xl font-bold mb-4 text-white">
-                  Join Our Global <span className="text-[#C8A97E]">Network</span>
+                  Join Our Global <span className="text-[#bcbe3a]">Network</span>
                 </motion.h2>
 
                 <motion.p variants={slideRight} className="text-white/80 mb-8">
@@ -632,31 +631,31 @@ export default function DiasporaOutreachPage() {
 
                 <motion.div variants={slideRight} className="space-y-4">
                   <div className="flex items-center">
-                    <div className="bg-[#C8A97E]/20 p-2 rounded-full mr-4">
-                      <Globe className="h-5 w-5 text-[#C8A97E]" />
+                    <div className="bg-[#bcbe3a]/20 p-2 rounded-full mr-4">
+                      <Globe className="h-5 w-5 text-[#bcbe3a]" />
                     </div>
                     <span className="text-white">Connect with local chapters worldwide</span>
                   </div>
 
                   <div className="flex items-center">
-                    <div className="bg-[#C8A97E]/20 p-2 rounded-full mr-4">
-                      <Users className="h-5 w-5 text-[#C8A97E]" />
+                    <div className="bg-[#bcbe3a]/20 p-2 rounded-full mr-4">
+                      <Users className="h-5 w-5 text-[#bcbe3a]" />
                     </div>
                     <span className="text-white">Participate in cultural exchange programs</span>
                   </div>
 
                   <div className="flex items-center">
-                    <div className="bg-[#C8A97E]/20 p-2 rounded-full mr-4">
-                      <Heart className="h-5 w-5 text-[#C8A97E]" />
+                    <div className="bg-[#bcbe3a]/20 p-2 rounded-full mr-4">
+                      <Heart className="h-5 w-5 text-[#bcbe3a]" />
                     </div>
                     <span className="text-white">Contribute to community development projects</span>
                   </div>
                 </motion.div>
 
                 <motion.div variants={slideRight} className="mt-8">
-                  <Button className="bg-[#C8A97E] hover:bg-[#8A6D3B] text-white rounded-full px-8 py-6">
-                    Become a Member
-                  </Button>
+                  <Button className="bg-[#bcbe3a] hover:bg-[#8A6D3B] text-white rounded-full px-8 py-6">
+                    <Link href="/membership">Become a Member</Link>
+                </Button>
                 </motion.div>
               </div>
 
@@ -685,7 +684,7 @@ export default function DiasporaOutreachPage() {
             className="text-center mb-16"
           >
             <motion.h2 variants={slideUp} className="text-3xl md:text-4xl font-bold mb-4">
-              Get in <span className="text-[#C8A97E]">Touch</span>
+              Get in <span className="text-[#bcbe3a]">Touch</span>
             </motion.h2>
             <motion.p variants={slideUp} className="text-gray-600 max-w-2xl mx-auto">
               Have questions about our diaspora initiatives? Reach out to our global coordinators.
@@ -705,7 +704,7 @@ export default function DiasporaOutreachPage() {
               </div>
               <h3 className="text-xl font-semibold mb-2">Email Us</h3>
               <p className="text-gray-600 mb-4">For general inquiries and information</p>
-              <a href="mailto:diaspora@ekoclub.org" className="text-[#C8A97E] font-medium hover:underline">
+              <a href="mailto:diaspora@ekoclub.org" className="text-[#bcbe3a] font-medium hover:underline">
                 diaspora@ekoclub.org
               </a>
             </motion.div>
@@ -716,7 +715,7 @@ export default function DiasporaOutreachPage() {
               </div>
               <h3 className="text-xl font-semibold mb-2">Call Us</h3>
               <p className="text-gray-600 mb-4">Speak with our diaspora coordinators</p>
-              <a href="tel:+2341234567890" className="text-[#C8A97E] font-medium hover:underline">
+              <a href="tel:+2341234567890" className="text-[#bcbe3a] font-medium hover:underline">
                 +234 123 456 7890
               </a>
             </motion.div>
@@ -727,7 +726,7 @@ export default function DiasporaOutreachPage() {
               </div>
               <h3 className="text-xl font-semibold mb-2">Connect Online</h3>
               <p className="text-gray-600 mb-4">Join our online diaspora community</p>
-              <a href="#" className="text-[#C8A97E] font-medium hover:underline">
+              <a href="#" className="text-[#bcbe3a] font-medium hover:underline">
                 community.ekoclub.org
               </a>
             </motion.div>

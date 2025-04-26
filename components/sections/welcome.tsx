@@ -48,7 +48,7 @@ export default function Welcome() {
             </div>
 
             <div className="pt-6">
-              <Link href="/#about" className="inline-block">
+              <Link href="/about/our-story" className="inline-block">
                 <Button
                   variant="link"
                   className="text-[#8A6D3B] hover:text-[#C8A97E] uppercase tracking-widest text-sm font-medium border-b border-[#8A6D3B] rounded-none px-0 hover:border-[#C8A97E]"
@@ -143,7 +143,7 @@ export default function Welcome() {
             <iframe
               width="100%"
               height="100%"
-              src="https://www.youtube.com/embed/dQw4w9WgXcQ?autoplay=0"
+              src="https://www.youtube.com/embed/zLBC4nPznHc?si=583ln9M2KOUU-oIH"
               title="Eko Club International Video"
               frameBorder="0"
               allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"

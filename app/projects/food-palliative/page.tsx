@@ -34,26 +34,19 @@ export default function FoodPalliativePage() {
   const videos = [
     {
       id: 1,
-      title: "Emergency Food Relief",
+      title: "Food Relief",
       description:
-        "Our rapid response team delivering essential food supplies to communities affected by flooding in Lagos.",
-      thumbnail: "/placeholder.svg?height=400&width=600",
-      videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ",
+        "Our team delivering essential food supplies to communities in Lagos.",
+      thumbnail: "/images/Food_Palliative/thumb1.png?height=400&width=600",
+      videoUrl: "https://res.cloudinary.com/dvrpa1lyo/video/upload/v1745616592/ECI_FOOD_PALLIATIVE_DAY_1__d81s7g.mp4",
     },
     {
-      id: 2,
-      title: "Community Food Bank",
-      description: "Inside our community food bank operations that serve thousands of families each month.",
-      thumbnail: "/placeholder.svg?height=400&width=600",
-      videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ",
-    },
-    {
-      id: 3,
-      title: "Sustainable Farming Initiative",
+      id: 1,
+      title: "Food Relief",
       description:
-        "How our agricultural training program is helping communities grow their own food and achieve food security.",
-      thumbnail: "/placeholder.svg?height=400&width=600",
-      videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ",
+        "Our team delivering essential food supplies to communities in Lagos",
+      thumbnail: "/images/Food_Palliative/thumb2.png?height=400&width=600",
+      videoUrl: "https://www.youtube.com/embed/Y6EnVaCOzic?si=gInOYKSz-dJx_yOO",
     },
   ]
 
@@ -294,28 +287,28 @@ export default function FoodPalliativePage() {
             <motion.div initial="hidden" animate="visible" variants={staggerContainer} className="text-left">
               <motion.div variants={fadeIn} className="mb-4">
                 <div className="flex items-center gap-2 text-white/80 mb-4 pt-10 pb-20">
-                  <Link href="/" className="hover:text-[#C8A97E] transition-colors">
+                  <Link href="/" className="hover:text-[#2828fd] transition-colors">
                     Home
                   </Link>
                   <ChevronRight className="h-4 w-4" />
-                  <Link href="/#projects" className="hover:text-[#C8A97E] transition-colors">
+                  <Link href="/#projects" className="hover:text-[#2828fd] transition-colors">
                     Our Projects
                   </Link>
                   <ChevronRight className="h-4 w-4" />
-                  <span className="text-[#C8A97E]">Food Palliative</span>
+                  <span className="text-[#2828fd]">Food Palliative</span>
                 </div>
                 <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold text-white mb-4 leading-tight">
                   Fighting Hunger, <br />
-                  <span className="text-[#C8A97E]">Nourishing Communities</span>
+                  <span className="text-[#7d7dff]">Nourishing Communities</span>
                 </h1>
               </motion.div>
               <motion.div variants={fadeIn}>
-                <div className="h-1 w-24 bg-[#C8A97E] mb-6"></div>
+                <div className="h-1 w-24 bg-[#2828fd] mb-6"></div>
                 <p className="text-lg md:text-xl text-white/90 max-w-xl mb-8">
                   Our Food Palliative Program provides essential nutrition to vulnerable communities while building
                   sustainable food systems for long-term security.
                 </p>
-                <Button className="bg-[#C8A97E] hover:bg-[#8A6D3B] text-white transition-colors duration-300 rounded-none px-8 py-6 text-lg">
+                <Button className="bg-[#2828fd] hover:bg-[#101053] text-white transition-colors duration-300 rounded-none px-8 py-6 text-lg">
                   Get Involved
                 </Button>
               </motion.div>
@@ -328,7 +321,7 @@ export default function FoodPalliativePage() {
               className="hidden md:block"
             >
               <div className="relative h-[500px] w-full">
-                <div className="absolute top-0 right-0 w-4/5 h-4/5 bg-[#C8A97E]/20 rounded-lg"></div>
+                <div className="absolute top-0 right-0 w-4/5 h-4/5 bg-[#2828fd]/20 rounded-lg"></div>
                 <div className="absolute bottom-0 left-0 w-4/5 h-4/5 bg-white rounded-lg overflow-hidden shadow-2xl">
                   <Image
                     src="/images/Food_Palliative/food_palliative-3.jpg?height=600&width=800"
@@ -354,8 +347,8 @@ export default function FoodPalliativePage() {
               variants={fadeIn}
               className="flex items-center gap-4 bg-white p-6 rounded-lg shadow-md"
             >
-              <div className="bg-[#C8A97E]/10 p-4 rounded-full">
-                <Utensils className="h-8 w-8 text-[#C8A97E]" />
+              <div className="bg-[#2828fd]/10 p-4 rounded-full">
+                <Utensils className="h-8 w-8 text-[#2828fd]" />
               </div>
               <div>
                 <div className="text-3xl font-bold text-gray-800">150,000+</div>
@@ -370,8 +363,8 @@ export default function FoodPalliativePage() {
               variants={fadeIn}
               className="flex items-center gap-4 bg-white p-6 rounded-lg shadow-md"
             >
-              <div className="bg-[#C8A97E]/10 p-4 rounded-full">
-                <Users className="h-8 w-8 text-[#C8A97E]" />
+              <div className="bg-[#2828fd]/10 p-4 rounded-full">
+                <Users className="h-8 w-8 text-[#2828fd]" />
               </div>
               <div>
                 <div className="text-3xl font-bold text-gray-800">25,000+</div>
@@ -386,8 +379,8 @@ export default function FoodPalliativePage() {
               variants={fadeIn}
               className="flex items-center gap-4 bg-white p-6 rounded-lg shadow-md"
             >
-              <div className="bg-[#C8A97E]/10 p-4 rounded-full">
-                <Truck className="h-8 w-8 text-[#C8A97E]" />
+              <div className="bg-[#2828fd]/10 p-4 rounded-full">
+                <Truck className="h-8 w-8 text-[#2828fd]" />
               </div>
               <div>
                 <div className="text-3xl font-bold text-gray-800">12</div>
@@ -402,8 +395,8 @@ export default function FoodPalliativePage() {
               variants={fadeIn}
               className="flex items-center gap-4 bg-white p-6 rounded-lg shadow-md"
             >
-              <div className="bg-[#C8A97E]/10 p-4 rounded-full">
-                <Leaf className="h-8 w-8 text-[#C8A97E]" />
+              <div className="bg-[#2828fd]/10 p-4 rounded-full">
+                <Leaf className="h-8 w-8 text-[#2828fd]" />
               </div>
               <div>
                 <div className="text-3xl font-bold text-gray-800">15</div>
@@ -427,9 +420,9 @@ export default function FoodPalliativePage() {
                 className="md:col-span-2"
               >
                 <h2 className="text-3xl md:text-4xl font-bold text-gray-800 mb-6">
-                  About Our <span className="text-[#C8A97E]">Food Palliative Program</span>
+                  About Our <span className="text-[#2828fd]">Food Palliative Program</span>
                 </h2>
-                <div className="h-1 w-20 bg-[#C8A97E] mb-8"></div>
+                <div className="h-1 w-20 bg-[#2828fd] mb-8"></div>
                 <p className="text-gray-600 mb-6">
                   The Eko Club International Food Palliative Program was established in 2018 to address food insecurity
                   in vulnerable communities across Lagos State. What began as an emergency response to economic
@@ -465,12 +458,12 @@ export default function FoodPalliativePage() {
                       className="object-cover"
                     />
                   </div>
-                  <div className="bg-[#C8A97E] p-6 rounded-lg text-white">
+                  <div className="bg-[#2828fd] p-6 rounded-lg text-white">
                     <h3 className="text-xl font-bold mb-3">Get Involved</h3>
                     <p className="mb-4">
                       Join us in our mission to fight hunger and build food security in our communities.
                     </p>
-                    <Button className="w-full bg-white text-[#C8A97E] hover:bg-gray-100 transition-colors">
+                    <Button className="w-full bg-white text-[#2828fd] hover:bg-gray-100 transition-colors">
                       Volunteer Now
                     </Button>
                   </div>
@@ -492,22 +485,22 @@ export default function FoodPalliativePage() {
             className="text-center max-w-3xl mx-auto mb-16"
           >
             <h2 className="text-3xl md:text-4xl font-bold mb-6 text-white">
-              See Our <span className="text-[#C8A97E]">Impact</span> in Action
+              See Our <span className="text-[#2828fd]">Impact</span> in Action
             </h2>
-            <div className="h-1 w-20 bg-[#C8A97E] mx-auto mb-8"></div>
+            <div className="h-1 w-20 bg-[#2828fd] mx-auto mb-8"></div>
             <p className="text-white/80">
               Watch these videos to see how our food palliative initiatives are making a difference in communities
               across Lagos.
             </p>
           </motion.div>
 
-          <div className="grid grid-cols-1 md:grid-cols-12 gap-6">
+          <div className="flex md:grid-cols-12 gap-6">
             <motion.div
               initial="hidden"
               whileInView="visible"
               viewport={{ once: true, margin: "-100px" }}
               variants={fadeInFromLeft}
-              className="md:col-span-7"
+              className="w-1/2"
             >
               <div
                 className="relative aspect-video cursor-pointer rounded-lg overflow-hidden shadow-lg group"
@@ -521,7 +514,7 @@ export default function FoodPalliativePage() {
                 />
                 <div className="absolute inset-0 bg-black/40 flex items-center justify-center group-hover:bg-black/60 transition-colors">
                   <motion.div
-                    className="bg-white/90 rounded-full p-5 group-hover:bg-[#C8A97E] transition-colors"
+                    className="bg-white/90 rounded-full p-5 group-hover:bg-[#2828fd] transition-colors"
                     whileHover={{ scale: 1.1 }}
                     transition={{ type: "spring", stiffness: 400, damping: 10 }}
                   >
@@ -534,15 +527,17 @@ export default function FoodPalliativePage() {
                 </div>
               </div>
             </motion.div>
-
-            <div className="md:col-span-5 space-y-6">
-              <motion.div
+            <motion.div
                 initial="hidden"
                 whileInView="visible"
                 viewport={{ once: true, margin: "-100px" }}
                 variants={fadeInFromRight}
-                className="relative aspect-video cursor-pointer rounded-lg overflow-hidden shadow-lg group"
+                className="w-1/2"
                 onClick={() => openVideoModal(videos[1])}
+              >
+                <div
+                className="relative aspect-video cursor-pointer rounded-lg overflow-hidden shadow-lg group"
+                onClick={() => openVideoModal(videos[0])}
               >
                 <Image
                   src={videos[1].thumbnail || "/placeholder.svg"}
@@ -552,7 +547,7 @@ export default function FoodPalliativePage() {
                 />
                 <div className="absolute inset-0 bg-black/40 flex items-center justify-center group-hover:bg-black/60 transition-colors">
                   <motion.div
-                    className="bg-white/90 rounded-full p-4 group-hover:bg-[#C8A97E] transition-colors"
+                    className="bg-white/90 rounded-full p-4 group-hover:bg-[#2828fd] transition-colors"
                     whileHover={{ scale: 1.1 }}
                     transition={{ type: "spring", stiffness: 400, damping: 10 }}
                   >
@@ -563,37 +558,8 @@ export default function FoodPalliativePage() {
                   <h3 className="text-lg font-bold text-white mb-1">{videos[1].title}</h3>
                   <p className="text-white/80 text-sm">{videos[1].description}</p>
                 </div>
-              </motion.div>
-
-              <motion.div
-                initial="hidden"
-                whileInView="visible"
-                viewport={{ once: true, margin: "-100px" }}
-                variants={fadeInFromRight}
-                className="relative aspect-video cursor-pointer rounded-lg overflow-hidden shadow-lg group"
-                onClick={() => openVideoModal(videos[2])}
-              >
-                <Image
-                  src={videos[2].thumbnail || "/placeholder.svg"}
-                  alt={videos[2].title}
-                  fill
-                  className="object-cover transition-transform duration-500 group-hover:scale-105"
-                />
-                <div className="absolute inset-0 bg-black/40 flex items-center justify-center group-hover:bg-black/60 transition-colors">
-                  <motion.div
-                    className="bg-white/90 rounded-full p-4 group-hover:bg-[#C8A97E] transition-colors"
-                    whileHover={{ scale: 1.1 }}
-                    transition={{ type: "spring", stiffness: 400, damping: 10 }}
-                  >
-                    <Play className="h-8 w-8 text-gray-800 group-hover:text-white" />
-                  </motion.div>
                 </div>
-                <div className="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-black/80 to-transparent">
-                  <h3 className="text-lg font-bold text-white mb-1">{videos[2].title}</h3>
-                  <p className="text-white/80 text-sm">{videos[2].description}</p>
-                </div>
-              </motion.div>
-            </div>
+            </motion.div>
           </div>
         </div>
       </section>
@@ -609,9 +575,9 @@ export default function FoodPalliativePage() {
             className="text-center max-w-3xl mx-auto mb-16"
           >
             <h2 className="text-3xl md:text-4xl font-bold mb-6 text-gray-800">
-              Our <span className="text-[#C8A97E]">Programs</span>
+              Our <span className="text-[#2828fd]">Programs</span>
             </h2>
-            <div className="h-1 w-20 bg-[#C8A97E] mx-auto mb-8"></div>
+            <div className="h-1 w-20 bg-[#2828fd] mx-auto mb-8"></div>
             <p className="text-gray-600">
               Explore our comprehensive approach to addressing food insecurity through these key programs.
             </p>
@@ -622,25 +588,25 @@ export default function FoodPalliativePage() {
               <TabsList className="flex grid-cols-2 md:grid-cols-4 bg-gray-100 p-1 rounded-full px-4">
                 <TabsTrigger
                   value="distribution"
-                  className="rounded-full data-[state=active]:bg-[#C8A97E] data-[state=active]:text-white px-6 py-2"
+                  className="rounded-full data-[state=active]:bg-[#2828fd] data-[state=active]:text-white px-6 py-2"
                 >
                   Distribution
                 </TabsTrigger>
                 <TabsTrigger
                   value="foodbank"
-                  className="rounded-full data-[state=active]:bg-[#C8A97E] data-[state=active]:text-white px-6 py-2"
+                  className="rounded-full data-[state=active]:bg-[#2828fd] data-[state=active]:text-white px-6 py-2"
                 >
                   Food Banks
                 </TabsTrigger>
                 {/* <TabsTrigger
                   value="agriculture"
-                  className="rounded-full data-[state=active]:bg-[#C8A97E] data-[state=active]:text-white px-6 py-2"
+                  className="rounded-full data-[state=active]:bg-[#2828fd] data-[state=active]:text-white px-6 py-2"
                 >
                   Agriculture
                 </TabsTrigger>
                 <TabsTrigger
                   value="education"
-                  className="rounded-full data-[state=active]:bg-[#C8A97E] data-[state=active]:text-white px-6 py-2"
+                  className="rounded-full data-[state=active]:bg-[#2828fd] data-[state=active]:text-white px-6 py-2"
                 >
                   Education
                 </TabsTrigger> */}
@@ -663,7 +629,7 @@ export default function FoodPalliativePage() {
                       <div className="grid grid-cols-3 gap-4">
                         {program.stats.map((stat, index) => (
                           <div key={index} className="bg-gray-50 p-4 rounded-lg text-center">
-                            <div className="text-2xl font-bold text-[#C8A97E] mb-2">{stat.value}</div>
+                            <div className="text-2xl font-bold text-[#2828fd] mb-2">{stat.value}</div>
                             <p className="text-gray-600 text-sm">{stat.label}</p>
                           </div>
                         ))}
@@ -699,9 +665,9 @@ export default function FoodPalliativePage() {
             className="text-center max-w-3xl mx-auto mb-16"
           >
             <h2 className="text-3xl md:text-4xl font-bold mb-6 text-gray-800">
-              Our <span className="text-[#C8A97E]">Journey</span>
+              Our <span className="text-[#2828fd]">Journey</span>
             </h2>
-            <div className="h-1 w-20 bg-[#C8A97E] mx-auto mb-8"></div>
+            <div className="h-1 w-20 bg-[#2828fd] mx-auto mb-8"></div>
             <p className="text-gray-600">
               From emergency response to sustainable food systems, explore the evolution of our Food Palliative Program.
             </p>
@@ -727,11 +693,11 @@ export default function FoodPalliativePage() {
                   >
                     <div className="hidden md:flex items-center justify-center w-full md:w-1/2 p-4">
                       <div
-                        className={`bg-white p-6 rounded-lg shadow-lg border-t-4 ${index % 2 === 0 ? "border-[#C8A97E]" : "border-[#8A6D3B]"} max-w-md`}
+                        className={`bg-white p-6 rounded-lg shadow-lg border-t-4 ${index % 2 === 0 ? "border-[#2828fd]" : "border-[#101053]"} max-w-md`}
                       >
                         <div className="flex items-center gap-3 mb-3">
                           <div
-                            className={`p-3 rounded-full ${index % 2 === 0 ? "bg-[#C8A97E]" : "bg-[#8A6D3B]"} text-white`}
+                            className={`p-3 rounded-full ${index % 2 === 0 ? "bg-[#2828fd]" : "bg-[#101053]"} text-white`}
                           >
                             {event.icon}
                           </div>
@@ -747,15 +713,15 @@ export default function FoodPalliativePage() {
                     {/* Timeline Dot - Desktop */}
                     <div className="hidden md:flex absolute left-1/2 transform -translate-x-1/2 items-center justify-center">
                       <div
-                        className={`w-10 h-10 rounded-full ${index % 2 === 0 ? "bg-[#C8A97E]" : "bg-[#8A6D3B]"} border-4 border-white shadow z-10 flex items-center justify-center text-white`}
+                        className={`w-10 h-10 rounded-full ${index % 2 === 0 ? "bg-[#2828fd]" : "bg-[#101053]"} border-4 border-white shadow z-10 flex items-center justify-center text-white`}
                       >
                         {event.icon}
                       </div>
                     </div>
 
                     {/* Mobile Version */}
-                    <div className="md:hidden flex items-start gap-4 bg-white p-6 rounded-lg shadow-lg border-l-4 border-[#C8A97E] w-full">
-                      <div className="p-3 rounded-full bg-[#C8A97E] text-white shrink-0">{event.icon}</div>
+                    <div className="md:hidden flex items-start gap-4 bg-white p-6 rounded-lg shadow-lg border-l-4 border-[#2828fd] w-full">
+                      <div className="p-3 rounded-full bg-[#2828fd] text-white shrink-0">{event.icon}</div>
                       <div>
                         <span className="text-sm font-semibold text-gray-500">{event.year}</span>
                         <h3 className="text-xl font-bold text-gray-800 mb-2">{event.title}</h3>
@@ -773,7 +739,7 @@ export default function FoodPalliativePage() {
       </section>
 
       {/* Testimonials Section - Carousel */}
-      <section className="py-20 bg-[#C8A97E]">
+      <section className="py-20 bg-[#2828fd]">
         <div className="container mx-auto px-4">
           <motion.div
             initial="hidden"
@@ -803,7 +769,7 @@ export default function FoodPalliativePage() {
                   className="bg-white rounded-lg p-8 shadow-lg"
                 >
                   <div className="flex flex-col md:flex-row gap-8 items-center">
-                    <div className="w-24 h-24 md:w-32 md:h-32 rounded-full overflow-hidden flex-shrink-0 border-4 border-[#C8A97E]/30">
+                    <div className="w-24 h-24 md:w-32 md:h-32 rounded-full overflow-hidden flex-shrink-0 border-4 border-[#2828fd]/30">
                       <Image
                         src={testimonials[visibleTestimonial].image || "/placeholder.svg"}
                         alt={testimonials[visibleTestimonial].name}
@@ -816,7 +782,7 @@ export default function FoodPalliativePage() {
                       <p className="text-gray-700 italic mb-6 text-lg">"{testimonials[visibleTestimonial].quote}"</p>
                       <div>
                         <h4 className="text-xl font-bold text-gray-800">{testimonials[visibleTestimonial].name}</h4>
-                        <p className="text-[#C8A97E]">{testimonials[visibleTestimonial].location}</p>
+                        <p className="text-[#2828fd]">{testimonials[visibleTestimonial].location}</p>
                       </div>
                     </div>
                   </div>
@@ -864,9 +830,9 @@ export default function FoodPalliativePage() {
             className="text-center max-w-3xl mx-auto mb-16"
           >
             <h2 className="text-3xl md:text-4xl font-bold mb-6 text-gray-800">
-              Upcoming <span className="text-[#C8A97E]">Events</span>
+              Upcoming <span className="text-[#2828fd]">Events</span>
             </h2>
-            <div className="h-1 w-20 bg-[#C8A97E] mx-auto mb-8"></div>
+            <div className="h-1 w-20 bg-[#2828fd] mx-auto mb-8"></div>
             <p className="text-gray-600">
               Join us at these upcoming events and be part of our mission to fight hunger and build food security.
             </p>
@@ -891,11 +857,11 @@ export default function FoodPalliativePage() {
                         <h3 className="text-lg font-medium">{event.title}</h3>
                         <div className="flex items-center gap-4 text-sm text-gray-500 mt-2 md:mt-0">
                           <div className="flex items-center gap-1">
-                            <Calendar className="h-4 w-4 text-[#C8A97E]" />
+                            <Calendar className="h-4 w-4 text-[#2828fd]" />
                             <span>{event.date}</span>
                           </div>
                           <div className="flex items-center gap-1">
-                            <MapPin className="h-4 w-4 text-[#C8A97E]" />
+                            <MapPin className="h-4 w-4 text-[#2828fd]" />
                             <span>{event.location}</span>
                           </div>
                         </div>
@@ -903,7 +869,7 @@ export default function FoodPalliativePage() {
                     </AccordionTrigger>
                     <AccordionContent className="px-6 pb-4">
                       <p className="text-gray-600 mb-4">{event.description}</p>
-                      <Button className="bg-[#C8A97E] hover:bg-[#8A6D3B] text-white transition-colors">
+                      <Button className="bg-[#2828fd] hover:bg-[#101053] text-white transition-colors">
                         Register Now
                       </Button>
                     </AccordionContent>
@@ -932,7 +898,7 @@ export default function FoodPalliativePage() {
                 our communities.
               </p>
               <Button
-                className="bg-[#C8A97E] hover:bg-[#8A6D3B] text-white transition-colors rounded-none px-8 py-6 text-lg"
+                className="bg-[#2828fd] hover:bg-[#101053] text-white transition-colors rounded-none px-8 py-6 text-lg"
                 asChild
               >
                 <Link href="/donate">Donate Now</Link>
@@ -945,7 +911,7 @@ export default function FoodPalliativePage() {
             whileInView="visible"
             viewport={{ once: true, margin: "-100px" }}
             variants={fadeInFromRight}
-            className="bg-[#C8A97E] text-white p-12 md:p-20 flex items-center"
+            className="bg-[#2828fd] text-white p-12 md:p-20 flex items-center"
           >
             <div>
               <h2 className="text-3xl md:text-4xl font-bold mb-6">Volunteer With Us</h2>
@@ -954,7 +920,7 @@ export default function FoodPalliativePage() {
                 communities about nutrition.
               </p>
               <Button
-                className="bg-white text-[#C8A97E] hover:bg-gray-100 transition-colors rounded-none px-8 py-6 text-lg"
+                className="bg-white text-[#2828fd] hover:bg-gray-100 transition-colors rounded-none px-8 py-6 text-lg"
                 asChild
               >
                 <Link href="/#contact">Get Involved</Link>

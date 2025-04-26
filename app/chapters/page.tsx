@@ -59,7 +59,7 @@ const chapterPresidents = [
   },
   { id: 9, name: "Hon. T.O Olarinde", chapter: "Florida", image: "/images/chapter-presidents/florida.jpg?height=300&width=300" },
   { id: 10, name: "Hon. B. J. Agoro", chapter: "Houston", image: "/images/chapter-presidents/houston.jpg?height=300&width=300" },
-  { id: 10, name: "Hon. Oyedunmola Iyabo Ojo", chapter: "Houston Women", image: "/images/chapter-presidents/houston_women.jpg?height=300&width=300" },
+  { id: 24, name: "Hon. Oyedunmola Iyabo Ojo", chapter: "Houston Women", image: "/images/chapter-presidents/houston_women.jpg?height=300&width=300" },
   { id: 12, name: "Hon. Toyin Ibrahim-Igbo", chapter: "London, U.K.", image: "/images/chapter-presidents/london.jpg?height=300&width=300" },
   { id: 13, name: "Hon. Ayodeji Famuyide", chapter: "Louisiana", image: "/images/chapter-presidents/louisiana.jpg?height=300&width=300" },
   { id: 14, name: "Hon. Julia Ayo-Ajayi", chapter: "Miami", image: "/images/chapter-presidents/miami.jpg?height=300&width=300" },
@@ -68,7 +68,7 @@ const chapterPresidents = [
   { id: 17, name: "Prince Omokayode Dosumu", chapter: "New York", image: "/images/chapter-presidents/new_york.jpg?height=300&width=300" },
   { id: 18, name: "Hon. Wale Onitiri", chapter: "Ohio", image: "/images/chapter-presidents/ohio.jpg?height=300&width=300" },
   { id: 19, name: "Hon. Adewale Dosumu", chapter: "Pennsylvania", image: "/images/chapter-presidents/pennsylvania.jpg?height=300&width=300" },
-  { id: 20, name: "Hon. Olabisi Dabiri-Okoya", chapter: "Philadelphia", image: "/images/chapter-presidents/philadelphia.jpg?height=300&width=300" },
+  { id: 25, name: "Hon. Olabisi Dabiri-Okoya", chapter: "Philadelphia", image: "/images/chapter-presidents/philadelphia.jpg?height=300&width=300" },
   { id: 20, name: "Hon. Bode Esuola", chapter: "Washington D.C Metro", image: "/images/chapter-presidents/washington.jpg?height=300&width=300" },
   {
     id: 21,
@@ -137,7 +137,7 @@ export default function ChaptersPage() {
               </BreadcrumbItem>
               <BreadcrumbSeparator />
               <BreadcrumbItem>
-                <BreadcrumbLink href="/chapters" className="text-[#C8A97E] font-medium">
+                <BreadcrumbLink href="/chapters" className="text-[#b7b943] font-medium">
                   Chapters
                 </BreadcrumbLink>
               </BreadcrumbItem>
@@ -165,9 +165,9 @@ export default function ChaptersPage() {
             className="max-w-3xl mx-auto text-center"
           >
             <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6">
-              Our Global <span className="text-[#C8A97E]">Chapters</span>
+              Our Global <span className="text-[#e4e66d]">Chapters</span>
             </h1>
-            <div className="h-1 w-24 bg-[#C8A97E] mx-auto mb-6" />
+            <div className="h-1 w-24 bg-[#b7b943] mx-auto mb-6" />
             <p className="text-lg md:text-xl text-gray-300 mb-8">
               Eko Club International has established chapters across the globe, bringing together members of the Lagos
               community worldwide to promote cultural heritage and community development.
@@ -179,15 +179,15 @@ export default function ChaptersPage() {
             >
               <div className="flex flex-wrap justify-center gap-3">
                 <div className="flex items-center gap-2 bg-white/10 backdrop-blur-sm px-4 py-2 rounded-full">
-                  <Globe className="h-5 w-5 text-[#C8A97E]" />
+                  <Globe className="h-5 w-5 text-[#b7b943]" />
                   <span>3 Countries</span>
                 </div>
                 <div className="flex items-center gap-2 bg-white/10 backdrop-blur-sm px-4 py-2 rounded-full">
-                  <MapPin className="h-5 w-5 text-[#C8A97E]" />
+                  <MapPin className="h-5 w-5 text-[#b7b943]" />
                   <span>22 Chapters</span>
                 </div>
                 <div className="flex items-center gap-2 bg-white/10 backdrop-blur-sm px-4 py-2 rounded-full">
-                  <Users className="h-5 w-5 text-[#C8A97E]" />
+                  <Users className="h-5 w-5 text-[#b7b943]" />
                   <span>2,000+ Members</span>
                 </div>
               </div>
@@ -222,7 +222,7 @@ export default function ChaptersPage() {
             className="mb-8 text-center"
           >
             <h2 className="text-3xl md:text-4xl font-bold mb-4">Find Your Chapter</h2>
-            <div className="h-1 w-24 bg-[#C8A97E] mx-auto mb-6" />
+            <div className="h-1 w-24 bg-[#b7b943] mx-auto mb-6" />
             <p className="text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
               Explore our chapters around the world and connect with fellow members in your region.
             </p>
@@ -243,8 +243,8 @@ export default function ChaptersPage() {
                 className={cn(
                   "rounded-full px-6",
                   selectedRegion === region
-                    ? "bg-[#C8A97E] hover:bg-[#b89868] text-white border-[#C8A97E]"
-                    : "border-[#C8A97E] text-[#C8A97E] hover:bg-[#C8A97E]/10",
+                    ? "bg-[#b7b943] hover:bg-[#b89868] text-white border-[#b7b943]"
+                    : "border-[#b7b943] text-[#b7b943] hover:bg-[#b7b943]/10",
                 )}
               >
                 {region}
@@ -278,13 +278,13 @@ export default function ChaptersPage() {
               >
                 <Link href={chapter.url} target="_blank" rel="noopener noreferrer">
                   <Card
-                    className={`h-full overflow-hidden transition-all duration-300 ${hoveredChapter === chapter.id ? "shadow-lg border-[#C8A97E]" : "shadow-md"}`}
+                    className={`h-full overflow-hidden transition-all duration-300 ${hoveredChapter === chapter.id ? "shadow-lg border-[#b7b943]" : "shadow-md"}`}
                   >
                     <div className="h-32 bg-gradient-to-r from-[#1a1a2e] to-[#16213e] relative">
                       <div className="absolute inset-0 flex items-center justify-center">
                         <h3 className="text-2xl font-bold text-white">{chapter.name}</h3>
                       </div>
-                      <div className="absolute bottom-0 right-0 bg-[#C8A97E] text-white px-3 py-1 text-sm font-medium">
+                      <div className="absolute bottom-0 right-0 bg-[#b7b943] text-white px-3 py-1 text-sm font-medium">
                         {chapter.country}
                       </div>
                     </div>
@@ -299,8 +299,8 @@ export default function ChaptersPage() {
                         <div
                           className={`flex items-center justify-between transition-opacity duration-300 ${hoveredChapter === chapter.id ? "opacity-100" : "opacity-70"}`}
                         >
-                          <span className="text-sm text-[#C8A97E] font-medium">Visit Chapter</span>
-                          <ExternalLink className="h-4 w-4 text-[#C8A97E]" />
+                          <span className="text-sm text-[#434417] font-medium">Visit Chapter</span>
+                          <ExternalLink className="h-4 w-4 text-[#b7b943]" />
                         </div>
                       </div>
                     </CardContent>
@@ -323,7 +323,7 @@ export default function ChaptersPage() {
             className="text-center mb-12"
           >
             <h2 className="text-3xl md:text-4xl font-bold mb-4">Chapter Presidents</h2>
-            <div className="h-1 w-24 bg-[#C8A97E] mx-auto mb-6" />
+            <div className="h-1 w-24 bg-[#b7b943] mx-auto mb-6" />
             <p className="text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
               Meet the dedicated leaders who guide our chapters and foster community engagement around the world.
             </p>
@@ -359,7 +359,7 @@ export default function ChaptersPage() {
                             <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent"></div>
                             <div className="absolute bottom-0 left-0 p-4 text-white">
                               <h3 className="text-xl font-bold">{president.name}</h3>
-                              <p className="text-[#C8A97E]">President, {president.chapter} Chapter</p>
+                              <p className="text-[#b7b943]">President, {president.chapter} Chapter</p>
                             </div>
                           </div>
                         </Card>
@@ -371,7 +371,7 @@ export default function ChaptersPage() {
                   <Button
                     variant="outline"
                     size="icon"
-                    className="rounded-full border-[#C8A97E] text-[#C8A97E] hover:bg-[#C8A97E] hover:text-white"
+                    className="rounded-full border-[#b7b943] text-[#b7b943] hover:bg-[#b7b943] hover:text-white"
                     onClick={() => document.querySelector("[data-carousel-button-prev]")?.click()}
                   >
                     <ChevronLeft className="h-5 w-5" />
@@ -381,7 +381,7 @@ export default function ChaptersPage() {
                   <Button
                     variant="outline"
                     size="icon"
-                    className="rounded-full border-[#C8A97E] text-[#C8A97E] hover:bg-[#C8A97E] hover:text-white"
+                    className="rounded-full border-[#b7b943] text-[#b7b943] hover:bg-[#b7b943] hover:text-white"
                     onClick={() => document.querySelector("[data-carousel-button-next]")?.click()}
                   >
                     <ChevronRight className="h-5 w-5" />
@@ -406,7 +406,7 @@ export default function ChaptersPage() {
             className="text-center mb-12"
           >
             <h2 className="text-3xl md:text-4xl font-bold mb-4">Our Global Presence</h2>
-            <div className="h-1 w-24 bg-[#C8A97E] mx-auto mb-6" />
+            <div className="h-1 w-24 bg-[#b7b943] mx-auto mb-6" />
             <p className="text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
               Eko Club International has established a strong presence across North America and Europe, connecting
               Lagosians worldwide.
@@ -439,7 +439,7 @@ export default function ChaptersPage() {
                 whileHover={{ scale: 1.2 }}
               >
                 <motion.div
-                  className="w-3 h-3 bg-[#C8A97E] rounded-full cursor-pointer"
+                  className="w-3 h-3 bg-[#b7b943] rounded-full cursor-pointer"
                   animate={{
                     scale: [1, 1.2, 1],
                   }}
@@ -474,13 +474,13 @@ export default function ChaptersPage() {
             className="max-w-3xl mx-auto text-center"
           >
             <h2 className="text-3xl md:text-4xl font-bold mb-4">Join Your Local Chapter Today</h2>
-            <div className="h-1 w-24 bg-[#C8A97E] mx-auto mb-6" />
+            <div className="h-1 w-24 bg-[#b7b943] mx-auto mb-6" />
             <p className="text-gray-300 mb-8">
               Connect with fellow Lagosians in your area, participate in cultural events, and contribute to community
               development initiatives.
             </p>
             {/* <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Button className="bg-[#C8A97E] hover:bg-[#b89868] text-white px-8 py-6 text-lg">
+              <Button className="bg-[#b7b943] hover:bg-[#b89868] text-white px-8 py-6 text-lg">
                 Find Your Chapter
               </Button>
               <Button variant="outline" className="border-white text-white hover:bg-white/10 px-8 py-6 text-lg">

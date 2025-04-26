@@ -111,20 +111,20 @@ export default function OurMissionPage() {
           <motion.div initial="hidden" animate="visible" variants={staggerContainer} className="max-w-4xl mx-auto">
             <motion.div variants={fadeIn} className="mb-4">
               <div className="flex items-center justify-center gap-2 text-white/80 mb-4">
-                <Link href="/" className="hover:text-[#C8A97E] transition-colors">
+                <Link href="/" className="hover:text-[#66aa5d] transition-colors">
                   Home
                 </Link>
                 <ChevronRight className="h-4 w-4" />
-                <Link href="/#about" className="hover:text-[#C8A97E] transition-colors">
+                <Link href="/#about" className="hover:text-[#66aa5d] transition-colors">
                   About
                 </Link>
                 <ChevronRight className="h-4 w-4" />
-                <span className="text-[#C8A97E]">Our Mission</span>
+                <span className="text-[#66aa5d]">Our Mission</span>
               </div>
               <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-4">Our Mission</h1>
             </motion.div>
             <motion.div variants={fadeIn}>
-              <div className="h-1 w-24 bg-[#C8A97E] mx-auto mb-6"></div>
+              <div className="h-1 w-24 bg-[#66aa5d] mx-auto mb-6"></div>
               <p className="text-lg md:text-xl text-white/90 max-w-3xl mx-auto">
                 Guided by our core values, we strive to make a meaningful difference in our communities while preserving
                 our cultural heritage.
@@ -148,12 +148,12 @@ export default function OurMissionPage() {
               <div className="space-y-8">
                 <div>
                   <div className="flex items-center gap-3 mb-4">
-                    <div className="p-3 rounded-full bg-[#C8A97E] text-white">
+                    <div className="p-3 rounded-full bg-[#66aa5d] text-white">
                       <Target className="h-6 w-6" />
                     </div>
                     <h2 className="text-3xl font-bold text-gray-800">Our Mission</h2>
                   </div>
-                  <div className="h-1 w-20 bg-[#C8A97E] mb-6"></div>
+                  <div className="h-1 w-20 bg-[#66aa5d] mb-6"></div>
                   <p className="text-gray-600 leading-relaxed">
                     Eko Club International is dedicated to preserving and promoting the rich cultural heritage of Lagos,
                     Nigeria, while fostering unity, community development, and social welfare among our members and the
@@ -168,12 +168,12 @@ export default function OurMissionPage() {
 
                 <div>
                   <div className="flex items-center gap-3 mb-4">
-                    <div className="p-3 rounded-full bg-[#C8A97E] text-white">
+                    <div className="p-3 rounded-full bg-[#66aa5d] text-white">
                       <Globe className="h-6 w-6" />
                     </div>
                     <h2 className="text-3xl font-bold text-gray-800">Our Vision</h2>
                   </div>
-                  <div className="h-1 w-20 bg-[#C8A97E] mb-6"></div>
+                  <div className="h-1 w-20 bg-[#66aa5d] mb-6"></div>
                   <p className="text-gray-600 leading-relaxed">
                     Our vision is to be the premier cultural organization that connects people of Lagos heritage
                     worldwide, creating a global network that supports community development, cultural preservation, and
@@ -219,9 +219,9 @@ export default function OurMissionPage() {
             className="text-center max-w-3xl mx-auto mb-16"
           >
             <h2 className="text-3xl md:text-4xl font-bold mb-6 text-gray-800">
-              Our <span className="text-[#C8A97E]">Core Values</span>
+              Our <span className="text-[#66aa5d]">Core Values</span>
             </h2>
-            <div className="h-1 w-20 bg-[#C8A97E] mx-auto mb-8"></div>
+            <div className="h-1 w-20 bg-[#66aa5d] mx-auto mb-8"></div>
             <p className="text-gray-600">
               Our core values guide our actions, decisions, and interactions as we work towards fulfilling our mission
               and vision. They represent the principles that define who we are as an organization.
@@ -239,9 +239,9 @@ export default function OurMissionPage() {
               <motion.div
                 key={index}
                 variants={scaleIn}
-                className="bg-white rounded-lg shadow-lg p-8 border-t-4 border-[#C8A97E] hover:shadow-xl transition-shadow"
+                className="bg-white rounded-lg shadow-lg p-8 border-t-4 border-[#66aa5d] hover:shadow-xl transition-shadow"
               >
-                <div className="text-[#C8A97E] mb-4">{value.icon}</div>
+                <div className="text-[#66aa5d] mb-4">{value.icon}</div>
                 <h3 className="text-xl font-bold text-gray-800 mb-3">{value.title}</h3>
                 <p className="text-gray-600">{value.description}</p>
               </motion.div>
@@ -272,13 +272,13 @@ export default function OurMissionPage() {
               variants={fadeInFromLeft}
             >
               <h2 className="text-3xl md:text-4xl font-bold mb-6 text-gray-800">
-                Our <span className="text-[#C8A97E]">Strategic Goals</span>
+                Our <span className="text-[#66aa5d]">Strategic Goals</span>
               </h2>
-              <div className="h-1 w-20 bg-[#C8A97E] mb-8"></div>
+              <div className="h-1 w-20 bg-[#66aa5d] mb-8"></div>
 
               <div className="space-y-6">
                 <div className="flex gap-4">
-                  <div className="flex-shrink-0 w-12 h-12 rounded-full bg-[#C8A97E]/10 flex items-center justify-center text-[#C8A97E]">
+                  <div className="flex-shrink-0 w-12 h-12 rounded-full bg-[#66aa5d]/10 flex items-center justify-center text-[#66aa5d]">
                     <span className="text-xl font-bold">01</span>
                   </div>
                   <div>
@@ -291,7 +291,7 @@ export default function OurMissionPage() {
                 </div>
 
                 <div className="flex gap-4">
-                  <div className="flex-shrink-0 w-12 h-12 rounded-full bg-[#C8A97E]/10 flex items-center justify-center text-[#C8A97E]">
+                  <div className="flex-shrink-0 w-12 h-12 rounded-full bg-[#66aa5d]/10 flex items-center justify-center text-[#66aa5d]">
                     <span className="text-xl font-bold">02</span>
                   </div>
                   <div>
@@ -304,7 +304,7 @@ export default function OurMissionPage() {
                 </div>
 
                 <div className="flex gap-4">
-                  <div className="flex-shrink-0 w-12 h-12 rounded-full bg-[#C8A97E]/10 flex items-center justify-center text-[#C8A97E]">
+                  <div className="flex-shrink-0 w-12 h-12 rounded-full bg-[#66aa5d]/10 flex items-center justify-center text-[#66aa5d]">
                     <span className="text-xl font-bold">03</span>
                   </div>
                   <div>
@@ -317,7 +317,7 @@ export default function OurMissionPage() {
                 </div>
 
                 <div className="flex gap-4">
-                  <div className="flex-shrink-0 w-12 h-12 rounded-full bg-[#C8A97E]/10 flex items-center justify-center text-[#C8A97E]">
+                  <div className="flex-shrink-0 w-12 h-12 rounded-full bg-[#66aa5d]/10 flex items-center justify-center text-[#66aa5d]">
                     <span className="text-xl font-bold">04</span>
                   </div>
                   <div>
@@ -345,9 +345,9 @@ export default function OurMissionPage() {
             className="text-center max-w-3xl mx-auto mb-16"
           >
             <h2 className="text-3xl md:text-4xl font-bold mb-6">
-              Our <span className="text-[#C8A97E]">Impact</span>
+              Our <span className="text-[#66aa5d]">Impact</span>
             </h2>
-            <div className="h-1 w-20 bg-[#C8A97E] mx-auto mb-8"></div>
+            <div className="h-1 w-20 bg-[#66aa5d] mx-auto mb-8"></div>
             <p className="text-gray-300">
               Through our mission-driven initiatives, we have made significant impacts in our communities. Here are some
               of our key achievements:
@@ -362,25 +362,25 @@ export default function OurMissionPage() {
             className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8"
           >
             <motion.div variants={scaleIn} className="text-center">
-              <div className="text-[#C8A97E] text-5xl font-bold mb-2">25K+</div>
+              <div className="text-[#66aa5d] text-5xl font-bold mb-2">25K+</div>
               <div className="text-xl font-medium mb-2">Lives Impacted</div>
               <p className="text-gray-400">Through our medical missions and healthcare initiatives</p>
             </motion.div>
 
             <motion.div variants={scaleIn} className="text-center">
-              <div className="text-[#C8A97E] text-5xl font-bold mb-2">500+</div>
+              <div className="text-[#66aa5d] text-5xl font-bold mb-2">500+</div>
               <div className="text-xl font-medium mb-2">Scholarships</div>
               <p className="text-gray-400">Awarded to deserving students to pursue their education</p>
             </motion.div>
 
             <motion.div variants={scaleIn} className="text-center">
-              <div className="text-[#C8A97E] text-5xl font-bold mb-2">100+</div>
+              <div className="text-[#66aa5d] text-5xl font-bold mb-2">100+</div>
               <div className="text-xl font-medium mb-2">Projects</div>
               <p className="text-gray-400">Community development projects implemented across various regions</p>
             </motion.div>
 
             <motion.div variants={scaleIn} className="text-center">
-              <div className="text-[#C8A97E] text-5xl font-bold mb-2">15+</div>
+              <div className="text-[#66aa5d] text-5xl font-bold mb-2">15+</div>
               <div className="text-xl font-medium mb-2">Countries</div>
               <p className="text-gray-400">Where our members actively promote Lagos culture and heritage</p>
             </motion.div>
@@ -389,7 +389,7 @@ export default function OurMissionPage() {
       </section>
 
       {/* CTA Section */}
-      <section className="py-20 bg-[#C8A97E]">
+      <section className="py-20 bg-[#66aa5d]">
         <div className="container mx-auto px-4 text-center">
           <motion.div
             initial="hidden"
@@ -403,7 +403,7 @@ export default function OurMissionPage() {
               Together, we can make a lasting impact for generations to come.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Button className="bg-white text-[#C8A97E] hover:bg-gray-100 px-8 py-6 text-lg rounded-none" asChild>
+              <Button className="bg-white text-[#66aa5d] hover:bg-gray-100 px-8 py-6 text-lg rounded-none" asChild>
                 <Link href="/#membership">Become a Member</Link>
               </Button>
               <Button className="bg-gray-900 text-white hover:bg-gray-800 px-8 py-6 text-lg rounded-none" asChild>

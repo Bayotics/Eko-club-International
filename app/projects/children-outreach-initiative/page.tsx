@@ -164,11 +164,11 @@ export default function ChildrenOutreachInitiative() {
   const videos = [
     {
       id: 1,
-      title: "Annual Children's Day Celebration",
+      title: "ECI Children Outreach Initiative",
       description:
-        "Watch highlights from our annual Children's Day celebration featuring games, performances, and educational activities.",
-      thumbnail: "/placeholder.svg?height=720&width=1280",
-      videoSrc: "https://www.youtube.com/embed/dQw4w9WgXcQ",
+        "Watch highlights from our Food Distribution at Helen Aderonke Hospital,  Idimu Lagos",
+      thumbnail: "/images/Children/thumbnail1.png?height=720&width=1280",
+      videoSrc: "https://www.youtube.com/embed/6pVfRASjQCk?si=GbfCCY6LlyTg1HEh",
       duration: "3:45",
       category: "Events",
     },
@@ -177,17 +177,17 @@ export default function ChildrenOutreachInitiative() {
       title: "School Supplies Distribution",
       description:
         "See how our volunteers distribute essential school supplies to children in underserved communities.",
-      thumbnail: "/placeholder.svg?height=720&width=1280",
-      videoSrc: "https://www.youtube.com/embed/dQw4w9WgXcQ",
+      thumbnail: "/images/Children/thumbnail2.png?height=720&width=1280",
+      videoSrc: "https://res.cloudinary.com/dvrpa1lyo/video/upload/v1745620651/DAY-1_mwkw9p.mp4",
       duration: "5:12",
       category: "Outreach",
     },
     {
       id: 3,
-      title: "Children's Talent Show",
-      description: "Enjoy performances from talented children showcasing their skills in music, dance, and more.",
-      thumbnail: "/placeholder.svg?height=720&width=1280",
-      videoSrc: "https://www.youtube.com/embed/dQw4w9WgXcQ",
+      title: "School Supplies Distribution 2",
+      description: "See how our volunteers distribute essential school supplies to children in underserved communities.",
+      thumbnail: "/images/Children/thumbnail2.png?height=720&width=1280",
+      videoSrc: "https://res.cloudinary.com/dvrpa1lyo/video/upload/v1745620667/DAY-2_zwrk0t.mp4",
       duration: "7:30",
       category: "Performances",
     },
@@ -625,7 +625,7 @@ export default function ChildrenOutreachInitiative() {
       </section>
 
       {/* Upcoming Events - Curved Cards */}
-      <section className="py-16 md:py-24 bg-[#4ECDC4]/10">
+      {/* <section className="py-16 md:py-24 bg-[#4ECDC4]/10">
         <div className="container mx-auto px-4">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -674,7 +674,7 @@ export default function ChildrenOutreachInitiative() {
             ))}
           </div>
         </div>
-      </section>
+      </section> */}
 
       {/* Call to Action */}
       <section className="py-16 md:py-24 bg-gradient-to-br from-[#FF6B6B] to-[#FFD166] relative overflow-hidden">
