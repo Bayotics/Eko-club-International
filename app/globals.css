@@ -119,3 +119,15 @@
   }
 }
 
+
+@media screen and (min-width: 281px)  and (max-width: 700px) {
+  .diaspora-cards
+  {
+    display: block;
+    column-gap: 20px;
+  }
+  .diaspora-card{
+    margin-bottom: 40px;
+  }
+}
+

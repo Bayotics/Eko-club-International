@@ -311,7 +311,7 @@ export default function DiasporaOutreachPage() {
               Our <span className="text-[#bcbe3a]">Global</span> Presence
             </motion.h2>
             <motion.p variants={slideUp} className="text-gray-600 max-w-2xl mx-auto">
-              With active communities across five continents, we're building a worldwide network that celebrates
+              With active communities across three continents, we're building a worldwide network that celebrates
               Nigerian heritage and creates opportunities for collaboration.
             </motion.p>
           </motion.div>
@@ -321,14 +321,14 @@ export default function DiasporaOutreachPage() {
             whileInView="visible"
             viewport={{ once: true, margin: "-100px" }}
             variants={containerVariants}
-            className="flex justify-center grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-10"
+            className="flex diaspora-cards justify-center grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-10"
           >
             {globalLocations.map((location, index) => (
               <motion.div
                 key={location.name}
                 variants={itemVariants}
                 whileHover={{ y: -10, transition: { duration: 0.3 } }}
-                className="bg-gradient-to-br px-10 py-6 from-indigo-50 to-blue-50 rounded-xl shadow-md border border-indigo-100"
+                className="bg-gradient-to-br diaspora-card px-10 py-6 from-indigo-50 to-blue-50 rounded-xl shadow-md border border-indigo-100"
               >
                 <div className="text-center">
                   <div className="inline-flex items-center justify-center w-16 h-16 mb-4 rounded-full bg-indigo-100 text-indigo-800">

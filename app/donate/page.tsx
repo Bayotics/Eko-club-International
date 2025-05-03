@@ -490,7 +490,7 @@ export default function DonatePage() {
   }
 
   return (
-    <main className="min-h-screen bg-gray-50">
+    <main className="min-h-screen bg-gray-50 mt-4">
       {/* Breadcrumb with proper spacing to avoid navbar overlap */}
       <div className="bg-white shadow-sm pt-24 pb-4">
         <div className="container mx-auto px-4">
@@ -519,7 +519,8 @@ export default function DonatePage() {
         </div>
 
         <div className="container mx-auto px-4 relative z-10">
-          <motion.div
+          <motion.div viewport={{ once: true }}
+
             initial={{ opacity: 0, y: 20 }}
             animate={heroVisible ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
             transition={{ duration: 0.7 }}
@@ -530,7 +531,8 @@ export default function DonatePage() {
               Your generous donation helps us make a lasting impact in our communities. Together, we can create positive
               change and build a better future.
             </p>
-            <motion.div 
+            <motion.div viewport={{ once: true }}
+ 
               viewport={{ once: true }}
               initial={{ opacity: 0, scale: 0.9 }}
               animate={{ opacity: 1, scale: 1 }}
@@ -548,75 +550,11 @@ export default function DonatePage() {
         </div>
       </section>
 
-      {/* Impact Section */}
-      <section ref={impactRef} className="py-16 bg-white">
-        <div className="container mx-auto px-4">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={impactVisible ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
-            transition={{ duration: 0.7 }}
-            className="text-center mb-12"
-            viewport={{ once: true }}
-          >
-            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">Your Donation Makes a Difference</h2>
-            <p className="text-lg text-gray-600 max-w-3xl mx-auto">
-              See how your contributions help us create meaningful change in our communities and support vital
-              initiatives.
-            </p>
-          </motion.div>
-
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {[
-              {
-                icon: <Heart className="h-10 w-10 text-[#2cc72c]" />,
-                title: "Medical Missions",
-                description: "Providing essential healthcare services to underserved communities in Lagos.",
-                stat: "5,000+",
-                statLabel: "People Served",
-              },
-              {
-                icon: <Users className="h-10 w-10 text-[#2cc72c]" />,
-                title: "Educational Support",
-                description: "Funding scholarships and educational resources for students in need.",
-                stat: "250+",
-                statLabel: "Scholarships Awarded",
-              },
-              {
-                icon: <DollarSign className="h-10 w-10 text-[#2cc72c]" />,
-                title: "Community Development",
-                description: "Building infrastructure and supporting local initiatives.",
-                stat: "12",
-                statLabel: "Projects Completed",
-              },
-            ].map((item, index) => (
-              <motion.div
-                key={index}
-                initial={{ opacity: 0, y: 20 }}
-                animate={impactVisible ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
-                transition={{ duration: 0.5, delay: 0.1 * (index + 1) }}
-                viewport={{ once: true }}
-              >
-                <Card className="h-full">
-                  <CardContent className="pt-6 flex flex-col items-center text-center h-full">
-                    <div className="mb-4 p-3 bg-[#2cc72c]/10 rounded-full">{item.icon}</div>
-                    <h3 className="text-xl font-semibold mb-2 text-gray-900">{item.title}</h3>
-                    <p className="text-gray-600 mb-6">{item.description}</p>
-                    <div className="mt-auto">
-                      <p className="text-3xl font-bold text-[#8A6D3B]">{item.stat}</p>
-                      <p className="text-sm text-gray-500">{item.statLabel}</p>
-                    </div>
-                  </CardContent>
-                </Card>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </section>
-
       {/* Donation Form Section */}
       <section ref={donateRef} className="py-16 bg-gray-50">
         <div className="container mx-auto px-4">
-          <motion.div
+          <motion.div viewport={{ once: true }}
+
             initial={{ opacity: 0, y: 20 }}
             animate={donateVisible ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
             transition={{ duration: 0.7 }}
@@ -655,7 +593,8 @@ export default function DonatePage() {
                   </div>
                 ) : (
                   <form onSubmit={handleSubmit}>
-                    <motion.div
+                    <motion.div viewport={{ once: true }}
+
                       initial={{ opacity: 0 }}
                       animate={donateVisible ? { opacity: 1 } : { opacity: 0 }}
                       transition={{ duration: 0.5 }}
@@ -786,7 +725,8 @@ export default function DonatePage() {
 
                       {/* Conditional Fields for Recognition Wall */}
                       {showRecognition && (
-                        <motion.div
+                        <motion.div viewport={{ once: true }}
+
                           initial={{ opacity: 0, height: 0 }}
                           animate={{ opacity: 1, height: "auto" }}
                           exit={{ opacity: 0, height: 0 }}
@@ -847,7 +787,8 @@ export default function DonatePage() {
                       )}
 
                       {/* Submit Button */}
-                      <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }} viewport={{ once: true }}>
+                      <motion.div viewport={{ once: true }}
+                        whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }} viewport={{ once: true }}>
                         <Button
                           type="submit"
                           className="w-full bg-[#2cc72c] hover:bg-[#8A6D3B] text-lg py-6"
@@ -875,15 +816,82 @@ export default function DonatePage() {
           </div>
         </div>
       </section>
+      {/* Impact Section */}
+      <section ref={impactRef} className="py-16 bg-white">
+        <div className="container mx-auto px-4">
+          <motion.div viewport={{ once: true }}
 
+            initial={{ opacity: 0, y: 20 }}
+            animate={impactVisible ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+            transition={{ duration: 0.7 }}
+            className="text-center mb-12"
+            viewport={{ once: true }}
+          >
+            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">Your Donation Makes a Difference</h2>
+            <p className="text-lg text-gray-600 max-w-3xl mx-auto">
+              See how your contributions help us create meaningful change in our communities and support vital
+              initiatives.
+            </p>
+          </motion.div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            {[
+              {
+                icon: <Heart className="h-10 w-10 text-[#2cc72c]" />,
+                title: "Medical Missions",
+                description: "Providing essential healthcare services to underserved communities in Lagos.",
+                stat: "5,000+",
+                statLabel: "People Served",
+              },
+              {
+                icon: <Users className="h-10 w-10 text-[#2cc72c]" />,
+                title: "Educational Support",
+                description: "Funding scholarships and educational resources for students in need.",
+                stat: "250+",
+                statLabel: "Scholarships Awarded",
+              },
+              {
+                icon: <DollarSign className="h-10 w-10 text-[#2cc72c]" />,
+                title: "Community Development",
+                description: "Building infrastructure and supporting local initiatives.",
+                stat: "12",
+                statLabel: "Projects Completed",
+              },
+            ].map((item, index) => (
+              <motion.div viewport={{ once: true }}
+
+                key={index}
+                initial={{ opacity: 0, y: 20 }}
+                animate={impactVisible ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+                transition={{ duration: 0.5, delay: 0.1 * (index + 1) }}
+                viewport={{ once: true }}
+              >
+                <Card className="h-full">
+                  <CardContent className="pt-6 flex flex-col items-center text-center h-full">
+                    <div className="mb-4 p-3 bg-[#2cc72c]/10 rounded-full">{item.icon}</div>
+                    <h3 className="text-xl font-semibold mb-2 text-gray-900">{item.title}</h3>
+                    <p className="text-gray-600 mb-6">{item.description}</p>
+                    <div className="mt-auto">
+                      <p className="text-3xl font-bold text-[#8A6D3B]">{item.stat}</p>
+                      <p className="text-sm text-gray-500">{item.statLabel}</p>
+                    </div>
+                  </CardContent>
+                </Card>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
       {/* Recognition Wall Section */}
       <section ref={recognitionRef} className="py-16 bg-white">
         <div className="container mx-auto px-4">
-          <motion.div
+          <motion.div viewport={{ once: true }}
+
             initial={{ opacity: 0, y: 20 }}
             animate={recognitionVisible ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
             transition={{ duration: 0.7 }}
             className="text-center mb-12"
+            viewport={{ once: true }}
           >
             <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">Our Generous Supporters</h2>
             <p className="text-lg text-gray-600 max-w-3xl mx-auto">
@@ -898,11 +906,13 @@ export default function DonatePage() {
           ) : (
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
               {payments.map((payment, index) => (
-                <motion.div
+                <motion.div viewport={{ once: true }}
+
                   key={index}
                   initial={{ opacity: 0, y: 20 }}
                   animate={recognitionVisible ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
                   transition={{ duration: 0.5, delay: 0.1 * (index % 3) }}
+                  viewport={{ once: true }}
                 >
                   <Card className="h-full">
                     <CardContent className="pt-6">
@@ -934,7 +944,8 @@ export default function DonatePage() {
       {/* FAQ Section */}
       <section ref={faqRef} className="py-16 bg-gray-50">
         <div className="container mx-auto px-4">
-          <motion.div
+          <motion.div viewport={{ once: true }}
+
             initial={{ opacity: 0, y: 20 }}
             animate={faqVisible ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
             transition={{ duration: 0.7 }}
@@ -980,7 +991,8 @@ export default function DonatePage() {
                     "Yes, we accept donations in both Nigerian Naira (NGN) and US Dollars (USD). You can select your preferred currency when making a donation.",
                 },
               ].map((faq, index) => (
-                <motion.div
+                <motion.div viewport={{ once: true }}
+
                   key={index}
                   initial={{ opacity: 0, y: 10 }}
                   animate={faqVisible ? { opacity: 1, y: 0 } : { opacity: 0, y: 10 }}
@@ -1002,7 +1014,8 @@ export default function DonatePage() {
       {/* Alternative Ways to Support */}
       <section className="py-16 bg-white">
         <div className="container mx-auto px-4">
-          <motion.div
+          <motion.div viewport={{ once: true }}
+
             initial={{ opacity: 0, y: 20 }}
             animate={faqVisible ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
             transition={{ duration: 0.7, delay: 0.2 }}
@@ -1033,7 +1046,8 @@ export default function DonatePage() {
                 description: "Follow us on social media and help raise awareness about our initiatives.",
               },
             ].map((item, index) => (
-              <motion.div
+              <motion.div viewport={{ once: true }}
+
                 key={index}
                 initial={{ opacity: 0, y: 20 }}
                 animate={faqVisible ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
