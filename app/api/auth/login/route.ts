@@ -23,13 +23,13 @@ export async function POST(request: Request) {
     // Find user by email
     const user = await User.findOne({ email })
     if (!user) {
-      return NextResponse.json({ message: "Invalid email or password" }, { status: 401 })
+      return NextResponse.json({ message: "Invalid email" }, { status: 401 })
     }
 
     // Verify password
     const isPasswordValid = await bcrypt.compare(password, user.password)
     if (!isPasswordValid) {
-      return NextResponse.json({ message: "Invalid email or password" }, { status: 401 })
+      return NextResponse.json({ message: "Invalid password" }, { status: 401 })
     }
 
     // Update last login time

@@ -126,10 +126,10 @@ export default function MemberDashboard() {
               <p className="text-gray-600">Welcome back, {user?.fullName || "Member"}!</p>
             </motion.div>
 
-            <Button variant="outline" className="mt-4 md:mt-0 flex items-center" onClick={handleLogout}>
+            {/* <Button variant="outline" className="mt-4 md:mt-0 flex items-center" onClick={handleLogout}>
               <LogOut className="mr-2 h-4 w-4" />
               Sign Out
-            </Button>
+            </Button> */}
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-4 gap-6">

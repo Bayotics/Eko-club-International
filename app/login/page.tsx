@@ -1,10 +1,10 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useEffect, useRef } from "react"
 import { useRouter } from "next/navigation"
 import Link from "next/link"
 import { motion } from "framer-motion"
-import { Loader2 } from "lucide-react"
+import { Loader2, Eye, EyeOff, Upload, X, User } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
@@ -19,13 +19,29 @@ import {
 } from "@/components/ui/breadcrumb"
 import Image from "next/image"
 import { useAuth } from "@/contexts/auth-context"
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
+import { useToast } from "@/components/ui/use-toast"
+import { Toaster } from "@/components/ui/toaster"
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 
 export default function LoginPage() {
   const router = useRouter()
   const { login } = useAuth()
+  const { toast } = useToast()
   const [activeTab, setActiveTab] = useState("login")
   const [isLoading, setIsLoading] = useState(false)
   const [error, setError] = useState("")
+  const [showPassword, setShowPassword] = useState(false)
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false)
+  const [profileImage, setProfileImage] = useState(null)
+  const [profileImageUrl, setProfileImageUrl] = useState("")
+  const [isUploading, setIsUploading] = useState(false)
+  const fileInputRef = useRef(null)
+
+  // Clear error when tab changes
+  useEffect(() => {
+    setError("")
+  }, [activeTab])
 
   // Login form state
   const [loginData, setLoginData] = useState({
@@ -41,6 +57,7 @@ export default function LoginPage() {
     confirmPassword: "",
     chapterName: "",
     membershipId: "",
+    profileImage: "",
   })
 
   const handleLoginChange = (e) => {
@@ -51,6 +68,81 @@ export default function LoginPage() {
   const handleRegisterChange = (e) => {
     const { name, value } = e.target
     setRegisterData((prev) => ({ ...prev, [name]: value }))
+  }
+
+  const handleProfileImageChange = (e) => {
+    const file = e.target.files[0]
+    if (file) {
+      // Preview the image
+      const reader = new FileReader()
+      reader.onloadend = () => {
+        setProfileImage(reader.result)
+      }
+      reader.readAsDataURL(file)
+
+      // Upload to Cloudinary
+      uploadImageToCloudinary(file)
+    }
+  }
+
+  const uploadImageToCloudinary = async (file) => {
+    setIsUploading(true)
+
+    try {
+      // Create form data for upload
+      const formData = new FormData()
+      formData.append("file", file)
+      // formData.append("upload_preset", "eko_club_profiles") // Create this preset in your Cloudinary dashboard
+
+      // Upload to Cloudinary
+      const response = await fetch("/api/cloudinary/upload", {
+        method: "POST",
+        body: formData,
+      })
+
+      const data = await response.json()
+
+      if (data.secure_url) {
+        setProfileImageUrl(data.secure_url)
+        setRegisterData((prev) => ({ ...prev, profileImage: data.secure_url }))
+
+        toast({
+          title: "Image Uploaded",
+          description: "Your profile image has been uploaded successfully.",
+          variant: "default",
+        })
+      } else {
+        throw new Error("Failed to upload image")
+      }
+    } catch (err) {
+      console.error("Error uploading image:", err)
+
+      toast({
+        title: "Upload Failed",
+        description: "Failed to upload profile image. Please try again.",
+        variant: "destructive",
+      })
+
+      // Clear the preview
+      setProfileImage(null)
+    } finally {
+      setIsUploading(false)
+    }
+  }
+
+  const removeProfileImage = () => {
+    setProfileImage(null)
+    setProfileImageUrl("")
+    setRegisterData((prev) => ({ ...prev, profileImage: "" }))
+    if (fileInputRef.current) {
+      fileInputRef.current.value = ""
+    }
+  }
+
+  const triggerFileInput = () => {
+    if (fileInputRef.current) {
+      fileInputRef.current.click()
+    }
   }
 
   const handleLogin = async (e) => {
@@ -74,11 +166,27 @@ export default function LoginPage() {
       // Update auth context with user data
       login(data.user, data.token)
 
+      // Show success toast
+      toast({
+        title: "Login Successful",
+        description: "Welcome back to Eko Club International!",
+        variant: "default",
+      })
+
       // Redirect to member dashboard
       router.push("/members/dashboard")
     } catch (err) {
       console.error("Login error:", err)
+
+      // Set error for Alert component
       setError(err.message || "An error occurred during login")
+
+      // Show error toast
+      toast({
+        title: "Login Failed",
+        description: err.message || "An error occurred during login",
+        variant: "destructive",
+      })
     } finally {
       setIsLoading(false)
     }
@@ -91,7 +199,15 @@ export default function LoginPage() {
 
     // Validate passwords match
     if (registerData.password !== registerData.confirmPassword) {
-      setError("Passwords do not match")
+      const errorMsg = "Passwords do not match"
+      setError(errorMsg)
+
+      toast({
+        title: "Password Mismatch",
+        description: errorMsg,
+        variant: "destructive",
+      })
+
       setIsLoading(false)
       return
     }
@@ -109,6 +225,13 @@ export default function LoginPage() {
         throw new Error(data.message || "Registration failed")
       }
 
+      // Show success toast
+      toast({
+        title: "Registration Successful",
+        description: "Your account has been created. Please login to continue.",
+        variant: "default",
+      })
+
       // Switch to login tab after successful registration
       setActiveTab("login")
       setLoginData({
@@ -117,7 +240,16 @@ export default function LoginPage() {
       })
     } catch (err) {
       console.error("Registration error:", err)
+
+      // Set error for Alert component
       setError(err.message || "An error occurred during registration")
+
+      // Show error toast
+      toast({
+        title: "Registration Failed",
+        description: err.message || "An error occurred during registration",
+        variant: "destructive",
+      })
     } finally {
       setIsLoading(false)
     }
@@ -130,6 +262,9 @@ export default function LoginPage() {
 
   return (
     <main className="min-h-screen bg-gray-50">
+      {/* Add Toaster component to render toast notifications */}
+      <Toaster />
+
       {/* Breadcrumb with proper spacing to avoid navbar overlap */}
       <div className="bg-white shadow-sm pt-24 pb-4">
         <div className="container mx-auto px-4">
@@ -295,7 +430,7 @@ export default function LoginPage() {
                     </TabsList>
 
                     <TabsContent value="login">
-                      {error && (
+                      {error && activeTab === "login" && (
                         <Alert variant="destructive" className="mb-4">
                           <AlertDescription>{error}</AlertDescription>
                         </Alert>
@@ -325,15 +460,25 @@ export default function LoginPage() {
                                 Forgot password?
                               </Link>
                             </div>
-                            <Input
-                              id="password"
-                              name="password"
-                              type="password"
-                              placeholder="••••••••"
-                              required
-                              value={loginData.password}
-                              onChange={handleLoginChange}
-                            />
+                            <div className="relative">
+                              <Input
+                                id="password"
+                                name="password"
+                                type={showPassword ? "text" : "password"}
+                                placeholder="Input your password"
+                                required
+                                value={loginData.password}
+                                onChange={handleLoginChange}
+                              />
+                              <button
+                                type="button"
+                                className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 hover:text-gray-700"
+                                onClick={() => setShowPassword(!showPassword)}
+                                aria-label={showPassword ? "Hide password" : "Show password"}
+                              >
+                                {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
+                              </button>
+                            </div>
                           </div>
                           <Button type="submit" className="w-full bg-[#78b16d] hover:bg-[#8A6D3B]" disabled={isLoading}>
                             {isLoading ? (
@@ -350,13 +495,69 @@ export default function LoginPage() {
                     </TabsContent>
 
                     <TabsContent value="register">
-                      {error && (
+                      {error && activeTab === "register" && (
                         <Alert variant="destructive" className="mb-4">
                           <AlertDescription>{error}</AlertDescription>
                         </Alert>
                       )}
                       <form onSubmit={handleRegister}>
                         <div className="space-y-4">
+                          {/* Profile Image Upload */}
+                          <div className="flex flex-col items-center mb-6">
+                            <label className="text-sm font-medium mb-2">Profile Picture</label>
+                            <div className="relative">
+                              {profileImage ? (
+                                <div className="relative">
+                                  <Avatar className="w-24 h-24 border-2 border-[#78b16d]">
+                                    <AvatarImage src={profileImage || "/placeholder.svg"} alt="Profile preview" />
+                                    <AvatarFallback>
+                                      <User className="w-12 h-12 text-gray-400" />
+                                    </AvatarFallback>
+                                  </Avatar>
+                                  <button
+                                    type="button"
+                                    onClick={removeProfileImage}
+                                    className="absolute -top-2 -right-2 bg-red-500 text-white rounded-full p-1"
+                                    aria-label="Remove image"
+                                  >
+                                    <X size={16} />
+                                  </button>
+                                </div>
+                              ) : (
+                                <div
+                                  onClick={triggerFileInput}
+                                  className="w-24 h-24 rounded-full bg-gray-100 flex items-center justify-center cursor-pointer border-2 border-dashed border-gray-300 hover:border-[#78b16d] transition-colors"
+                                >
+                                  <Upload className="w-8 h-8 text-gray-400" />
+                                </div>
+                              )}
+
+                              <input
+                                type="file"
+                                ref={fileInputRef}
+                                onChange={handleProfileImageChange}
+                                accept="image/*"
+                                className="hidden"
+                                id="profile-image"
+                              />
+                            </div>
+                            {isUploading && (
+                              <div className="mt-2 flex items-center text-sm text-gray-500">
+                                <Loader2 className="w-4 h-4 mr-2 animate-spin" />
+                                Uploading...
+                              </div>
+                            )}
+                            {!profileImage && !isUploading && (
+                              <button
+                                type="button"
+                                onClick={triggerFileInput}
+                                className="mt-2 text-sm text-[#78b16d] hover:underline"
+                              >
+                                Upload Photo
+                              </button>
+                            )}
+                          </div>
+
                           <div className="space-y-2">
                             <label htmlFor="fullName" className="text-sm font-medium">
                               Full Name
@@ -389,24 +590,53 @@ export default function LoginPage() {
                               <label htmlFor="chapterName" className="text-sm font-medium">
                                 Chapter Name
                               </label>
-                              <Input
-                                id="chapterName"
+                              <Select
                                 name="chapterName"
-                                placeholder="e.g. Lagos Chapter"
                                 value={registerData.chapterName}
-                                onChange={handleRegisterChange}
-                              />
+                                onValueChange={(value) => setRegisterData((prev) => ({ ...prev, chapterName: value }))}
+                              >
+                                <SelectTrigger id="chapterName" className="w-full">
+                                  <SelectValue placeholder="Select your chapter" />
+                                </SelectTrigger>
+                                <SelectContent>
+                                  <SelectItem value="Atlanta">Atlanta</SelectItem>
+                                  <SelectItem value="Austin">Austin</SelectItem>
+                                  <SelectItem value="California">California</SelectItem>
+                                  <SelectItem value="Dallas">Dallas</SelectItem>
+                                  <SelectItem value="DC Metro">DC Metro</SelectItem>
+                                  <SelectItem value="Delaware Valley">Delaware Valley</SelectItem>
+                                  <SelectItem value="Detroit">Detroit</SelectItem>
+                                  <SelectItem value="Eko Lagosians of Canada">Eko Lagosians of Canada</SelectItem>
+                                  <SelectItem value="Florida">Florida</SelectItem>
+                                  <SelectItem value="Houston">Houston</SelectItem>
+                                  <SelectItem value="Eko club Houston Women">Eko club Houston Women</SelectItem>
+                                  <SelectItem value="London">London</SelectItem>
+                                  <SelectItem value="Louisiana">Louisiana</SelectItem>
+                                  <SelectItem value="Miami">Miami</SelectItem>
+                                  <SelectItem value="Minnesota">Minnesota</SelectItem>
+                                  <SelectItem value="Eko Lagosians of Minnesota">Eko Lagosians of Minnesota</SelectItem>
+                                  <SelectItem value="New Jersey">New Jersey</SelectItem>
+                                  <SelectItem value="New York">New York</SelectItem>
+                                  <SelectItem value="Ohio">Ohio</SelectItem>
+                                  <SelectItem value="Pennsylvania">Pennsylvania</SelectItem>
+                                  <SelectItem value="Philadelphia">Philadelphia</SelectItem>
+                                  <SelectItem value="Rhode Island">Rhode Island</SelectItem>
+                                  <SelectItem value="San Antonio">San Antonio</SelectItem>
+                                  <SelectItem value="Lagosians of Chicago">Lagosians of Chicago</SelectItem>
+                                </SelectContent>
+                              </Select>
                             </div>
                             <div className="space-y-2">
                               <label htmlFor="membershipId" className="text-sm font-medium">
-                                Membership ID (if any)
+                                Membership ID
                               </label>
                               <Input
                                 id="membershipId"
                                 name="membershipId"
-                                placeholder="ECI-12345"
+                                placeholder="e.g ECI-12345"
                                 value={registerData.membershipId}
                                 onChange={handleRegisterChange}
+                                required
                               />
                             </div>
                           </div>
@@ -415,32 +645,56 @@ export default function LoginPage() {
                               <label htmlFor="registerPassword" className="text-sm font-medium">
                                 Password
                               </label>
-                              <Input
-                                id="registerPassword"
-                                name="password"
-                                type="password"
-                                placeholder="••••••••"
-                                required
-                                value={registerData.password}
-                                onChange={handleRegisterChange}
-                              />
+                              <div className="relative">
+                                <Input
+                                  id="registerPassword"
+                                  name="password"
+                                  type={showPassword ? "text" : "password"}
+                                  placeholder="Input Password"
+                                  required
+                                  value={registerData.password}
+                                  onChange={handleRegisterChange}
+                                />
+                                <button
+                                  type="button"
+                                  className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 hover:text-gray-700"
+                                  onClick={() => setShowPassword(!showPassword)}
+                                  aria-label={showPassword ? "Hide password" : "Show password"}
+                                >
+                                  {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
+                                </button>
+                              </div>
                             </div>
                             <div className="space-y-2">
                               <label htmlFor="confirmPassword" className="text-sm font-medium">
                                 Confirm Password
                               </label>
-                              <Input
-                                id="confirmPassword"
-                                name="confirmPassword"
-                                type="password"
-                                placeholder="••••••••"
-                                required
-                                value={registerData.confirmPassword}
-                                onChange={handleRegisterChange}
-                              />
+                              <div className="relative">
+                                <Input
+                                  id="confirmPassword"
+                                  name="confirmPassword"
+                                  type={showConfirmPassword ? "text" : "password"}
+                                  placeholder="Confirm Password"
+                                  required
+                                  value={registerData.confirmPassword}
+                                  onChange={handleRegisterChange}
+                                />
+                                <button
+                                  type="button"
+                                  className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 hover:text-gray-700"
+                                  onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+                                  aria-label={showConfirmPassword ? "Hide password" : "Show password"}
+                                >
+                                  {showConfirmPassword ? <EyeOff size={18} /> : <Eye size={18} />}
+                                </button>
+                              </div>
                             </div>
                           </div>
-                          <Button type="submit" className="w-full bg-[#78b16d] hover:bg-[#8A6D3B]" disabled={isLoading}>
+                          <Button
+                            type="submit"
+                            className="w-full bg-[#78b16d] hover:bg-[#8A6D3B]"
+                            disabled={isLoading || isUploading}
+                          >
                             {isLoading ? (
                               <>
                                 <Loader2 className="mr-2 h-4 w-4 animate-spin" />

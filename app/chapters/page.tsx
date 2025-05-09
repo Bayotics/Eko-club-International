@@ -29,7 +29,7 @@ const chapters = [
   { id: 8, name: "Eko Lagosians of Canada", country: "Canada", members: 90, url: "http://www.lagosiansofcanada.com" },
   { id: 9, name: "Florida", country: "USA", members: 105, url: "www.ekoclubflorida.org" },
   { id: 10, name: "Houston", country: "USA", members: 130, url: "www.ekoclubhouston.com" },
-  { id: 11, name: "Kent, U.K.", country: "United Kingdom", members: 70, url: "#" },
+  { id: 11, name: "Eko club Houston Women", country: "USA", members: 65, url: "#" },
   { id: 12, name: "London, U.K.", country: "United Kingdom", members: 115, url: "http://www.gobspace.com/ekl" },
   { id: 13, name: "Louisiana", country: "USA", members: 60, url: "https://ekoclub-louisiana.org" },
   { id: 14, name: "Miami", country: "USA", members: 85, url: "https://ekoclub-miami.org" },
@@ -41,6 +41,8 @@ const chapters = [
   { id: 20, name: "Philadelphia", country: "USA", members: 95, url: "www.ekoclubphiladelphia.org" },
   { id: 21, name: "Rhode Island", country: "USA", members: 45, url: "https://ekoclub-rhodeisland.org" },
   { id: 22, name: "San Antonio", country: "USA", members: 65, url: "https://ekoclub-sanantonio.org" },
+  { id: 23, name: "Lagosians of Chicago", country: "USA", members: 65, url: "#" },
+  { id: 24, name: "Eko Lagosians of Minnesota", country: "USA", members: 65, url: "#" },
 ]
 
 const chapterPresidents = [

@@ -6,7 +6,7 @@ import { connectToDatabase } from "@/lib/mongodb"
 export async function POST(request: Request) {
   try {
     // Parse request body
-    const { fullName, email, password, chapterName, membershipId } = await request.json()
+    const { fullName, email, password, chapterName, membershipId, profileImage } = await request.json()
 
     // Validate required fields
     if (!fullName || !email || !password) {
@@ -33,6 +33,7 @@ export async function POST(request: Request) {
       chapterName: chapterName || "",
       membershipId: membershipId || "",
       role: "member", // Default role
+      profileImage,
       createdAt: new Date(),
     })
 
