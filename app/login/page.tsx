@@ -23,6 +23,8 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { useToast } from "@/components/ui/use-toast"
 import { Toaster } from "@/components/ui/toaster"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
+import "react-phone-number-input/style.css"
+import PhoneInput from "react-phone-number-input"
 
 export default function LoginPage() {
   const router = useRouter()
@@ -58,6 +60,7 @@ export default function LoginPage() {
     chapterName: "",
     membershipId: "",
     profileImage: "",
+    phone: "", // Add phone field
   })
 
   const handleLoginChange = (e) => {
@@ -258,6 +261,10 @@ export default function LoginPage() {
   const fadeIn = {
     hidden: { opacity: 0, y: 20 },
     visible: { opacity: 1, y: 0 },
+  }
+
+  const handlePhoneChange = (value) => {
+    setRegisterData((prev) => ({ ...prev, phone: value }))
   }
 
   return (
@@ -585,6 +592,21 @@ export default function LoginPage() {
                               onChange={handleRegisterChange}
                             />
                           </div>
+                          <div className="space-y-2">
+                            <label htmlFor="phone" className="text-sm font-medium">
+                              Phone Number
+                            </label>
+                            <div className="phone-input-container">
+                              <PhoneInput
+                                international
+                                countryCallingCodeEditable={true}
+                                defaultCountry="US"
+                                value={registerData.phone}
+                                onChange={handlePhoneChange}
+                                className="phone-input"
+                              />
+                            </div>
+                          </div>
                           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                             <div className="space-y-2">
                               <label htmlFor="chapterName" className="text-sm font-medium">
@@ -731,6 +753,35 @@ export default function LoginPage() {
           </div>
         </div>
       </div>
+      <style jsx global>{`
+        .phone-input-container {
+          position: relative;
+        }
+        .phone-input {
+          width: 100%;
+          padding: 0.5rem;
+          border-radius: 0.375rem;
+          border: 1px solid #e2e8f0;
+          background-color: white;
+        }
+        .PhoneInputInput {
+          border: none;
+          outline: none;
+          width: 100%;
+          padding: 0.5rem 0;
+          background-color: transparent;
+        }
+        .PhoneInputCountrySelect {
+          position: relative;
+          align-self: stretch;
+          display: flex;
+          align-items: center;
+        }
+        .PhoneInputCountry{
+          background: beige;
+          width: 20%
+        }
+      `}</style>
     </main>
   )
 }

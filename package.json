@@ -75,6 +75,7 @@
     "react-hook-form": "^7.54.1",
     "react-icons": "latest",
     "react-leaflet": "^5.0.0",
+    "react-phone-number-input": "^3.4.12",
     "react-resizable-panels": "^2.1.7",
     "recharts": "2.15.0",
     "sonner": "^1.7.1",

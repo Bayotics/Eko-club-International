@@ -81,7 +81,7 @@ export default function Chapters() {
                     className="absolute top-full left-1/2 transform -translate-x-1/2 mt-2 bg-white dark:bg-gray-800 shadow-lg rounded-md p-2 whitespace-nowrap z-30"
                   >
                     <p className="font-medium text-sm">{chapter.name}</p>
-                    <p className="text-xs text-gray-500 dark:text-gray-400">{chapter.members} members</p>
+                    {/* <p className="text-xs text-gray-500 dark:text-gray-400">{chapter.members} members</p> */}
                   </motion.div>
                 )}
               </motion.div>
@@ -107,9 +107,9 @@ export default function Chapters() {
                     <MapPin className="h-4 w-4 mr-1" />
                     {chapter.country}
                   </div>
-                  <div className="mt-2 text-sm">
+                  {/* <div className="mt-2 text-sm">
                     <span className="font-medium">{chapter.members}</span> members
-                  </div>
+                  </div> */}
                 </CardContent>
               </Card>
             </motion.div>

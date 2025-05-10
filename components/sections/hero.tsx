@@ -131,14 +131,14 @@ export default function Hero() {
                 >
                   <Link href="/donate">DONATE NOW</Link>
                 </Button>
-                <Button
+                {/* <Button
                   asChild
                   size="lg"
                   variant="outline"
                   className="text-lg border-[#78b16d] text-[#78b16d] hover:bg-[#78b16d] hover:text-white transition-colors duration-300 rounded-none px-8 py-6"
                 >
                   <Link href="/#membership">BECOME A MEMBER</Link>
-                </Button>
+                </Button> */}
               </motion.div>
             </motion.div>
           </AnimatePresence>

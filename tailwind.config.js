@@ -73,6 +73,7 @@ module.exports = {
       },
       fontFamily: {
         sans: ["var(--font-poppins)", "ui-sans-serif", "system-ui", "sans-serif"],
+        raleway: ["var(--font-raleway)", "ui-sans-serif", "system-ui", "sans-serif"],
       },
     },
   },

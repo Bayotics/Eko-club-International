@@ -182,7 +182,7 @@ export default function ChaptersPage() {
               <div className="flex flex-wrap justify-center gap-3">
                 <div className="flex items-center gap-2 bg-white/10 backdrop-blur-sm px-4 py-2 rounded-full">
                   <Globe className="h-5 w-5 text-[#b7b943]" />
-                  <span>3 Countries</span>
+                  <span>3 Continents</span>
                 </div>
                 <div className="flex items-center gap-2 bg-white/10 backdrop-blur-sm px-4 py-2 rounded-full">
                   <MapPin className="h-5 w-5 text-[#b7b943]" />
@@ -292,12 +292,12 @@ export default function ChaptersPage() {
                     </div>
                     <CardContent className="pt-6">
                       <div className="flex flex-col gap-4">
-                        <div className="flex items-center text-sm text-gray-500 dark:text-gray-400">
+                        {/* <div className="flex items-center text-sm text-gray-500 dark:text-gray-400">
                           <Users className="h-4 w-4 mr-2" />
                           <span>
                             <strong>{chapter.members}</strong> members
                           </span>
-                        </div>
+                        </div> */}
                         <div
                           className={`flex items-center justify-between transition-opacity duration-300 ${hoveredChapter === chapter.id ? "opacity-100" : "opacity-70"}`}
                         >

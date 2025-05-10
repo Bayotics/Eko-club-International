@@ -6,11 +6,11 @@ import { connectToDatabase } from "@/lib/mongodb"
 export async function POST(request: Request) {
   try {
     // Parse request body
-    const { fullName, email, password, chapterName, membershipId, profileImage } = await request.json()
+    const { fullName, email, password, chapterName, membershipId, profileImage, phone } = await request.json()
 
     // Validate required fields
-    if (!fullName || !email || !password) {
-      return NextResponse.json({ message: "Name, email and password are required" }, { status: 400 })
+    if (!fullName || !email || !password || !phone) {
+      return NextResponse.json({ message: "Name, email, phone, and password are required" }, { status: 400 })
     }
 
     // Connect to database
@@ -21,6 +21,10 @@ export async function POST(request: Request) {
     if (existingUser) {
       return NextResponse.json({ message: "User with this email already exists" }, { status: 409 })
     }
+    const existingPhone = await User.findOne({ phone })
+    if (existingPhone) {
+      return NextResponse.json({ message: "User with this phone number already exists!" }, { status: 409 })
+    }
 
     // Hash password
     const hashedPassword = await bcrypt.hash(password, 10)
@@ -29,6 +33,7 @@ export async function POST(request: Request) {
     const newUser = new User({
       fullName,
       email,
+      phone,
       password: hashedPassword,
       chapterName: chapterName || "",
       membershipId: membershipId || "",
@@ -50,6 +55,7 @@ export async function POST(request: Request) {
           chapterName: newUser.chapterName,
           membershipId: newUser.membershipId,
           role: newUser.role,
+          phone: newUser.phone
         },
       },
       { status: 201 },

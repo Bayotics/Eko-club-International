@@ -1,13 +1,12 @@
 "use client"
 
-import { useState, useEffect } from "react"
+import { useState, useEffect, useRef } from "react"
 import { useRouter } from "next/navigation"
 import { motion } from "framer-motion"
 import { Loader2, Camera, MapPin, Calendar, Award, User, Edit, Save } from "lucide-react"
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
-import { Textarea } from "@/components/ui/textarea"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Label } from "@/components/ui/label"
@@ -32,13 +31,17 @@ export default function ProfilePage() {
     fullName: "",
     email: "",
     role: "",
-    // phone: "",
+    phone: "",
     // address: "",
     // city: "",
     // state: "",
     // country: "",
     // bio: "",
   })
+
+  const [isUploading, setIsUploading] = useState(false)
+  const [profileImagePreview, setProfileImagePreview] = useState("")
+  const fileInputRef = useRef(null)
 
   useEffect(() => {
     const fetchUserData = async () => {
@@ -64,14 +67,13 @@ export default function ProfilePage() {
         setFormData({
           fullName: data.fullName || "",
           email: data.email || "",
-          role: data.role || ""
-
-        //   phone: data.phone || "",
-        //   address: data.user.address || "",
-        //   city: data.user.city || "",
-        //   state: data.user.state || "",
-        //   country: data.user.country || "",
-        //   bio: data.user.bio || "",
+          role: data.role || "",
+          phone: data.phone || "",
+          //   address: data.user.address || "",
+          //   city: data.user.city || "",
+          //   state: data.user.state || "",
+          //   country: data.user.country || "",
+          //   bio: data.user.bio || "",
         })
       } catch (err) {
         console.error("Error fetching user data:", err)
@@ -144,6 +146,84 @@ export default function ProfilePage() {
       .join("")
       .toUpperCase()
       .substring(0, 2)
+  }
+
+  const triggerFileInput = () => {
+    if (fileInputRef.current) {
+      fileInputRef.current.click()
+    }
+  }
+
+  const handleProfileImageChange = async (e) => {
+    const file = e.target.files[0]
+    if (!file) return
+
+    try {
+      // Show preview
+      const reader = new FileReader()
+      reader.onloadend = () => {
+        setProfileImagePreview(reader.result)
+      }
+      reader.readAsDataURL(file)
+
+      // Start upload
+      setIsUploading(true)
+
+      // Create form data for upload
+      const formData = new FormData()
+      formData.append("file", file)
+
+      // Upload to Cloudinary
+      const response = await fetch("/api/cloudinary/upload", {
+        method: "POST",
+        body: formData,
+      })
+
+      const data = await response.json()
+
+      if (!response.ok) {
+        throw new Error(data.message || "Failed to upload image")
+      }
+
+      // Update user profile with new image URL
+      const token = localStorage.getItem("token")
+      const updateResponse = await fetch("/api/auth/update-profile-pic", {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({
+          ...formData,
+          profileImage: data.secure_url,
+        }),
+      })
+
+      if (!updateResponse.ok) {
+        throw new Error("Failed to update profile image")
+      }
+
+      // Update local user state with new image
+      setUser((prev) => ({
+        ...prev,
+        profileImage: data.secure_url,
+      }))
+
+      toast({
+        title: "Success",
+        description: "Your profile picture has been updated successfully.",
+      })
+    } catch (err) {
+      console.error("Error updating profile image:", err)
+      setProfileImagePreview("")
+      toast({
+        title: "Error",
+        description: "Failed to update profile picture. Please try again.",
+        variant: "destructive",
+      })
+    } finally {
+      setIsUploading(false)
+    }
   }
 
   if (loading) {
@@ -226,17 +306,32 @@ export default function ProfilePage() {
                 <CardHeader className="text-center">
                   <div className="relative mx-auto">
                     <Avatar className="h-24 w-24">
-                      <AvatarImage src={user?.profileImage || ""} />
+                      <AvatarImage src={profileImagePreview || user?.profileImage || ""} />
                       <AvatarFallback className="text-lg bg-[#C8A97E] text-white">
                         {getInitials(user?.fullName)}
                       </AvatarFallback>
                     </Avatar>
                     <div className="absolute bottom-0 right-0 bg-white rounded-full p-1 shadow-md">
-                      <Button size="icon" variant="ghost" className="h-6 w-6">
-                        <Camera className="h-4 w-4" />
+                      <Button
+                        size="icon"
+                        variant="ghost"
+                        className="h-6 w-6"
+                        onClick={triggerFileInput}
+                        disabled={isUploading}
+                      >
+                        {isUploading ? <Loader2 className="h-4 w-4 animate-spin" /> : <Camera className="h-4 w-4" />}
                       </Button>
+                      <input
+                        type="file"
+                        ref={fileInputRef}
+                        onChange={handleProfileImageChange}
+                        accept="image/*"
+                        className="hidden"
+                        id="profile-image"
+                      />
                     </div>
                   </div>
+                  {isUploading && <div className="text-xs text-center mt-2 text-gray-500">Uploading...</div>}
                   <CardTitle className="mt-4">{user?.fullName}</CardTitle>
                   <CardDescription>{user?.email}</CardDescription>
                 </CardHeader>
@@ -253,6 +348,10 @@ export default function ProfilePage() {
                     <div className="flex items-center">
                       <User className="h-4 w-4 mr-2 text-[#C8A97E]" />
                       <span className="capitalize">{user?.role || "Member"}</span>
+                    </div>
+                    <div className="flex items-center">
+                      <User className="h-4 w-4 mr-2 text-[#C8A97E]" />
+                      <span className="capitalize">{user?.phone || "Member"}</span>
                     </div>
                     <div className="flex items-center">
                       <Calendar className="h-4 w-4 mr-2 text-[#C8A97E]" />
@@ -308,7 +407,7 @@ export default function ProfilePage() {
                             type="email"
                             value={formData.email}
                             onChange={handleInputChange}
-                            disabled={!editMode}
+                            disabled
                           />
                         </div>
                         {/* <select value={formData.role} onChange={handleInputChange} name="role" id="role" disabled={!editMode}>
@@ -316,7 +415,7 @@ export default function ProfilePage() {
                           <option value="member">Member</option>
                           <option value="exco">Exco</option>
                         </select> */}
-                        {/* <div className="space-y-2">
+                        <div className="space-y-2">
                           <Label htmlFor="phone">Phone Number</Label>
                           <Input
                             id="phone"
@@ -326,6 +425,7 @@ export default function ProfilePage() {
                             disabled={!editMode}
                           />
                         </div>
+                        {/*
                         <div className="space-y-2">
                           <Label htmlFor="address">Address</Label>
                           <Input
