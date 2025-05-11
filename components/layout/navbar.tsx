@@ -282,7 +282,8 @@ export default function Navbar() {
               alt="Eko Club Logo"
               width={72}
               height={72}
-              className="h-[4.5rem] w-auto"
+              // className="h-[4.5rem] w-auto"
+              className={`${scrolled || pathname != '/' ? "h-[4.5rem] w-auto" : "h-[7rem] w-auto"} `}
             />
           </motion.div>
           <motion.div

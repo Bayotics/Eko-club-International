@@ -32,9 +32,24 @@ export async function POST(request: Request) {
       return NextResponse.json({ message: "Invalid password" }, { status: 401 })
     }
 
-    // Update last login time
-    user.lastLogin = new Date()
-    await user.save()
+    // Check if user has a phone number, if not, add a default one
+    // This handles users created before the phone field was required
+    if (!user.phone) {
+      // Update the user document directly without triggering validation
+      await User.updateOne(
+        { _id: user._id },
+        {
+          $set: {
+            phone: "Not provided",
+            lastLogin: new Date(),
+          },
+        },
+        { runValidators: false },
+      )
+    } else {
+      // Update last login time
+      await User.updateOne({ _id: user._id }, { $set: { lastLogin: new Date() } }, { runValidators: false })
+    }
 
     // Generate JWT token
     const token = jwt.sign(

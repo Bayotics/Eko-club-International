@@ -1,27 +1,25 @@
 import mongoose from "mongoose"
+import { Schema } from "mongoose"
 
-const UserSchema = new mongoose.Schema({
+const UserSchema = new Schema({
   fullName: {
     type: String,
-    required: [true, "Full name is required"],
-    trim: true,
+    required: [true, "Please provide a name"],
   },
   email: {
     type: String,
-    required: [true, "Email is required"],
+    required: [true, "Please provide an email"],
     unique: true,
-    trim: true,
-    lowercase: true,
   },
   phone: {
     type: String,
-    required: [true, "Phone number is required"],
+    required: [true, "Please provide a phone number"],
     unique: true,
+    default: "Not provided",
   },
   password: {
     type: String,
-    required: [true, "Password is required"],
-    minlength: 6,
+    required: [true, "Please provide a password"],
   },
   chapterName: {
     type: String,
@@ -29,20 +27,20 @@ const UserSchema = new mongoose.Schema({
   },
   membershipId: {
     type: String,
-    unique: true,
+    default: "",
   },
   role: {
     type: String,
-    enum: ["admin", "member", "exco"],
+    enum: ["admin", "member", "superadmin"],
     default: "member",
   },
   profileImage: {
     type: String,
     default: "",
   },
-  isActive: {
+  isVerified: {
     type: Boolean,
-    default: true,
+    default: false,
   },
   createdAt: {
     type: Date,
@@ -50,10 +48,10 @@ const UserSchema = new mongoose.Schema({
   },
   lastLogin: {
     type: Date,
+    default: null,
   },
+  resetPasswordToken: String,
+  resetPasswordExpire: Date,
 })
 
-// Check if model already exists to prevent overwriting during hot reloads
-const User = mongoose.models.User || mongoose.model("User", UserSchema)
-
-export default User
+export default mongoose.models.User || mongoose.model("User", UserSchema)

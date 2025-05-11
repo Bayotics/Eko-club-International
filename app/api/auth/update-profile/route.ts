@@ -33,7 +33,7 @@ export async function PUT(request: NextRequest) {
           fullName: userData.fullName,
           email: userData.email,
           role: userData.role,
-        //   phone: userData.phone,
+          phone: userData.phone,
         //   address: userData.address,
         //   city: userData.city,
         //   state: userData.state,

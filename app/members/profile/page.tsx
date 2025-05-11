@@ -3,7 +3,7 @@
 import { useState, useEffect, useRef } from "react"
 import { useRouter } from "next/navigation"
 import { motion } from "framer-motion"
-import { Loader2, Camera, MapPin, Calendar, Award, User, Edit, Save } from "lucide-react"
+import { Loader2, Camera, MapPin, Calendar, Award, User, Edit, Save, Phone } from "lucide-react"
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
@@ -350,7 +350,7 @@ export default function ProfilePage() {
                       <span className="capitalize">{user?.role || "Member"}</span>
                     </div>
                     <div className="flex items-center">
-                      <User className="h-4 w-4 mr-2 text-[#C8A97E]" />
+                      <Phone className="h-4 w-4 mr-2 text-[#C8A97E]" />
                       <span className="capitalize">{user?.phone || "Member"}</span>
                     </div>
                     <div className="flex items-center">

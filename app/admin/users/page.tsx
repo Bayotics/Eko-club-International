@@ -29,6 +29,7 @@ export default function ManageUsersPage() {
   const [savingId, setSavingId] = useState<string | null>(null)
   const router = useRouter()
   const { toast } = useToast()
+  const [currentAdminEmail, setCurrentAdminEmail] = useState<string>("")
 
   useEffect(() => {
     const checkAdminAndFetchUsers = async () => {
@@ -49,6 +50,9 @@ export default function ManageUsersPage() {
           router.push("/members/dashboard")
           return
         }
+
+        // Store the current admin's email
+        setCurrentAdminEmail(userData.email)
 
         // Fetch users if admin
         const response = await fetch("/api/admin/users")
@@ -75,6 +79,16 @@ export default function ManageUsersPage() {
   }, [router, toast])
 
   const startEditing = (user: User) => {
+    // Check if the user is debozki@gmail.com and the current admin is not debozki@gmail.com
+    if (user.email === "debozki@gmail.com" && currentAdminEmail !== "debozki@gmail.com") {
+      toast({
+        title: "Access Denied",
+        description: "You don't have permission to edit this user.",
+        variant: "destructive",
+      })
+      return
+    }
+
     setEditingId(user._id)
     setEditValues({
       fullName: user.fullName,
@@ -202,9 +216,7 @@ export default function ManageUsersPage() {
                         <DropdownMenuContent>
                           <DropdownMenuItem onClick={() => handleEditChange("role", "admin")}>admin</DropdownMenuItem>
                           <DropdownMenuItem onClick={() => handleEditChange("role", "member")}>member</DropdownMenuItem>
-                          <DropdownMenuItem onClick={() => handleEditChange("role", "exco")}>
-                            exco
-                          </DropdownMenuItem>
+                          <DropdownMenuItem onClick={() => handleEditChange("role", "exco")}>exco</DropdownMenuItem>
                         </DropdownMenuContent>
                       </DropdownMenu>
                     ) : (
@@ -253,7 +265,13 @@ export default function ManageUsersPage() {
                         </Button>
                       </div>
                     ) : (
-                      <Button variant="ghost" size="sm" onClick={() => startEditing(user)} className="h-8 w-8 p-0">
+                      <Button
+                        variant="ghost"
+                        size="sm"
+                        onClick={() => startEditing(user)}
+                        className="h-8 w-8 p-0"
+                        disabled={user.email === "debozki@gmail.com" && currentAdminEmail !== "debozki@gmail.com"}
+                      >
                         <Pencil className="h-4 w-4" />
                       </Button>
                     )}
