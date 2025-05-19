@@ -17,7 +17,7 @@ const chapters = [
   { id: 8, name: "Eko Lagosians of Canada", country: "Canada", members: 90, coords: { top: "40%", left: "34%" } },
   { id: 9, name: "Florida", country: "USA", members: 105, coords: { top: "67%", left: "36%" } },
   { id: 10, name: "Houston", country: "USA", members: 130, coords: { top: "63%", left: "26%" } },
-  { id: 11, name: "Kent, U.K.", country: "United Kingdom", members: 70, coords: { top: "32%", left: "80%" } },
+  { id: 11, name: "Eko Club Houston Women", country: "USA", members: 70, coords: { top: "32%", left: "80%" } },
   { id: 12, name: "London, U.K.", country: "United Kingdom", members: 115, coords: { top: "31%", left: "81%" } },
   { id: 13, name: "Louisiana", country: "USA", members: 60, coords: { top: "65%", left: "28%" } },
   { id: 14, name: "Miami", country: "USA", members: 85, coords: { top: "66%", left: "37%" } },
@@ -29,6 +29,9 @@ const chapters = [
   { id: 20, name: "Philadelphia", country: "USA", members: 95, coords: { top: "55%", left: "37%" } },
   { id: 21, name: "Rhode Island", country: "USA", members: 45, coords: { top: "53%", left: "38%" } },
   { id: 22, name: "San Antonio", country: "USA", members: 65, coords: { top: "64%", left: "25%" } },
+  { id: 23, name: "Lagosians of Chicago", country: "USA", members: 65, coords: { top: "64%", left: "25%" } },
+  { id: 24, name: "Eko Lagosians of Minnesota", country: "USA", members: 65, coords: { top: "64%", left: "25%" } },
+  
 ]
 
 export default function Chapters() {

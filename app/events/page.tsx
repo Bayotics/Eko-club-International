@@ -462,11 +462,8 @@ export default function EventsPage() {
       {/* Featured Events Section */}
       <section ref={featuredRef} className="py-16 bg-white">
         <div className="container mx-auto px-4">
-          <motion.div
+          <div
             className="text-center mb-12"
-            initial={{ opacity: 0, y: 20 }}
-            animate={featuredInView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.6 }}
           >
             <h2 className="text-3xl md:text-4xl font-light mb-4">
               UPCOMING <span className="text-[#2cc72c] font-medium">EVENTS</span>
@@ -480,7 +477,7 @@ export default function EventsPage() {
             <p className="text-gray-600 max-w-3xl mx-auto">
               Join us at our upcoming events and be part of our mission to make a difference in our communities.
             </p>
-          </motion.div>
+          </div>
 
           {loading ? (
             <div className="flex justify-center items-center py-20">
@@ -502,12 +499,8 @@ export default function EventsPage() {
           ) : (
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
               {filteredUpcomingEvents.map((event, index) => (
-                <motion.div
+                <div
                   key={event._id}
-                  initial={{ opacity: 0, y: 50 }}
-                  animate={featuredInView ? { opacity: 1, y: 0 } : {}}
-                  transition={{ duration: 0.5, delay: 0.2 + index * 0.1 }}
-                  whileHover={{ y: -5, transition: { duration: 0.2 } }}
                 >
                   <Card className="border-0 overflow-hidden shadow-lg h-full flex flex-col">
                     <div className="relative overflow-hidden">
@@ -531,7 +524,10 @@ export default function EventsPage() {
                     </div>
                     <CardContent className="p-6 flex-grow">
                       <h3 className="text-xl font-medium mb-3">{event.title}</h3>
-                      <p className="text-gray-600 mb-4">{event.description}</p>
+                      <div
+                        className="text-gray-600 text-sm mb-4 prose prose-sm max-w-none"
+                        dangerouslySetInnerHTML={{ __html: event.description }}
+                      />
                       <div className="space-y-2 text-sm">
                         <div className="flex items-center">
                           <CalendarIcon className="h-4 w-4 text-[#2cc72c] mr-2" />
@@ -553,7 +549,7 @@ export default function EventsPage() {
                       </Button>
                     </CardFooter> */}
                   </Card>
-                </motion.div>
+                </div>
               ))}
             </div>
           )}
@@ -974,7 +970,10 @@ export default function EventsPage() {
                       <div className="md:w-3/6">
                         <Badge className="mb-2 bg-[#2cc72c]">{event.category}</Badge>
                         <h3 className="font-medium mb-1">{event.title}</h3>
-                        <p className="text-sm text-gray-600">{event.description}</p>
+                        <div
+                          className="text-gray-600 text-sm mb-4 prose prose-sm max-w-none"
+                          dangerouslySetInnerHTML={{ __html: event.description }}
+                        />                      
                       </div>
                       <div className="md:w-1/6 text-sm text-gray-600">
                         <div className="flex items-center mb-2">

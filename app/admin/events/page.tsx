@@ -19,11 +19,11 @@ import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigge
 import { Badge } from "@/components/ui/badge"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Label } from "@/components/ui/label"
-import { Textarea } from "@/components/ui/textarea"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Checkbox } from "@/components/ui/checkbox"
 import { useToast } from "@/components/ui/use-toast"
 import { useAuth } from "@/contexts/auth-context"
+import { TipTapEditor } from "@/components/tiptap-editor"
 
 export default function AdminEventsPage() {
   const router = useRouter()
@@ -52,7 +52,17 @@ export default function AdminEventsPage() {
     featured: false,
   })
 
-  const categories = ["All", "Medical", "Cultural", "Education", "Youth", "Business", "Fundraising", "Other"]
+  const categories = [
+    "All",
+    "Medical",
+    "Cultural",
+    "Education",
+    "Youth",
+    "Business",
+    "Fundraising",
+    "Convention",
+    "General",
+  ]
 
   useEffect(() => {
     if (!loading && !user) {
@@ -296,13 +306,10 @@ export default function AdminEventsPage() {
 
                 <div className="space-y-2">
                   <Label htmlFor="description">Description</Label>
-                  <Textarea
-                    id="description"
-                    value={newEvent.description}
-                    onChange={(e) => setNewEvent({ ...newEvent, description: e.target.value })}
+                  <TipTapEditor
+                    content={newEvent.description}
+                    onChange={(content) => setNewEvent({ ...newEvent, description: content })}
                     placeholder="Enter event description"
-                    required
-                    className="min-h-[100px]"
                   />
                 </div>
 
@@ -421,7 +428,9 @@ export default function AdminEventsPage() {
                     checked={newEvent.featured}
                     onCheckedChange={(checked) => setNewEvent({ ...newEvent, featured: checked === true })}
                   />
-                  <Label htmlFor="featured">Featured Event? (featured events are displayed on the homepage even for non registered users)</Label>
+                  <Label htmlFor="featured">
+                    Featured Event? (featured events are displayed on the homepage even for non registered users)
+                  </Label>
                 </div>
               </div>
 
@@ -543,7 +552,10 @@ export default function AdminEventsPage() {
                         </DropdownMenu>
                       </div>
                       <h3 className="text-lg font-semibold mb-2 line-clamp-2">{event.title}</h3>
-                      <p className="text-gray-600 text-sm mb-4 line-clamp-3">{event.description}</p>
+                      <div
+                        className="text-gray-600 text-sm mb-4 line-clamp-3 prose prose-sm max-w-none"
+                        dangerouslySetInnerHTML={{ __html: event.description }}
+                      />
                       <div className="space-y-1 text-sm text-gray-500">
                         <div className="flex items-center">
                           <Calendar className="h-4 w-4 mr-2 text-[#C8A97E]" />
@@ -620,7 +632,10 @@ export default function AdminEventsPage() {
                         </DropdownMenu>
                       </div>
                       <h3 className="text-lg font-semibold mb-2 line-clamp-2">{event.title}</h3>
-                      <p className="text-gray-600 text-sm mb-4 line-clamp-3">{event.description}</p>
+                      <div
+                        className="text-gray-600 text-sm mb-4 line-clamp-3 prose prose-sm max-w-none"
+                        dangerouslySetInnerHTML={{ __html: event.description }}
+                      />
                       <div className="space-y-1 text-sm text-gray-500">
                         <div className="flex items-center">
                           <Calendar className="h-4 w-4 mr-2 text-gray-400" />

@@ -477,9 +477,11 @@ export default function EventDetailsPage({ params }) {
 
                   <div className="prose max-w-none">
                     <h3 className="text-xl font-semibold mb-4">Description</h3>
-                    <p className="whitespace-pre-line">{event.description}</p>
+                    <div
+                      className="text-gray-600 text-sm mb-4 prose prose-sm max-w-none whitespace-pre-line"
+                      dangerouslySetInnerHTML={{ __html: event.description }}
+                    />
                   </div>
-
                   <div className="flex justify-end gap-2 mt-8">
                     <Button
                       variant="outline"

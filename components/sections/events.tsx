@@ -115,7 +115,10 @@ export default function Events() {
                   </div>
                   <CardContent className="p-6 flex-grow">
                     <h3 className="text-xl font-medium mb-3">{event.title}</h3>
-                    <p className="text-gray-600 mb-4">{event.description}</p>
+                    <div
+                      className="text-gray-600 text-sm mb-4 line-clamp-3 prose prose-sm max-w-none"
+                      dangerouslySetInnerHTML={{ __html: event.description }}
+                    />
                     <div className="space-y-2 text-sm">
                       <div className="flex items-center">
                         <Calendar className="h-4 w-4 text-[#f33a3a] mr-2" />
