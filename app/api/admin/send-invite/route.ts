@@ -3,14 +3,10 @@ import { connectToDatabase } from "@/lib/mongodb"
 import InviteCode from "@/models/InviteCode"
 import { verifyJwtToken } from "@/lib/jwt"
 import crypto from "crypto"
-// Note: You need to install this package:
-// npm install node-fetch@2
-import fetch from "node-fetch"
 
-// MailerLite configuration
-const MAILERLITE_API_URL = "https://api.mailerlite.com/api/v2"
-// We'll request the API token when needed
-const MAILERLITE_API_TOKEN = process.env.MAILERLITE_API_TOKEN || ""
+// Postmark configuration
+const POSTMARK_SERVER_TOKEN = process.env.POSTMARK_SERVER_TOKEN || ""
+const POSTMARK_API_URL = "https://api.postmarkapp.com/email"
 
 export async function POST(request: NextRequest) {
   try {
@@ -87,104 +83,75 @@ function generateInviteCode() {
   return crypto.randomBytes(4).toString("hex").toUpperCase()
 }
 
-// Helper function to send the invite email using MailerLite
+// Helper function to send the invite email using Postmark
 async function sendInviteEmail(email: string, code: string) {
-  if (!MAILERLITE_API_TOKEN) {
-    throw new Error("MailerLite API token is not configured")
+  if (!POSTMARK_SERVER_TOKEN) {
+    throw new Error("Postmark server token is not configured")
   }
 
   try {
-    // First, check if the subscriber exists
-    const checkResponse = await fetch(`${MAILERLITE_API_URL}/subscribers/${email}`, {
-      method: "GET",
-      headers: {
-        "X-MailerLite-ApiKey": MAILERLITE_API_TOKEN,
-        "Content-Type": "application/json",
-      },
-    })
+    const appUrl = process.env.NEXT_PUBLIC_APP_URL || "https://ekoclub.org"
+    // const emailFrom = process.env.EMAIL_FROM || "noreply@ekoclub.org"
+    const emailFrom = process.env.EMAIL_FROM || "sabdullahi@cinnsol.com"
 
-    let subscriber
+    // Create HTML email template
+    const htmlBody = `
+      <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; border: 1px solid #e0e0e0; border-radius: 5px;">
+        <div style="text-align: center; margin-bottom: 20px;">
+          <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Eko_club_logo-removebg-preview-SAUiEpYRjmONtSd1YKYL42qyW13AzD.png" alt="Eko Club Logo" style="max-width: 150px;">
+        </div>
+        <h2 style="color: #C8A97E; text-align: center;">Welcome to Eko Club International</h2>
+        <p>You have been invited to join the Eko Club International community. To complete your registration, please use the following invitation code:</p>
+        <div style="background-color: #f5f5f5; padding: 15px; text-align: center; margin: 20px 0; border-radius: 5px;">
+          <span style="font-size: 24px; font-weight: bold; letter-spacing: 2px; color: #333;">${code}</span>
+        </div>
+        <p>This code will expire in 7 days. To register, please visit our website and click on the "Register" button.</p>
+        <div style="text-align: center; margin-top: 30px;">
+          <a href="${appUrl}/register" style="background-color: #C8A97E; color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px; font-weight: bold;">Register Now</a>
+        </div>
+        <p style="margin-top: 30px; font-size: 12px; color: #666; text-align: center;">
+          If you did not request this invitation, please ignore this email.
+        </p>
+      </div>
+    `
 
-    if (checkResponse.status === 200) {
-      // Subscriber exists, update their fields
-      subscriber = await checkResponse.json()
+    // Create text version as fallback
+    const textBody = `
+Welcome to Eko Club International
 
-      await fetch(`${MAILERLITE_API_URL}/subscribers/${email}`, {
-        method: "PUT",
-        headers: {
-          "X-MailerLite-ApiKey": MAILERLITE_API_TOKEN,
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          fields: {
-            invite_code: code,
-          },
-        }),
-      })
-    } else {
-      // Subscriber doesn't exist, create a new one
-      const createResponse = await fetch(`${MAILERLITE_API_URL}/subscribers`, {
-        method: "POST",
-        headers: {
-          "X-MailerLite-ApiKey": MAILERLITE_API_TOKEN,
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          email: email,
-          fields: {
-            invite_code: code,
-          },
-        }),
-      })
+You have been invited to join the Eko Club International community. To complete your registration, please use the following invitation code:
 
-      if (!createResponse.ok) {
-        throw new Error(`Failed to create subscriber: ${await createResponse.text()}`)
-      }
+${code}
 
-      subscriber = await createResponse.json()
-    }
+This code will expire in 7 days. To register, please visit our website at ${appUrl}/register
 
-    // Send the email using a custom campaign
-    const campaignResponse = await fetch(`${MAILERLITE_API_URL}/campaigns`, {
+If you did not request this invitation, please ignore this email.
+    `
+
+    // Send email using Postmark API
+    const response = await fetch(POSTMARK_API_URL, {
       method: "POST",
       headers: {
-        "X-MailerLite-ApiKey": MAILERLITE_API_TOKEN,
+        Accept: "application/json",
         "Content-Type": "application/json",
+        "X-Postmark-Server-Token": POSTMARK_SERVER_TOKEN,
       },
       body: JSON.stringify({
-        subject: "You're invited to join Eko Club International",
-        from: process.env.EMAIL_FROM || "noreply@ekoclub.org",
-        from_name: "Eko Club",
-        groups: [],
-        type: "regular",
-        html: `
-          <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; border: 1px solid #e0e0e0; border-radius: 5px;">
-            <div style="text-align: center; margin-bottom: 20px;">
-              <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Eko_club_logo-removebg-preview-SAUiEpYRjmONtSd1YKYL42qyW13AzD.png" alt="Eko Club Logo" style="max-width: 150px;">
-            </div>
-            <h2 style="color: #C8A97E; text-align: center;">Welcome to Eko Club International</h2>
-            <p>You have been invited to join the Eko Club International community. To complete your registration, please use the following invitation code:</p>
-            <div style="background-color: #f5f5f5; padding: 15px; text-align: center; margin: 20px 0; border-radius: 5px;">
-              <span style="font-size: 24px; font-weight: bold; letter-spacing: 2px; color: #333;">${code}</span>
-            </div>
-            <p>This code will expire in 7 days. To register, please visit our website and click on the "Register" button.</p>
-            <div style="text-align: center; margin-top: 30px;">
-              <a href="${process.env.NEXT_PUBLIC_APP_URL || "https://ekoclub.org"}/register" style="background-color: #C8A97E; color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px; font-weight: bold;">Register Now</a>
-            </div>
-            <p style="margin-top: 30px; font-size: 12px; color: #666; text-align: center;">
-              If you did not request this invitation, please ignore this email.
-            </p>
-          </div>
-        `,
-        emails: [email],
+        From: emailFrom,
+        To: email,
+        Subject: "You're invited to join Eko Club International",
+        HtmlBody: htmlBody,
+        TextBody: textBody,
+        MessageStream: "outbound",
       }),
     })
 
-    if (!campaignResponse.ok) {
-      throw new Error(`Failed to create campaign: ${await campaignResponse.text()}`)
+    if (!response.ok) {
+      const errorData = await response.json()
+      throw new Error(`Postmark API error: ${JSON.stringify(errorData)}`)
     }
 
-    console.log(`Invitation email sent to ${email}`)
+    console.log(`Invitation email sent to ${email} via Postmark`)
   } catch (error) {
     console.error(`Failed to send invitation email to ${email}:`, error)
     throw error
