@@ -26,6 +26,19 @@ export async function POST(request: Request) {
       return NextResponse.json({ message: "Invalid email" }, { status: 401 })
     }
 
+    // Check if user is blocked
+    if (user.role === "blocked") {
+      return NextResponse.json(
+        { message: "Your account has been blocked. Please contact an administrator." },
+        { status: 403 },
+      )
+    }
+
+    // Check if user is verified
+    if (!user.isVerified) {
+      return NextResponse.json({ message: "Please verify your email before logging in." }, { status: 401 })
+    }
+
     // Verify password
     const isPasswordValid = await bcrypt.compare(password, user.password)
     if (!isPasswordValid) {
@@ -70,6 +83,7 @@ export async function POST(request: Request) {
       chapterName: user.chapterName,
       membershipId: user.membershipId,
       role: user.role,
+      isVerified: user.isVerified,
     }
 
     // Set cookie with token

@@ -6,9 +6,15 @@ import User from "@/models/user"
 
 export async function GET(request: NextRequest) {
   try {
-    // Get the token from cookies
-    const cookieStore = await cookies()
-    const token = cookieStore.get("token")?.value
+    // Get the token from cookies or Authorization header
+    let token = (await cookies()).get("token")?.value
+    // If no token in cookies, check Authorization header
+    if (!token) {
+      const authHeader = request.headers.get("Authorization")
+      if (authHeader && authHeader.startsWith("Bearer ")) {
+        token = authHeader.substring(7)
+      }
+    }
 
     if (!token) {
       return NextResponse.json({ success: false, message: "Not authenticated" }, { status: 401 })

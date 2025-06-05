@@ -3,10 +3,10 @@ import { connectToDatabase } from "@/lib/mongodb"
 import InviteCode from "@/models/InviteCode"
 import { verifyJwtToken } from "@/lib/jwt"
 import crypto from "crypto"
+import { Resend } from "resend"
 
-// Postmark configuration
-const POSTMARK_SERVER_TOKEN = process.env.POSTMARK_SERVER_TOKEN || ""
-const POSTMARK_API_URL = "https://api.postmarkapp.com/email/batch"
+// Resend configuration
+const resend = new Resend(process.env.RESEND_API_KEY)
 
 export async function GET(request: NextRequest) {
   try {
@@ -62,7 +62,6 @@ export async function POST(request: NextRequest) {
     const results = []
     const successfulEmails = []
     const failedEmails = []
-    const emailBatch = []
 
     // Process each email
     for (const email of emails) {
@@ -85,8 +84,8 @@ export async function POST(request: NextRequest) {
           existingInvite.expiresAt = new Date(Date.now() + 7 * 24 * 60 * 60 * 1000) // 7 days from now
           await existingInvite.save()
 
-          // Add to email batch
-          emailBatch.push(createEmailPayload(email, existingInvite.code))
+          // Send email
+          await sendInviteEmail(email, existingInvite.code)
 
           results.push({
             email,
@@ -108,8 +107,8 @@ export async function POST(request: NextRequest) {
 
           await newInvite.save()
 
-          // Add to email batch
-          emailBatch.push(createEmailPayload(email, code))
+          // Send email
+          await sendInviteEmail(email, code)
 
           results.push({
             email,
@@ -126,16 +125,6 @@ export async function POST(request: NextRequest) {
           message: "Failed to send invitation",
         })
         failedEmails.push(email)
-      }
-    }
-
-    // Send all emails in a batch if there are any successful ones
-    if (emailBatch.length > 0) {
-      try {
-        await sendBatchEmails(emailBatch)
-      } catch (error) {
-        console.error("Error sending batch emails:", error)
-        // We'll still return success for the database operations
       }
     }
 
@@ -161,82 +150,43 @@ function generateInviteCode() {
   return crypto.randomBytes(4).toString("hex").toUpperCase()
 }
 
-// Helper function to create email payload for Postmark
-function createEmailPayload(email: string, code: string) {
-  const appUrl = process.env.NEXT_PUBLIC_APP_URL || "https://ekoclub.org"
-  const emailFrom = process.env.EMAIL_FROM || "noreply@ekoclub.org"
-
-  // Create HTML email template
-  const htmlBody = `
-    <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; border: 1px solid #e0e0e0; border-radius: 5px;">
-      <div style="text-align: center; margin-bottom: 20px;">
-        <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Eko_club_logo-removebg-preview-SAUiEpYRjmONtSd1YKYL42qyW13AzD.png" alt="Eko Club Logo" style="max-width: 150px;">
-      </div>
-      <h2 style="color: #C8A97E; text-align: center;">Welcome to Eko Club International</h2>
-      <p>You have been invited to join the Eko Club International community. To complete your registration, please use the following invitation code:</p>
-      <div style="background-color: #f5f5f5; padding: 15px; text-align: center; margin: 20px 0; border-radius: 5px;">
-        <span style="font-size: 24px; font-weight: bold; letter-spacing: 2px; color: #333;">${code}</span>
-      </div>
-      <p>This code will expire in 7 days. To register, please visit our website and click on the "Register" button.</p>
-      <div style="text-align: center; margin-top: 30px;">
-        <a href="${appUrl}/register" style="background-color: #C8A97E; color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px; font-weight: bold;">Register Now</a>
-      </div>
-      <p style="margin-top: 30px; font-size: 12px; color: #666; text-align: center;">
-        If you did not request this invitation, please ignore this email.
-      </p>
-    </div>
-  `
-
-  // Create text version as fallback
-  const textBody = `
-Welcome to Eko Club International
-
-You have been invited to join the Eko Club International community. To complete your registration, please use the following invitation code:
-
-${code}
-
-This code will expire in 7 days. To register, please visit our website at ${appUrl}/register
-
-If you did not request this invitation, please ignore this email.
-  `
-
-  return {
-    From: emailFrom,
-    To: email,
-    Subject: "You're invited to join Eko Club International",
-    HtmlBody: htmlBody,
-    TextBody: textBody,
-    MessageStream: "outbound",
-  }
-}
-
-// Helper function to send batch emails using Postmark
-async function sendBatchEmails(emailBatch) {
-  if (!POSTMARK_SERVER_TOKEN) {
-    throw new Error("Postmark server token is not configured")
-  }
-
+// Helper function to send invite email using Resend
+async function sendInviteEmail(email: string, code: string) {
   try {
-    // Send emails using Postmark Batch API
-    const response = await fetch(POSTMARK_API_URL, {
-      method: "POST",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-        "X-Postmark-Server-Token": POSTMARK_SERVER_TOKEN,
-      },
-      body: JSON.stringify(emailBatch),
+    const appUrl = process.env.NEXT_PUBLIC_APP_URL || "https://ekoclub.org"
+    const emailFrom = process.env.EMAIL_FROM || "noreply@ekoclub.org"
+
+    // Create HTML email template
+    const htmlBody = `
+      <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; border: 1px solid #e0e0e0; border-radius: 5px;">
+        <div style="text-align: center; margin-bottom: 20px;">
+          <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Eko_club_logo-removebg-preview-SAUiEpYRjmONtSd1YKYL42qyW13AzD.png" alt="Eko Club Logo" style="max-width: 150px;">
+        </div>
+        <h2 style="color: #C8A97E; text-align: center;">Welcome to Eko Club International</h2>
+        <p>You have been invited to join the Eko Club International community. To complete your registration, please use the following invitation code:</p>
+        <div style="background-color: #f5f5f5; padding: 15px; text-align: center; margin: 20px 0; border-radius: 5px;">
+          <span style="font-size: 24px; font-weight: bold; letter-spacing: 2px; color: #333;">${code}</span>
+        </div>
+        <p>This code will expire in 7 days. To register, please visit our website and click on the "Register" button.</p>
+        <div style="text-align: center; margin-top: 30px;">
+          <a href="${appUrl}/login" style="background-color: #C8A97E; color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px; font-weight: bold;">Register Now</a>
+        </div>
+        <p style="margin-top: 30px; font-size: 12px; color: #666; text-align: center;">
+          If you did not request this invitation, please ignore this email.
+        </p>
+      </div>
+    `
+
+    await resend.emails.send({
+      from: emailFrom,
+      to: [email],
+      subject: "You're invited to join Eko Club International",
+      html: htmlBody,
     })
 
-    if (!response.ok) {
-      const errorData = await response.json()
-      throw new Error(`Postmark API error: ${JSON.stringify(errorData)}`)
-    }
-
-    console.log(`Batch of ${emailBatch.length} invitation emails sent via Postmark`)
-    return await response.json()
+    console.log(`Invitation email sent to ${email} via Resend`)
   } catch (error) {
-    console.error("Failed to send batch emails:", error)
+    console.error(`Failed to send invitation email to ${email}:`, error)
     throw error
   }
 }

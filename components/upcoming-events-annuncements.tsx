@@ -123,9 +123,10 @@ export default function UpcomingEventsAnnouncements() {
             </div>
             <div>
               <h4 className="font-medium">{event.title}</h4>
-              <p className="text-sm text-gray-600 mt-1">
-                {event.description}
-              </p>
+              <div
+                className="text-gray-600 text-sm mb-4 line-clamp-3 prose prose-sm max-w-none"
+                dangerouslySetInnerHTML={{ __html: event.description }}
+              />
               <div className="flex items-center mt-2 text-sm text-gray-500">
                 <MapPin className="h-3 w-3 mr-1" />
                 <span>{event.location}</span>

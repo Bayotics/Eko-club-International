@@ -3,10 +3,10 @@ import { connectToDatabase } from "@/lib/mongodb"
 import InviteCode from "@/models/InviteCode"
 import { verifyJwtToken } from "@/lib/jwt"
 import crypto from "crypto"
+import { Resend } from "resend"
 
-// Postmark configuration
-const POSTMARK_SERVER_TOKEN = process.env.POSTMARK_SERVER_TOKEN || ""
-const POSTMARK_API_URL = "https://api.postmarkapp.com/email"
+// Resend configuration
+const resend = new Resend(process.env.RESEND_API_KEY)
 
 export async function POST(request: NextRequest) {
   try {
@@ -83,16 +83,11 @@ function generateInviteCode() {
   return crypto.randomBytes(4).toString("hex").toUpperCase()
 }
 
-// Helper function to send the invite email using Postmark
+// Helper function to send the invite email using Resend
 async function sendInviteEmail(email: string, code: string) {
-  if (!POSTMARK_SERVER_TOKEN) {
-    throw new Error("Postmark server token is not configured")
-  }
-
   try {
     const appUrl = process.env.NEXT_PUBLIC_APP_URL || "https://ekoclub.org"
-    // const emailFrom = process.env.EMAIL_FROM || "noreply@ekoclub.org"
-    const emailFrom = process.env.EMAIL_FROM || "sabdullahi@cinnsol.com"
+    const emailFrom = process.env.EMAIL_FROM || "noreply@ekoclub.org"
 
     // Create HTML email template
     const htmlBody = `
@@ -107,7 +102,7 @@ async function sendInviteEmail(email: string, code: string) {
         </div>
         <p>This code will expire in 7 days. To register, please visit our website and click on the "Register" button.</p>
         <div style="text-align: center; margin-top: 30px;">
-          <a href="${appUrl}/register" style="background-color: #C8A97E; color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px; font-weight: bold;">Register Now</a>
+          <a href="${appUrl}/login" style="background-color: #C8A97E; color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px; font-weight: bold;">Register Now</a>
         </div>
         <p style="margin-top: 30px; font-size: 12px; color: #666; text-align: center;">
           If you did not request this invitation, please ignore this email.
@@ -115,43 +110,14 @@ async function sendInviteEmail(email: string, code: string) {
       </div>
     `
 
-    // Create text version as fallback
-    const textBody = `
-Welcome to Eko Club International
-
-You have been invited to join the Eko Club International community. To complete your registration, please use the following invitation code:
-
-${code}
-
-This code will expire in 7 days. To register, please visit our website at ${appUrl}/register
-
-If you did not request this invitation, please ignore this email.
-    `
-
-    // Send email using Postmark API
-    const response = await fetch(POSTMARK_API_URL, {
-      method: "POST",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-        "X-Postmark-Server-Token": POSTMARK_SERVER_TOKEN,
-      },
-      body: JSON.stringify({
-        From: emailFrom,
-        To: email,
-        Subject: "You're invited to join Eko Club International",
-        HtmlBody: htmlBody,
-        TextBody: textBody,
-        MessageStream: "outbound",
-      }),
+    await resend.emails.send({
+      from: emailFrom,
+      to: [email],
+      subject: "You're invited to join Eko Club International",
+      html: htmlBody,
     })
 
-    if (!response.ok) {
-      const errorData = await response.json()
-      throw new Error(`Postmark API error: ${JSON.stringify(errorData)}`)
-    }
-
-    console.log(`Invitation email sent to ${email} via Postmark`)
+    console.log(`Invitation email sent to ${email} via Resend`)
   } catch (error) {
     console.error(`Failed to send invitation email to ${email}:`, error)
     throw error

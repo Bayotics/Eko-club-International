@@ -506,17 +506,13 @@ export default function ProfilePage() {
                           <h3 className="text-sm font-medium text-gray-500">Status</h3>
                           <p className="mt-1">
                             <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">
-                              Active
+                               {user?.role === "pending" ? "Awaiting approval" : "Active"}
                             </span>
                           </p>
                         </div>
                         <div>
                           <h3 className="text-sm font-medium text-gray-500">Join Date</h3>
                           <p className="mt-1">{new Date(user?.createdAt).toLocaleDateString()}</p>
-                        </div>
-                        <div>
-                          <h3 className="text-sm font-medium text-gray-500">Renewal Date</h3>
-                          <p className="mt-1">January 1, 2024</p>
                         </div>
                       </div>
 

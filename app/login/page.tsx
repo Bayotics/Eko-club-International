@@ -51,6 +51,16 @@ export default function LoginPage() {
     password: "",
   })
 
+  function generateRandomNumber(digits) {
+  const min = Math.pow(10, digits - 1);
+  const max = Math.pow(10, digits) - 1;
+
+  return (Math.floor(Math.random() * (max - min + 1)) + min).toString();
+}
+
+// Example usage: Generate a 6-digit random number
+const randomNumber = generateRandomNumber(6);
+console.log(randomNumber);
   // Register form state
   const [registerData, setRegisterData] = useState({
     fullName: "",
@@ -58,9 +68,9 @@ export default function LoginPage() {
     password: "",
     confirmPassword: "",
     chapterName: "",
-    membershipId: "",
     profileImage: "",
-    phone: "", // Add phone field
+    phone: "",
+    membershipId:  generateRandomNumber(19)// Add phone field
   })
 
   const handleLoginChange = (e) => {
@@ -161,20 +171,54 @@ export default function LoginPage() {
       })
 
       const data = await response.json()
+      console.log(data)
 
       if (!response.ok) {
         throw new Error(data.message || "Login failed")
       }
 
+      // Check if user is verified
+      if (!data.user.isVerified) {
+        setError("Please verify your email before logging in. Check your inbox for the verification link.")
+        toast({
+          title: "Email Not Verified",
+          description: "Please verify your email before logging in. Check your inbox for the verification link.",
+          variant: "destructive",
+        })
+        setIsLoading(false)
+        return
+      }
+
+      // Check if user is blocked
+      if (data.user.role === "blocked") {
+        setError("Your account has been blocked. Please contact an administrator for assistance.")
+        toast({
+          title: "Account Blocked",
+          description: "Your account has been blocked. Please contact an administrator for assistance.",
+          variant: "destructive",
+        })
+        setIsLoading(false)
+        return
+      }
+
       // Update auth context with user data
       login(data.user, data.token)
 
-      // Show success toast
-      toast({
-        title: "Login Successful",
-        description: "Welcome back to Eko Club International!",
-        variant: "default",
-      })
+      // Show appropriate toast based on user role
+      if (data.user.role === "pending") {
+        toast({
+          title: "Login Successful",
+          description: "Your account is pending approval. Some features will be limited until approved.",
+          variant: "default",
+          duration: 6000,
+        })
+      } else {
+        toast({
+          title: "Login Successful",
+          description: "Welcome back to Eko Club International!",
+          variant: "default",
+        })
+      }
 
       // Redirect to member dashboard
       router.push("/members/dashboard")
@@ -228,11 +272,12 @@ export default function LoginPage() {
         throw new Error(data.message || "Registration failed")
       }
 
-      // Show success toast
+      // Show success toast with verification instructions
       toast({
-        title: "Registration Successful",
-        description: "Your account has been created. Please login to continue.",
+        title: "Registration Initiated",
+        description: "Please check your email to verify your account. The verification link will expire in 24 hours. If you do not receive anything in your inbox, check your spam folder",
         variant: "default",
+        duration: 6000,
       })
 
       // Switch to login tab after successful registration
@@ -649,17 +694,12 @@ export default function LoginPage() {
                               </Select>
                             </div>
                             <div className="space-y-2">
-                              <label htmlFor="membershipId" className="text-sm font-medium">
-                                Membership ID
-                              </label>
-                              <Input
-                                id="membershipId"
-                                name="membershipId"
-                                placeholder="e.g ECI-12345"
-                                value={registerData.membershipId}
-                                onChange={handleRegisterChange}
-                                required
-                              />
+                              <div className="text-sm text-gray-600 bg-gray-100 p-3 rounded-md border border-gray-200">
+                                <p className="font-medium text-gray-700 mb-1">Note about Membership ID:</p>
+                                <p>
+                                  Membership IDs are assigned by administrators after your registration is approved.
+                                </p>
+                              </div>
                             </div>
                           </div>
                           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -767,19 +807,18 @@ export default function LoginPage() {
         .PhoneInputInput {
           border: none;
           outline: none;
-          width: 100%;
+          width: 70%;
           padding: 0.5rem 0;
           background-color: transparent;
+        }
+        .PhoneInputCountry{
+          width: 30%
         }
         .PhoneInputCountrySelect {
           position: relative;
           align-self: stretch;
           display: flex;
           align-items: center;
-        }
-        .PhoneInputCountry{
-          background: beige;
-          width: 20%
         }
       `}</style>
     </main>

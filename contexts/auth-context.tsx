@@ -10,6 +10,8 @@ interface User {
   profileImage?: string
   chapterName?: string
   membershipId?: string
+  createdAt?: string
+  lastLogin?: string
 }
 
 interface AuthContextType {
@@ -30,16 +32,41 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   useEffect(() => {
     const fetchUser = async () => {
       try {
-        const response = await fetch("/api/auth/me")
+        // Check if we're in a browser environment
+        if (typeof window === "undefined") {
+          setLoading(false)
+          return
+        }
+
+        const token = localStorage.getItem("token")
+
+        // If no token, don't attempt to fetch
+        if (!token) {
+          setUser(null)
+          setLoading(false)
+          return
+        }
+
+        const response = await fetch("/api/auth/me", {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        })
+
         if (response.ok) {
           const userData = await response.json()
           setUser(userData)
         } else {
-          setUser(null)
+          // Only clear user if we get a 401 Unauthorized
+          // For other errors, keep the current user state to prevent flickering
+          if (response.status === 401) {
+            setUser(null)
+            localStorage.removeItem("token")
+          }
         }
       } catch (error) {
         console.error("Error fetching user data:", error)
-        setUser(null)
+        // Don't clear user on network errors to prevent flickering
       } finally {
         setLoading(false)
       }
@@ -65,22 +92,43 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       }
     } catch (error) {
       console.error("Error logging out:", error)
+      // Still remove token and user on error to ensure user can log out even if API fails
+      setUser(null)
+      localStorage.removeItem("token")
     }
   }
 
   const refreshUser = async () => {
     setLoading(true)
     try {
-      const response = await fetch("/api/auth/me")
+      const token = localStorage.getItem("token")
+
+      // If no token, don't attempt to fetch
+      if (!token) {
+        setUser(null)
+        setLoading(false)
+        return
+      }
+
+      const response = await fetch("/api/auth/me", {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+
       if (response.ok) {
         const userData = await response.json()
         setUser(userData)
       } else {
-        setUser(null)
+        // Only clear user if we get a 401 Unauthorized
+        if (response.status === 401) {
+          setUser(null)
+          localStorage.removeItem("token")
+        }
       }
     } catch (error) {
       console.error("Error refreshing user data:", error)
-      setUser(null)
+      // Don't clear user on network errors
     } finally {
       setLoading(false)
     }

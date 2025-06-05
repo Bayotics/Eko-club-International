@@ -16,6 +16,7 @@ import {
   DollarSign,
   UserPlus,
   Send,
+  UserCheck,
 } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { usePathname } from "next/navigation"
@@ -283,7 +284,7 @@ export default function Navbar() {
               width={72}
               height={72}
               // className="h-[4.5rem] w-auto"
-              className={`${scrolled || pathname != '/' ? "h-[4.5rem] w-auto" : "h-[7rem] w-auto"} `}
+              className={`${scrolled || pathname != "/" ? "h-[4.5rem] w-auto" : "h-[7rem] w-auto"} `}
             />
           </motion.div>
           <motion.div
@@ -347,7 +348,9 @@ export default function Navbar() {
                     )}
                   </Avatar>
                   <div className="flex flex-col items-start">
-                    <span className={scrolled ? "text-sm font-medium" : "text-sm font-medium text-slate-400"}>{user.fullName}</span>
+                    <span className={scrolled ? "text-sm font-medium" : "text-sm font-medium text-slate-400"}>
+                      {user.fullName}
+                    </span>
                     <span className="text-xs text-gray-500 capitalize">{user.role}</span>
                   </div>
                 </Button>
@@ -425,6 +428,12 @@ export default function Navbar() {
                       <Link href="/admin/documents">
                         <FileText className="mr-2 h-4 w-4" />
                         Manage Documents
+                      </Link>
+                    </DropdownMenuItem>
+                    <DropdownMenuItem asChild>
+                      <Link href="/admin/pending-users" className="cursor-pointer">
+                        <UserCheck className="mr-2 h-4 w-4" />
+                        <span>Pending Users</span>
                       </Link>
                     </DropdownMenuItem>
                   </>
@@ -606,6 +615,13 @@ export default function Navbar() {
                           onClick={() => setIsOpen(false)}
                         >
                           Manage Documents
+                        </Link>
+                        <Link
+                          href="/admin/pending-users"
+                          className="block py-1 text-sm text-gray-800 hover:text-[#e4e66d]"
+                          onClick={() => setIsOpen(false)}
+                        >
+                          Pending Users
                         </Link>
                       </>
                     )}

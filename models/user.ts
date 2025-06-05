@@ -15,6 +15,7 @@ const UserSchema = new Schema({
     type: String,
     required: [true, "Please provide a phone number"],
     unique: true,
+    // Add a default value for existing users
     default: "Not provided",
   },
   password: {
@@ -31,8 +32,8 @@ const UserSchema = new Schema({
   },
   role: {
     type: String,
-    enum: ["admin", "member", "superadmin"],
-    default: "member",
+    enum: ["admin", "member", "exco", "superadmin", "pending", "blocked"],
+    default: "pending",
   },
   profileImage: {
     type: String,
@@ -52,6 +53,8 @@ const UserSchema = new Schema({
   },
   resetPasswordToken: String,
   resetPasswordExpire: Date,
+  emailVerificationToken: String,
+  emailVerificationExpire: Date,
 })
 
 export default mongoose.models.User || mongoose.model("User", UserSchema)
