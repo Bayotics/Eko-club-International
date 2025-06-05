@@ -1,5 +1,7 @@
 "use client"
 
+import type React from "react"
+
 import { useState, useRef, useEffect } from "react"
 import Image from "next/image"
 import { motion, useScroll, useTransform, useInView } from "framer-motion"
@@ -32,6 +34,7 @@ interface Event {
   time: string
   category: string
   featured: boolean
+  registrationLink: string
 }
 
 // Define News type
@@ -144,61 +147,60 @@ export default function EventsPage() {
   const { scrollYProgress } = useScroll()
   const heroScale = useTransform(scrollYProgress, [0, 0.1], [1, 0.98])
   const [email, setEmail] = useState("")
-    const [isLoading, setIsLoading] = useState(false)
-  
-    const validateEmail = (email: string) => {
-      const regex = /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/
-      return regex.test(email)
+  const [isLoading, setIsLoading] = useState(false)
+
+  const validateEmail = (email: string) => {
+    const regex = /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/
+    return regex.test(email)
+  }
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault()
+
+    // Reset error state
+    setError(null)
+
+    // Validate email format
+    if (!validateEmail(email)) {
+      setError("Please enter a valid email address")
+      toast.error("Please enter a valid email address")
+      return
     }
-  
-    const handleSubmit = async (e: React.FormEvent) => {
-      e.preventDefault()
-  
-      // Reset error state
-      setError(null)
-  
-      // Validate email format
-      if (!validateEmail(email)) {
-        setError("Please enter a valid email address")
-        toast.error("Please enter a valid email address")
-        return
+
+    // Set loading state
+    setIsLoading(true)
+
+    try {
+      // Submit to API
+      const response = await fetch("/api/newsletter/subscribe", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ email }),
+      })
+
+      const data = await response.json()
+
+      if (!response.ok) {
+        throw new Error(data.message || "Something went wrong")
       }
-  
-      // Set loading state
-      setIsLoading(true)
-  
-      try {
-        // Submit to API
-        const response = await fetch("/api/newsletter/subscribe", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({ email }),
-        })
-  
-        const data = await response.json()
-  
-        if (!response.ok) {
-          throw new Error(data.message || "Something went wrong")
-        }
-  
-        // Show success message
-        toast.success(data.message || "Thank you for subscribing to our newsletter!")
-  
-        // Reset form
-        setEmail("")
-      } catch (error) {
-        // Show error message
-        const errorMessage = error instanceof Error ? error.message : "Failed to subscribe. Please try again."
-        setError(errorMessage)
-        toast.error(errorMessage)
-      } finally {
-        // Reset loading state
-        setIsLoading(false)
-      }
+
+      // Show success message
+      toast.success(data.message || "Thank you for subscribing to our newsletter!")
+
+      // Reset form
+      setEmail("")
+    } catch (error) {
+      // Show error message
+      const errorMessage = error instanceof Error ? error.message : "Failed to subscribe. Please try again."
+      setError(errorMessage)
+      toast.error(errorMessage)
+    } finally {
+      // Reset loading state
+      setIsLoading(false)
     }
-  
+  }
 
   // Fetch events from the API
   useEffect(() => {
@@ -462,9 +464,7 @@ export default function EventsPage() {
       {/* Featured Events Section */}
       <section ref={featuredRef} className="py-16 bg-white">
         <div className="container mx-auto px-4">
-          <div
-            className="text-center mb-12"
-          >
+          <div className="text-center mb-12">
             <h2 className="text-3xl md:text-4xl font-light mb-4">
               UPCOMING <span className="text-[#2cc72c] font-medium">EVENTS</span>
             </h2>
@@ -499,9 +499,7 @@ export default function EventsPage() {
           ) : (
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
               {filteredUpcomingEvents.map((event, index) => (
-                <div
-                  key={event._id}
-                >
+                <div key={event._id}>
                   <Card className="border-0 overflow-hidden shadow-lg h-full flex flex-col">
                     <div className="relative overflow-hidden">
                       {event.featured && (
@@ -525,7 +523,7 @@ export default function EventsPage() {
                     <CardContent className="p-6 flex-grow">
                       <h3 className="text-xl font-medium mb-3">{event.title}</h3>
                       <div
-                        className="text-gray-600 text-sm mb-4 prose prose-sm max-w-none"
+                        className="text-gray-600 text-sm mb-4 line-clamp-3 prose prose-sm max-w-none"
                         dangerouslySetInnerHTML={{ __html: event.description }}
                       />
                       <div className="space-y-2 text-sm">
@@ -543,18 +541,19 @@ export default function EventsPage() {
                         </div>
                       </div>
                     </CardContent>
-                    {/* <CardFooter className="p-6 pt-0">
-                      <Button className="w-full bg-[#2cc72c] hover:bg-[#8A6D3B] text-white transition-colors duration-300 rounded-none uppercase">
-                        Register
+                    <CardFooter className="p-6 pt-0">
+                      <Button
+                        className="w-full bg-[#2cc72c] hover:bg-[#1a6e1a] text-white transition-colors duration-300 rounded-none uppercase"
+                        onClick={() => (window.location.href = `/events/${event._id}`)}
+                      >
+                        View Details
                       </Button>
-                    </CardFooter> */}
+                    </CardFooter>
                   </Card>
                 </div>
               ))}
             </div>
           )}
-
-          
         </div>
       </section>
 
@@ -580,9 +579,7 @@ export default function EventsPage() {
               Stay updated with the latest news and announcements from Eko Club International.
             </p>
           </motion.div>
-          <h1 className="text-center font-semibold text-3xl">
-            Coming Soon...
-          </h1>
+          <h1 className="text-center font-semibold text-3xl">Coming Soon...</h1>
           {/* {filteredNews.length === 0 ? (
             <motion.div
               className="text-center py-12"
@@ -973,7 +970,7 @@ export default function EventsPage() {
                         <div
                           className="text-gray-600 text-sm mb-4 prose prose-sm max-w-none"
                           dangerouslySetInnerHTML={{ __html: event.description }}
-                        />                      
+                        />
                       </div>
                       <div className="md:w-1/6 text-sm text-gray-600">
                         <div className="flex items-center mb-2">
@@ -1071,47 +1068,47 @@ export default function EventsPage() {
               involved.
             </p>
             <motion.form
-                        initial={{ opacity: 0, y: 20 }}
-                        whileInView={{ opacity: 1, y: 0 }}
-                        viewport={{ once: true }}
-                        transition={{ duration: 0.6, delay: 0.4 }}
-                        onSubmit={handleSubmit}
-                        className="flex flex-col sm:flex-row gap-4 max-w-2xl mx-auto"
-                      >
-                        <div className="flex-grow relative rounded-full overflow-hidden border-2 border-green-300 focus-within:border-white/50">
-                          <Input
-                            type="email"
-                            placeholder="Email address"
-                            value={email}
-                            onChange={(e) => setEmail(e.target.value)}
-                            required
-                            className="bg-transparent border-none text-black placeholder:text-gray-400 h-14 px-6 focus-visible:ring-0 focus-visible:ring-offset-0"
-                            disabled={isLoading}
-                            aria-invalid={error ? "true" : "false"}
-                            aria-describedby={error ? "email-error" : undefined}
-                          />
-                        </div>
-                        <Button
-                          type="submit"
-                          className="h-14 px-8 rounded-full bg-[#2cc72c] hover:bg-[#1a6e1a] text-black font-medium text-lg"
-                          disabled={isLoading}
-                        >
-                          {isLoading ? (
-                            <>
-                              <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                              Subscribing...
-                            </>
-                          ) : (
-                            "Subscribe"
-                          )}
-                        </Button>
-                      </motion.form>
-            
-                      {error && (
-                        <p id="email-error" className="mt-2 text-red-400 text-sm">
-                          {error}
-                        </p>
-                      )}
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6, delay: 0.4 }}
+              onSubmit={handleSubmit}
+              className="flex flex-col sm:flex-row gap-4 max-w-2xl mx-auto"
+            >
+              <div className="flex-grow relative rounded-full overflow-hidden border-2 border-green-300 focus-within:border-white/50">
+                <Input
+                  type="email"
+                  placeholder="Email address"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  required
+                  className="bg-transparent border-none text-black placeholder:text-gray-400 h-14 px-6 focus-visible:ring-0 focus-visible:ring-offset-0"
+                  disabled={isLoading}
+                  aria-invalid={error ? "true" : "false"}
+                  aria-describedby={error ? "email-error" : undefined}
+                />
+              </div>
+              <Button
+                type="submit"
+                className="h-14 px-8 rounded-full bg-[#2cc72c] hover:bg-[#1a6e1a] text-black font-medium text-lg"
+                disabled={isLoading}
+              >
+                {isLoading ? (
+                  <>
+                    <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                    Subscribing...
+                  </>
+                ) : (
+                  "Subscribe"
+                )}
+              </Button>
+            </motion.form>
+
+            {error && (
+              <p id="email-error" className="mt-2 text-red-400 text-sm">
+                {error}
+              </p>
+            )}
             {/* <div className="mt-8 flex flex-wrap justify-center gap-4">
               <motion.div
                 initial={{ opacity: 0, scale: 0.8 }}

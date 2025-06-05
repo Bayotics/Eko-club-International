@@ -1,6 +1,7 @@
 "use client"
 
-import { useState, useEffect, useRef } from "react"
+import React from "react"
+import {useState, useEffect, useRef } from "react"
 import { useRouter } from "next/navigation"
 import { Calendar, MapPin, Clock, ArrowLeft, Save, Trash2, X, ImageIcon } from "lucide-react"
 import { Button } from "@/components/ui/button"
@@ -23,11 +24,15 @@ import { Separator } from "@/components/ui/separator"
 import { useToast } from "@/components/ui/use-toast"
 import { useAuth } from "@/contexts/auth-context"
 
-export default function EventDetailsPage({ params }) {
+interface PageParams {
+  id: string;
+}
+
+export default function EventDetailsPage({ params }: { params: PageParams }) {
   const router = useRouter()
   const { user, loading } = useAuth()
   const { toast } = useToast()
-  const { id } = params
+  const { id } = React.use(params)
 
   const [event, setEvent] = useState(null)
   const [isLoading, setIsLoading] = useState(true)
@@ -43,8 +48,17 @@ export default function EventDetailsPage({ params }) {
   const [imagePreview, setImagePreview] = useState(null)
   const [imageFile, setImageFile] = useState(null)
 
-  const categories = ["Medical", "Cultural", "Education", "Youth", "Business", "Fundraising", "Other"]
-
+const categories = [
+    "All",
+    "Medical",
+    "Cultural",
+    "Education",
+    "Youth",
+    "Business",
+    "Fundraising",
+    "Convention",
+    "General",
+  ]
   useEffect(() => {
     if (!loading && !user) {
       router.push("/login")
@@ -312,7 +326,15 @@ export default function EventDetailsPage({ params }) {
                       required
                     />
                   </div>
-
+                  <div className="space-y-2">
+                    <Label htmlFor="registrationLink">Registration link (if any)</Label>
+                    <Input
+                      id="registrationLink"
+                      value={editedEvent.registrationLink}
+                      onChange={(e) => setEditedEvent({ ...newEvent, registrationLink: e.target.value })}
+                      placeholder="Enter registration link if any"
+                    />
+                  </div>
                   <div className="space-y-2">
                     <Label htmlFor="category">Category</Label>
                     <Select

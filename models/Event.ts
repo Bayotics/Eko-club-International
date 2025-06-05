@@ -31,6 +31,10 @@ const EventSchema = new mongoose.Schema({
    type: Boolean,
    default: false,
  },
+ registrationLink:{
+  type: String,
+  default: ""
+ }
 })
 
 const Event = mongoose.models.Event || mongoose.model("Event", EventSchema)

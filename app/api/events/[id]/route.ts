@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from "next/server"
 import { connectToDatabase } from "@/lib/mongodb"
 import { ObjectId } from "mongodb"
 import { verifyJwtToken } from "@/lib/jwt"
+import Event from "@/models/Event"
 
 export async function GET(
   request: NextRequest,
@@ -12,9 +13,9 @@ export async function GET(
     if (!ObjectId.isValid(id)) {
       return NextResponse.json({ error: "Invalid event ID" }, { status: 400 })
     }
-
+    await connectToDatabase()
     const { db } = await connectToDatabase()
-    const event = await db.collection("events").findOne({ _id: new ObjectId(id) })
+    const event = await Event.findOne({ _id: new ObjectId(id) })    
 
     if (!event) {
       return NextResponse.json({ error: "Event not found" }, { status: 404 })

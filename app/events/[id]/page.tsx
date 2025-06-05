@@ -7,12 +7,13 @@ import { useParams, useRouter } from "next/navigation"
 import Image from "next/image"
 import { motion } from "framer-motion"
 import { format, parseISO, isSameDay } from "date-fns"
-import { Calendar, MapPin, Clock, ArrowLeft, Share2, CalendarIcon, Users, Tag } from "lucide-react"
+import { Calendar, MapPin, Clock, ArrowLeft, Share2, CalendarIcon, Users, Tag, LinkIcon } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { Skeleton } from "@/components/ui/skeleton"
 import { Alert, AlertDescription } from "@/components/ui/alert"
+import Link from "next/link"
 import {
   Breadcrumb,
   BreadcrumbItem,
@@ -20,17 +21,6 @@ import {
   BreadcrumbList,
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb"
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from "@/components/ui/dialog"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
 import { toast } from "sonner"
 
 // Define Event type
@@ -56,44 +46,10 @@ interface Event {
   virtualEvent?: boolean
   virtualEventUrl?: string
   tags?: string[]
+  registrationLink?: string
 }
 
-// Sample related events (will be replaced with API data in production)
-const relatedEvents = [
-  {
-    _id: "related1",
-    title: "Community Health Fair",
-    description: "Free health screenings, consultations, and wellness information for community members.",
-    image: "/placeholder.svg?height=400&width=600",
-    date: "2024-08-28T00:00:00.000Z",
-    location: "Chicago, IL",
-    time: "9:00 AM - 3:00 PM",
-    category: "Medical",
-    featured: false,
-  },
-  {
-    _id: "related2",
-    title: "Youth Leadership Workshop",
-    description: "Empowering the next generation of leaders with skills and knowledge to make a positive impact.",
-    image: "/placeholder.svg?height=400&width=600",
-    date: "2024-07-18T00:00:00.000Z",
-    location: "Houston, TX",
-    time: "10:00 AM - 4:00 PM",
-    category: "Youth",
-    featured: false,
-  },
-  {
-    _id: "related3",
-    title: "Scholarship Fundraiser",
-    description: "Help us raise funds to support educational opportunities for deserving students in our communities.",
-    image: "/placeholder.svg?height=400&width=600",
-    date: "2024-09-05T00:00:00.000Z",
-    location: "New York, NY",
-    time: "7:00 PM - 10:00 PM",
-    category: "Education",
-    featured: false,
-  },
-]
+const relatedEvents = []
 
 export default function EventDetailPage() {
   const params = useParams()
@@ -109,6 +65,9 @@ export default function EventDetailPage() {
     email: "",
     phone: "",
   })
+
+  const [relatedEvents, setRelatedEvents] = useState<Event[]>([])
+  const [loadingRelated, setLoadingRelated] = useState(true)
 
   // Fetch event data
   useEffect(() => {
@@ -139,6 +98,37 @@ export default function EventDetailPage() {
       fetchEvent()
     }
   }, [eventId])
+
+  // Fetch related events
+  useEffect(() => {
+    const fetchRelatedEvents = async () => {
+      try {
+        setLoadingRelated(true)
+        const response = await fetch("/api/events")
+
+        if (response.ok) {
+          const data = await response.json()
+          // Filter out current event and only show upcoming events
+          const currentDate = new Date()
+          const filteredEvents = data.events
+            .filter((e: Event) => e._id !== eventId && new Date(e.date) > currentDate)
+            .sort((a: Event, b: Event) => new Date(a.date).getTime() - new Date(b.date).getTime())
+            .slice(0, 3) // Limit to 3 events
+
+          setRelatedEvents(filteredEvents)
+        }
+      } catch (error) {
+        console.error("Error fetching related events:", error)
+        setRelatedEvents([])
+      } finally {
+        setLoadingRelated(false)
+      }
+    }
+
+    if (eventId && !loading) {
+      fetchRelatedEvents()
+    }
+  }, [eventId, loading])
 
   const handleRegistration = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -474,6 +464,17 @@ export default function EventDetailPage() {
                       </div>
                     </div>
 
+                    {event.registrationLink && (
+                      <div className="flex items-start gap-3">
+                        <LinkIcon className="h-5 w-5 text-[#2cc72c] mt-0.5" />
+                        <div>
+                          <p className="font-medium">Registration link</p>
+                          <Link href={event.registrationLink} target="_blank">
+                            <p className="text-gray-600">{event.registrationLink}</p>
+                          </Link>
+                        </div>
+                      </div>
+                    )}
                     {event.price && (
                       <div className="flex items-start gap-3">
                         <Tag className="h-5 w-5 text-[#2cc72c] mt-0.5" />
@@ -484,95 +485,8 @@ export default function EventDetailPage() {
                       </div>
                     )}
                   </div>
-
-                  {event.registrationRequired ? (
-                    <>
-                      {event.registrationDeadline && (
-                        <p className="text-sm text-gray-500 mb-4">
-                          Registration closes on {formatEventDate(event.registrationDeadline)}
-                        </p>
-                      )}
-
-                      {event.registrationUrl ? (
-                        <Button
-                          className="w-full bg-[#2cc72c] hover:bg-[#1a8f1a] text-white"
-                          onClick={() => window.open(event.registrationUrl, "_blank")}
-                        >
-                          Register Now
-                        </Button>
-                      ) : (
-                        <Dialog>
-                          <DialogTrigger asChild>
-                            <Button className="w-full bg-[#2cc72c] hover:bg-[#1a8f1a] text-white">Register Now</Button>
-                          </DialogTrigger>
-                          <DialogContent className="sm:max-w-[425px]">
-                            <DialogHeader>
-                              <DialogTitle>Register for {event.title}</DialogTitle>
-                              <DialogDescription>
-                                Fill out the form below to register for this event. You will receive a confirmation
-                                email.
-                              </DialogDescription>
-                            </DialogHeader>
-                            <form onSubmit={handleRegistration}>
-                              <div className="grid gap-4 py-4">
-                                <div className="grid gap-2">
-                                  <Label htmlFor="name">Full Name</Label>
-                                  <Input
-                                    id="name"
-                                    value={registrationForm.name}
-                                    onChange={(e) => setRegistrationForm({ ...registrationForm, name: e.target.value })}
-                                    required
-                                  />
-                                </div>
-                                <div className="grid gap-2">
-                                  <Label htmlFor="email">Email</Label>
-                                  <Input
-                                    id="email"
-                                    type="email"
-                                    value={registrationForm.email}
-                                    onChange={(e) =>
-                                      setRegistrationForm({ ...registrationForm, email: e.target.value })
-                                    }
-                                    required
-                                  />
-                                </div>
-                                <div className="grid gap-2">
-                                  <Label htmlFor="phone">Phone Number (Optional)</Label>
-                                  <Input
-                                    id="phone"
-                                    value={registrationForm.phone}
-                                    onChange={(e) =>
-                                      setRegistrationForm({ ...registrationForm, phone: e.target.value })
-                                    }
-                                  />
-                                </div>
-                              </div>
-                              <DialogFooter>
-                                <Button
-                                  type="submit"
-                                  className="bg-[#2cc72c] hover:bg-[#1a8f1a] text-white"
-                                  disabled={isRegistering}
-                                >
-                                  {isRegistering ? "Registering..." : "Complete Registration"}
-                                </Button>
-                              </DialogFooter>
-                            </form>
-                          </DialogContent>
-                        </Dialog>
-                      )}
-                    </>
-                  ) : (
-                    <p className="text-center text-gray-600">No registration required</p>
-                  )}
                 </CardContent>
               </Card>
-
-              {/* Google Maps placeholder - would be replaced with actual Google Maps in production */}
-              <div className="mb-8 rounded-lg overflow-hidden h-[200px] relative bg-gray-200">
-                <div className="absolute inset-0 flex items-center justify-center">
-                  <p className="text-gray-500">Map location would appear here</p>
-                </div>
-              </div>
             </motion.div>
           </div>
         </div>
@@ -585,33 +499,62 @@ export default function EventDetailPage() {
           className="mt-12"
         >
           <h2 className="text-2xl font-semibold mb-6">Similar Events You May Like</h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {relatedEvents.map((relatedEvent) => (
-              <Card
-                key={relatedEvent._id}
-                className="overflow-hidden border-0 shadow-md cursor-pointer transition-transform hover:-translate-y-1"
-                onClick={() => router.push(`/events/${relatedEvent._id}`)}
-              >
-                <div className="relative h-48">
-                  <Image
-                    src={relatedEvent.image || "/placeholder.svg?height=400&width=600"}
-                    alt={relatedEvent.title}
-                    fill
-                    className="object-cover"
-                  />
-                  <Badge className="absolute top-2 right-2 bg-[#2cc72c]">{relatedEvent.category}</Badge>
-                </div>
-                <CardContent className="p-4">
-                  <h3 className="font-medium mb-2 line-clamp-1">{relatedEvent.title}</h3>
-                  <p className="text-sm text-gray-600 mb-3 line-clamp-2">{relatedEvent.description}</p>
-                  <div className="flex items-center text-xs text-gray-500">
-                    <Calendar className="h-3 w-3 mr-1" />
-                    {formatEventDate(relatedEvent.date)}
+          {loadingRelated ? (
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {[1, 2, 3].map((i) => (
+                <Card key={i} className="overflow-hidden border-0 shadow-md">
+                  <Skeleton className="h-48 w-full" />
+                  <CardContent className="p-4">
+                    <Skeleton className="h-4 w-3/4 mb-2" />
+                    <Skeleton className="h-3 w-full mb-3" />
+                    <Skeleton className="h-3 w-1/2" />
+                  </CardContent>
+                </Card>
+              ))}
+            </div>
+          ) : relatedEvents.length > 0 ? (
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {relatedEvents.map((relatedEvent) => (
+                <Card
+                  key={relatedEvent._id}
+                  className="overflow-hidden border-0 shadow-md cursor-pointer transition-transform hover:-translate-y-1"
+                  onClick={() => router.push(`/events/${relatedEvent._id}`)}
+                >
+                  <div className="relative h-48">
+                    <Image
+                      src={relatedEvent.image || "/placeholder.svg?height=400&width=600"}
+                      alt={relatedEvent.title}
+                      fill
+                      className="object-cover"
+                    />
+                    <Badge className="absolute top-2 right-2 bg-[#2cc72c]">{relatedEvent.category}</Badge>
                   </div>
-                </CardContent>
-              </Card>
-            ))}
-          </div>
+                  <CardContent className="p-4">
+                    <h3 className="font-medium mb-2 line-clamp-1">{relatedEvent.title}</h3>
+                    <p className="text-sm text-gray-600 mb-3 line-clamp-2">
+                      {relatedEvent.description.length > 50
+                        ? `${relatedEvent.description.substring(0, 50)}...`
+                        : relatedEvent.description}
+                    </p>
+                    <div className="flex items-center text-xs text-gray-500">
+                      <Calendar className="h-3 w-3 mr-1" />
+                      {formatEventDate(relatedEvent.date)}
+                    </div>
+                  </CardContent>
+                </Card>
+              ))}
+            </div>
+          ) : (
+            <div className="text-center py-12">
+              <div className="bg-gray-50 rounded-lg p-8">
+                <Calendar className="h-12 w-12 text-gray-400 mx-auto mb-4" />
+                <h3 className="text-lg font-medium text-gray-900 mb-2">No Upcoming Events</h3>
+                <p className="text-gray-600">
+                  There are currently no other upcoming events available. Check back soon for new events!
+                </p>
+              </div>
+            </div>
+          )}
         </motion.div>
       </div>
     </main>

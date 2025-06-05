@@ -50,6 +50,7 @@ export default function AdminEventsPage() {
     imageFile: null,
     imagePreview: null,
     featured: false,
+    registrationLink: ""
   })
 
   const categories = [
@@ -204,6 +205,7 @@ export default function AdminEventsPage() {
         imageFile: null,
         imagePreview: null,
         featured: false,
+        registrationLink: ""
       })
       fetchEvents()
     } catch (error) {
@@ -345,6 +347,15 @@ export default function AdminEventsPage() {
                     onChange={(e) => setNewEvent({ ...newEvent, location: e.target.value })}
                     placeholder="Enter event location"
                     required
+                  />
+                </div>
+                <div className="space-y-2">
+                  <Label htmlFor="registrationLink">Registration link (if any)</Label>
+                  <Input
+                    id="registrationLink"
+                    value={newEvent.registrationLink}
+                    onChange={(e) => setNewEvent({ ...newEvent, registrationLink: e.target.value })}
+                    placeholder="Enter registration link if any"
                   />
                 </div>
 
