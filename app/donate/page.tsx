@@ -675,7 +675,7 @@ export default function DonatePage() {
                       <div>
                         <Label className="text-base font-medium mb-3 block">Donation Amount</Label>
                         <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mb-3">
-                          {["50", "100", "250", "500"].map((amount) => (
+                          {["5000", "10000", "50000", "100000"].map((amount) => (
                             <Button
                               key={amount}
                               type="button"
