@@ -1,6 +1,6 @@
 import { type NextRequest, NextResponse } from "next/server"
 import { connectToDatabase } from "@/lib/mongodb"
-import User from "@/models/User"
+import User from "@/models/user"
 import jwt from "jsonwebtoken"
 
 export async function PUT(request: NextRequest) {
