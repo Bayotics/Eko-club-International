@@ -355,7 +355,7 @@ export default function Navbar() {
                   </div>
                 </Button>
               </DropdownMenuTrigger>
-              <DropdownMenuContent align="end" className="w-56">
+               <DropdownMenuContent align="end" className="w-56 max-h-80 overflow-y-auto">
                 <DropdownMenuLabel>My Account</DropdownMenuLabel>
                 <DropdownMenuSeparator />
                 <DropdownMenuItem asChild>
@@ -398,6 +398,12 @@ export default function Navbar() {
                       <Link href="/admin/events" className="cursor-pointer">
                         <Calendar className="mr-2 h-4 w-4" />
                         <span>Manage Events</span>
+                      </Link>
+                    </DropdownMenuItem>
+                    <DropdownMenuItem asChild>
+                      <Link href="/admin/registrations" className="cursor-pointer">
+                        <UserCheck className="mr-2 h-4 w-4" />
+                        <span>Manage Registrations</span>
                       </Link>
                     </DropdownMenuItem>
                     <DropdownMenuItem asChild>
@@ -580,6 +586,13 @@ export default function Navbar() {
                           onClick={() => setIsOpen(false)}
                         >
                           Manage Events
+                        </Link>
+                        <Link
+                          href="/admin/registrations"
+                          className="block py-1 text-sm text-gray-800 hover:text-[#e4e66d]"
+                          onClick={() => setIsOpen(false)}
+                        >
+                          Manage Registrations
                         </Link>
                         <Link
                           href="/admin/meeting-minutes"
