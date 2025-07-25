@@ -10,7 +10,7 @@ const resend = new Resend(process.env.RESEND_API_KEY)
 export async function POST(request: Request) {
   try {
     // Parse request body
-    const { fullName, email, password, chapterName, phone, profileImage } = await request.json()
+    const { fullName, email, password, chapterName, phone, profileImage, membershipId } = await request.json()
 
     // Validate required fields
     if (!fullName || !email || !password || !phone) {
@@ -60,6 +60,7 @@ export async function POST(request: Request) {
       emailVerificationToken: verificationToken,
       emailVerificationExpire: verificationExpire,
       isVerified: false,
+      membershipId
     }
 
     // Send verification email

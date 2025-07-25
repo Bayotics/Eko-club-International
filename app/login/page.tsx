@@ -51,16 +51,14 @@ export default function LoginPage() {
     password: "",
   })
 
-  function generateRandomNumber(digits) {
-  const min = Math.pow(10, digits - 1);
-  const max = Math.pow(10, digits) - 1;
-
-  return (Math.floor(Math.random() * (max - min + 1)) + min).toString();
+  function generateMembershipId(length = 19) {
+  const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+  let result = '';
+  for (let i = 0; i < length; i++) {
+    result += chars.charAt(Math.floor(Math.random() * chars.length));
+  }
+  return result;
 }
-
-// Example usage: Generate a 6-digit random number
-const randomNumber = generateRandomNumber(6);
-console.log(randomNumber);
   // Register form state
   const [registerData, setRegisterData] = useState({
     fullName: "",
@@ -70,7 +68,7 @@ console.log(randomNumber);
     chapterName: "",
     profileImage: "",
     phone: "",
-    membershipId:  generateRandomNumber(19)// Add phone field
+    membershipId: generateMembershipId()
   })
 
   const handleLoginChange = (e) => {
