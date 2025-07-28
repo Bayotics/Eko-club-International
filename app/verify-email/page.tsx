@@ -27,7 +27,7 @@ export default function VerifyEmailPage() {
         const response = await fetch(`/api/auth/verify-email?token=${token}`)
         const data = await response.json()
 
-        if (response.ok && data.verified) {
+        if (response.ok && data.success) {
           setVerificationStatus("success")
           setMessage(
             data.message || "Your email has been verified successfully. Your account is now pending admin approval.",
@@ -42,7 +42,6 @@ export default function VerifyEmailPage() {
         setMessage("An error occurred during verification. Please try again later.")
       }
     }
-
     verifyEmail()
   }, [token])
 
@@ -59,7 +58,10 @@ export default function VerifyEmailPage() {
           {verificationStatus === "loading" && (
             <div className="flex flex-col items-center justify-center py-8">
               <Loader2 className="h-12 w-12 animate-spin text-green-500 mb-4" />
-              <p className="text-center text-gray-600">Please wait while we verify your email address. If it doesn't work at first trial, don't fret, Just refresh the page..</p>
+              <p className="text-center text-gray-600">
+                Please wait while we verify your email address. If it doesn't work at first trial, don't fret, Just
+                refresh the page..
+              </p>
             </div>
           )}
 
@@ -87,7 +89,7 @@ export default function VerifyEmailPage() {
           )}
 
           {verificationStatus === "error" && (
-            <Button className="w-full" variant="outline" onClick={() => router.push("/login")}>
+            <Button className="w-full bg-transparent" variant="outline" onClick={() => router.push("/login")}>
               Back to Registration
             </Button>
           )}

@@ -810,7 +810,7 @@ export default function LoginPage() {
           background-color: transparent;
         }
         .PhoneInputCountry{
-          width: 30%
+          width: 10%
         }
         .PhoneInputCountrySelect {
           position: relative;
@@ -818,6 +818,9 @@ export default function LoginPage() {
           display: flex;
           align-items: center;
         }
+          .PhoneInputCountryIcon{
+            width: 100%
+          }
       `}</style>
     </main>
   )
