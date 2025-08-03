@@ -407,6 +407,12 @@ export default function Navbar() {
                       </Link>
                     </DropdownMenuItem>
                     <DropdownMenuItem asChild>
+                      <Link href="/admin/convention-events" className="cursor-pointer">
+                        <UserCheck className="mr-2 h-4 w-4" />
+                        <span>Manage Convention Events</span>
+                      </Link>
+                    </DropdownMenuItem>
+                    <DropdownMenuItem asChild>
                       <Link href="/admin/meeting-minutes" className="cursor-pointer">
                         <FileText className="mr-2 h-4 w-4" />
                         <span>Manage Minutes</span>
@@ -593,6 +599,13 @@ export default function Navbar() {
                           onClick={() => setIsOpen(false)}
                         >
                           Manage Registrations
+                        </Link>
+                        <Link
+                          href="/admin/convention-events"
+                          className="block py-1 text-sm text-gray-800 hover:text-[#e4e66d]"
+                          onClick={() => setIsOpen(false)}
+                        >
+                          Manage Convention Events
                         </Link>
                         <Link
                           href="/admin/meeting-minutes"
