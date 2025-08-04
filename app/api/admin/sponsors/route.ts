@@ -4,9 +4,9 @@ import { cookies } from "next/headers"
 import { connectToDatabase } from "@/lib/mongodb"
 import Sponsor from "@/models/Sponsor"
 
-// GET - Fetch all sponsors with filtering and search
 const JWT_SECRET = process.env.JWT_SECRET || "your-secret-key"
 
+// GET - Fetch all sponsors with filtering and pagination
 export async function GET(request: Request) {
   try {
     // Check authentication
@@ -18,47 +18,58 @@ export async function GET(request: Request) {
     }
 
     try {
-          const { payload } = await jwtVerify(token, new TextEncoder().encode(JWT_SECRET))
-    
-          // Check if user is admin
-          const userRole = payload.role || (payload.user && payload.user.role)
-    
-          if (userRole !== "admin") {
-            return NextResponse.json({ error: "Admin access required" }, { status: 403 })
-          }
-        } catch (error) {
-          console.error("Token verification error:", error)
-          return NextResponse.json({ error: "Invalid token" }, { status: 401 })
-        }
-    
-        // Connect to database
-        await connectToDatabase()
+      const { payload } = await jwtVerify(token, new TextEncoder().encode(JWT_SECRET))
+
+      // Check if user is admin
+      const userRole = payload.role || (payload.user && payload.user.role)
+
+      if (userRole !== "admin") {
+        return NextResponse.json({ error: "Admin access required" }, { status: 403 })
+      }
+    } catch (error) {
+      console.error("Token verification error:", error)
+      return NextResponse.json({ error: "Invalid token" }, { status: 401 })
+    }
+
+    // Connect to database
+    await connectToDatabase()
 
     const { searchParams } = new URL(request.url)
-    const search = searchParams.get("search") || ""
-    const contributionType = searchParams.get("contributionType") || ""
     const page = Number.parseInt(searchParams.get("page") || "1")
     const limit = Number.parseInt(searchParams.get("limit") || "10")
-    const skip = (page - 1) * limit
+    const search = searchParams.get("search") || ""
+    const contributionType = searchParams.get("contributionType") || ""
+    const sponsorshipType = searchParams.get("sponsorshipType") || ""
 
-    // Build query
-    const query: any = {}
+    // Build filter query
+    const filter: any = {}
 
     if (search) {
-      query.$or = [
+      filter.$or = [
         { name: { $regex: search, $options: "i" } },
         { description: { $regex: search, $options: "i" } },
         { "contribution.inKindDescription": { $regex: search, $options: "i" } },
       ]
     }
 
-    if (contributionType) {
-      query["contribution.type"] = contributionType
+    if (contributionType && contributionType !== "all") {
+      filter["contribution.type"] = contributionType
     }
 
-    const sponsors = await Sponsor.find(query).sort({ createdAt: -1 }).skip(skip).limit(limit)
+    if (sponsorshipType && sponsorshipType !== "all") {
+      filter.sponsorshipType = sponsorshipType
+    }
 
-    const total = await Sponsor.countDocuments(query)
+    // Calculate pagination
+    const skip = (page - 1) * limit
+
+    // Fetch sponsors with pagination
+    const [sponsors, total] = await Promise.all([
+      Sponsor.find(filter).sort({ createdAt: -1 }).skip(skip).limit(limit),
+      Sponsor.countDocuments(filter),
+    ])
+
+    const totalPages = Math.ceil(total / limit)
 
     return NextResponse.json({
       sponsors,
@@ -66,7 +77,7 @@ export async function GET(request: Request) {
         page,
         limit,
         total,
-        pages: Math.ceil(total / limit),
+        pages: totalPages,
       },
     })
   } catch (error) {
@@ -87,30 +98,40 @@ export async function POST(request: Request) {
     }
 
     try {
-          const { payload } = await jwtVerify(token, new TextEncoder().encode(JWT_SECRET))
-    
-          // Check if user is admin
-          const userRole = payload.role || (payload.user && payload.user.role)
-    
-          if (userRole !== "admin") {
-            return NextResponse.json({ error: "Admin access required" }, { status: 403 })
-          }
-        } catch (error) {
-          console.error("Token verification error:", error)
-          return NextResponse.json({ error: "Invalid token" }, { status: 401 })
-        }
-    
-        // Connect to database
-        await connectToDatabase()
+      const { payload } = await jwtVerify(token, new TextEncoder().encode(JWT_SECRET))
+
+      // Check if user is admin
+      const userRole = payload.role || (payload.user && payload.user.role)
+
+      if (userRole !== "admin") {
+        return NextResponse.json({ error: "Admin access required" }, { status: 403 })
+      }
+    } catch (error) {
+      console.error("Token verification error:", error)
+      return NextResponse.json({ error: "Invalid token" }, { status: 401 })
+    }
+
+    // Connect to database
+    await connectToDatabase()
 
     const body = await request.json()
-    const { name, description, pic, contribution, websiteLink } = body
+    const { name, description, pic, sponsorshipType, contribution, websiteLink } = body
 
     // Validate required fields
-    if (!name || !contribution?.type) {
+    if (!name || !contribution?.type || !sponsorshipType) {
       return NextResponse.json(
         {
-          error: "Name and contribution type are required",
+          error: "Name, sponsorship type, and contribution type are required",
+        },
+        { status: 400 },
+      )
+    }
+
+    // Validate sponsorship type
+    if (!["regular", "corporate"].includes(sponsorshipType)) {
+      return NextResponse.json(
+        {
+          error: "Sponsorship type must be either 'regular' or 'corporate'",
         },
         { status: 400 },
       )
@@ -158,6 +179,7 @@ export async function POST(request: Request) {
       name,
       description,
       pic,
+      sponsorshipType,
       contribution,
       websiteLink,
     })

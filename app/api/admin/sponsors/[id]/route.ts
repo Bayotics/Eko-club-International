@@ -5,6 +5,7 @@ import { connectToDatabase } from "@/lib/mongodb"
 import Sponsor from "@/models/Sponsor"
 
 const JWT_SECRET = process.env.JWT_SECRET || "your-secret-key"
+
 // GET - Fetch single sponsor
 export async function GET(request: Request, { params }: { params: { id: string } }) {
   try {
@@ -17,17 +18,17 @@ export async function GET(request: Request, { params }: { params: { id: string }
     }
 
     try {
-        const { payload } = await jwtVerify(token, new TextEncoder().encode(JWT_SECRET))
+      const { payload } = await jwtVerify(token, new TextEncoder().encode(JWT_SECRET))
 
-        // Check if user is admin
-        const userRole = payload.role || (payload.user && payload.user.role)
+      // Check if user is admin
+      const userRole = payload.role || (payload.user && payload.user.role)
 
-        if (userRole !== "admin") {
+      if (userRole !== "admin") {
         return NextResponse.json({ error: "Admin access required" }, { status: 403 })
-        }
+      }
     } catch (error) {
-        console.error("Token verification error:", error)
-        return NextResponse.json({ error: "Invalid token" }, { status: 401 })
+      console.error("Token verification error:", error)
+      return NextResponse.json({ error: "Invalid token" }, { status: 401 })
     }
 
     // Connect to database
@@ -58,30 +59,40 @@ export async function PUT(request: Request, { params }: { params: { id: string }
     }
 
     try {
-        const { payload } = await jwtVerify(token, new TextEncoder().encode(JWT_SECRET))
+      const { payload } = await jwtVerify(token, new TextEncoder().encode(JWT_SECRET))
 
-        // Check if user is admin
-        const userRole = payload.role || (payload.user && payload.user.role)
+      // Check if user is admin
+      const userRole = payload.role || (payload.user && payload.user.role)
 
-        if (userRole !== "admin") {
+      if (userRole !== "admin") {
         return NextResponse.json({ error: "Admin access required" }, { status: 403 })
-        }
+      }
     } catch (error) {
-        console.error("Token verification error:", error)
-        return NextResponse.json({ error: "Invalid token" }, { status: 401 })
+      console.error("Token verification error:", error)
+      return NextResponse.json({ error: "Invalid token" }, { status: 401 })
     }
 
     // Connect to database
     await connectToDatabase()
 
     const body = await request.json()
-    const { name, description, pic, contribution, websiteLink } = body
+    const { name, description, pic, sponsorshipType, contribution, websiteLink } = body
 
     // Validate required fields
-    if (!name || !contribution?.type) {
+    if (!name || !contribution?.type || !sponsorshipType) {
       return NextResponse.json(
         {
-          error: "Name and contribution type are required",
+          error: "Name, sponsorship type, and contribution type are required",
+        },
+        { status: 400 },
+      )
+    }
+
+    // Validate sponsorship type
+    if (!["regular", "corporate"].includes(sponsorshipType)) {
+      return NextResponse.json(
+        {
+          error: "Sponsorship type must be either 'regular' or 'corporate'",
         },
         { status: 400 },
       )
@@ -131,10 +142,14 @@ export async function PUT(request: Request, { params }: { params: { id: string }
         name,
         description,
         pic,
+        sponsorshipType,
         contribution,
         websiteLink,
       },
-      { new: true, runValidators: true },
+      {
+        new: true,
+        runValidators: false, // We handle validation manually above
+      },
     )
 
     if (!sponsor) {
@@ -153,7 +168,7 @@ export async function PUT(request: Request, { params }: { params: { id: string }
       return NextResponse.json({ error: errors.join(", ") }, { status: 400 })
     }
 
-    return NextResponse.json({ error: "Internal server error" }, { status: 500 })
+    return NextResponse.json({ error: error.message || "Internal server error" }, { status: 500 })
   }
 }
 
@@ -169,17 +184,17 @@ export async function DELETE(request: Request, { params }: { params: { id: strin
     }
 
     try {
-        const { payload } = await jwtVerify(token, new TextEncoder().encode(JWT_SECRET))
+      const { payload } = await jwtVerify(token, new TextEncoder().encode(JWT_SECRET))
 
-        // Check if user is admin
-        const userRole = payload.role || (payload.user && payload.user.role)
+      // Check if user is admin
+      const userRole = payload.role || (payload.user && payload.user.role)
 
-        if (userRole !== "admin") {
+      if (userRole !== "admin") {
         return NextResponse.json({ error: "Admin access required" }, { status: 403 })
-        }
+      }
     } catch (error) {
-        console.error("Token verification error:", error)
-        return NextResponse.json({ error: "Invalid token" }, { status: 401 })
+      console.error("Token verification error:", error)
+      return NextResponse.json({ error: "Invalid token" }, { status: 401 })
     }
 
     // Connect to database
@@ -191,7 +206,9 @@ export async function DELETE(request: Request, { params }: { params: { id: strin
       return NextResponse.json({ error: "Sponsor not found" }, { status: 404 })
     }
 
-    return NextResponse.json({ message: "Sponsor deleted successfully" })
+    return NextResponse.json({
+      message: "Sponsor deleted successfully",
+    })
   } catch (error) {
     console.error("Error deleting sponsor:", error)
     return NextResponse.json({ error: "Internal server error" }, { status: 500 })

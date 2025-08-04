@@ -25,6 +25,8 @@ import {
   X,
   AlertCircle,
   CheckCircle2,
+  Building2,
+  User,
 } from "lucide-react"
 import type { ISponsor } from "@/models/Sponsor"
 
@@ -32,6 +34,7 @@ interface SponsorFormData {
   name: string
   description: string
   pic: string
+  sponsorshipType: "regular" | "corporate"
   contribution: {
     type: "monetary" | "in-kind" | "both"
     monetaryAmount: number | ""
@@ -44,6 +47,7 @@ const initialFormData: SponsorFormData = {
   name: "",
   description: "",
   pic: "",
+  sponsorshipType: "regular",
   contribution: {
     type: "monetary",
     monetaryAmount: "",
@@ -138,7 +142,7 @@ const SponsorForm = ({
   )
 
   const isFormValid = useMemo(() => {
-    if (!formData.name || !formData.contribution.type) return false
+    if (!formData.name || !formData.contribution.type || !formData.sponsorshipType) return false
 
     if (formData.contribution.type === "monetary") {
       return formData.contribution.monetaryAmount && Number(formData.contribution.monetaryAmount) > 0
@@ -174,6 +178,22 @@ const SponsorForm = ({
             placeholder="Enter sponsor name"
             maxLength={100}
           />
+        </div>
+
+        <div className="space-y-2">
+          <Label htmlFor="sponsorshipType">Sponsorship Type *</Label>
+          <Select
+            value={formData.sponsorshipType}
+            onValueChange={(value: "regular" | "corporate") => handleInputChange("sponsorshipType", value)}
+          >
+            <SelectTrigger id="sponsorshipType">
+              <SelectValue placeholder="Select sponsorship type" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="regular">Regular</SelectItem>
+              <SelectItem value="corporate">Corporate</SelectItem>
+            </SelectContent>
+          </Select>
         </div>
 
         <div className="space-y-2">
@@ -330,6 +350,7 @@ export default function ManageSponsorsPage() {
   const [success, setSuccess] = useState("")
   const [searchTerm, setSearchTerm] = useState("")
   const [contributionTypeFilter, setContributionTypeFilter] = useState("")
+  const [sponsorshipTypeFilter, setSponsorshipTypeFilter] = useState("")
   const [showCreateDialog, setShowCreateDialog] = useState(false)
   const [showEditDialog, setShowEditDialog] = useState(false)
   const [editingSponsor, setEditingSponsor] = useState<ISponsor | null>(null)
@@ -349,15 +370,25 @@ export default function ManageSponsorsPage() {
         page: pagination.page.toString(),
         limit: pagination.limit.toString(),
         ...(searchTerm && { search: searchTerm }),
-        ...(contributionTypeFilter && { contributionType: contributionTypeFilter }),
+        ...(contributionTypeFilter && contributionTypeFilter !== "all" && { contributionType: contributionTypeFilter }),
+        ...(sponsorshipTypeFilter && sponsorshipTypeFilter !== "all" && { sponsorshipType: sponsorshipTypeFilter }),
       })
 
       const response = await fetch(`/api/admin/sponsors?${params}`)
 
       if (response.ok) {
         const data = await response.json()
-        setSponsors(data.sponsors)
-        setPagination(data.pagination)
+        setSponsors(data.sponsors || [])
+
+        // Ensure pagination object has all required properties
+        const paginationData = data.pagination || {}
+        setPagination({
+          page: paginationData.page || 1,
+          limit: paginationData.limit || 10,
+          total: paginationData.total || 0,
+          pages: paginationData.pages || 0,
+        })
+
         setError("")
       } else {
         const errorData = await response.json()
@@ -369,7 +400,7 @@ export default function ManageSponsorsPage() {
     } finally {
       setLoading(false)
     }
-  }, [pagination.page, pagination.limit, searchTerm, contributionTypeFilter])
+  }, [pagination.page, pagination.limit, searchTerm, contributionTypeFilter, sponsorshipTypeFilter])
 
   useEffect(() => {
     fetchSponsors()
@@ -396,7 +427,9 @@ export default function ManageSponsorsPage() {
         setSuccess("Sponsor created successfully")
         setShowCreateDialog(false)
         setFormData(initialFormData)
-        fetchSponsors()
+        // Reset pagination to first page and fetch
+        setPagination((prev) => ({ ...prev, page: 1 }))
+        setTimeout(() => fetchSponsors(), 100)
       } else {
         const errorData = await response.json()
         setError(errorData.error || "Failed to create sponsor")
@@ -429,7 +462,8 @@ export default function ManageSponsorsPage() {
         setShowEditDialog(false)
         setEditingSponsor(null)
         setFormData(initialFormData)
-        fetchSponsors()
+        // Fetch sponsors after a short delay to ensure state is updated
+        setTimeout(() => fetchSponsors(), 100)
       } else {
         const errorData = await response.json()
         setError(errorData.error || "Failed to update sponsor")
@@ -453,7 +487,8 @@ export default function ManageSponsorsPage() {
 
         if (response.ok) {
           setSuccess("Sponsor deleted successfully")
-          fetchSponsors()
+          // Fetch sponsors after a short delay
+          setTimeout(() => fetchSponsors(), 100)
         } else {
           const errorData = await response.json()
           setError(errorData.error || "Failed to delete sponsor")
@@ -472,6 +507,7 @@ export default function ManageSponsorsPage() {
       name: sponsor.name,
       description: sponsor.description || "",
       pic: sponsor.pic || "",
+      sponsorshipType: sponsor.sponsorshipType,
       contribution: {
         type: sponsor.contribution.type,
         monetaryAmount: sponsor.contribution.monetaryAmount || "",
@@ -487,6 +523,27 @@ export default function ManageSponsorsPage() {
     setEditingSponsor(null)
   }, [])
 
+  const getSponsorshipTypeBadge = useCallback((sponsorshipType: ISponsor["sponsorshipType"]) => {
+    switch (sponsorshipType) {
+      case "corporate":
+        return (
+          <Badge variant="default" className="bg-blue-100 text-blue-800">
+            <Building2 className="h-3 w-3 mr-1" />
+            Corporate
+          </Badge>
+        )
+      case "regular":
+        return (
+          <Badge variant="default" className="bg-gray-100 text-gray-800">
+            <User className="h-3 w-3 mr-1" />
+            Regular
+          </Badge>
+        )
+      default:
+        return null
+    }
+  }, [])
+
   const getContributionBadge = useCallback((contribution: ISponsor["contribution"]) => {
     switch (contribution.type) {
       case "monetary":
@@ -498,7 +555,7 @@ export default function ManageSponsorsPage() {
         )
       case "in-kind":
         return (
-          <Badge variant="default" className="bg-blue-100 text-blue-800">
+          <Badge variant="default" className="bg-orange-100 text-orange-800">
             <Gift className="h-3 w-3 mr-1" />
             In-Kind
           </Badge>
@@ -606,11 +663,23 @@ export default function ManageSponsorsPage() {
               </div>
             </div>
 
-            <Select value={contributionTypeFilter} onValueChange={setContributionTypeFilter}>
+            <Select value={sponsorshipTypeFilter} onValueChange={setSponsorshipTypeFilter}>
               <SelectTrigger className="w-full sm:w-48">
-                <SelectValue placeholder="Filter by type" />
+                <SelectValue placeholder="Filter by sponsorship type" />
               </SelectTrigger>
               <SelectContent>
+                <SelectItem value="all">All Types</SelectItem>
+                <SelectItem value="regular">Regular</SelectItem>
+                <SelectItem value="corporate">Corporate</SelectItem>
+              </SelectContent>
+            </Select>
+
+            <Select value={contributionTypeFilter} onValueChange={setContributionTypeFilter}>
+              <SelectTrigger className="w-full sm:w-48">
+                <SelectValue placeholder="Filter by contribution" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="all">All Contributions</SelectItem>
                 <SelectItem value="monetary">Monetary</SelectItem>
                 <SelectItem value="in-kind">In Kind</SelectItem>
                 <SelectItem value="both">Both</SelectItem>
@@ -640,11 +709,11 @@ export default function ManageSponsorsPage() {
             <Gift className="h-12 w-12 text-gray-400 mx-auto mb-4" />
             <h3 className="text-lg font-semibold text-gray-900 mb-2">No sponsors found</h3>
             <p className="text-gray-600 mb-4">
-              {searchTerm || contributionTypeFilter
+              {searchTerm || contributionTypeFilter || sponsorshipTypeFilter
                 ? "No sponsors match your current filters."
                 : "Get started by creating your first sponsor."}
             </p>
-            {!searchTerm && !contributionTypeFilter && (
+            {!searchTerm && !contributionTypeFilter && !sponsorshipTypeFilter && (
               <Button onClick={() => setShowCreateDialog(true)}>
                 <Plus className="h-4 w-4 mr-2" />
                 Add First Sponsor
@@ -674,7 +743,10 @@ export default function ManageSponsorsPage() {
                 </div>
 
                 <div className="space-y-3">
-                  <div className="flex items-center gap-2">{getContributionBadge(sponsor.contribution)}</div>
+                  <div className="flex items-center gap-2">
+                    {getSponsorshipTypeBadge(sponsor.sponsorshipType)}
+                    {getContributionBadge(sponsor.contribution)}
+                  </div>
 
                   <div className="text-sm text-gray-700">
                     <strong>Contribution:</strong> {formatContributionDetails(sponsor.contribution)}

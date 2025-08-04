@@ -1,27 +1,44 @@
-import mongoose from "mongoose"
+import mongoose, { Schema, type Document } from "mongoose"
 
-export interface ISponsor {
-  _id?: string
+export interface ISponsor extends Document {
+  _id: string
   name: string
   description?: string
   pic?: string
+  sponsorshipType: "regular" | "corporate"
   contribution: {
     type: "monetary" | "in-kind" | "both"
     monetaryAmount?: number
     inKindDescription?: string
   }
   websiteLink?: string
-  createdAt?: Date
-  updatedAt?: Date
+  createdAt: Date
+  updatedAt: Date
 }
 
-const sponsorSchema = new mongoose.Schema(
+const contributionSchema = new Schema({
+  type: {
+    type: String,
+    enum: ["monetary", "in-kind", "both"],
+    required: [true, "Contribution type is required"],
+  },
+  monetaryAmount: {
+    type: Number,
+    min: [0, "Monetary amount must be positive"],
+  },
+  inKindDescription: {
+    type: String,
+    maxlength: [300, "In-kind description cannot exceed 300 characters"],
+  },
+})
+
+const sponsorSchema = new Schema<ISponsor>(
   {
     name: {
       type: String,
       required: [true, "Sponsor name is required"],
       trim: true,
-      maxlength: [100, "Name cannot exceed 100 characters"],
+      maxlength: [100, "Sponsor name cannot exceed 100 characters"],
     },
     description: {
       type: String,
@@ -32,46 +49,25 @@ const sponsorSchema = new mongoose.Schema(
       type: String,
       trim: true,
     },
+    sponsorshipType: {
+      type: String,
+      enum: ["regular", "corporate"],
+      required: [true, "Sponsorship type is required"],
+      default: "regular",
+    },
     contribution: {
-      type: {
-        type: String,
-        enum: ["monetary", "in-kind", "both"],
-        required: [true, "Contribution type is required"],
-      },
-      monetaryAmount: {
-        type: Number,
-        min: [0, "Monetary amount must be positive"],
-        validate: {
-          validator: function (this: ISponsor, value: number) {
-            return this.contribution.type === "monetary" || this.contribution.type === "both" ? value > 0 : true
-          },
-          message: "Monetary amount is required for monetary contributions",
-        },
-      },
-      inKindDescription: {
-        type: String,
-        trim: true,
-        maxlength: [300, "In-kind description cannot exceed 300 characters"],
-        validate: {
-          validator: function (this: ISponsor, value: string) {
-            return this.contribution.type === "in-kind" || this.contribution.type === "both"
-              ? value && value.length > 0
-              : true
-          },
-          message: "In-kind description is required for in-kind contributions",
-        },
-      },
+      type: contributionSchema,
+      required: [true, "Contribution details are required"],
     },
     websiteLink: {
       type: String,
       trim: true,
       validate: {
-        validator: (value: string) => {
-          if (!value) return true
-          const urlRegex = /^(https?:\/\/)?([\da-z.-]+)\.([a-z.]{2,6})([/\w .-]*)*\/?$/
-          return urlRegex.test(value)
+        validator: (v: string) => {
+          if (!v) return true // Optional field
+          return /^https?:\/\/.+/.test(v)
         },
-        message: "Please enter a valid website URL",
+        message: "Website link must be a valid URL",
       },
     },
   },
@@ -80,9 +76,56 @@ const sponsorSchema = new mongoose.Schema(
   },
 )
 
-// Indexes for better query performance
+// Pre-save validation
+sponsorSchema.pre("save", function (next) {
+  const sponsor = this as ISponsor
+
+  // Validate contribution based on type
+  if (sponsor.contribution.type === "monetary" || sponsor.contribution.type === "both") {
+    if (!sponsor.contribution.monetaryAmount || sponsor.contribution.monetaryAmount <= 0) {
+      return next(new Error("Monetary amount is required and must be greater than 0 for monetary contributions"))
+    }
+  }
+
+  if (sponsor.contribution.type === "in-kind" || sponsor.contribution.type === "both") {
+    if (!sponsor.contribution.inKindDescription || sponsor.contribution.inKindDescription.trim().length === 0) {
+      return next(new Error("In-kind description is required for in-kind contributions"))
+    }
+  }
+
+  next()
+})
+
+// Pre-update validation
+sponsorSchema.pre(["findOneAndUpdate", "updateOne"], function (next) {
+  const update = this.getUpdate() as any
+
+  if (update.contribution) {
+    const contribution = update.contribution
+
+    // Validate contribution based on type
+    if (contribution.type === "monetary" || contribution.type === "both") {
+      if (!contribution.monetaryAmount || contribution.monetaryAmount <= 0) {
+        return next(new Error("Monetary amount is required and must be greater than 0 for monetary contributions"))
+      }
+    }
+
+    if (contribution.type === "in-kind" || contribution.type === "both") {
+      if (!contribution.inKindDescription || contribution.inKindDescription.trim().length === 0) {
+        return next(new Error("In-kind description is required for in-kind contributions"))
+      }
+    }
+  }
+
+  next()
+})
+
+// Create indexes
 sponsorSchema.index({ name: 1 })
+sponsorSchema.index({ sponsorshipType: 1 })
 sponsorSchema.index({ "contribution.type": 1 })
 sponsorSchema.index({ createdAt: -1 })
 
-export default mongoose.models.Sponsor || mongoose.model<ISponsor>("Sponsor", sponsorSchema)
+const Sponsor = mongoose.models.Sponsor || mongoose.model<ISponsor>("Sponsor", sponsorSchema)
+
+export default Sponsor
