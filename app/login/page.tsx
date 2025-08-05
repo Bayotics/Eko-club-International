@@ -330,7 +330,7 @@ export default function LoginPage() {
         description:
           "Please check your email to verify your account. The verification link will expire in 24 hours. If you do not receive anything in your inbox, check your spam folder",
         variant: "default",
-        duration: 10000,
+        duration: 6000,
       })
 
       // Switch to login tab after successful registration

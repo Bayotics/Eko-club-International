@@ -6,7 +6,7 @@ export interface ISponsor extends Document {
   description?: string
   pic?: string
   sponsorshipType: "regular" | "corporate"
-  contribution: {
+  contribution?: {
     type: "monetary" | "in-kind" | "both"
     monetaryAmount?: number
     inKindDescription?: string
@@ -20,7 +20,6 @@ const contributionSchema = new Schema({
   type: {
     type: String,
     enum: ["monetary", "in-kind", "both"],
-    required: [true, "Contribution type is required"],
   },
   monetaryAmount: {
     type: Number,
@@ -57,7 +56,7 @@ const sponsorSchema = new Schema<ISponsor>(
     },
     contribution: {
       type: contributionSchema,
-      required: [true, "Contribution details are required"],
+      required: false, // Made optional
     },
     websiteLink: {
       type: String,
@@ -76,27 +75,30 @@ const sponsorSchema = new Schema<ISponsor>(
   },
 )
 
-// Pre-save validation
+// Pre-save validation - only validate if contribution exists
 sponsorSchema.pre("save", function (next) {
   const sponsor = this as ISponsor
 
-  // Validate contribution based on type
-  if (sponsor.contribution.type === "monetary" || sponsor.contribution.type === "both") {
-    if (!sponsor.contribution.monetaryAmount || sponsor.contribution.monetaryAmount <= 0) {
-      return next(new Error("Monetary amount is required and must be greater than 0 for monetary contributions"))
+  // Only validate contribution if it exists
+  if (sponsor.contribution) {
+    // Validate contribution based on type
+    if (sponsor.contribution.type === "monetary" || sponsor.contribution.type === "both") {
+      if (!sponsor.contribution.monetaryAmount || sponsor.contribution.monetaryAmount <= 0) {
+        return next(new Error("Monetary amount is required and must be greater than 0 for monetary contributions"))
+      }
     }
-  }
 
-  if (sponsor.contribution.type === "in-kind" || sponsor.contribution.type === "both") {
-    if (!sponsor.contribution.inKindDescription || sponsor.contribution.inKindDescription.trim().length === 0) {
-      return next(new Error("In-kind description is required for in-kind contributions"))
+    if (sponsor.contribution.type === "in-kind" || sponsor.contribution.type === "both") {
+      if (!sponsor.contribution.inKindDescription || sponsor.contribution.inKindDescription.trim().length === 0) {
+        return next(new Error("In-kind description is required for in-kind contributions"))
+      }
     }
   }
 
   next()
 })
 
-// Pre-update validation
+// Pre-update validation - only validate if contribution exists
 sponsorSchema.pre(["findOneAndUpdate", "updateOne"], function (next) {
   const update = this.getUpdate() as any
 

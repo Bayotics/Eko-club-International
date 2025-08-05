@@ -36,7 +36,7 @@ interface SponsorFormData {
   pic: string
   sponsorshipType: "regular" | "corporate"
   contribution: {
-    type: "monetary" | "in-kind" | "both"
+    type: "monetary" | "in-kind" | "both" | ""
     monetaryAmount: number | ""
     inKindDescription: string
   }
@@ -49,7 +49,7 @@ const initialFormData: SponsorFormData = {
   pic: "",
   sponsorshipType: "regular",
   contribution: {
-    type: "monetary",
+    type: "",
     monetaryAmount: "",
     inKindDescription: "",
   },
@@ -95,15 +95,15 @@ const SponsorForm = ({
   )
 
   const handleContributionTypeChange = useCallback(
-    (type: "monetary" | "in-kind" | "both") => {
+    (type: "monetary" | "in-kind" | "both" | "") => {
       onFormDataChange({
         ...formData,
         contribution: {
           ...formData.contribution,
           type,
           // Reset values when changing type
-          monetaryAmount: type === "in-kind" ? "" : formData.contribution.monetaryAmount,
-          inKindDescription: type === "monetary" ? "" : formData.contribution.inKindDescription,
+          monetaryAmount: type === "in-kind" || type === "" ? "" : formData.contribution.monetaryAmount,
+          inKindDescription: type === "monetary" || type === "" ? "" : formData.contribution.inKindDescription,
         },
       })
     },
@@ -142,25 +142,29 @@ const SponsorForm = ({
   )
 
   const isFormValid = useMemo(() => {
-    if (!formData.name || !formData.contribution.type || !formData.sponsorshipType) return false
+    // Only name and sponsorshipType are required
+    if (!formData.name || !formData.sponsorshipType) return false
 
-    if (formData.contribution.type === "monetary") {
-      return formData.contribution.monetaryAmount && Number(formData.contribution.monetaryAmount) > 0
+    // If contribution type is provided, validate based on type
+    if (formData.contribution.type) {
+      if (formData.contribution.type === "monetary") {
+        return formData.contribution.monetaryAmount && Number(formData.contribution.monetaryAmount) > 0
+      }
+
+      if (formData.contribution.type === "in-kind") {
+        return formData.contribution.inKindDescription.trim().length > 0
+      }
+
+      if (formData.contribution.type === "both") {
+        return (
+          formData.contribution.monetaryAmount &&
+          Number(formData.contribution.monetaryAmount) > 0 &&
+          formData.contribution.inKindDescription.trim().length > 0
+        )
+      }
     }
 
-    if (formData.contribution.type === "in-kind") {
-      return formData.contribution.inKindDescription.trim().length > 0
-    }
-
-    if (formData.contribution.type === "both") {
-      return (
-        formData.contribution.monetaryAmount &&
-        Number(formData.contribution.monetaryAmount) > 0 &&
-        formData.contribution.inKindDescription.trim().length > 0
-      )
-    }
-
-    return false
+    return true // Valid if no contribution type is selected
   }, [formData])
 
   return (
@@ -280,17 +284,21 @@ const SponsorForm = ({
 
       <Separator />
 
-      {/* Contribution */}
+      {/* Contribution - Now Optional */}
       <div className="space-y-4">
-        <h3 className="text-lg font-semibold">Contribution Details *</h3>
+        <h3 className="text-lg font-semibold">Contribution Details (Optional)</h3>
+        <p className="text-sm text-gray-600">
+          You can leave this section empty if contribution details are not available.
+        </p>
 
         <div className="space-y-2">
           <Label htmlFor="contributionType">Contribution Type</Label>
           <Select value={formData.contribution.type} onValueChange={handleContributionTypeChange}>
             <SelectTrigger id="contributionType">
-              <SelectValue placeholder="Select contribution type" />
+              <SelectValue placeholder="Select contribution type (optional)" />
             </SelectTrigger>
             <SelectContent>
+              <SelectItem value="none">None</SelectItem>
               <SelectItem value="monetary">Monetary</SelectItem>
               <SelectItem value="in-kind">In Kind</SelectItem>
               <SelectItem value="both">Both</SelectItem>
@@ -300,7 +308,7 @@ const SponsorForm = ({
 
         {(formData.contribution.type === "monetary" || formData.contribution.type === "both") && (
           <div className="space-y-2">
-            <Label htmlFor="monetaryAmount">Donation Amount (USD) *</Label>
+            <Label htmlFor="monetaryAmount">Donation Amount (USD)</Label>
             <Input
               id="monetaryAmount"
               type="number"
@@ -317,7 +325,7 @@ const SponsorForm = ({
 
         {(formData.contribution.type === "in-kind" || formData.contribution.type === "both") && (
           <div className="space-y-2">
-            <Label htmlFor="inKindDescription">In-Kind Contribution Description *</Label>
+            <Label htmlFor="inKindDescription">In-Kind Contribution Description</Label>
             <Textarea
               id="inKindDescription"
               value={formData.contribution.inKindDescription}
@@ -349,8 +357,8 @@ export default function ManageSponsorsPage() {
   const [error, setError] = useState("")
   const [success, setSuccess] = useState("")
   const [searchTerm, setSearchTerm] = useState("")
-  const [contributionTypeFilter, setContributionTypeFilter] = useState("")
-  const [sponsorshipTypeFilter, setSponsorshipTypeFilter] = useState("")
+  const [contributionTypeFilter, setContributionTypeFilter] = useState("none")
+  const [sponsorshipTypeFilter, setSponsorshipTypeFilter] = useState("all")
   const [showCreateDialog, setShowCreateDialog] = useState(false)
   const [showEditDialog, setShowEditDialog] = useState(false)
   const [editingSponsor, setEditingSponsor] = useState<ISponsor | null>(null)
@@ -374,7 +382,7 @@ export default function ManageSponsorsPage() {
         ...(sponsorshipTypeFilter && sponsorshipTypeFilter !== "all" && { sponsorshipType: sponsorshipTypeFilter }),
       })
 
-      const response = await fetch(`/api/admin/sponsors?${params}`)
+      const response = await fetch(`/api/admin/sponsors`)
 
       if (response.ok) {
         const data = await response.json()
@@ -509,9 +517,9 @@ export default function ManageSponsorsPage() {
       pic: sponsor.pic || "",
       sponsorshipType: sponsor.sponsorshipType,
       contribution: {
-        type: sponsor.contribution.type,
-        monetaryAmount: sponsor.contribution.monetaryAmount || "",
-        inKindDescription: sponsor.contribution.inKindDescription || "",
+        type: sponsor.contribution?.type || "",
+        monetaryAmount: sponsor.contribution?.monetaryAmount || "",
+        inKindDescription: sponsor.contribution?.inKindDescription || "",
       },
       websiteLink: sponsor.websiteLink || "",
     })
@@ -544,7 +552,15 @@ export default function ManageSponsorsPage() {
     }
   }, [])
 
-  const getContributionBadge = useCallback((contribution: ISponsor["contribution"]) => {
+  const getContributionBadge = useCallback((contribution?: ISponsor["contribution"]) => {
+    if (!contribution?.type) {
+      return (
+        <Badge variant="default" className="bg-gray-100 text-gray-600">
+          No Contribution
+        </Badge>
+      )
+    }
+
     switch (contribution.type) {
       case "monetary":
         return (
@@ -572,7 +588,11 @@ export default function ManageSponsorsPage() {
     }
   }, [])
 
-  const formatContributionDetails = useCallback((contribution: ISponsor["contribution"]) => {
+  const formatContributionDetails = useCallback((contribution?: ISponsor["contribution"]) => {
+    if (!contribution?.type) {
+      return "No contribution details"
+    }
+
     const details = []
 
     if (contribution.monetaryAmount) {
@@ -583,7 +603,7 @@ export default function ManageSponsorsPage() {
       details.push(contribution.inKindDescription)
     }
 
-    return details.join(" + ")
+    return details.length > 0 ? details.join(" + ") : "No contribution details"
   }, [])
 
   // Clear messages after 5 seconds
@@ -679,7 +699,7 @@ export default function ManageSponsorsPage() {
                 <SelectValue placeholder="Filter by contribution" />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="all">All Contributions</SelectItem>
+                <SelectItem value="none">All Contributions</SelectItem>
                 <SelectItem value="monetary">Monetary</SelectItem>
                 <SelectItem value="in-kind">In Kind</SelectItem>
                 <SelectItem value="both">Both</SelectItem>
@@ -713,7 +733,7 @@ export default function ManageSponsorsPage() {
                 ? "No sponsors match your current filters."
                 : "Get started by creating your first sponsor."}
             </p>
-            {!searchTerm && !contributionTypeFilter && !sponsorshipTypeFilter && (
+            {!searchTerm && contributionTypeFilter === "none" && sponsorshipTypeFilter === "all" && (
               <Button onClick={() => setShowCreateDialog(true)}>
                 <Plus className="h-4 w-4 mr-2" />
                 Add First Sponsor
@@ -743,15 +763,17 @@ export default function ManageSponsorsPage() {
                 </div>
 
                 <div className="space-y-3">
-                  <div className="flex items-center gap-2">
+                  {/* <div className="flex items-center gap-2">
                     {getSponsorshipTypeBadge(sponsor.sponsorshipType)}
                     {getContributionBadge(sponsor.contribution)}
-                  </div>
-
-                  <div className="text-sm text-gray-700">
-                    <strong>Contribution:</strong> {formatContributionDetails(sponsor.contribution)}
-                  </div>
-
+                  </div> */}
+                  {sponsor.contribution && (
+                    <div>
+                       <div className="text-sm text-gray-700">
+                        <strong>Contribution:</strong> {formatContributionDetails(sponsor.contribution)}
+                      </div>
+                    </div>
+                  )}
                   {sponsor.websiteLink && (
                     <div className="flex items-center gap-1 text-sm">
                       <ExternalLink className="h-3 w-3" />
