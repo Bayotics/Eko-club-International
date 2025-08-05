@@ -5,89 +5,206 @@ import User from "@/models/user"
 import { connectToDatabase } from "@/lib/mongodb"
 import { Resend } from "resend"
 
-const resend = new Resend(process.env.RESEND_API_KEY)
+// Resend configuration with error handling
+const RESEND_API_KEY = process.env.RESEND_API_KEY
+let resend = null
+
+if (RESEND_API_KEY) {
+  try {
+    resend = new Resend(RESEND_API_KEY)
+  } catch (error) {
+    console.error("Failed to initialize Resend:", error)
+  }
+} else {
+  console.warn("RESEND_API_KEY environment variable is not set")
+}
 
 export async function POST(request: Request) {
   try {
+    console.log("Registration request received")
+
     // Parse request body
-    const { fullName, email, password, chapterName, phone, profileImage, membershipId } = await request.json()
+    let body
+    try {
+      body = await request.json()
+    } catch (error) {
+      console.error("Failed to parse request body:", error)
+      return NextResponse.json({ message: "Invalid request body" }, { status: 400 })
+    }
+
+    const { name, fullName, email, password, chapterName, phone, profileImage, recaptchaToken } = body
+    const userName = name || fullName
+
+    console.log("Registration attempt for email:", email)
+    console.log("reCAPTCHA token received:", !!recaptchaToken)
 
     // Validate required fields
-    if (!fullName || !email || !password || !phone) {
-      return NextResponse.json({ message: "Name, email, phone, and password are required" }, { status: 400 })
+    if (!userName || !email || !password) {
+      console.log("Missing required fields:", { userName: !!userName, email: !!email, password: !!password })
+      return NextResponse.json({ message: "Name, email, and password are required" }, { status: 400 })
+    }
+
+    // Verify reCAPTCHA token if provided and secret key is configured
+    const recaptchaSecretKey = process.env.RECAPTCHA_SECRET_KEY
+    if (recaptchaToken && recaptchaSecretKey) {
+      console.log("Verifying reCAPTCHA token...")
+      try {
+        const recaptchaResponse = await fetch("https://www.google.com/recaptcha/api/siteverify", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/x-www-form-urlencoded",
+          },
+          body: new URLSearchParams({
+            secret: recaptchaSecretKey,
+            response: recaptchaToken,
+          }),
+        })
+
+        const recaptchaResult = await recaptchaResponse.json()
+        console.log("reCAPTCHA verification result:", recaptchaResult)
+
+        if (!recaptchaResult.success) {
+          console.error("reCAPTCHA verification failed:", recaptchaResult["error-codes"])
+          return NextResponse.json(
+            {
+              message: "reCAPTCHA verification failed. Please try again.",
+            },
+            { status: 400 },
+          )
+        }
+
+        console.log("reCAPTCHA verification successful")
+      } catch (error) {
+        console.error("Error verifying reCAPTCHA:", error)
+        return NextResponse.json({ message: "reCAPTCHA verification failed" }, { status: 500 })
+      }
+    } else if (recaptchaToken && !recaptchaSecretKey) {
+      console.warn("reCAPTCHA token provided but secret key not configured")
+    } else if (!recaptchaToken && recaptchaSecretKey) {
+      console.log("reCAPTCHA secret key configured but no token provided")
+      return NextResponse.json({ message: "reCAPTCHA verification is required" }, { status: 400 })
+    } else {
+      console.log("reCAPTCHA not configured, proceeding without verification")
     }
 
     // Connect to database
-    await connectToDatabase()
+    try {
+      await connectToDatabase()
+      console.log("Database connected successfully")
+    } catch (error) {
+      console.error("Database connection failed:", error)
+      return NextResponse.json({ message: "Database connection failed" }, { status: 500 })
+    }
 
     // Check if user already exists
-    const existingUser = await User.findOne({ email })
-    if (existingUser) {
-      return NextResponse.json({ message: "User with this email already exists" }, { status: 409 })
-    }
+    try {
+      const existingUser = await User.findOne({ email })
+      if (existingUser) {
+        console.log("User already exists with email:", email)
+        return NextResponse.json({ message: "User with this email already exists" }, { status: 409 })
+      }
 
-    const existingPhone = await User.findOne({ phone })
-    if (existingPhone) {
-      return NextResponse.json({ message: "User with this phone number already exists!" }, { status: 409 })
-    }
+      // Only check phone if it's provided
+      if (phone) {
+        const existingPhone = await User.findOne({ phone })
+        if (existingPhone) {
+          console.log("User already exists with phone:", phone)
+          return NextResponse.json({ message: "User with this phone number already exists!" }, { status: 409 })
+        }
+      }
 
-    // Check if user is blocked
-    const blockedUser = await User.findOne({ email, role: "blocked" })
-    if (blockedUser) {
-      return NextResponse.json(
-        { message: "This email has been blocked. Please contact an administrator." },
-        { status: 403 },
-      )
+      // Check if user is blocked
+      const blockedUser = await User.findOne({ email, role: "blocked" })
+      if (blockedUser) {
+        console.log("Blocked user attempted registration:", email)
+        return NextResponse.json(
+          { message: "This email has been blocked. Please contact an administrator." },
+          { status: 403 },
+        )
+      }
+    } catch (error) {
+      console.error("Error checking existing users:", error)
+      return NextResponse.json({ message: "Error checking user existence" }, { status: 500 })
     }
 
     // Hash password
-    const hashedPassword = await bcrypt.hash(password, 10)
+    let hashedPassword
+    try {
+      hashedPassword = await bcrypt.hash(password, 10)
+      console.log("Password hashed successfully")
+    } catch (error) {
+      console.error("Password hashing failed:", error)
+      return NextResponse.json({ message: "Password processing failed" }, { status: 500 })
+    }
 
     // Generate verification token
     const verificationToken = crypto.randomBytes(20).toString("hex")
     const verificationExpire = new Date(Date.now() + 24 * 60 * 60 * 1000) // 24 hours
 
-    // Create temporary user object (not saved to DB yet)
-    const tempUser = {
-      fullName,
+    // Create user object
+    const userData = {
+      fullName: userName,
       email,
-      phone,
+      phone: phone || "Not provided",
       password: hashedPassword,
       chapterName: chapterName || "",
-      role: "pending", // Default role is now pending
-      profileImage,
+      role: "pending",
+      profileImage: profileImage || "",
       createdAt: new Date(),
       emailVerificationToken: verificationToken,
       emailVerificationExpire: verificationExpire,
       isVerified: false,
-      membershipId
+    }
+
+    // Save user to database
+    let newUser
+    try {
+      newUser = new User(userData)
+      await newUser.save()
+      console.log("User saved to database successfully")
+    } catch (error) {
+      console.error("Error saving user to database:", error)
+      return NextResponse.json({ message: "Failed to create user account" }, { status: 500 })
     }
 
     // Send verification email
-    await sendVerificationEmail(email, fullName, verificationToken)
-
-    // Store user data in temporary storage (we'll use the token as the key)
-    // In a real application, you might want to use Redis or another temporary storage
-    // For simplicity, we'll save to the database but mark as unverified
-    const newUser = new User(tempUser)
-    await newUser.save()
+    try {
+      await sendVerificationEmail(email, userName, verificationToken)
+      console.log("Verification email sent successfully")
+    } catch (error) {
+      console.error("Failed to send verification email:", error)
+      // Don't fail the registration if email fails, but log it
+      console.log("Registration completed but email failed to send")
+    }
 
     // Return success response
     return NextResponse.json(
       {
-        message: "Registration initiated. Please check your email to verify your account. If you do not receive anything in your inbox, check your spam folder",
+        message: "Registration initiated. Please check your email to verify your account.",
         verificationSent: true,
       },
       { status: 201 },
     )
   } catch (error) {
     console.error("Registration error:", error)
-    return NextResponse.json({ message: "An error occurred during registration" }, { status: 500 })
+    console.error("Error stack:", error.stack)
+    return NextResponse.json(
+      {
+        message: "An error occurred during registration",
+        error: process.env.NODE_ENV === "development" ? error.message : undefined,
+      },
+      { status: 500 },
+    )
   }
 }
 
 async function sendVerificationEmail(email: string, name: string, token: string) {
-  const appUrl = process.env.NEXT_PUBLIC_APP_URL || "https://ekoclub.org"
+  if (!resend) {
+    console.warn("Resend not configured, skipping email send")
+    throw new Error("Email service is not configured")
+  }
+
+  const appUrl = "https://eko-club-international.vercel.app"
   const emailFrom = process.env.EMAIL_FROM || "noreply@ekoclub.org"
   const verificationUrl = `${appUrl}/verify-email?token=${token}`
 
@@ -107,18 +224,32 @@ async function sendVerificationEmail(email: string, name: string, token: string)
       </div>
   `
 
+  const textBody = `
+    Dear ${name},
+
+    Thank you for registering with Eko Club International. To complete your registration, please verify your email address by visiting the following link:
+
+    ${verificationUrl}
+
+    This link will expire in 24 hours. If you did not create an account, please ignore this email.
+
+    Best regards,
+    Eko Club International Team
+  `
+
   try {
     const data = await resend.emails.send({
       from: `Eko Club <${emailFrom}>`,
       to: email,
       subject: "Verify Your Email - Eko Club International",
       html: htmlBody,
+      text: textBody,
     })
 
     console.log("Resend API success:", data)
+    return data
   } catch (error) {
     console.error("Resend email failed:", error)
     throw error
   }
 }
-

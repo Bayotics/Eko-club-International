@@ -25,6 +25,7 @@ import { Toaster } from "@/components/ui/toaster"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import "react-phone-number-input/style.css"
 import PhoneInput from "react-phone-number-input"
+import ReCAPTCHA from "react-google-recaptcha"
 
 export default function LoginPage() {
   const router = useRouter()
@@ -38,11 +39,21 @@ export default function LoginPage() {
   const [profileImage, setProfileImage] = useState(null)
   const [profileImageUrl, setProfileImageUrl] = useState("")
   const [isUploading, setIsUploading] = useState(false)
+  const [recaptchaToken, setRecaptchaToken] = useState("")
   const fileInputRef = useRef(null)
+  const recaptchaRef = useRef(null)
+
+  // reCAPTCHA site key - this should be set in your environment variables
+  const RECAPTCHA_SITE_KEY = process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY
 
   // Clear error when tab changes
   useEffect(() => {
     setError("")
+    setRecaptchaToken("")
+    // Reset reCAPTCHA when switching tabs
+    if (recaptchaRef.current) {
+      recaptchaRef.current.reset()
+    }
   }, [activeTab])
 
   // Login form state
@@ -51,14 +62,12 @@ export default function LoginPage() {
     password: "",
   })
 
-  function generateMembershipId(length = 19) {
-  const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-  let result = '';
-  for (let i = 0; i < length; i++) {
-    result += chars.charAt(Math.floor(Math.random() * chars.length));
+  function generateRandomNumber(digits) {
+    const min = Math.pow(10, digits - 1)
+    const max = Math.pow(10, digits) - 1
+    return (Math.floor(Math.random() * (max - min + 1)) + min).toString()
   }
-  return result;
-}
+
   // Register form state
   const [registerData, setRegisterData] = useState({
     fullName: "",
@@ -68,7 +77,7 @@ export default function LoginPage() {
     chapterName: "",
     profileImage: "",
     phone: "",
-    membershipId: generateMembershipId()
+    membershipId: generateRandomNumber(19),
   })
 
   const handleLoginChange = (e) => {
@@ -103,7 +112,6 @@ export default function LoginPage() {
       // Create form data for upload
       const formData = new FormData()
       formData.append("file", file)
-      // formData.append("upload_preset", "eko_club_profiles") // Create this preset in your Cloudinary dashboard
 
       // Upload to Cloudinary
       const response = await fetch("/api/cloudinary/upload", {
@@ -154,6 +162,34 @@ export default function LoginPage() {
     if (fileInputRef.current) {
       fileInputRef.current.click()
     }
+  }
+
+  // Handle reCAPTCHA change
+  const handleRecaptchaChange = (token) => {
+    console.log("reCAPTCHA token received:", !!token)
+    setRecaptchaToken(token || "")
+  }
+
+  // Handle reCAPTCHA expiry
+  const handleRecaptchaExpired = () => {
+    console.log("reCAPTCHA expired")
+    setRecaptchaToken("")
+    toast({
+      title: "reCAPTCHA Expired",
+      description: "Please complete the reCAPTCHA verification again.",
+      variant: "destructive",
+    })
+  }
+
+  // Handle reCAPTCHA error
+  const handleRecaptchaError = () => {
+    console.log("reCAPTCHA error")
+    setRecaptchaToken("")
+    toast({
+      title: "reCAPTCHA Error",
+      description: "There was an error with reCAPTCHA. Please try again.",
+      variant: "destructive",
+    })
   }
 
   const handleLogin = async (e) => {
@@ -257,11 +293,29 @@ export default function LoginPage() {
       return
     }
 
+    // Check if reCAPTCHA is completed (only if site key is configured)
+    if (RECAPTCHA_SITE_KEY && !recaptchaToken) {
+      const errorMsg = "Please complete the reCAPTCHA verification"
+      setError(errorMsg)
+
+      toast({
+        title: "reCAPTCHA Required",
+        description: errorMsg,
+        variant: "destructive",
+      })
+
+      setIsLoading(false)
+      return
+    }
+
     try {
       const response = await fetch("/api/auth/register", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(registerData),
+        body: JSON.stringify({
+          ...registerData,
+          recaptchaToken,
+        }),
       })
 
       const data = await response.json()
@@ -273,9 +327,10 @@ export default function LoginPage() {
       // Show success toast with verification instructions
       toast({
         title: "Registration Initiated",
-        description: "Please check your email to verify your account. The verification link will expire in 24 hours. If you do not receive anything in your inbox, check your spam folder",
+        description:
+          "Please check your email to verify your account. The verification link will expire in 24 hours. If you do not receive anything in your inbox, check your spam folder",
         variant: "default",
-        duration: 6000,
+        duration: 10000,
       })
 
       // Switch to login tab after successful registration
@@ -284,6 +339,12 @@ export default function LoginPage() {
         email: registerData.email,
         password: "",
       })
+
+      // Reset recaptcha token
+      setRecaptchaToken("")
+      if (recaptchaRef.current) {
+        recaptchaRef.current.reset()
+      }
     } catch (err) {
       console.error("Registration error:", err)
 
@@ -296,6 +357,12 @@ export default function LoginPage() {
         description: err.message || "An error occurred during registration",
         variant: "destructive",
       })
+
+      // Reset recaptcha token on error
+      setRecaptchaToken("")
+      if (recaptchaRef.current) {
+        recaptchaRef.current.reset()
+      }
     } finally {
       setIsLoading(false)
     }
@@ -750,10 +817,71 @@ export default function LoginPage() {
                               </div>
                             </div>
                           </div>
+
+                          {/* reCAPTCHA Section */}
+                          {RECAPTCHA_SITE_KEY && (
+                            <div className="space-y-4">
+                              <div className="flex justify-center">
+                                <ReCAPTCHA
+                                  ref={recaptchaRef}
+                                  sitekey={RECAPTCHA_SITE_KEY}
+                                  onChange={handleRecaptchaChange}
+                                  onExpired={handleRecaptchaExpired}
+                                  onError={handleRecaptchaError}
+                                  theme="light"
+                                />
+                              </div>
+
+                              {/* reCAPTCHA Notice */}
+                              <div className="bg-blue-50 border border-blue-200 rounded-lg p-3">
+                                <div className="flex items-center">
+                                  <div className="flex-shrink-0">
+                                    <svg className="h-5 w-5 text-blue-400" viewBox="0 0 20 20" fill="currentColor">
+                                      <path
+                                        fillRule="evenodd"
+                                        d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z"
+                                        clipRule="evenodd"
+                                      />
+                                    </svg>
+                                  </div>
+                                  <div className="ml-3">
+                                    <p className="text-sm text-blue-700">
+                                      This site is protected by reCAPTCHA and the Google{" "}
+                                      <a
+                                        href="https://policies.google.com/privacy"
+                                        className="underline"
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                      >
+                                        Privacy Policy
+                                      </a>{" "}
+                                      and{" "}
+                                      <a
+                                        href="https://policies.google.com/terms"
+                                        className="underline"
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                      >
+                                        Terms of Service
+                                      </a>{" "}
+                                      apply.
+                                    </p>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          )}
+
+                          {!RECAPTCHA_SITE_KEY && (
+                            <div className="text-center text-sm text-yellow-600 bg-yellow-50 p-2 rounded">
+                              reCAPTCHA not configured - registration will work without verification
+                            </div>
+                          )}
+
                           <Button
                             type="submit"
                             className="w-full bg-[#78b16d] hover:bg-[#8A6D3B]"
-                            disabled={isLoading || isUploading}
+                            disabled={isLoading || isUploading || (RECAPTCHA_SITE_KEY && !recaptchaToken)}
                           >
                             {isLoading ? (
                               <>
@@ -809,8 +937,8 @@ export default function LoginPage() {
           padding: 0.5rem 0;
           background-color: transparent;
         }
-        .PhoneInputCountry{
-          width: 10%
+        .PhoneInputCountry {
+          width: 30%;
         }
         .PhoneInputCountrySelect {
           position: relative;
@@ -818,9 +946,6 @@ export default function LoginPage() {
           display: flex;
           align-items: center;
         }
-          .PhoneInputCountryIcon{
-            width: 100%
-          }
       `}</style>
     </main>
   )

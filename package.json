@@ -74,6 +74,7 @@
     "react-countup": "latest",
     "react-day-picker": "8.10.1",
     "react-dom": "^19",
+    "react-google-recaptcha": "^3.1.0",
     "react-hook-form": "^7.54.1",
     "react-icons": "latest",
     "react-leaflet": "^5.0.0",
