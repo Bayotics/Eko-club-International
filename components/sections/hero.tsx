@@ -78,7 +78,7 @@ const slides = [
     showCountdown: true,
     specialButton: {
       text: "REGISTER NOW",
-      link: "https://docs.google.com/forms/d/e/1FAIpQLSecvxqmQ5rXGGNJyNSb382IRXAg56qSqGxvMeW-2kBYnPrglg/viewform",
+      link: "https://www.ekoclubevents.org/register",
       external: true,
     },
   },

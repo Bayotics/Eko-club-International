@@ -79,10 +79,10 @@ export async function PUT(request: Request, { params }: { params: { id: string }
     const { name, description, pic, sponsorshipType, contribution, websiteLink } = body
 
     // Validate required fields
-    if (!name || !contribution?.type || !sponsorshipType) {
+    if (!name || !sponsorshipType) {
       return NextResponse.json(
         {
-          error: "Name, sponsorship type, and contribution type are required",
+          error: "Name, and sponsorship type are required",
         },
         { status: 400 },
       )
@@ -99,42 +99,47 @@ export async function PUT(request: Request, { params }: { params: { id: string }
     }
 
     // Validate contribution based on type
-    if (contribution.type === "monetary" && (!contribution.monetaryAmount || contribution.monetaryAmount <= 0)) {
+    
+
+// Only validate contribution if it is provided and has a type
+if (contribution && contribution.type) {
+  if (contribution.type === "monetary" && (!contribution.monetaryAmount || contribution.monetaryAmount <= 0)) {
+    return NextResponse.json(
+      {
+        error: "Monetary amount is required for monetary contributions",
+      },
+      { status: 400 },
+    )
+  }
+
+  if (contribution.type === "in-kind" && !contribution.inKindDescription) {
+    return NextResponse.json(
+      {
+        error: "In-kind description is required for in-kind contributions",
+      },
+      { status: 400 },
+    )
+  }
+
+  if (contribution.type === "both") {
+    if (!contribution.monetaryAmount || contribution.monetaryAmount <= 0) {
       return NextResponse.json(
         {
-          error: "Monetary amount is required for monetary contributions",
+          error: "Monetary amount is required for both type contributions",
         },
         { status: 400 },
       )
     }
-
-    if (contribution.type === "in-kind" && !contribution.inKindDescription) {
+    if (!contribution.inKindDescription) {
       return NextResponse.json(
         {
-          error: "In-kind description is required for in-kind contributions",
+          error: "In-kind description is required for both type contributions",
         },
         { status: 400 },
       )
     }
-
-    if (contribution.type === "both") {
-      if (!contribution.monetaryAmount || contribution.monetaryAmount <= 0) {
-        return NextResponse.json(
-          {
-            error: "Monetary amount is required for both type contributions",
-          },
-          { status: 400 },
-        )
-      }
-      if (!contribution.inKindDescription) {
-        return NextResponse.json(
-          {
-            error: "In-kind description is required for both type contributions",
-          },
-          { status: 400 },
-        )
-      }
-    }
+  }
+}
 
     const sponsor = await Sponsor.findByIdAndUpdate(
       params.id,
@@ -143,7 +148,6 @@ export async function PUT(request: Request, { params }: { params: { id: string }
         description,
         pic,
         sponsorshipType,
-        contribution,
         websiteLink,
       },
       {

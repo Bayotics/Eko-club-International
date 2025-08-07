@@ -378,11 +378,11 @@ export default function ManageSponsorsPage() {
         page: pagination.page.toString(),
         limit: pagination.limit.toString(),
         ...(searchTerm && { search: searchTerm }),
-        ...(contributionTypeFilter && contributionTypeFilter !== "all" && { contributionType: contributionTypeFilter }),
-        ...(sponsorshipTypeFilter && sponsorshipTypeFilter !== "all" && { sponsorshipType: sponsorshipTypeFilter }),
+        // ...(contributionTypeFilter && contributionTypeFilter !== "all" && { contributionType: contributionTypeFilter }),
+        // ...(sponsorshipTypeFilter && sponsorshipTypeFilter !== "all" && { sponsorshipType: sponsorshipTypeFilter }),
       })
 
-      const response = await fetch(`/api/admin/sponsors`)
+      const response = await fetch(`/api/admin/sponsors?${params}`)
 
       if (response.ok) {
         const data = await response.json()
@@ -475,10 +475,12 @@ export default function ManageSponsorsPage() {
       } else {
         const errorData = await response.json()
         setError(errorData.error || "Failed to update sponsor")
+        alert("Failed to update sponsor")
       }
     } catch (error) {
       console.error("Error updating sponsor:", error)
       setError("Failed to update sponsor")
+      alert(error)
     } finally {
       setSubmitting(false)
     }
