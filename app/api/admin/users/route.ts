@@ -38,7 +38,8 @@ const sendWelcomeEmail = async (
       throw new Error("Email service not configured - RESEND_API_KEY missing")
     }
 
-    const appUrl = process.env.NEXT_PUBLIC_APP_URL || "http://localhost:3000"
+    // const appUrl = process.env.NEXT_PUBLIC_APP_URL || "http://localhost:3000"
+    const appUrl = "https://eko-club-international.vercel.app"
     const loginUrl = `${appUrl}/login`
 
     console.log("Preparing email content for:", email)
