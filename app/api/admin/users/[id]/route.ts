@@ -84,7 +84,7 @@ export async function PATCH(request: Request, { params }: { params: { id: string
     }
 
     // Only allow specific fields to be updated (email is excluded)
-    const allowedFields = ["fullName", "phone", "membershipId", "role"]
+    const allowedFields = ["fullName", "phone", "membershipId", "role", "yearJoined"]
     const updateData: Record<string, any> = {}
 
     for (const field of allowedFields) {

@@ -301,7 +301,7 @@ export async function POST(request: Request) {
       return NextResponse.json({ message: "Invalid JSON in request body" }, { status: 400 })
     }
 
-    const { fullName, email, phone, membershipId, role = "member" } = body
+    const { fullName, email, phone, membershipId, yearJoined, role = "member" } = body
 
     // Validate required fields
     if (!fullName || !email || !phone || !membershipId) {
@@ -371,6 +371,7 @@ export async function POST(request: Request) {
       isVerified: true, // Auto-verify admin-created users
       isActive: true, // Auto-activate admin-created users
       createdAt: new Date(),
+      yearJoined
     })
 
     await newUser.save()
@@ -396,6 +397,7 @@ export async function POST(request: Request) {
         isVerified: newUser.isVerified,
         isActive: newUser.isActive,
         createdAt: newUser.createdAt,
+        yearJoined: newUser.yearJoined
       },
       tempPassword,
       emailSent: emailResult.success,

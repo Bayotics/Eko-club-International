@@ -31,6 +31,7 @@ interface User {
   isVerified: boolean
   isActive: boolean
   createdAt: string
+  yearJoined: number
 }
 
 interface CreateUserResponse {
@@ -57,6 +58,7 @@ export default function AdminUsersPage() {
     phone: "",
     membershipId: "",
     role: "member",
+    yearJoined: 2024
   })
   const [createdUserInfo, setCreatedUserInfo] = useState<{
     tempPassword: string
@@ -202,6 +204,7 @@ export default function AdminUsersPage() {
         phone: "",
         membershipId: "",
         role: "member",
+        yearJoined: 2024
       })
       setFormErrors({})
 
@@ -237,6 +240,7 @@ export default function AdminUsersPage() {
       phone: user.phone,
       membershipId: user.membershipId,
       role: user.role,
+      yearJoined: user.yearJoined
     })
   }
 
@@ -330,6 +334,7 @@ export default function AdminUsersPage() {
       phone: "",
       membershipId: "",
       role: "member",
+      yearJoined: 2024
     })
   }
 
@@ -369,7 +374,7 @@ export default function AdminUsersPage() {
             </DialogHeader>
 
             {!createdUserInfo ? (
-              <div className="space-y-4">
+              <div className="space-y-4 overflow-x-auto overflow-y-auto max-h-[250px]">
                 <div>
                   <Label htmlFor="fullName">Full Name *</Label>
                   <Input
@@ -438,7 +443,18 @@ export default function AdminUsersPage() {
                   />
                   {formErrors.membershipId && <p className="text-sm text-red-500 mt-1">{formErrors.membershipId}</p>}
                 </div>
-
+                <div>
+                  <Label htmlFor="yearJoined">Year Joined </Label>
+                  <Input
+                    id="yearJoined"
+                    value={newUser.yearJoined}
+                    type="number"
+                    onChange={(e) => {
+                      setNewUser({ ...newUser, yearJoined: Number(e.target.value) })
+                    }}
+                    placeholder="Enter year Joined"
+                  />
+                </div>
                 <div>
                   <Label htmlFor="role">Role</Label>
                   <Select value={newUser.role} onValueChange={(value) => setNewUser({ ...newUser, role: value })}>
@@ -584,7 +600,7 @@ export default function AdminUsersPage() {
                     <TableHead>Email</TableHead>
                     <TableHead>Phone</TableHead>
                     <TableHead>Membership ID</TableHead>
-                    <TableHead>Chapter</TableHead>
+                    <TableHead>Year Joined</TableHead>                    
                     <TableHead>Role</TableHead>
                     <TableHead>Status</TableHead>
                     <TableHead>Created</TableHead>
@@ -628,7 +644,18 @@ export default function AdminUsersPage() {
                           user.membershipId
                         )}
                       </TableCell>
-                      <TableCell>{user.chapterName}</TableCell>
+                      <TableCell>
+                        {editingUserId === user._id ? (
+                          <Input
+                            value={editingUser.yearJoined || 2024}
+                            onChange={(e) => handleEditChange("yearJoined", e.target.value)}
+                            className="max-w-[150px]"
+                            type="number"
+                          />
+                        ) : (
+                          user.yearJoined
+                        )}
+                      </TableCell>
                       <TableCell>
                         {editingUserId === user._id ? (
                           <Select

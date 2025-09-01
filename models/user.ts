@@ -51,9 +51,15 @@ const UserSchema = new Schema({
     type: Boolean,
     default: false,
   },
+  yearJoined:{
+    type: Number,
+    default: 2024,
+    required: false
+  },
   createdAt: {
     type: Date,
     default: Date.now,
+
   },
   lastLogin: {
     type: Date,
