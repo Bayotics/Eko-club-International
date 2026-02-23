@@ -4,7 +4,20 @@ import Payment from "@/models/Payment"
 import { connectToDatabase } from "@/lib/mongodb"
 
 // This endpoint would be called by a cron job or scheduled task
-export async function POST() {
+export async function POST(request: Request) {
+  const cronSecret = process.env.CRON_SECRET_TOKEN
+  if (!cronSecret) {
+    return NextResponse.json({ success: false, error: "CRON_SECRET_TOKEN is not configured" }, { status: 500 })
+  }
+
+  const authHeader = request.headers.get("authorization") || ""
+  const bearer = authHeader.startsWith("Bearer ") ? authHeader.slice("Bearer ".length) : null
+
+  if (!bearer || bearer !== cronSecret) {
+    // Return 404 to avoid advertising an internal endpoint
+    return NextResponse.json({ success: false, error: "Not found" }, { status: 404 })
+  }
+
   try {
     await connectToDatabase()
     const now = new Date()

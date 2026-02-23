@@ -11,12 +11,20 @@ export async function GET(request: Request) {
   }
 
   try {
-    // Call the subscription processing endpoint
-    const response = await fetch(`${process.env.NEXT_PUBLIC_APP_URL}/api/subscriptions/process`, {
+    const cronSecret = process.env.CRON_SECRET_TOKEN
+    if (!cronSecret) {
+      return NextResponse.json({ success: false, message: "CRON_SECRET_TOKEN is not configured" }, { status: 500 })
+    }
+
+    // Call the subscription processing endpoint (same deployment)
+    const origin = new URL(request.url).origin
+    const response = await fetch(`${origin}/api/subscription/process`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
+        Authorization: `Bearer ${cronSecret}`,
       },
+      cache: "no-store",
     })
 
     const data = await response.json()
