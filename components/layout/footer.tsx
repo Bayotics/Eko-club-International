@@ -10,7 +10,7 @@ export default function Footer() {
           <div className="space-y-4">
             <div className="flex items-center mb-4">
               <Image
-                src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Eko_club_logo-removebg-preview-SAUiEpYRjmONtSd1YKYL42qyW13AzD.png"
+                src="/images/eko-club-logo.png"
                 alt="Eko Club Logo"
                 width={80}
                 height={80}

@@ -72,13 +72,14 @@ const slides = [
   {
     id: 1,
     image: "/images/hero-slide-1.png",
-    title: "Join our 14th CONVENTION",
-    subtitle: "and 25th ANNIVERSARY",
+    title: "Be a part of our",
+    subtitle: "2026 Medical Mission",
+    subtitleSuffix: "in Lagos, Nigeria",
     description: "",
     showCountdown: true,
     specialButton: {
       text: "REGISTER NOW",
-      link: "https://www.ekoclubevents.org/register",
+      link: "https://forms.gle/JyHDPfqZnoU3zNMv7",
       external: true,
     },
   },
@@ -178,6 +179,11 @@ export default function Hero() {
                   <span className="block text-3xl sm:text-5xl md:text-6xl lg:text-[4rem] font-medium text-[#f3d447] leading-tight">
                     {slides[current].subtitle}
                   </span>
+                  {slides[current].subtitleSuffix && (
+                    <span className="block text-3xl sm:text-5xl md:text-6xl lg:text-[4rem] font-light leading-tight">
+                      {slides[current].subtitleSuffix}
+                    </span>
+                  )}
                 </motion.h1>
               ) : (
                 <motion.h1
@@ -197,7 +203,7 @@ export default function Hero() {
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.8, delay: 0.3 }}
                 >
-                  <CountdownTimer targetDate="2025-09-18T00:00:00" />
+                  <CountdownTimer targetDate="2026-11-15T00:00:00" />
                 </motion.div>
               )}
 
