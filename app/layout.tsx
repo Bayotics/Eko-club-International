@@ -20,12 +20,15 @@ export const metadata = {
   icons: {
     icon: [
       {
-        url: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Eko_club_logo-removebg-preview-SAUiEpYRjmONtSd1YKYL42qyW13AzD.png",
-        href: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Eko_club_logo-removebg-preview-SAUiEpYRjmONtSd1YKYL42qyW13AzD.png",
+        url: "/images/eko-club-logo.png",
+        href: "/images/eko-club-logo.png",
+        type: "image/png",
       },
     ],
+    apple: "/images/eko-club-logo.png",
+    shortcut: "/images/eko-club-logo.png",
   },
-    generator: 'v0.dev'
+    generator: 'Ash linq technologies'
 }
 
 export default function RootLayout({
