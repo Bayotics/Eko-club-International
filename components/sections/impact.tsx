@@ -24,13 +24,13 @@ export default function Impact() {
     },
     {
       icon: <Globe className="h-10 w-10 text-green-500" />,
-      value: 22,
+      value: 25,
       label: "Chapters",
       suffix: "",
     },
     {
       icon: <Award className="h-10 w-10 text-yellow-500" />,
-      value: 25,
+      value: 26,
       label: "Years of Service",
       suffix: "",
     },

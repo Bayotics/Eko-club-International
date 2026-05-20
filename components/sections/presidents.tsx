@@ -52,8 +52,8 @@ const presidents = [
   {
     id: 7,
     name: "Hon. Saheed Olushi",
-    title: "Current President",
-    period: "2021-Present",
+    title: "7th President",
+    period: "2021-2025",
     image: "/images/Presidents/president.jpg?height=400&width=400",
   },
 ]

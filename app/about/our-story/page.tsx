@@ -65,34 +65,46 @@ export default function OurStoryPage() {
 
   const timelineEvents = [
     {
-      year: "1999",
-      title: "Foundation",
-      description: "Eko Club International was founded by a group of visionary individuals from Lagos.",
+      year: "Feb 15, 2000",
+      title: "The Genesis Meeting",
+      description:
+        "Representatives of Eko Club Houston (Otunba T.J. Abass, Yesir Ganiyu, Sam Dipeolu) met with Eko Club Canada members (Alhaji Yekini Agiri, Mrs. Biola Nosiru, Lekan Waheed) at Mrs. Abiola Nosiru's residence. The goal: establish an umbrella organization for all Eko Clubs — a forum to collectively harness resources and drive development in Lagos State.",
     },
     {
-      year: "2002",
-      title: "First International Chapter",
-      description: "The first international chapter was established, expanding our reach globally.",
+      year: "Mar 29 – Apr 3, 2000",
+      title: "1st International Convention – Houston",
+      description:
+        "Eko Club Houston organized the inaugural international convention under the theme \"Enhancing Community Development in Lagos State.\" The event attracted the Governor of Lagos State, the Speaker of the Lagos House of Assembly, and senior government functionaries. The Governor also met Houston's business community to promote investment in Lagos.",
     },
     {
-      year: "2003",
-      title: "Major Community Project",
-      description: "Launched our first major community development project in Lagos.",
+      year: "April 3, 2000",
+      title: "Official Inauguration of ECI",
+      description:
+        "Eko Club International was officially inaugurated comprising Eko Club Canada, Houston, Los Angeles, Indianapolis, Lagosians of Chicago, Eko Club London, and Eko Club New Hampshire. Interim leadership: Otunba Sam Dipeolu (Chairman), Prince Adelani Adeniji Adele (Interim President), Mr. Wahab Owokoniran (VP), Otunba T.J. Abass (General Secretary). Massey Street Children Hospital was adopted as ECI's pet project, with over $80,000 in donated equipment.",
     },
     {
-      year: "2008",
-      title: "Educational Initiative",
-      description: "Started our scholarship program to support underprivileged students.",
+      year: "Oct 17, 2000",
+      title: "Non-Profit Registration",
+      description:
+        "Eko Club International was officially registered as a non-profit organization with the State of Texas.",
     },
     {
-      year: "2012",
-      title: "Healthcare Mission",
-      description: "Initiated our annual medical mission providing free healthcare services.",
+      year: "June 2001",
+      title: "2nd Annual Convention – Canada",
+      description:
+        "Held in Canada with chapters from Atlanta, Boston, Canada, Dallas, Houston, New Jersey, New York, Rhode Island, and Egbe Omo Eko Florida in attendance. An election ushered in the dynamic leadership of Alhaji Olusesi Dawodu as ECI's first elected President.",
     },
     {
-      year: "2018",
-      title: "Digital Transformation",
-      description: "Embraced digital platforms to connect members worldwide and enhance our impact.",
+      year: "3rd Convention",
+      title: "3rd Annual Convention – Atlanta",
+      description:
+        "Eko Club Atlanta hosted the 3rd annual convention. The Governor of Lagos State attended alongside top officials. The economic session fortified Atlanta–Lagos sister-city ties and showcased investment opportunities. The pet project was the computerization of L.A.S.U. On August 15th, elections ushered in the administration of Attorney O.J. Lawal.",
+    },
+    {
+      year: "2007",
+      title: "First ECI Medical Mission",
+      description:
+        "Eko Club International launched its first Medical Mission, delivering free healthcare services to communities in Lagos, Nigeria — a program that has since become one of ECI's most celebrated and impactful annual initiatives.",
     },
   ]
 
@@ -116,12 +128,12 @@ export default function OurStoryPage() {
                   About
                 </Link>
                 <ChevronRight className="h-4 w-4" />
-                <span className="text-[#f0f359]">Our Story</span>
+                <span className="text-[#c8a400]">Our Story</span>
               </div>
               <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-4">Our Story</h1>
             </motion.div>
             <motion.div variants={fadeIn}>
-              <div className="h-1 w-24 bg-[#f0f359] mx-auto mb-6"></div>
+              <div className="h-1 w-24 bg-[#c8a400] mx-auto mb-6"></div>
               <p className="text-lg md:text-xl text-white/90 max-w-3xl mx-auto">
                 Discover the journey of Eko Club International, from our humble beginnings to becoming a leading
                 cultural and community organization.
@@ -158,31 +170,37 @@ export default function OurStoryPage() {
               className="max-w-xl"
             >
               <h2 className="text-3xl md:text-4xl font-bold mb-6 text-gray-800">
-                Our <span className="text-[#f0f359]">Mission</span> & Vision
+                How It All <span className="text-[#c8a400]">Began</span>
               </h2>
-              <div className="h-1 w-20 bg-[#f0f359] mb-8"></div>
+              <div className="h-1 w-20 bg-[#c8a400] mb-8"></div>
               <p className="text-gray-600 mb-6 leading-relaxed">
-                Since our founding, Eko Club International has been dedicated to preserving and promoting the rich
-                cultural heritage of Lagos while fostering unity, community development, and social welfare among our
-                members and the broader community.
+                The genesis of Eko Club International can be attributed to the vision of a group of Lagosians from Eko
+                Club Houston and Canada. The trio of Sam Dipeolu, T.J. Abass and Yesir Ganiyu represented Eko Club
+                Houston at a historic meeting with members of Eko Club Canada, held at Mrs. Abiola Nosiru's residence
+                on <strong>February 15th, 2000</strong>.
+              </p>
+              <p className="text-gray-600 mb-6 leading-relaxed">
+                The goal of the meeting was to highlight the significance of having an umbrella organization for all Eko
+                Clubs — a forum for collectively harnessing limitless resources and a dependable partner in bringing
+                about development, economic well-being, and unity among its members and their beloved state.
               </p>
               <p className="text-gray-600 mb-8 leading-relaxed">
-                Our vision is to be the premier cultural organization that connects people of Lagos heritage worldwide,
-                creating a global network that supports community development, cultural preservation, and social welfare
-                initiatives.
+                At that meeting, a resolution was reached to officially register ECI in the U.S.A. At the time, there
+                were only four chapters: Eko Club Canada, Eko Club Houston, Eko Club New York, and Lagosians of
+                Chicago. Today, ECI has grown into a global network spanning multiple continents.
               </p>
               <div className="grid grid-cols-2 gap-6">
                 <div className="flex items-start gap-3">
-                  <div className="p-3 rounded-full bg-[#f0f359]/10 text-[#f0f359]">
+                  <div className="p-3 rounded-full bg-[#c8a400]/10 text-[#c8a400]">
                     <Calendar className="h-6 w-6" />
                   </div>
                   <div>
                     <h3 className="font-semibold text-gray-800 mb-1">Established</h3>
-                    <p className="text-gray-600">1999</p>
+                    <p className="text-gray-600">2000</p>
                   </div>
                 </div>
                 <div className="flex items-start gap-3">
-                  <div className="p-3 rounded-full bg-[#f0f359]/10 text-[#f0f359]">
+                  <div className="p-3 rounded-full bg-[#c8a400]/10 text-[#c8a400]">
                     <Users className="h-6 w-6" />
                   </div>
                   <div>
@@ -191,16 +209,16 @@ export default function OurStoryPage() {
                   </div>
                 </div>
                 <div className="flex items-start gap-3">
-                  <div className="p-3 rounded-full bg-[#f0f359]/10 text-[#f0f359]">
+                  <div className="p-3 rounded-full bg-[#c8a400]/10 text-[#c8a400]">
                     <Award className="h-6 w-6" />
                   </div>
                   <div>
                     <h3 className="font-semibold text-gray-800 mb-1">Chapters</h3>
-                    <p className="text-gray-600">15 Worldwide</p>
+                    <p className="text-gray-600">25 Worldwide</p>
                   </div>
                 </div>
                 <div className="flex items-start gap-3">
-                  <div className="p-3 rounded-full bg-[#f0f359]/10 text-[#f0f359]">
+                  <div className="p-3 rounded-full bg-[#c8a400]/10 text-[#c8a400]">
                     <Heart className="h-6 w-6" />
                   </div>
                   <div>
@@ -227,9 +245,9 @@ export default function OurStoryPage() {
             <h2 className="text-3xl md:text-4xl font-bold mb-6 text-gray-800">
               Our <span className="text-[#d0d331]">Journey</span> Through Time
             </h2>
-            <div className="h-1 w-20 bg-[#f0f359] mx-auto mb-8"></div>
+            <div className="h-1 w-20 bg-[#c8a400] mx-auto mb-8"></div>
             <p className="text-gray-600">
-              For over four decades, Eko Club International has grown from a small gathering of like-minded individuals
+              For over two decades, Eko Club International has grown from a small gathering of like-minded individuals
               to a global organization with chapters across multiple countries. Explore our rich history and milestones.
             </p>
           </motion.div>
@@ -260,7 +278,7 @@ export default function OurStoryPage() {
                     >
                       <div
                         className={`inline-block px-4 py-2 rounded-full text-white text-sm font-semibold mb-4 ${
-                          index % 2 === 0 ? "bg-[#f0f359]" : "bg-[#8A6D3B]"
+                          index % 2 === 0 ? "bg-[#c8a400]" : "bg-[#8A6D3B]"
                         }`}
                       >
                         {event.year}
@@ -270,7 +288,7 @@ export default function OurStoryPage() {
                     </div>
                   </div>
                   <div className="hidden md:flex items-center justify-center">
-                    <div className="w-6 h-6 rounded-full bg-[#f0f359] border-4 border-white shadow"></div>
+                    <div className="w-6 h-6 rounded-full bg-[#c8a400] border-4 border-white shadow"></div>
                   </div>
                   <div className="w-full md:w-1/2"></div>
                 </motion.div>
@@ -291,12 +309,12 @@ export default function OurStoryPage() {
             className="text-center max-w-3xl mx-auto mb-16"
           >
             <h2 className="text-3xl md:text-4xl font-bold mb-6">
-              Our <span className="text-[#f0f359]">Founders</span>
+              The <span className="text-[#c8a400]">Founders</span>
             </h2>
-            <div className="h-1 w-20 bg-[#f0f359] mx-auto mb-8"></div>
+            <div className="h-1 w-20 bg-[#c8a400] mx-auto mb-8"></div>
             <p className="text-gray-300">
-              Eko Club International was founded by visionary individuals who saw the need to preserve our cultural
-              heritage and foster unity among our people. Their legacy continues to inspire our work today.
+              Eko Club International was brought to life by visionary Lagosians who believed in the power of unity and
+              community. Their leadership in those early days laid the foundation for everything ECI stands for today.
             </p>
           </motion.div>
 
@@ -309,41 +327,50 @@ export default function OurStoryPage() {
           >
             <motion.div variants={scaleIn} className="bg-gray-800 rounded-lg overflow-hidden">
               <div className="relative h-80">
-                <Image src="/images/Presidents/Late-dawodu1.jpg" alt="Founder" fill className="object-cover" />
+                <Image src="/images/Presidents/Late-dawodu1.jpg" alt="Alhaji Olusesi Dawodu" fill className="object-cover" />
               </div>
               <div className="p-6">
-                <h3 className="text-xl font-bold mb-2">Chief Olusesi Dawodu</h3>
-                <p className="text-[#f0f359] mb-4">Founding President (2001-2003)</p>
+                <h3 className="text-xl font-bold mb-2">Alhaji Olusesi Dawodu</h3>
+                <p className="text-[#c8a400] mb-4">1st Elected President (2001–2003)</p>
                 <p className="text-gray-300">
-                  Led the initial formation of Eko Club and established its core values and mission that continue to
-                  guide us today.
+                  Elected at the 2nd Annual Convention in Canada, Alhaji Dawodu's dynamic leadership steered ECI
+                  through its formative years and set a standard of excellence for all who followed.
                 </p>
               </div>
             </motion.div>
 
             <motion.div variants={scaleIn} className="bg-gray-800 rounded-lg overflow-hidden">
-              <div className="relative h-80">
-                <Image src="/images/Presidents/larry-ojo.jpg" alt="Founder" fill className="object-cover" />
+              <div className="h-80 flex flex-col items-center justify-center bg-gray-700">
+                <div className="w-24 h-24 rounded-full bg-[#c8a400]/20 flex items-center justify-center mb-4">
+                  <Users className="h-12 w-12 text-[#c8a400]" />
+                </div>
+                <p className="text-white font-semibold text-lg text-center px-4">Otunba Sam Dipeolu</p>
+                <p className="text-[#c8a400] text-sm mt-1">Interim Chairman</p>
               </div>
               <div className="p-6">
-                <h3 className="text-xl font-bold mb-2">Chief Oluwole Johnson</h3>
-                <p className="text-[#f0f359] mb-4">Founding Secretary (2001-2005)</p>
+                <h3 className="text-xl font-bold mb-2">Otunba Sam Dipeolu</h3>
+                <p className="text-[#c8a400] mb-4">Interim Chairman</p>
                 <p className="text-gray-300">
-                  Instrumental in developing the club's constitution and establishing its organizational structure.
+                  One of the Houston trio who initiated the February 2000 genesis meeting, Otunba Dipeolu served as
+                  ECI's first Interim Chairman following the official inauguration in April 2000.
                 </p>
               </div>
             </motion.div>
 
             <motion.div variants={scaleIn} className="bg-gray-800 rounded-lg overflow-hidden">
-              <div className="relative h-80">
-                <Image src="/images/Presidents/zainu2.jpg" alt="Founder" fill className="object-cover" />
+              <div className="h-80 flex flex-col items-center justify-center bg-gray-700">
+                <div className="w-24 h-24 rounded-full bg-[#c8a400]/20 flex items-center justify-center mb-4">
+                  <Users className="h-12 w-12 text-[#c8a400]" />
+                </div>
+                <p className="text-white font-semibold text-lg text-center px-4">Prince Adelani Adeniji Adele</p>
+                <p className="text-[#c8a400] text-sm mt-1">1st Interim President</p>
               </div>
               <div className="p-6">
-                <h3 className="text-xl font-bold mb-2">Chief Adebisi Ogunleye</h3>
-                <p className="text-[#f0f359] mb-4">Founding Treasurer (2001-2005)</p>
+                <h3 className="text-xl font-bold mb-2">Prince Adelani Adeniji Adele</h3>
+                <p className="text-[#c8a400] mb-4">1st Interim President</p>
                 <p className="text-gray-300">
-                  Established the financial framework that has enabled the club to grow and sustain its operations over
-                  the decades.
+                  Appointed as the first Interim President of ECI at its inauguration on April 3rd, 2000, Prince
+                  Adelani provided foundational presidential leadership that guided the organization in its earliest days.
                 </p>
               </div>
             </motion.div>

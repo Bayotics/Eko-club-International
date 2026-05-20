@@ -15,7 +15,7 @@ const projects = [
     description: "Providing essential healthcare services to communities in Lagos, Nigeria.",
     image: "/images/projects-medical.jpg?height=400&width=600",
     location: "Lagos, Nigeria",
-    date: "Annual",
+    date: "Biennial",
     impact: "10,000+ patients served",
     details:
       "Our medical missions bring healthcare professionals to provide free medical services, including consultations, surgeries, and medication to underserved communities in Lagos, Nigeria.",

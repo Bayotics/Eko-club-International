@@ -29,7 +29,6 @@ import {
   FiTarget,
   FiAward,
   FiUsers,
-  FiClock,
   FiHeart,
   FiHome,
   FiTrendingUp,
@@ -58,10 +57,8 @@ const navItems = [
     hasDropdown: true,
     dropdownItems: [
       { name: "Our Story", href: "/about/our-story", icon: FiBook },
-      { name: "Our Mission", href: "/about/our-mission", icon: FiTarget },
-      { name: "Our Values", href: "/#about?section=values", icon: FiAward },
+      { name: "Our Mission and Values", href: "/about/our-mission", icon: FiTarget },
       { name: "Leadership", href: "/about/leadership", icon: FiUsers },
-      { name: "History", href: "/#about?section=history", icon: FiClock },
     ],
   },
   {
