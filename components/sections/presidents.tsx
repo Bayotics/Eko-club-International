@@ -56,6 +56,13 @@ const presidents = [
     period: "2021-2025",
     image: "/images/Presidents/president.jpg?height=400&width=400",
   },
+  {
+    id: 8,
+    name: "Hon. Lola Ogbara-alogba",
+    title: "Current President",
+    period: "2025-Present",
+    image: "/images/Presidents/lola.jpg?height=400&width=400",
+  },
 ]
 
 // Duplicate the presidents array for the infinite scroll effect

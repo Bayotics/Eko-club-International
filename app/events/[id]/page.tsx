@@ -322,12 +322,13 @@ export default function EventDetailPage() {
               transition={{ duration: 0.5 }}
               className="mb-8"
             >
-              <div className="relative w-full h-[400px] mb-6 rounded-lg overflow-hidden">
+              <div className="relative w-full mb-6 rounded-lg overflow-hidden bg-gray-100">
                 <Image
                   src={event.image || "/placeholder.svg?height=800&width=1200"}
                   alt={event.title}
-                  fill
-                  className="object-cover"
+                  width={1200}
+                  height={800}
+                  className="w-full h-auto object-contain"
                 />
                 {event.featured && (
                   <div className="absolute top-4 right-4 bg-[#2cc72c] text-white px-4 py-1 rounded-full font-medium text-sm">

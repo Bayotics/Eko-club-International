@@ -11,13 +11,13 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } f
 
 // Sample data for current president
 const currentPresident = {
-  name: "Honorable Saheed Olushi",
+  name: "Honorable Lola Ogbara-Alogba",
   title: "Current President",
-  image: "/images/president.jpg",
-  joinedYear: "2005",
-  presidentYear: "2021",
-  term: "2021 - Present",
-  email: "president@ekoclubinternational.org",
+  image: "/images/Presidents/lola.jpg",
+  joinedYear: "2008",
+  presidentYear: "2025",
+  term: "2025 - Present",
+  email: "president@ekoclub.org",
   phone: "+1 (234) 567-8901",
   contributions: [
     "Led the expansion of the club's international chapters from 12 to 22",
@@ -27,7 +27,7 @@ const currentPresident = {
     "Strengthened partnerships with government agencies and international organizations",
   ],
   biography:
-    "Honorable Saheed Olushi is a distinguished leader with over 25 years of experience in community service and organizational leadership. He holds a Master's degree in Public Administration and has dedicated his career to promoting cultural heritage and community development. Under his leadership, Eko Club International has experienced unprecedented growth and impact, expanding its reach globally while strengthening its core mission of preserving Lagos cultural heritage and supporting community development initiatives.",
+    "Honorable Lola Ogbara-Alogba is a distinguished leader with over 25 years of experience in community service and organizational leadership. She holds a Master's degree in Public Administration and has dedicated her career to promoting cultural heritage and community development. Under her leadership, Eko Club International has experienced unprecedented growth and impact, expanding its reach globally while strengthening its core mission of preserving Lagos cultural heritage and supporting community development initiatives.",
 }
 
 const currentExcos = [
