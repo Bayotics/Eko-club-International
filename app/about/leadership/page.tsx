@@ -32,10 +32,10 @@ const currentPresident = {
 
 const currentExcos = [
   {
-    name: "Hon. Olajide Danmola",
+    name: "Hon. Dr. Tayo Ogunyemi",
     title: "Vice President",
-    image: "/images/Excos/vice-president.PNG",
-    bio: "Hon. Olajide Danmola is a respected politician and community leader with over 20 years of experience in healthcare administration. He leads the club's medical mission initiatives.",
+    image: "/images/Excos/vice-president.jpg",
+    bio: "Hon. Dr. Tayo Ogunyemi is a respected politician and community leader with over 20 years of experience in healthcare administration. He leads the club's medical mission initiatives.",
     social: {
       facebook: "https://facebook.com/adebayo",
       twitter: "https://twitter.com/adebayo",
@@ -44,10 +44,10 @@ const currentExcos = [
     },
   },
   {
-    name: "Hon. Ogbara-Alagba",
+    name: "Yeye Aare Bisi Rokosu-Lawal",
     title: "General Secretary",
-    image: "/images/Excos/gen-sec.PNG",
-    bio: "Hon. Lola Ogbara-Alogba is a corporate lawyer with expertise in governance and compliance. He manages the club's administrative affairs and ensures operational excellence.",
+    image: "/images/Excos/gen-sec.jpg",
+    bio: "Yeye Aare Bisi Rokosu-Lawal is a corporate lawyer with expertise in governance and compliance. She manages the club's administrative affairs and ensures operational excellence.",
     social: {
       facebook: "https://facebook.com/folake",
       twitter: "https://twitter.com/folake",
@@ -56,10 +56,22 @@ const currentExcos = [
     },
   },
   {
-    name: "Hon. Omotayo Ogunyemi",
-    title: "Assistant Gen. Secretary",
-    image: "/images/Excos/Asst-Gen-sec.PNG",
-    bio: "Hon. Omotayo Ogunyemi is a certified accountant with over 15 years of experience in financial management. He oversees the club's financial operations and reporting.",
+    name: "Hon. Folashade small",
+    title: "Asst. General Secretary",
+    image: "/images/Excos/asst-gen-sec.jpg",
+    bio: "Hon. Folashade Small is a communications specialist with a background in public relations and media management. She assists in managing the club's communications and administrative tasks.",
+    social: {
+      facebook: "https://facebook.com/bisi",
+      twitter: "https://twitter.com/bisi",
+      instagram: "https://instagram.com/bisi",
+      linkedin: "https://linkedin.com/in/bisi",
+    },
+  },
+  {
+    name: "Hon. Bolanle Onikosi-Rosiji",
+    title: "Financial Secretary",
+    image: "/images/Excos/fin-sec.jpg",
+    bio: "Hon. Bolanle Onikosi-Rosiji is a certified accountant with over 15 years of experience in financial management. She oversees the club's financial operations and reporting.",
     social: {
       facebook: "https://facebook.com/tunde",
       twitter: "https://twitter.com/tunde",
@@ -68,10 +80,10 @@ const currentExcos = [
     },
   },
   {
-    name: "Hon. Olabisi Rokosu-Lawal",
-    title: "Social Secretary",
-    image: "/images/Excos/soc-secretary.PNG",
-    bio: "Hon. Olabisi is a social worker with a passion for community development. She coordinates the club's welfare programs and community outreach initiatives.",
+    name: "Hon. Dr. Laolu Lediju",
+    title: "Treasurer",
+    image: "/images/Excos/treasurer.jpg",
+    bio: "Hon. Dr. Laolu Lediju is a social worker with a passion for community development. He coordinates the club's financial programs and community outreach initiatives.",
     social: {
       facebook: "https://facebook.com/funmilayo",
       twitter: "https://twitter.com/funmilayo",
@@ -80,10 +92,10 @@ const currentExcos = [
     },
   },
   {
-    name: "Hon. Bukky Adebiyi",
-    title: "Chief Whip",
-    image: "/images/Excos/chief-whip.PNG",
-    bio: "Hon. Bukky Adebiyi is a cultural enthusiast and historian. She leads the club's cultural preservation initiatives and organizes cultural events and exhibitions.",
+    name: "Hon. Babatunde Phillips",
+    title: "Public Relations Officer",
+    image: "/images/Excos/pro.jpg",
+    bio: "Hon. Babatunde is a communications expert with experience in public relations and media management. He manages the club's public image and external communications.",
     social: {
       facebook: "https://facebook.com/kunle",
       twitter: "https://twitter.com/kunle",
@@ -92,10 +104,10 @@ const currentExcos = [
     },
   },
   {
-    name: "Hon. Saheed Abdullateef",
-    title: "Public Relations Officer",
-    image: "/images/Excos/pro.PNG",
-    bio: "Hon. Saheed is a communications expert with experience in public relations and media management. He manages the club's public image and external communications.",
+    name: "Hon. Yetunde Konrad",
+    title: "social Secretary",
+    image: "/images/Excos/social-sec.jpg",
+    bio: "Hon. Yetunde Konrad is an event planner and community organizer with a passion for cultural preservation. She coordinates the club's social events and cultural programs.",
     social: {
       facebook: "https://facebook.com/bisi",
       twitter: "https://twitter.com/bisi",
@@ -104,10 +116,10 @@ const currentExcos = [
     },
   },
   {
-    name: "Ibiyinka Thanni",
-    title: "Financial Secretary",
-    image: "/images/Excos/fin-sec.PNG",
-    bio: "Hon. Ibiyinka is responsible for maintaining accurate financial records and supporting the treasurer in all monetary matters. His commitment to detail and transparency strengthens the club's financial operations.",
+    name: "Hon. Princess Adeshola Haastrup",
+    title: "Chief Liaison Officer",
+    image: "/images/Excos/clo.jpg",
+    bio: "Hon. Princess Adeshola Haastrup is a seasoned diplomat and international relations expert. She manages the club's relationships with external organizations and oversees international collaborations.",
     social: {
       facebook: "https://facebook.com/bisi",
       twitter: "https://twitter.com/bisi",
@@ -116,10 +128,10 @@ const currentExcos = [
     },
   },
   {
-    name: "Hon. Olatunji Anthonio",
-    title: "Auditor General",
-    image: "/images/Excos/treasurer.PNG",
-    bio: "Hon. Olatunji oversees the financial assets of Eko Club International, ensuring transparent and accountable management of the club’s funds. ",
+    name: "Hon. Bashir Agoro",
+    title: "Auditor",
+    image: "/images/Excos/auditor.jpg",
+    bio: "Hon. Bashir Agoro is a financial auditor with extensive experience in nonprofit organizations. He ensures the club's financial integrity and compliance with regulatory standards.",
     social: {
       facebook: "https://facebook.com/bisi",
       twitter: "https://twitter.com/bisi",
@@ -127,23 +139,32 @@ const currentExcos = [
       linkedin: "https://linkedin.com/in/bisi",
     },
   },
-  // {
-  //   name: "Hon. Saheed Abdullateef",
-  //   title: "Public Relations Officer",
-  //   image: "/images/Excos/pro.PNG",
-  //   bio: "Hon. Saheed is a communications expert with experience in public relations and media management. He manages the club's public image and external communications.",
-  //   social: {
-  //     facebook: "https://facebook.com/bisi",
-  //     twitter: "https://twitter.com/bisi",
-  //     instagram: "https://instagram.com/bisi",
-  //     linkedin: "https://linkedin.com/in/bisi",
-  //   },
-  // },
+  {
+    name: "Hon. Bukola Adebiyi",
+    title: "Chief Whip",
+    image: "/images/Excos/chief-whip.jpg",
+    bio: "Hon. Bukola is a seasoned politician with a strong background in legislative affairs. she leads the club's advocacy efforts and represents the organization in various political forums.",
+    social: {
+      facebook: "https://facebook.com/bisi",
+      twitter: "https://twitter.com/bisi",
+      instagram: "https://instagram.com/bisi",
+      linkedin: "https://linkedin.com/in/bisi",
+    },
+  },
+  
   
 ]
 
-// Sample data for past presidents
 const pastPresidents = [
+  {
+    name: "President Saheed Olushi",
+    term: "2021-2025",
+    image: "/images/Presidents/president.jpg",
+    shortBio:
+      "Championed the club's digital presence and community engagement, overseeing significant growth in membership and international chapter development...",
+    fullBio:
+      "President Saheed Olushi served as the President of Eko Club International from 2021 to 2025, a period marked by resilience and transformation. Under his leadership, the club navigated post-pandemic recovery while expanding its community development programs and strengthening its international chapters. He prioritized member engagement and digital innovation, modernizing the club's outreach and communication strategies. President Olushi's tenure was defined by his dedication to the club's cultural mission and his commitment to fostering unity among members worldwide.",
+  },
   {
     name: "President Larry Ojo",
     term: "2017-2021",
@@ -293,7 +314,7 @@ export default function LeadershipPage() {
     if (isAnimating) return
     setIsAnimating(true)
     setDirection(-1)
-    setCurrentExcoIndex((prev) => (prev === 0 ? currentExcos.length - 1 : prev - 1))
+    setCurrentExcoIndex((prev) => (prev - 3 + currentExcos.length) % currentExcos.length)
     setTimeout(() => setIsAnimating(false), 500)
   }
 
@@ -301,15 +322,13 @@ export default function LeadershipPage() {
     if (isAnimating) return
     setIsAnimating(true)
     setDirection(1)
-    setCurrentExcoIndex((prev) => (prev === currentExcos.length - 1 ? 0 : prev + 1))
+    setCurrentExcoIndex((prev) => (prev + 3) % currentExcos.length)
     setTimeout(() => setIsAnimating(false), 500)
   }
 
-  // Display two executives at a time
+  // Display three executives at a time
   const getVisibleExcos = () => {
-    const firstIndex = currentExcoIndex
-    const secondIndex = (currentExcoIndex + 1) % currentExcos.length
-    return [currentExcos[firstIndex], currentExcos[secondIndex]]
+    return [0, 1, 2].map((offset) => currentExcos[(currentExcoIndex + offset) % currentExcos.length])
   }
 
   return (
@@ -497,45 +516,42 @@ export default function LeadershipPage() {
                 initial="enter"
                 animate="center"
                 exit="exit"
-                className="grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-20"
+                className="grid grid-cols-1 md:grid-cols-3 gap-8"
               >
                 {getVisibleExcos().map((exco, index) => (
-                  <div key={index} className="flex flex-col md:flex-row gap-8 items-start">
-                    <div className="w-full md:w-1/2 aspect-square relative rounded-md overflow-hidden">
+                  <div key={index} className="flex flex-col items-center text-center bg-white rounded-xl shadow-md p-6">
+                    <div className="w-36 h-36 relative rounded-full overflow-hidden mb-4 ring-4 ring-[#ec3e3e]/20 flex-shrink-0">
                       <Image src={exco.image || "/placeholder.svg"} alt={exco.name} fill className="object-cover" />
                     </div>
-                    <div className="w-full md:w-1/2">
-                      <h3 className="text-2xl font-bold text-gray-800">{exco.name}</h3>
-                      <p className="text-[#ec3e3e] mb-4">{exco.title}</p>
-                      <div className="w-full h-px bg-gray-200 mb-4"></div>
-                      <p className="text-gray-600 mb-6">{exco.bio}</p>
-
-                      <div className="flex gap-4">
-                        <a
-                          href={exco.social.twitter}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="bg-[#1DA1F2] text-white p-2 rounded-full hover:opacity-80 transition-opacity"
-                        >
-                          <FaTwitter size={18} />
-                        </a>
-                        <a
-                          href={exco.social.instagram}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="bg-[#E1306C] text-white p-2 rounded-full hover:opacity-80 transition-opacity"
-                        >
-                          <FaInstagram size={18} />
-                        </a>
-                        <a
-                          href={exco.social.linkedin}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="bg-[#0077B5] text-white p-2 rounded-full hover:opacity-80 transition-opacity"
-                        >
-                          <FaLinkedin size={18} />
-                        </a>
-                      </div>
+                    <h3 className="text-lg font-bold text-gray-800">{exco.name}</h3>
+                    <p className="text-[#ec3e3e] text-sm mb-3">{exco.title}</p>
+                    <div className="w-12 h-px bg-gray-200 mb-3"></div>
+                    <p className="text-gray-600 text-sm mb-4">{exco.bio}</p>
+                    <div className="flex gap-3 mt-auto">
+                      <a
+                        href={exco.social.twitter}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="bg-[#1DA1F2] text-white p-2 rounded-full hover:opacity-80 transition-opacity"
+                      >
+                        <FaTwitter size={14} />
+                      </a>
+                      <a
+                        href={exco.social.instagram}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="bg-[#E1306C] text-white p-2 rounded-full hover:opacity-80 transition-opacity"
+                      >
+                        <FaInstagram size={14} />
+                      </a>
+                      <a
+                        href={exco.social.linkedin}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="bg-[#0077B5] text-white p-2 rounded-full hover:opacity-80 transition-opacity"
+                      >
+                        <FaLinkedin size={14} />
+                      </a>
                     </div>
                   </div>
                 ))}
@@ -550,12 +566,6 @@ export default function LeadershipPage() {
               >
                 <ChevronLeft className="h-6 w-6" />
               </button>
-
-              <div className="flex items-center gap-2">
-                <span className="text-gray-600">{currentExcoIndex + 1}</span>
-                <span className="text-gray-400">/</span>
-                <span className="text-gray-400">{currentExcos.length}</span>
-              </div>
 
               <button
                 onClick={handleNextExco}

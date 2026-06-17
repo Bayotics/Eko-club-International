@@ -755,6 +755,7 @@ export default function LoginPage() {
                                   <SelectItem value="Rhode Island">Rhode Island</SelectItem>
                                   <SelectItem value="San Antonio">San Antonio</SelectItem>
                                   <SelectItem value="Lagosians of Chicago">Lagosians of Chicago</SelectItem>
+                                  <SelectItem value="Eko Club Of Corpus Christi">Eko Club Of Corpus Christi</SelectItem>
                                 </SelectContent>
                               </Select>
                             </div>

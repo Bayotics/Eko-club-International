@@ -43,6 +43,7 @@ const chapters = [
   { id: 22, name: "San Antonio", country: "USA", members: 65, url: "https://ekoclub-sanantonio.org" },
   { id: 23, name: "Lagosians of Chicago", country: "USA", members: 65, url: "#" },
   { id: 24, name: "Eko Lagosians of Minnesota", country: "USA", members: 65, url: "#" },
+  { id: 25, name: "Eko Club Of Corpus Christi", country: "USA", members: 65, url: "#" },
 ]
 
 const chapterPresidents = [
