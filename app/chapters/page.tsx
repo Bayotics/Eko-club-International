@@ -4,7 +4,7 @@ import { useEffect, useState } from "react"
 import Link from "next/link"
 import Image from "next/image"
 import { motion } from "framer-motion"
-import { MapPin, Globe, Users, ExternalLink, ChevronRight, ChevronLeft } from "lucide-react"
+import { MapPin, Globe, Users, ExternalLink, ChevronRight, ChevronLeft, Loader2 } from "lucide-react"
 import { Card, CardContent } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import {
@@ -60,10 +60,12 @@ export default function ChaptersPage() {
   const [selectedRegion, setSelectedRegion] = useState("All")
   const [hoveredChapter, setHoveredChapter] = useState(null)
   const [chapterPresidents, setChapterPresidents] = useState<ChapterPresident[]>([])
+  const [isPresidentsLoading, setIsPresidentsLoading] = useState(true)
 
   useEffect(() => {
     const fetchChapterPresidents = async () => {
       try {
+        setIsPresidentsLoading(true)
         const response = await fetch("/api/chapter-presidents")
         if (!response.ok) {
           return
@@ -72,6 +74,8 @@ export default function ChaptersPage() {
         setChapterPresidents(Array.isArray(data) ? data : [])
       } catch (error) {
         console.error("Failed to fetch chapter presidents:", error)
+      } finally {
+        setIsPresidentsLoading(false)
       }
     }
 
@@ -330,6 +334,11 @@ export default function ChaptersPage() {
           >
             {/* Carousel implementation */}
             <div className="w-full max-w-5xl mx-auto">
+              {isPresidentsLoading ? (
+                <div className="flex items-center justify-center py-16">
+                  <Loader2 className="h-8 w-8 animate-spin text-[#b7b943]" />
+                </div>
+              ) : (
               <Carousel
                 opts={{
                   align: "start",
@@ -341,12 +350,12 @@ export default function ChaptersPage() {
                     <CarouselItem key={president._id} className="md:basis-1/2 lg:basis-1/3">
                       <div className="p-2">
                         <Card className="overflow-hidden border-none shadow-lg">
-                          <div className="relative h-64 overflow-hidden">
+                          <div className="relative h-96 overflow-hidden">
                             <Image
                               src={president.image || "/placeholder.svg"}
                               alt={president.name}
                               fill
-                              className="object-cover transition-transform duration-500 hover:scale-110"
+                              className="object-cover object-top transition-transform duration-500 hover:scale-105"
                             />
                             <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent"></div>
                             <div className="absolute bottom-0 left-0 p-4 text-white">
@@ -382,8 +391,9 @@ export default function ChaptersPage() {
                   <CarouselNext className="hidden" data-carousel-button-next />
                 </div>
               </Carousel>
+              )}
             </div>
-            {chapterPresidents.length === 0 && (
+            {!isPresidentsLoading && chapterPresidents.length === 0 && (
               <p className="text-center mt-6 text-gray-600 dark:text-gray-300">No chapter presidents available yet.</p>
             )}
           </motion.div>
