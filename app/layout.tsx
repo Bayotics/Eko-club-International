@@ -5,6 +5,7 @@ import { ThemeProvider } from "@/components/theme-provider"
 import Navbar from "@/components/layout/navbar"
 import Footer from "@/components/layout/footer"
 import { AuthProvider } from "@/contexts/auth-context"
+import { Toaster } from "@/components/ui/toaster"
 import { Analytics } from '@vercel/analytics/next';
 
 const poppins = Poppins({
@@ -45,6 +46,7 @@ export default function RootLayout({
               <Navbar />
               <div className="flex-grow">{children}  <Analytics /></div>
               <Footer />
+              <Toaster />
             </AuthProvider>
           </div>
         </ThemeProvider>

@@ -78,8 +78,8 @@ const slides = [
     description: "",
     showCountdown: true,
     specialButton: {
-      text: "REGISTER NOW",
-      link: "https://forms.gle/JyHDPfqZnoU3zNMv7",
+      text: "LEARN MORE",
+      link: "https://ekoclub.org/events/6a0c99bf7e8e1c9d5e8abaa2",
       external: true,
     },
   },

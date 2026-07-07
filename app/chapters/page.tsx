@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import Link from "next/link"
 import Image from "next/image"
 import { motion } from "framer-motion"
@@ -46,41 +46,12 @@ const chapters = [
   { id: 25, name: "Eko Club Of Corpus Christi", country: "USA", members: 65, url: "#" },
 ]
 
-const chapterPresidents = [
-  { id: 1, name: "Hon. Deji Ajiboye", chapter: "Atlanta", image: "/images/chapter-presidents/atlanta.jpg?height=400&width=300" },
-  { id: 2, name: "Hon. Christie Okolie", chapter: "Austin", image: "/images/chapter-presidents/Austin.jpg?height=300&width=300" },
-  { id: 3, name: "Hon. Olatunji Anthonio", chapter: "California", image: "/images/chapter-presidents/california.png?height=300&width=300" },
-  { id: 23, name: "Hon. Bunmi Kuton", chapter: "Chicago", image: "/images/chapter-presidents/chicago.jpg?height=300&width=300" },
-  { id: 4, name: "Hon. Toyin Caxton", chapter: "Dallas", image: "/images/chapter-presidents/dallas.jpg?height=300&width=300" },
-  { id: 6, name: "Hon Dapo Lediju", chapter: "Delaware Valley", image: "/images/chapter-presidents/delaware.jpeg?height=300&width=300" },
-  { id: 7, name: "Hon. Deola Odunuga", chapter: "Detroit", image: "/images/chapter-presidents/detroit.jpg?height=300&width=300" },
-  {
-    id: 8,
-    name: "Hon. Ibiyinka Thanni",
-    chapter: "Eko Lagosians of Canada",
-    image: "/images/chapter-presidents/canada.png?height=300&width=300",
-  },
-  { id: 9, name: "Hon. T.O Olarinde", chapter: "Florida", image: "/images/chapter-presidents/florida.jpg?height=300&width=300" },
-  { id: 10, name: "Hon. B. J. Agoro", chapter: "Houston", image: "/images/chapter-presidents/houston.jpg?height=300&width=300" },
-  { id: 24, name: "Hon. Oyedunmola Iyabo Ojo", chapter: "Houston Women", image: "/images/chapter-presidents/houston_women.jpg?height=300&width=300" },
-  { id: 12, name: "Hon. Toyin Ibrahim-Igbo", chapter: "London, U.K.", image: "/images/chapter-presidents/london.jpg?height=300&width=300" },
-  { id: 13, name: "Hon. Ayodeji Famuyide", chapter: "Louisiana", image: "/images/chapter-presidents/louisiana.jpg?height=300&width=300" },
-  { id: 14, name: "Hon. Julia Ayo-Ajayi", chapter: "Miami", image: "/images/chapter-presidents/miami.jpg?height=300&width=300" },
-  { id: 15, name: "Hon. Fatai Martins", chapter: "Minnesota", image: "/images/chapter-presidents/minnesota.jpg?height=300&width=300" },
-  { id: 16, name: "Hon. Tajudeen Lawal", chapter: "New Jersey", image: "/images/chapter-presidents/new_jersey.jpg?height=300&width=300" },
-  { id: 17, name: "Prince Omokayode Dosumu", chapter: "New York", image: "/images/chapter-presidents/new_york.jpg?height=300&width=300" },
-  { id: 18, name: "Hon. Wale Onitiri", chapter: "Ohio", image: "/images/chapter-presidents/ohio.jpg?height=300&width=300" },
-  { id: 19, name: "Hon. Adewale Dosumu", chapter: "Pennsylvania", image: "/images/chapter-presidents/pennsylvania.jpg?height=300&width=300" },
-  { id: 25, name: "Hon. Olabisi Dabiri-Okoya", chapter: "Philadelphia", image: "/images/chapter-presidents/philadelphia.jpg?height=300&width=300" },
-  { id: 20, name: "Hon. Bode Esuola", chapter: "Washington D.C Metro", image: "/images/chapter-presidents/washington.jpg?height=300&width=300" },
-  {
-    id: 21,
-    name: "Hon. Kamaldeen Lambo",
-    chapter: "Rhode Island",
-    image: "/images/chapter-presidents/rhode_island.jpg?height=300&width=300",
-  },
-  { id: 22, name: "Dr. Caroline Jokotola", chapter: "San Antonio", image: "/images/chapter-presidents/san_antonio.jpg?height=300&width=300" },
-]
+interface ChapterPresident {
+  _id: string
+  name: string
+  chapter: string
+  image?: string
+}
 
 // Filter options
 const regions = ["All", "USA", "Canada", "United Kingdom"]
@@ -88,6 +59,24 @@ const regions = ["All", "USA", "Canada", "United Kingdom"]
 export default function ChaptersPage() {
   const [selectedRegion, setSelectedRegion] = useState("All")
   const [hoveredChapter, setHoveredChapter] = useState(null)
+  const [chapterPresidents, setChapterPresidents] = useState<ChapterPresident[]>([])
+
+  useEffect(() => {
+    const fetchChapterPresidents = async () => {
+      try {
+        const response = await fetch("/api/chapter-presidents")
+        if (!response.ok) {
+          return
+        }
+        const data = await response.json()
+        setChapterPresidents(Array.isArray(data) ? data : [])
+      } catch (error) {
+        console.error("Failed to fetch chapter presidents:", error)
+      }
+    }
+
+    fetchChapterPresidents()
+  }, [])
 
   // Calculate filtered chapters directly from the selected region
   // This avoids potential state synchronization issues
@@ -349,7 +338,7 @@ export default function ChaptersPage() {
               >
                 <CarouselContent>
                   {chapterPresidents.map((president) => (
-                    <CarouselItem key={president.id} className="md:basis-1/2 lg:basis-1/3">
+                    <CarouselItem key={president._id} className="md:basis-1/2 lg:basis-1/3">
                       <div className="p-2">
                         <Card className="overflow-hidden border-none shadow-lg">
                           <div className="relative h-64 overflow-hidden">
@@ -394,6 +383,9 @@ export default function ChaptersPage() {
                 </div>
               </Carousel>
             </div>
+            {chapterPresidents.length === 0 && (
+              <p className="text-center mt-6 text-gray-600 dark:text-gray-300">No chapter presidents available yet.</p>
+            )}
           </motion.div>
         </div>
       </section>

@@ -26,11 +26,20 @@ import { useAuth } from "@/contexts/auth-context" // Import the auth context
 const isPendingUser = (user) => user?.role === "pending"
 const canAccessMemberFeatures = (user) => ["member", "admin", "superadmin"].includes(user?.role)
 
+const normalizeChapter = (value: string) => value.toLowerCase().replace(/[^a-z0-9]/g, "")
+
+interface ChapterPresident {
+  _id: string
+  name: string
+  chapter: string
+}
+
 export default function MemberDashboard() {
   const router = useRouter()
   const { user, loading: authLoading, refreshUser } = useAuth() // Use the auth context
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState("")
+  const [chapterPresidentName, setChapterPresidentName] = useState("Not assigned")
 
   useEffect(() => {
     // Use the auth context instead of fetching user data directly
@@ -63,6 +72,42 @@ export default function MemberDashboard() {
 
     initializeDashboard()
   }, [user, authLoading, refreshUser, router])
+
+  useEffect(() => {
+    const fetchChapterPresident = async () => {
+      if (!user?.chapterName) {
+        setChapterPresidentName("Not assigned")
+        return
+      }
+
+      try {
+        const response = await fetch("/api/chapter-presidents")
+        if (!response.ok) {
+          setChapterPresidentName("Not assigned")
+          return
+        }
+
+        const data: ChapterPresident[] = await response.json()
+        const userChapterNormalized = normalizeChapter(user.chapterName)
+
+        const matchedPresident = data.find((president) => {
+          const presidentChapterNormalized = normalizeChapter(president.chapter)
+          return (
+            presidentChapterNormalized === userChapterNormalized ||
+            presidentChapterNormalized.includes(userChapterNormalized) ||
+            userChapterNormalized.includes(presidentChapterNormalized)
+          )
+        })
+
+        setChapterPresidentName(matchedPresident?.name || "Not assigned")
+      } catch (error) {
+        console.error("Failed to fetch chapter president:", error)
+        setChapterPresidentName("Not assigned")
+      }
+    }
+
+    fetchChapterPresident()
+  }, [user?.chapterName])
 
   // Show loading state while either local loading or auth context is loading
   if (loading || authLoading) {
@@ -288,7 +333,7 @@ export default function MemberDashboard() {
                           </div>
                           <div className="flex justify-between items-center">
                             <span className="text-sm font-medium">Chapter Leader:</span>
-                            <span>John Adebayo</span>
+                            <span>{chapterPresidentName}</span>
                           </div>
                         </div>
                       </CardContent>

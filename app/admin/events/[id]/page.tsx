@@ -330,8 +330,8 @@ const categories = [
                     <Label htmlFor="registrationLink">Registration link (if any)</Label>
                     <Input
                       id="registrationLink"
-                      value={editedEvent.registrationLink}
-                      onChange={(e) => setEditedEvent({ ...newEvent, registrationLink: e.target.value })}
+                      value={editedEvent.registrationLink || ""}
+                      onChange={(e) => setEditedEvent({ ...editedEvent, registrationLink: e.target.value })}
                       placeholder="Enter registration link if any"
                     />
                   </div>

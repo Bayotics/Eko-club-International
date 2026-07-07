@@ -21,7 +21,6 @@ import Image from "next/image"
 import { useAuth } from "@/contexts/auth-context"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { useToast } from "@/components/ui/use-toast"
-import { Toaster } from "@/components/ui/toaster"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import "react-phone-number-input/style.css"
 import PhoneInput from "react-phone-number-input"
@@ -379,9 +378,6 @@ export default function LoginPage() {
 
   return (
     <main className="min-h-screen bg-gray-50">
-      {/* Add Toaster component to render toast notifications */}
-      <Toaster />
-
       {/* Breadcrumb with proper spacing to avoid navbar overlap */}
       <div className="bg-white shadow-sm pt-24 pb-4">
         <div className="container mx-auto px-4">
