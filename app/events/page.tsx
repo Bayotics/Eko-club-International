@@ -317,7 +317,15 @@ export default function EventsPage() {
   )
 
   const currentMonthYear = `${currentMonth.getMonth()}-${currentMonth.getFullYear()}`
-  const currentMonthEvents = monthEventsMap[currentMonthYear] || []
+  const allMonthEvents = monthEventsMap[currentMonthYear] || []
+  // Filter to only show future events (today and onwards)
+  const today = new Date()
+  today.setHours(0, 0, 0, 0)
+  const currentMonthEvents = allMonthEvents.filter((event) => {
+    const eventDate = new Date(event.date)
+    eventDate.setHours(0, 0, 0, 0)
+    return eventDate >= today
+  })
 
   const daysInMonth = new Date(currentMonth.getFullYear(), currentMonth.getMonth() + 1, 0).getDate()
   const firstDayOfMonth = new Date(currentMonth.getFullYear(), currentMonth.getMonth(), 1).getDay()
@@ -815,7 +823,7 @@ export default function EventsPage() {
           >
             <h4 className="text-lg font-medium mb-4">Upcoming in {format(currentMonth, "MMMM")}</h4>
             {currentMonthEvents.length === 0 ? (
-              <p className="text-gray-500">No events scheduled for this month.</p>
+              <p className="text-gray-500">No more events scheduled for this month.</p>
             ) : (
               <ul className="space-y-3">
                 {currentMonthEvents.map((event, index) => (
