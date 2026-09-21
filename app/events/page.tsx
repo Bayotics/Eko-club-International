@@ -3,6 +3,7 @@
 import type React from "react"
 
 import { useState, useRef, useEffect } from "react"
+import { useRouter } from "next/navigation"
 import Image from "next/image"
 import { motion, useScroll, useTransform, useInView } from "framer-motion"
 import { format, isBefore, isAfter, parseISO, isSameMonth } from "date-fns"
@@ -122,6 +123,19 @@ const testimonials = [
     image: "/images/portrait.png?height=100&width=100",
   },
 ]
+
+function ViewGalleryButton({ eventId }: { eventId: string }) {
+  const router = useRouter()
+  return (
+    <Button
+      variant="outline"
+      className="text-white border-white hover:bg-white hover:text-black"
+      onClick={() => router.push(`/events/${eventId}`)}
+    >
+      View Gallery
+    </Button>
+  )
+}
 
 export default function EventsPage() {
   const [activeCategory, setActiveCategory] = useState("All")
@@ -913,9 +927,7 @@ export default function EventsPage() {
                           className="w-full h-48 object-cover"
                         />
                         <div className="absolute inset-0 bg-black/50 flex items-center justify-center opacity-0 hover:opacity-100 transition-opacity duration-300">
-                          <Button variant="outline" className="text-white border-white hover:bg-white hover:text-black">
-                            View Gallery
-                          </Button>
+                          <ViewGalleryButton eventId={event._id} />
                         </div>
                         <Badge className="absolute top-2 right-2 bg-[#2cc72c]">{event.category}</Badge>
                       </div>

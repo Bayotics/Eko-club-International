@@ -212,6 +212,8 @@ export default function AdminEventsPage() {
         imageGroups: uploadedGroups,
       }
 
+      console.log("ADMIN: Sending event data with imageGroups:", JSON.stringify(eventData, null, 2))
+
       const response = await fetch("/api/admin/events", {
         method: "POST",
         headers: { "Content-Type": "application/json" },

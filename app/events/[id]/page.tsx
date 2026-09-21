@@ -95,6 +95,8 @@ export default function EventDetailPage() {
         }
 
         const data = await response.json()
+        console.log("PUBLIC EVENT DATA:", data)
+        console.log("IMAGE GROUPS:", data.imageGroups)
         setEvent(data)
         setError(null)
       } catch (err) {

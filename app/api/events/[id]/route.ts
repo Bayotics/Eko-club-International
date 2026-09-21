@@ -13,35 +13,12 @@ export async function GET(
     if (!ObjectId.isValid(id)) {
       return NextResponse.json({ error: "Invalid event ID" }, { status: 400 })
     }
+
     await connectToDatabase()
-    const { db } = await connectToDatabase()
-    const event = await Event.findOne({ _id: new ObjectId(id) })    
+    const event = await Event.findById(id).lean()
 
     if (!event) {
       return NextResponse.json({ error: "Event not found" }, { status: 404 })
-    }
-
-    // Check if user is logged in
-    const token = request.cookies.get("token")?.value
-    let userRole = "public"
-    
-    if (token) {
-      try {
-        const payload = await verifyJwtToken(token)
-        if (payload) {
-          userRole = payload.role
-        }
-      } catch (error) {
-        console.error("Error verifying token:", error)
-      }
-    }
-    
-    // Check if user has permission to view this event
-    if (
-      event.visibility === "exco" && userRole !== "admin" && userRole !== "exco" ||
-      event.visibility === "members" && userRole === "public"
-    ) {
-      return NextResponse.json({ error: "Forbidden" }, { status: 403 })
     }
 
     return NextResponse.json(event)

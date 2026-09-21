@@ -31,19 +31,25 @@ const EventSchema = new mongoose.Schema({
     type: String,
     default: "",
   },
-  imageGroups: [
-    {
-      albumTitle: { type: String, default: "" },
-      media: [
-        {
-          url: { type: String, required: true },
-          type: { type: String, enum: ["image", "video"], default: "image" },
-          _id: false,
+  imageGroups: {
+    type: [
+      {
+        albumTitle: { type: String, default: "" },
+        media: {
+          type: [
+            {
+              url: { type: String, required: true },
+              type: { type: String, enum: ["image", "video"], default: "image" },
+              _id: false,
+            },
+          ],
+          default: [],
         },
-      ],
-      _id: false,
-    },
-  ],
+        _id: false,
+      },
+    ],
+    default: [],
+  },
   featured: {
     type: Boolean,
     default: false,
