@@ -3,19 +3,20 @@ import { v2 as cloudinary } from "cloudinary"
 import { cookies } from "next/headers"
 import { jwtVerify } from "jose"
 
-// Configure Cloudinary
 cloudinary.config({
   cloud_name: process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME,
   api_key: process.env.NEXT_PUBLIC_CLOUDINARY_API_KEY,
   api_secret: process.env.CLOUDINARY_API_SECRET,
 })
 
-// JWT secret should be in environment variables
 const JWT_SECRET = process.env.JWT_SECRET || "your-secret-key"
+const VIDEO_MAX_BYTES = 5 * 1024 * 1024 // 5 MB
+
+const IMAGE_TYPES = ["image/jpeg", "image/jpg", "image/png", "image/webp"]
+const VIDEO_TYPES = ["video/mp4", "video/quicktime", "video/webm", "video/avi", "video/x-msvideo"]
 
 export async function POST(request: Request) {
   try {
-    // Get token from cookies
     const cookieStore = await cookies()
     const token = cookieStore.get("token")?.value
 
@@ -23,22 +24,16 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: "Authentication required" }, { status: 401 })
     }
 
-    // Verify token
     try {
       const { payload } = await jwtVerify(token, new TextEncoder().encode(JWT_SECRET))
-
-      // Check if user is admin
-      const userRole = payload.role || (payload.user && payload.user.role)
-
+      const userRole = payload.role || (payload.user && (payload.user as { role?: string }).role)
       if (userRole !== "admin") {
         return NextResponse.json({ error: "Admin access required" }, { status: 403 })
       }
-    } catch (error) {
-      console.error("Token verification error:", error)
+    } catch {
       return NextResponse.json({ error: "Invalid token" }, { status: 401 })
     }
 
-    // Get form data with the image
     const formData = await request.formData()
     const file = formData.get("file") as File
 
@@ -46,46 +41,44 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: "No file provided" }, { status: 400 })
     }
 
-    // Check file type
-    const allowedTypes = ["image/jpeg", "image/jpg", "image/png"]
-    if (!allowedTypes.includes(file.type)) {
+    const isImage = IMAGE_TYPES.includes(file.type)
+    const isVideo = VIDEO_TYPES.includes(file.type)
+
+    if (!isImage && !isVideo) {
       return NextResponse.json(
-        { error: "File type not supported. Please upload JPG or PNG images only." },
+        { error: "Unsupported file type. Upload JPG, PNG, WEBP images or MP4, MOV, WEBM videos." },
         { status: 400 },
       )
     }
 
-    // Convert file to buffer
+    if (isVideo && file.size > VIDEO_MAX_BYTES) {
+      return NextResponse.json({ error: "Video exceeds the 5 MB limit. Please upload a smaller file." }, { status: 400 })
+    }
+
     const arrayBuffer = await file.arrayBuffer()
     const buffer = Buffer.from(arrayBuffer)
-
-    // Convert buffer to base64
     const base64 = buffer.toString("base64")
     const dataURI = `data:${file.type};base64,${base64}`
 
-    // Upload to Cloudinary
     const result = await new Promise((resolve, reject) => {
       cloudinary.uploader.upload(
         dataURI,
         {
           folder: "eko-club-events",
-          resource_type: "image",
+          resource_type: isVideo ? "video" : "image",
         },
         (error, result) => {
-          if (error) {
-            reject(error)
-          } else {
-            resolve(result)
-          }
+          if (error) reject(error)
+          else resolve(result)
         },
       )
     })
 
-    return NextResponse.json(result)
+    return NextResponse.json({ ...(result as object), mediaType: isVideo ? "video" : "image" })
   } catch (error) {
-    console.error("Error uploading image:", error)
+    console.error("Error uploading file:", error)
     return NextResponse.json(
-      { error: "Failed to upload image", details: error instanceof Error ? error.message : String(error) },
+      { error: "Failed to upload file", details: error instanceof Error ? error.message : String(error) },
       { status: 500 },
     )
   }

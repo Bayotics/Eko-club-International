@@ -7,7 +7,7 @@ import { useParams, useRouter } from "next/navigation"
 import Image from "next/image"
 import { motion } from "framer-motion"
 import { format, parseISO, isSameDay } from "date-fns"
-import { Calendar, MapPin, Clock, ArrowLeft, Share2, CalendarIcon, Users, Tag, LinkIcon } from "lucide-react"
+import { Calendar, MapPin, Clock, ArrowLeft, Share2, CalendarIcon, Users, Tag, LinkIcon, Play, Images } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
@@ -24,6 +24,16 @@ import {
 import { toast } from "sonner"
 
 // Define Event type
+interface MediaItem {
+  url: string
+  type: "image" | "video"
+}
+
+interface ImageGroup {
+  albumTitle: string
+  media: MediaItem[]
+}
+
 interface Event {
   _id: string
   title: string
@@ -47,6 +57,7 @@ interface Event {
   virtualEventUrl?: string
   tags?: string[]
   registrationLink?: string
+  imageGroups?: ImageGroup[]
 }
 
 const relatedEvents = []
@@ -110,10 +121,11 @@ export default function EventDetailPage() {
           const data = await response.json()
           // Filter out current event and only show upcoming events
           const currentDate = new Date()
-          const filteredEvents = data.events
+          const allEvents: Event[] = Array.isArray(data) ? data : (data.events ?? [])
+          const filteredEvents = allEvents
             .filter((e: Event) => e._id !== eventId && new Date(e.date) > currentDate)
             .sort((a: Event, b: Event) => new Date(a.date).getTime() - new Date(b.date).getTime())
-            .slice(0, 3) // Limit to 3 events
+            .slice(0, 3)
 
           setRelatedEvents(filteredEvents)
         }
@@ -406,6 +418,41 @@ export default function EventDetailPage() {
                 <h2 className="text-2xl font-semibold mb-4">About This Event</h2>
                 <div className="prose prose-lg max-w-none" dangerouslySetInnerHTML={{ __html: event.description }} />
               </div>
+
+              {event.imageGroups && event.imageGroups.length > 0 && (
+                <div className="mb-8">
+                  <h2 className="text-2xl font-semibold mb-4 flex items-center gap-2">
+                    <Images className="h-6 w-6 text-[#2cc72c]" /> Photo &amp; Video Gallery
+                  </h2>
+                  <div className="space-y-6">
+                    {event.imageGroups.map((group, gIdx) => (
+                      <div key={gIdx}>
+                        {group.albumTitle && (
+                          <p className="font-semibold text-gray-700 mb-2">{group.albumTitle}</p>
+                        )}
+                        <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
+                          {(group.media || []).map((item, mIdx) => (
+                            <div key={mIdx} className="rounded-lg overflow-hidden bg-gray-100 aspect-square relative">
+                              {item.type === "video" ? (
+                                <a href={item.url} target="_blank" rel="noreferrer"
+                                  className="w-full h-full flex flex-col items-center justify-center bg-gray-200 gap-1 hover:bg-gray-300 transition-colors">
+                                  <Play className="h-10 w-10 text-gray-600" />
+                                  <span className="text-xs text-gray-500">Play Video</span>
+                                </a>
+                              ) : (
+                                <a href={item.url} target="_blank" rel="noreferrer">
+                                  <img src={item.url} alt={`${group.albumTitle || "Gallery"} ${mIdx + 1}`}
+                                    className="w-full h-full object-cover hover:scale-105 transition-transform duration-300" />
+                                </a>
+                              )}
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
 
               {event.organizer && (
                 <div className="mb-8">

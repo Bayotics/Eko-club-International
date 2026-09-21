@@ -23,7 +23,9 @@ import {
 } from "@/components/ui/breadcrumb"
 import { Alert, AlertDescription } from "@/components/ui/alert"
 
-// Define Event type
+interface MediaItem { url: string; type: "image" | "video" }
+interface ImageGroup { albumTitle: string; media: MediaItem[] }
+
 interface Event {
   _id: string
   title: string
@@ -35,6 +37,7 @@ interface Event {
   category: string
   featured: boolean
   registrationLink: string
+  imageGroups?: ImageGroup[]
 }
 
 // Define News type
@@ -230,16 +233,22 @@ export default function EventsPage() {
   // Extract unique categories from events
   const eventCategories = ["All", ...Array.from(new Set(events.map((event) => event.category)))]
 
-  // Filter upcoming events (events with dates in the future)
+  // Filter upcoming events (events with dates in the future or today)
   const upcomingEvents = events.filter((event) => {
     const eventDate = new Date(event.date)
-    return isAfter(eventDate, new Date()) || isSameMonth(eventDate, new Date())
+    const today = new Date()
+    eventDate.setHours(0, 0, 0, 0)
+    today.setHours(0, 0, 0, 0)
+    return eventDate >= today
   })
 
   // Filter past events (events with dates in the past)
   const pastEvents = events.filter((event) => {
     const eventDate = new Date(event.date)
-    return isBefore(eventDate, new Date()) && !isSameMonth(eventDate, new Date())
+    const today = new Date()
+    eventDate.setHours(0, 0, 0, 0)
+    today.setHours(0, 0, 0, 0)
+    return eventDate < today
   })
 
   // Filter events based on search and category
