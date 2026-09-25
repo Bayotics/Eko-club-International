@@ -6,7 +6,7 @@ import { Calendar, MapPin, Clock, Loader2 } from "lucide-react"
 import Image from "next/image"
 import { useEffect, useState } from "react"
 import Link from "next/link"
-import dayjs from "dayjs"
+import { formatEventDate, formatEventTime } from "@/lib/event-time"
 
 interface Event {
   _id: string
@@ -14,6 +14,7 @@ interface Event {
   description: string
   image: string
   date: string
+  time?: string
   location: string
   featured: boolean
   createdAt: string
@@ -28,22 +29,19 @@ export default function Events() {
     const fetchEvents = async () => {
       try {
         setLoading(true)
-        const response = await fetch("/api/events")
+        const response = await fetch("/api/events?upcoming=true")
 
         if (!response.ok) {
           throw new Error("Failed to fetch events")
         }
 
         const data = await response.json()
-        console.log(data)
-        // Filter for featured events, sort by date (newest first), and take the first 3
+        // Next 3 featured events, soonest first
         const featuredEvents = data
           .filter((event: Event) => event.featured)
-          .sort((a: Event, b: Event) => new Date(b.date).getTime() - new Date(a.date).getTime())
+          .sort((a: Event, b: Event) => new Date(a.date).getTime() - new Date(b.date).getTime())
           .slice(0, 3)
         setEvents(featuredEvents)
-        console.log(featuredEvents)
-        console.log(events)
       } catch (err) {
         console.error("Error fetching events:", err)
         setError("Failed to load events. Please try again later.")
@@ -122,13 +120,7 @@ export default function Events() {
                     <div className="space-y-2 text-sm">
                       <div className="flex items-center">
                         <Calendar className="h-4 w-4 text-[#f33a3a] mr-2" />
-                        <span>
-                          {new Date(event.date).toLocaleDateString("en-US", {
-                            year: "numeric",
-                            month: "long",
-                            day: "numeric",
-                          })}
-                        </span>
+                        <span>{formatEventDate(event.date)}</span>
                       </div>
                       <div className="flex items-center">
                         <MapPin className="h-4 w-4 text-[#f33a3a] mr-2" />
@@ -136,7 +128,7 @@ export default function Events() {
                       </div>
                       <div className="flex items-center">
                         <Clock className="h-4 w-4 text-[#f33a3a] mr-2" />
-                        <span>{dayjs(event.date).format('HH mm A')}</span>
+                        <span>{formatEventTime(event.time)}</span>
                       </div>
                     </div>
                   </CardContent>

@@ -1,15 +1,11 @@
-import { NextRequest, NextResponse } from "next/server"
-import { connectToDatabase } from "@/lib/mongodb"
+import { NextResponse } from "next/server"
 import { ObjectId } from "mongodb"
-import { verifyJwtToken } from "@/lib/jwt"
+import { connectToDatabase } from "@/lib/mongodb"
 import Event from "@/models/Event"
 
-export async function GET(
-  request: NextRequest,
-  { params }: { params: { id: string } }
-) {
+export async function GET(_request: Request, { params }: { params: Promise<{ id: string }> }) {
   try {
-    const { id } = params
+    const { id } = await params
     if (!ObjectId.isValid(id)) {
       return NextResponse.json({ error: "Invalid event ID" }, { status: 400 })
     }

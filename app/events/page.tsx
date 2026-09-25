@@ -6,7 +6,8 @@ import { useState, useRef, useEffect } from "react"
 import { useRouter } from "next/navigation"
 import Image from "next/image"
 import { motion, useScroll, useTransform, useInView } from "framer-motion"
-import { format, isBefore, isAfter, parseISO, isSameMonth } from "date-fns"
+import { format } from "date-fns"
+import { eventDay, formatEventDate, formatEventTime } from "@/lib/event-time"
 import { CalendarIcon, MapPin, Clock, ChevronRight, ChevronLeft, Search, Loader2 } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardFooter } from "@/components/ui/card"
@@ -247,23 +248,11 @@ export default function EventsPage() {
   // Extract unique categories from events
   const eventCategories = ["All", ...Array.from(new Set(events.map((event) => event.category)))]
 
-  // Filter upcoming events (events with dates in the future or today)
-  const upcomingEvents = events.filter((event) => {
-    const eventDate = new Date(event.date)
-    const today = new Date()
-    eventDate.setHours(0, 0, 0, 0)
-    today.setHours(0, 0, 0, 0)
-    return eventDate >= today
-  })
+  const today = new Date()
+  today.setHours(0, 0, 0, 0)
 
-  // Filter past events (events with dates in the past)
-  const pastEvents = events.filter((event) => {
-    const eventDate = new Date(event.date)
-    const today = new Date()
-    eventDate.setHours(0, 0, 0, 0)
-    today.setHours(0, 0, 0, 0)
-    return eventDate < today
-  })
+  const upcomingEvents = events.filter((event) => eventDay(event.date) >= today)
+  const pastEvents = events.filter((event) => eventDay(event.date) < today)
 
   // Filter events based on search and category
   const filteredUpcomingEvents = upcomingEvents.filter((event) => {
@@ -301,7 +290,7 @@ export default function EventsPage() {
 
   // Create calendar events from real events data
   const calendarEvents = events.map((event) => ({
-    date: parseISO(event.date),
+    date: eventDay(event.date),
     title: event.title,
     category: event.category,
   }))
@@ -318,14 +307,7 @@ export default function EventsPage() {
 
   const currentMonthYear = `${currentMonth.getMonth()}-${currentMonth.getFullYear()}`
   const allMonthEvents = monthEventsMap[currentMonthYear] || []
-  // Filter to only show future events (today and onwards)
-  const today = new Date()
-  today.setHours(0, 0, 0, 0)
-  const currentMonthEvents = allMonthEvents.filter((event) => {
-    const eventDate = new Date(event.date)
-    eventDate.setHours(0, 0, 0, 0)
-    return eventDate >= today
-  })
+  const currentMonthEvents = allMonthEvents.filter((event) => event.date >= today)
 
   const daysInMonth = new Date(currentMonth.getFullYear(), currentMonth.getMonth() + 1, 0).getDate()
   const firstDayOfMonth = new Date(currentMonth.getFullYear(), currentMonth.getMonth(), 1).getDay()
@@ -345,16 +327,6 @@ export default function EventsPage() {
   const getEventForDay = (day: number | null) => {
     if (!day) return null
     return currentMonthEvents.find((event) => event.date.getDate() === day)
-  }
-
-  // Format date for display
-  const formatEventDate = (dateString: string) => {
-    try {
-      const date = parseISO(dateString)
-      return format(date, "MMMM d, yyyy")
-    } catch (error) {
-      return dateString
-    }
   }
 
   return (
@@ -568,7 +540,7 @@ export default function EventsPage() {
                         </div>
                         <div className="flex items-center">
                           <Clock className="h-4 w-4 text-[#2cc72c] mr-2" />
-                          <span>{event.time}</span>
+                          <span>{formatEventTime(event.time)}</span>
                         </div>
                       </div>
                     </CardContent>

@@ -5,13 +5,14 @@ import { useRouter } from "next/navigation"
 import { MapPin, Loader2 } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { useToast } from "@/components/ui/use-toast"
-import dayjs from "dayjs"
+import { formatEventDate, formatEventTime } from "@/lib/event-time"
 
 interface Event {
   _id: string
   title: string
   description: string
   date: string
+  time?: string
   location: string
   category: string
 }
@@ -48,7 +49,7 @@ export default function UpcomingEventsAnnouncements() {
         const role = await fetchUserRole()
         console.log(role)
         // Then fetch events
-        const response = await fetch("/api/events")
+        const response = await fetch("/api/events?upcoming=true")
         console.log(response)
         if (!response.ok) {
           throw new Error("Failed to fetch events")
@@ -118,8 +119,8 @@ export default function UpcomingEventsAnnouncements() {
         {events.map((event) => (
             <div className="flex flex-col md:flex-row gap-4 border-b pb-4">
             <div className="bg-[#C8A97E] text-white rounded-lg p-3 text-center min-w-[80px]">
-              <div className="text-2xl font-bold">{dayjs(event.date).format('D')}</div>
-              <div className="text-sm">{dayjs(event.date).format('MMM')}</div>
+              <div className="text-2xl font-bold">{formatEventDate(event.date, { day: "numeric" })}</div>
+              <div className="text-sm">{formatEventDate(event.date, { month: "short" })}</div>
             </div>
             <div>
               <h4 className="font-medium">{event.title}</h4>
@@ -131,7 +132,7 @@ export default function UpcomingEventsAnnouncements() {
                 <MapPin className="h-3 w-3 mr-1" />
                 <span>{event.location}</span>
                 <span className="mx-2">•</span>
-                <span>{dayjs(event.date).format('HH mm A')}</span>
+                <span>{formatEventTime(event.time)}</span>
               </div>
             </div>
           </div>

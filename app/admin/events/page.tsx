@@ -21,6 +21,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Checkbox } from "@/components/ui/checkbox"
 import { useToast } from "@/components/ui/use-toast"
 import { useAuth } from "@/contexts/auth-context"
+import { formatEventDate, formatEventTime, isPastEventDay } from "@/lib/event-time"
 import { TipTapEditor } from "@/components/tiptap-editor"
 
 interface MediaItem {
@@ -81,7 +82,7 @@ export default function AdminEventsPage() {
 
   const isPastDate = (dateStr: string) => {
     if (!dateStr) return false
-    return new Date(dateStr) < new Date()
+    return isPastEventDay(dateStr)
   }
 
   useEffect(() => {
@@ -264,8 +265,8 @@ export default function AdminEventsPage() {
     return true
   })
 
-  const upcomingEvents = filteredEvents.filter((event) => new Date(event.date) >= new Date())
-  const pastEvents = filteredEvents.filter((event) => new Date(event.date) < new Date())
+  const upcomingEvents = filteredEvents.filter((event) => !isPastEventDay(event.date))
+  const pastEvents = filteredEvents.filter((event) => isPastEventDay(event.date))
 
   if (loading) {
     return (
@@ -325,14 +326,12 @@ export default function AdminEventsPage() {
         <div className="space-y-1 text-sm text-gray-500">
           <div className="flex items-center">
             <Calendar className="h-4 w-4 mr-2 text-[#C8A97E]" />
-            <span>{new Date(event.date).toLocaleDateString()}</span>
+            <span>{formatEventDate(event.date)}</span>
           </div>
-          {event.time && (
-            <div className="flex items-center">
-              <Clock className="h-4 w-4 mr-2 text-[#C8A97E]" />
-              <span>{event.time}</span>
-            </div>
-          )}
+          <div className="flex items-center">
+            <Clock className="h-4 w-4 mr-2 text-[#C8A97E]" />
+            <span>{formatEventTime(event.time)}</span>
+          </div>
           <div className="flex items-center">
             <MapPin className="h-4 w-4 mr-2 text-[#C8A97E]" />
             <span>{event.location}</span>
@@ -399,7 +398,7 @@ export default function AdminEventsPage() {
                     }} required />
                 </div>
                 <div className="space-y-2">
-                  <Label htmlFor="time">Time</Label>
+                  <Label htmlFor="time">Time (Eastern Time)</Label>
                   <Input id="time" type="time" value={newEvent.time}
                     onChange={(e) => setNewEvent({ ...newEvent, time: e.target.value })} required />
                 </div>

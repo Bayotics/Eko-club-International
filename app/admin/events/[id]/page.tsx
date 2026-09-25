@@ -21,6 +21,7 @@ import { Card, CardContent } from "@/components/ui/card"
 import { Separator } from "@/components/ui/separator"
 import { useToast } from "@/components/ui/use-toast"
 import { useAuth } from "@/contexts/auth-context"
+import { formatEventDate, formatEventTime, isPastEventDay } from "@/lib/event-time"
 
 const IMAGE_TYPES = ["image/jpeg", "image/jpg", "image/png", "image/webp"]
 const VIDEO_TYPES = ["video/mp4", "video/quicktime", "video/webm", "video/avi"]
@@ -62,7 +63,7 @@ export default function EventDetailsPage({ params }: { params: { id: string } })
   const [editGroups, setEditGroups] = useState<ImageGroup[]>([])
   const groupFileInputRefs = useRef<(HTMLInputElement | null)[]>([])
 
-  const isPastDate = (dateStr: string) => new Date(dateStr) < new Date()
+  const isPastDate = (dateStr: string) => isPastEventDay(dateStr)
 
   useEffect(() => {
     if (!loading && !user) { router.push("/login"); return }
@@ -263,7 +264,7 @@ export default function EventDetailsPage({ params }: { params: { id: string } })
                       }} required />
                   </div>
                   <div className="space-y-2">
-                    <Label>Time</Label>
+                    <Label>Time (Eastern Time)</Label>
                     <Input type="time" value={editedEvent.time || ""}
                       onChange={(e) => setEditedEvent({ ...editedEvent, time: e.target.value })} />
                   </div>
@@ -430,7 +431,7 @@ export default function EventDetailsPage({ params }: { params: { id: string } })
                 <CardContent className="p-6">
                   <div className="flex flex-wrap gap-2 mb-4">
                     <Badge className="bg-[#C8A97E] text-white">{event.category}</Badge>
-                    {new Date(event.date) < new Date() && (
+                    {isPastEventDay(event.date) && (
                       <Badge variant="outline" className="border-red-500 text-red-500">Past Event</Badge>
                     )}
                   </div>
@@ -440,14 +441,12 @@ export default function EventDetailsPage({ params }: { params: { id: string } })
                   <div className="space-y-3 mb-6 text-gray-600">
                     <div className="flex items-center">
                       <Calendar className="h-5 w-5 mr-3 text-[#C8A97E]" />
-                      <span>{new Date(event.date).toLocaleDateString("en-US", { weekday: "long", year: "numeric", month: "long", day: "numeric" })}</span>
+                      <span>{formatEventDate(event.date, { weekday: "long", year: "numeric", month: "long", day: "numeric" })}</span>
                     </div>
-                    {event.time && (
-                      <div className="flex items-center">
-                        <Clock className="h-5 w-5 mr-3 text-[#C8A97E]" />
-                        <span>{event.time}</span>
-                      </div>
-                    )}
+                    <div className="flex items-center">
+                      <Clock className="h-5 w-5 mr-3 text-[#C8A97E]" />
+                      <span>{formatEventTime(event.time)}</span>
+                    </div>
                     <div className="flex items-center">
                       <MapPin className="h-5 w-5 mr-3 text-[#C8A97E]" />
                       <span>{event.location}</span>
@@ -513,7 +512,7 @@ export default function EventDetailsPage({ params }: { params: { id: string } })
               <div className="space-y-4">
                 <div>
                   <p className="text-sm text-gray-500">Status</p>
-                  <p className="font-medium">{new Date(event.date) >= new Date() ? "Upcoming" : "Past"}</p>
+                  <p className="font-medium">{isPastEventDay(event.date) ? "Past" : "Upcoming"}</p>
                 </div>
                 <Separator />
                 {event.imageGroups?.length > 0 && (

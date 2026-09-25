@@ -6,7 +6,8 @@ import { useState, useEffect } from "react"
 import { useParams, useRouter } from "next/navigation"
 import Image from "next/image"
 import { motion } from "framer-motion"
-import { format, parseISO, isSameDay } from "date-fns"
+import { parseISO, isSameDay } from "date-fns"
+import { formatEventDate, formatEventTime } from "@/lib/event-time"
 import { Calendar, MapPin, Clock, ArrowLeft, Share2, CalendarIcon, Users, Tag, LinkIcon, Play, Images } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
@@ -115,17 +116,11 @@ export default function EventDetailPage() {
     const fetchRelatedEvents = async () => {
       try {
         setLoadingRelated(true)
-        const response = await fetch("/api/events")
+        const response = await fetch("/api/events?upcoming=true")
 
         if (response.ok) {
-          const data = await response.json()
-          // Filter out current event and only show upcoming events
-          const currentDate = new Date()
-          const allEvents: Event[] = Array.isArray(data) ? data : (data.events ?? [])
-          const filteredEvents = allEvents
-            .filter((e: Event) => e._id !== eventId && new Date(e.date) > currentDate)
-            .sort((a: Event, b: Event) => new Date(a.date).getTime() - new Date(b.date).getTime())
-            .slice(0, 3)
+          const data: Event[] = await response.json()
+          const filteredEvents = data.filter((e) => e._id !== eventId).slice(0, 3)
 
           setRelatedEvents(filteredEvents)
         }
@@ -191,15 +186,6 @@ export default function EventDetailPage() {
     }
   }
 
-  // Format date for display
-  const formatEventDate = (dateString: string) => {
-    try {
-      const date = parseISO(dateString)
-      return format(date, "MMMM d, yyyy")
-    } catch (error) {
-      return dateString
-    }
-  }
 
   if (loading) {
     return (
@@ -381,7 +367,7 @@ export default function EventDetailPage() {
                   </div>
                   <div>
                     <p className="text-sm text-gray-500">Time</p>
-                    <p className="font-medium">{event.time}</p>
+                    <p className="font-medium">{formatEventTime(event.time)}</p>
                   </div>
                 </div>
 
@@ -500,7 +486,7 @@ export default function EventDetailPage() {
                             <> - {formatEventDate(event.endDate)}</>
                           )}
                         </p>
-                        <p className="text-gray-600">{event.time}</p>
+                        <p className="text-gray-600">{formatEventTime(event.time)}</p>
                       </div>
                     </div>
 
