@@ -17,7 +17,9 @@ import {
   UserPlus,
   Send,
   UserCheck,
-  Heart
+  Heart,
+  BookOpen,
+  Flower2,
 } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { usePathname } from "next/navigation"
@@ -37,6 +39,8 @@ import {
   FiSmile,
   FiBookOpen,
   FiGlobe,
+  FiFileText,
+  FiFeather,
 } from "react-icons/fi"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import {
@@ -76,6 +80,8 @@ const navItems = [
       { name: "Education Initiative", href: "/projects/education-initiative", icon: FiBookOpen },
       { name: "Diaspora Outreach", href: "/projects/diaspora-outreach", icon: FiGlobe },
       { name: "ECI Mr. & Mrs. Eko", href: "/projects/mr-and-mrs-eko", icon: FiAward },
+      { name: "Eko Communicator", href: "/projects/eko-communicator", icon: FiFileText },
+      { name: "In Loving Memory", href: "/projects/in-loving-memory", icon: FiFeather },
     ],
   },
   { name: "Events", href: "/events" },
@@ -459,6 +465,18 @@ export default function Navbar() {
                       </Link>
                     </DropdownMenuItem>
                     <DropdownMenuItem asChild>
+                      <Link href="/admin/eko-communicator" className="cursor-pointer">
+                        <BookOpen className="mr-2 h-4 w-4" />
+                        <span>Manage Eko Communicator</span>
+                      </Link>
+                    </DropdownMenuItem>
+                    <DropdownMenuItem asChild>
+                      <Link href="/admin/memorials" className="cursor-pointer">
+                        <Flower2 className="mr-2 h-4 w-4" />
+                        <span>Manage In Loving Memory</span>
+                      </Link>
+                    </DropdownMenuItem>
+                    <DropdownMenuItem asChild>
                       <Link href="/admin/pending-users" className="cursor-pointer">
                         <UserCheck className="mr-2 h-4 w-4" />
                         <span>Pending Users</span>
@@ -678,6 +696,20 @@ export default function Navbar() {
                           onClick={() => setIsOpen(false)}
                         >
                           Manage Documents
+                        </Link>
+                        <Link
+                          href="/admin/eko-communicator"
+                          className="block py-1 text-sm text-gray-800 hover:text-[#e4e66d]"
+                          onClick={() => setIsOpen(false)}
+                        >
+                          Manage Eko Communicator
+                        </Link>
+                        <Link
+                          href="/admin/memorials"
+                          className="block py-1 text-sm text-gray-800 hover:text-[#e4e66d]"
+                          onClick={() => setIsOpen(false)}
+                        >
+                          Manage In Loving Memory
                         </Link>
                         <Link
                           href="/admin/pending-users"
