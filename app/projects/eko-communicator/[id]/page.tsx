@@ -8,7 +8,7 @@ import { ArrowLeft, Loader2 } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import ProjectHero from "@/components/sections/project-hero"
 import { formatDateUTC } from "@/lib/format-date"
-import { pdfCoverFromUrl } from "@/lib/cloudinary-upload"
+import { magazineCover } from "@/lib/magazine-upload"
 import { COMMUNICATOR_ACCENT, COMMUNICATOR_HERO } from "@/lib/project-theme"
 
 const PdfReader = dynamic(() => import("@/components/pdf-reader"), {
@@ -27,6 +27,7 @@ interface Magazine {
   publishedDate: string
   description?: string
   coverImage?: string
+  pdfCoverImage?: string
   pdfUrl: string
 }
 
@@ -121,7 +122,7 @@ export default function MagazineReaderPage() {
                 <Link key={m._id} href={`/projects/eko-communicator/${m._id}`} className="group block">
                   <div className="aspect-[3/4] rounded-md overflow-hidden shadow-md bg-gray-200 mb-3">
                     <img
-                      src={m.coverImage || pdfCoverFromUrl(m.pdfUrl) || "/placeholder.svg?height=800&width=600"}
+                      src={magazineCover(m) || "/placeholder.svg?height=800&width=600"}
                       alt={`${m.title} cover`}
                       loading="lazy"
                       className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"

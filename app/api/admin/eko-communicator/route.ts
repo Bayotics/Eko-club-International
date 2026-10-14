@@ -2,6 +2,7 @@ import { NextResponse } from "next/server"
 import { connectToDatabase } from "@/lib/mongodb"
 import { requireAdmin } from "@/lib/admin-auth"
 import { parseMagazineInput } from "@/lib/magazine-input"
+import { verifyR2Upload } from "@/lib/magazine-storage"
 import Magazine from "@/models/Magazine"
 
 export async function GET() {
@@ -25,6 +26,11 @@ export async function POST(request: Request) {
   try {
     const parsed = parseMagazineInput(await request.json())
     if (!parsed.data) return NextResponse.json({ error: parsed.error }, { status: 400 })
+
+    if (parsed.data.pdfStorage === "r2") {
+      const problem = await verifyR2Upload(parsed.data.pdfKey)
+      if (problem) return NextResponse.json({ error: problem }, { status: 400 })
+    }
 
     await connectToDatabase()
     const magazine = await Magazine.create(parsed.data)

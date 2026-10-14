@@ -4,18 +4,12 @@ import { useCallback, useEffect, useRef, useState } from "react"
 import type { PDFDocumentProxy, RenderTask } from "pdfjs-dist"
 import { AlertTriangle, ChevronLeft, ChevronRight, Loader2, Maximize, Minimize, ZoomIn, ZoomOut } from "lucide-react"
 import { Button } from "@/components/ui/button"
+import { loadPdfJs } from "@/lib/pdfjs"
 
 const MIN_ZOOM = 0.5
 const MAX_ZOOM = 2.5
 const ZOOM_STEP = 0.25
 const MAX_PAGE_WIDTH = 900
-
-// pdf.mjs is itself a webpack bundle and crashes when Next re-bundles it; the minified build does not.
-async function loadPdfJs() {
-  const pdfjs = await import("pdfjs-dist/build/pdf.min.mjs")
-  pdfjs.GlobalWorkerOptions.workerSrc = new URL("pdfjs-dist/build/pdf.worker.min.mjs", import.meta.url).toString()
-  return pdfjs
-}
 
 export default function PdfReader({ url, title }: { url: string; title: string }) {
   const wrapperRef = useRef<HTMLDivElement>(null)

@@ -14,7 +14,9 @@ import { Progress } from "@/components/ui/progress"
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
 import { useToast } from "@/components/ui/use-toast"
 import { useAuth } from "@/contexts/auth-context"
-import { pdfCoverFromUrl, uploadToCloudinary, validateImage, validatePdf } from "@/lib/cloudinary-upload"
+import { uploadToCloudinary, validateImage } from "@/lib/cloudinary-upload"
+import { createPdfCover, magazineCover, uploadMagazinePdf, validateMagazinePdf } from "@/lib/magazine-upload"
+import { MAX_MAGAZINE_PDF_MB } from "@/lib/magazine-limits"
 import { formatDateUTC, toDateInputValue } from "@/lib/format-date"
 
 interface Magazine {
@@ -24,8 +26,11 @@ interface Magazine {
   publishedDate: string
   description: string
   coverImage: string
+  pdfCoverImage: string
+  pdfStorage: "cloudinary" | "r2"
   pdfUrl: string
   pdfPublicId: string
+  pdfKey: string
 }
 
 type MagazineForm = Omit<Magazine, "_id">
@@ -36,8 +41,11 @@ const emptyForm: MagazineForm = {
   publishedDate: "",
   description: "",
   coverImage: "",
+  pdfCoverImage: "",
+  pdfStorage: "r2",
   pdfUrl: "",
   pdfPublicId: "",
+  pdfKey: "",
 }
 
 export default function ManageEkoCommunicatorPage() {
@@ -56,10 +64,11 @@ export default function ManageEkoCommunicatorPage() {
   const [pdfName, setPdfName] = useState("")
   const [pdfProgress, setPdfProgress] = useState<number | null>(null)
   const [coverUploading, setCoverUploading] = useState(false)
+  const [coverGenerating, setCoverGenerating] = useState(false)
   const [isSaving, setIsSaving] = useState(false)
   const [deletingId, setDeletingId] = useState<string | null>(null)
 
-  const isUploading = pdfProgress !== null || coverUploading
+  const isUploading = pdfProgress !== null || coverUploading || coverGenerating
 
   useEffect(() => {
     if (loading) return
@@ -103,8 +112,11 @@ export default function ManageEkoCommunicatorPage() {
       publishedDate: toDateInputValue(m.publishedDate),
       description: m.description || "",
       coverImage: m.coverImage || "",
-      pdfUrl: m.pdfUrl,
+      pdfCoverImage: m.pdfCoverImage || "",
+      pdfStorage: m.pdfStorage || "cloudinary",
+      pdfUrl: m.pdfUrl || "",
       pdfPublicId: m.pdfPublicId || "",
+      pdfKey: m.pdfKey || "",
     })
     setPdfName("Current PDF")
     setDialogOpen(true)
@@ -115,21 +127,37 @@ export default function ManageEkoCommunicatorPage() {
     e.target.value = ""
     if (!file) return
 
-    const invalid = validatePdf(file)
+    const invalid = validateMagazinePdf(file)
     if (invalid) {
       toast({ title: "PDF rejected", description: invalid, variant: "destructive" })
       return
     }
 
+    let key: string
     try {
       setPdfProgress(0)
-      const { url, publicId } = await uploadToCloudinary(file, "eko-communicator", setPdfProgress)
-      setForm((prev) => ({ ...prev, pdfUrl: url, pdfPublicId: publicId }))
+      key = await uploadMagazinePdf(file, setPdfProgress)
+      setForm((prev) => ({ ...prev, pdfStorage: "r2", pdfKey: key, pdfUrl: "", pdfPublicId: "", pdfCoverImage: "" }))
       setPdfName(file.name)
     } catch (error: any) {
       toast({ title: "Upload failed", description: error.message, variant: "destructive" })
+      return
     } finally {
       setPdfProgress(null)
+    }
+
+    try {
+      setCoverGenerating(true)
+      const coverUrl = await createPdfCover(file)
+      setForm((prev) => (prev.pdfKey === key ? { ...prev, pdfCoverImage: coverUrl } : prev))
+    } catch (error) {
+      console.error("Cover generation failed:", error)
+      toast({
+        title: "Cover not generated",
+        description: "The PDF uploaded, but page 1 could not be turned into a cover. Upload a cover image instead.",
+      })
+    } finally {
+      setCoverGenerating(false)
     }
   }
 
@@ -158,7 +186,7 @@ export default function ManageEkoCommunicatorPage() {
   const handleSave = async () => {
     if (!form.title.trim()) return toast({ title: "Title is required", variant: "destructive" })
     if (!form.publishedDate) return toast({ title: "Publication date is required", variant: "destructive" })
-    if (!form.pdfUrl) return toast({ title: "Please upload the magazine PDF", variant: "destructive" })
+    if (!form.pdfKey && !form.pdfUrl) return toast({ title: "Please upload the magazine PDF", variant: "destructive" })
 
     try {
       setIsSaving(true)
@@ -205,7 +233,7 @@ export default function ManageEkoCommunicatorPage() {
     )
   }
 
-  const coverPreview = form.coverImage || pdfCoverFromUrl(form.pdfUrl, 300)
+  const coverPreview = magazineCover(form, 300)
 
   return (
     <main className="container mx-auto px-4 py-24 space-y-6">
@@ -244,8 +272,8 @@ export default function ManageEkoCommunicatorPage() {
                     <TableRow key={m._id}>
                       <TableCell>
                         <div className="w-12 h-16 rounded overflow-hidden bg-gray-100">
-                          {(m.coverImage || pdfCoverFromUrl(m.pdfUrl, 120)) && (
-                            <img src={m.coverImage || pdfCoverFromUrl(m.pdfUrl, 120)} alt="" className="w-full h-full object-cover" />
+                          {magazineCover(m, 120) && (
+                            <img src={magazineCover(m, 120)} alt="" className="w-full h-full object-cover" />
                           )}
                         </div>
                       </TableCell>
@@ -284,7 +312,7 @@ export default function ManageEkoCommunicatorPage() {
         <DialogContent className="sm:max-w-[600px] max-h-[90vh] overflow-y-auto">
           <DialogHeader>
             <DialogTitle>{editingId ? "Edit Publication" : "Add Publication"}</DialogTitle>
-            <DialogDescription>PDF files up to 10 MB. Readers can read online but cannot download.</DialogDescription>
+            <DialogDescription>PDF files up to {MAX_MAGAZINE_PDF_MB} MB. Readers can read online but cannot download.</DialogDescription>
           </DialogHeader>
 
           <div className="space-y-4">
@@ -338,7 +366,7 @@ export default function ManageEkoCommunicatorPage() {
                   <p className="text-sm">Uploading PDF... {pdfProgress}%</p>
                   <Progress value={pdfProgress} />
                 </div>
-              ) : form.pdfUrl ? (
+              ) : form.pdfKey || form.pdfUrl ? (
                 <div className="flex items-center justify-between gap-3 rounded-md border p-3">
                   <div className="flex items-center gap-2 min-w-0">
                     <FileText className="h-5 w-5 text-red-600 shrink-0" />
@@ -357,7 +385,7 @@ export default function ManageEkoCommunicatorPage() {
                 >
                   <Upload className="h-5 w-5 text-gray-500" />
                   <span>Select PDF</span>
-                  <span className="text-xs text-gray-500">Max 10 MB</span>
+                  <span className="text-xs text-gray-500">Max {MAX_MAGAZINE_PDF_MB} MB</span>
                 </Button>
               )}
             </div>
@@ -368,7 +396,7 @@ export default function ManageEkoCommunicatorPage() {
               <input ref={coverInputRef} type="file" accept=".jpg,.jpeg,.png,.webp" className="hidden" onChange={handleCoverSelect} />
               <div className="flex items-start gap-4">
                 <div className="w-24 aspect-[3/4] rounded border bg-gray-50 overflow-hidden flex items-center justify-center">
-                  {coverUploading ? (
+                  {coverUploading || coverGenerating ? (
                     <Loader2 className="h-5 w-5 animate-spin text-gray-400" />
                   ) : coverPreview ? (
                     <img src={coverPreview} alt="Cover preview" className="w-full h-full object-cover" />
@@ -380,7 +408,8 @@ export default function ManageEkoCommunicatorPage() {
                   <Button type="button" variant="outline" size="sm" onClick={() => coverInputRef.current?.click()} disabled={coverUploading}>
                     <Upload className="h-4 w-4 mr-2" /> {form.coverImage ? "Change cover" : "Upload cover"}
                   </Button>
-                  {form.coverImage && (
+                  {coverGenerating && <p className="text-xs text-muted-foreground">Creating cover from page 1...</p>}
+                  {form.coverImage && magazineCover({ ...form, coverImage: "" }) && (
                     <Button type="button" variant="ghost" size="sm" onClick={() => setForm((p) => ({ ...p, coverImage: "" }))}>
                       <X className="h-4 w-4 mr-2" /> Use PDF page 1
                     </Button>

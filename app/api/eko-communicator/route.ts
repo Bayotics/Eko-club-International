@@ -5,7 +5,7 @@ import Magazine from "@/models/Magazine"
 export async function GET() {
   try {
     await connectToDatabase()
-    const magazines = await Magazine.find({}).select("-pdfPublicId").sort({ publishedDate: -1 }).lean()
+    const magazines = await Magazine.find({}).select("-pdfPublicId -pdfKey").sort({ publishedDate: -1 }).lean()
     return NextResponse.json(magazines)
   } catch (error) {
     console.error("Error fetching magazines:", error)

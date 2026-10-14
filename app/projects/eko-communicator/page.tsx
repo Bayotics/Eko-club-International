@@ -8,7 +8,7 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import ProjectHero from "@/components/sections/project-hero"
 import { formatDateUTC } from "@/lib/format-date"
-import { pdfCoverFromUrl } from "@/lib/cloudinary-upload"
+import { magazineCover } from "@/lib/magazine-upload"
 import { COMMUNICATOR_ACCENT, COMMUNICATOR_HERO } from "@/lib/project-theme"
 
 interface Magazine {
@@ -18,10 +18,11 @@ interface Magazine {
   publishedDate: string
   description?: string
   coverImage?: string
+  pdfCoverImage?: string
   pdfUrl: string
 }
 
-const coverOf = (m: Magazine) => m.coverImage || pdfCoverFromUrl(m.pdfUrl) || "/placeholder.svg?height=800&width=600"
+const coverOf = (m: Magazine) => magazineCover(m) || "/placeholder.svg?height=800&width=600"
 
 function SectionHeading({ lead, highlight }: { lead: string; highlight: string }) {
   return (

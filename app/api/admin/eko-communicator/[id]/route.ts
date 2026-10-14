@@ -1,25 +1,10 @@
 import { NextResponse } from "next/server"
 import mongoose from "mongoose"
-import { v2 as cloudinary } from "cloudinary"
 import { connectToDatabase } from "@/lib/mongodb"
 import { requireAdmin } from "@/lib/admin-auth"
 import { parseMagazineInput } from "@/lib/magazine-input"
+import { isSamePdf, removeStoredPdf, verifyR2Upload } from "@/lib/magazine-storage"
 import Magazine from "@/models/Magazine"
-
-cloudinary.config({
-  cloud_name: process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME,
-  api_key: process.env.NEXT_PUBLIC_CLOUDINARY_API_KEY,
-  api_secret: process.env.CLOUDINARY_API_SECRET,
-})
-
-async function destroyPdf(publicId: string) {
-  if (!publicId) return
-  try {
-    await cloudinary.uploader.destroy(publicId, { resource_type: "image", invalidate: true })
-  } catch (error) {
-    console.error("Failed to delete magazine PDF from Cloudinary:", error)
-  }
-}
 
 export async function PUT(request: Request, { params }: { params: Promise<{ id: string }> }) {
   const denied = await requireAdmin()
@@ -40,13 +25,18 @@ export async function PUT(request: Request, { params }: { params: Promise<{ id: 
       return NextResponse.json({ error: "Magazine not found" }, { status: 404 })
     }
 
-    const previousPublicId = existing.pdfPublicId
+    const previous = { pdfStorage: existing.pdfStorage, pdfPublicId: existing.pdfPublicId, pdfKey: existing.pdfKey }
+    const pdfChanged = !isSamePdf(previous, parsed.data)
+
+    if (pdfChanged && parsed.data.pdfStorage === "r2") {
+      const problem = await verifyR2Upload(parsed.data.pdfKey)
+      if (problem) return NextResponse.json({ error: problem }, { status: 400 })
+    }
+
     existing.set(parsed.data)
     await existing.save()
 
-    if (previousPublicId && previousPublicId !== parsed.data.pdfPublicId) {
-      await destroyPdf(previousPublicId)
-    }
+    if (pdfChanged) await removeStoredPdf(previous)
 
     return NextResponse.json(existing)
   } catch (error) {
@@ -71,7 +61,7 @@ export async function DELETE(_request: Request, { params }: { params: Promise<{ 
       return NextResponse.json({ error: "Magazine not found" }, { status: 404 })
     }
 
-    await destroyPdf(deleted.pdfPublicId)
+    await removeStoredPdf(deleted)
     return NextResponse.json({ message: "Magazine deleted successfully" })
   } catch (error) {
     console.error("Error deleting magazine:", error)
